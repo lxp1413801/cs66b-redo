@@ -24,7 +24,26 @@
         <itemPath>mcc_generated_files/tmr2.c</itemPath>
         <itemPath>mcc_generated_files/tmr1.c</itemPath>
       </logicalFolder>
-      <itemPath>main.c</itemPath>
+      <logicalFolder name="src" displayName="src" projectFiles="true">
+        <logicalFolder name="api" displayName="api" projectFiles="true">
+        </logicalFolder>
+        <logicalFolder name="app" displayName="app" projectFiles="true">
+          <itemPath>src/app/main.c</itemPath>
+        </logicalFolder>
+        <logicalFolder name="configs" displayName="configs" projectFiles="true">
+        </logicalFolder>
+        <logicalFolder name="depend" displayName="depend" projectFiles="true">
+        </logicalFolder>
+        <logicalFolder name="driver" displayName="driver" projectFiles="true">
+        </logicalFolder>
+        <logicalFolder name="global" displayName="global" projectFiles="true">
+        </logicalFolder>
+        <logicalFolder name="includes" displayName="includes" projectFiles="true">
+          <itemPath>src/includes/includes.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="soc" displayName="soc" projectFiles="true">
+        </logicalFolder>
+      </logicalFolder>
     </logicalFolder>
     <logicalFolder name="LinkerScript" displayName="链接器文件" projectFiles="true">
     </logicalFolder>
@@ -33,6 +52,9 @@
       <itemPath>MyConfig.mc3</itemPath>
     </logicalFolder>
   </logicalFolder>
+  <sourceRootList>
+    <Elem>src</Elem>
+  </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
     <conf name="default" type="2">
