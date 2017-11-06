@@ -1,6 +1,6 @@
-//file name :drivers.h
-#ifndef __drivers_h__
-#define __drivers_h__
+//file name :ads1148_hal.h
+#ifndef __ads1148_hal_h__
+#define __ads1148_hal_h__
 #ifdef __cplusplus
 	extern "C"{
 #endif
@@ -8,9 +8,7 @@
     #include <stdint.h>
 	#include "gpio_config.h"
 	#include "gpio.h"
-    #include "lcd.h"
-	#include "ads1148_hal.h"
-	#include "ads1148.h"
+
 
 #ifdef __cplusplus
 	}

@@ -4,16 +4,12 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group name="cs600_test">
             <file>file:/F:/2017/cs66-b/cs66b.X/src/soc/delay.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/app/main.c</file>
+            <file>file:/F:/2017/cs66-b/cs66b.X/src/driver/ads1148.h</file>
             <file>file:/F:/2017/cs66-b/cs66b.X/src/driver/drivers.h</file>
             <file>file:/F:/2017/cs66-b/cs66b.X/src/app/main.h</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/driver/lcd_code_table.h</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/driver/lcd_code_table_ex.h</file>
             <file>file:/F:/2017/cs66-b/cs66b.X/src/driver/gpio.c</file>
             <file>file:/F:/2017/cs66-b/cs66b.X/nbproject/Makefile-default.mk</file>
             <file>file:/F:/2017/cs66-b/cs66b.X/src/driver/lcd.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/driver/lcd.h</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/driver/gpio_config.h</file>
             <file>file:/F:/2017/cs66-b/cs66b.X/src/includes/includes.h</file>
         </group>
     </open-files>

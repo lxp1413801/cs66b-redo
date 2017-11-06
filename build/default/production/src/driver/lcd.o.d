@@ -10,5 +10,7 @@ src/driver/../../mcc_generated_files/mcc.h  \
 src/driver/gpio_config.h  \
  src/driver/gpio.h  \
 src/driver/lcd.h  \
+src/driver/ads1148_hal.h  \
+ src/driver/ads1148.h  \
 src/driver/lcd_code_table.h  \
  src/driver/lcd_code_table_ex.h 
