@@ -130,7 +130,32 @@
     #define set_portj_value_low(pin)    do{LATJ  &= ~pin;}while(0);
     #define get_portj_value(pin)     PORTJ & pin	
 	*/
+
 	
+	#define _set_port_mode_an(port,pin) 		set_##port##_mode_an(pin)	
+	#define _set_port_mode_dig(port,pin)		set_##port##_mode_dig(pin)
+	#define _set_port_odc_en(port,pin)          set_##port##_odc_en(pin)
+	#define _set_port_odc_dis(port,pin)         set_##port##_odc_dis(pin)
+	#define _set_port_value_toggle(port,pin)	set_##port##_value_toggle(pin)	
+	
+    #define _set_port_mode_out(port,pin)     	set_##port##_mode_out(pin)
+    #define _set_port_mode_in(port,pin)      	set_##port##_mode_in(pin)
+    #define _set_port_value_hight(port,pin)		set_##port##_value_hight(pin)
+    #define _set_port_value_low(port,pin)		set_##port##_value_low(pin)
+    #define _get_port_value(port,pin)        	get_##port##_value(pin)
+	//
+	#define  DEF(x) x
+	#define set_port_mode_an(port,pin)  		_set_port_mode_an(port,pin)
+	#define set_port_mode_dig(port,pin) 		_set_port_mode_dig(port,pin)	
+	#define set_port_odc_en(port,pin) 			_set_port_odc_en(port,pin)
+	#define set_port_odc_dis(port,pin)			_set_port_odc_dis(port,pin)	
+	#define set_port_value_toggle(port,pin)		_set_port_value_toggle(port,pin)
+	
+    #define set_port_mode_out(port,pin)			_set_port_mode_out(port,pin)
+    #define set_port_mode_in(port,pin)			_set_port_mode_in(port,pin)
+    #define set_port_value_hight(port,pin)		_set_port_value_hight(port,pin)
+    #define set_port_value_low(port,pin)		_set_port_value_low(port,pin)
+    #define get_port_value(port,pin)			_get_port_value(port,pin)
 #ifdef __cplusplus
 	}
 #endif

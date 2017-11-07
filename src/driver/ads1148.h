@@ -287,30 +287,48 @@
 	}st_ads1148RegIDAC0,ads1148RegIDAC0_t;
 	
 	//IDAC1—IDAC Control Register 1 (offset = 0Bh) [reset = FFh]
-	#define ADS1148_IDAC_OUT_PINS	
+	#define ADS1148_IDAC_OUT_PINS_AIN0	0
+	#define ADS1148_IDAC_OUT_PINS_AIN1	1	
+	#define ADS1148_IDAC_OUT_PINS_AIN2	2	
+	#define ADS1148_IDAC_OUT_PINS_AIN3	3	
+	#define ADS1148_IDAC_OUT_PINS_AIN4	4	
+	#define ADS1148_IDAC_OUT_PINS_AIN5	5	
+	#define ADS1148_IDAC_OUT_PINS_AIN6	6	
+	#define ADS1148_IDAC_OUT_PINS_AIN7	7		
+	#define ADS1148_IDAC_OUT_PINS_IEXC1	8
+	#define ADS1148_IDAC_OUT_PINS_IEXC2	9
+	#define ADS1148_IDAC_OUT_PINS_NC	0x0f
+	typedef union{
+		uint8_t idac1;
+		struct{
+			uint8_t i2dir:4;
+			uint8_t i1dir:4;
+		}bits;
+	}st_ads1148RegIDAC1,ads1148RegIDAC1_t;
 	#endif
 	
 	typedef struct{
-		void (*ads1148_pins_init)(void);
-		void (*ads1148_pins_deinit)(void);
+		void (*pins_init)(void);
+		void (*pins_deinit)(void);
 		
-		void (*ads1148_pins_cs_set_low)(void);
-		void (*ads1148_pins_cs_set_hight)(void);
+		void (*pins_cs_set_low)(void);
+		void (*pins_cs_set_hight)(void);
 		
-		//void (*ads1148_pins_reset_set_hight)(void);
-		//void (*ads1148_pins_reset_set_low)(void);
+		//void (*pins_reset_set_hight)(void);
+		//void (*pins_reset_set_low)(void);
 		
-		void (*ads1148_pins_start_set_hight)(void);
-		void (*ads1148_pins_start_set_low)(void);
+		void (*pins_start_set_hight)(void);
+		void (*pins_start_set_low)(void);
 		
-		void (*ads1148_pins_drdy_mode_in)(void);
-		uint16_t (*ads1148_pins_drdy_get)(void);
+		void (*pins_drdy_mode_in)(void);
+		uint16_t (*pins_drdy_get)(void);
 		
-		void (*ads1148_pins_drdy_mode_out)(void);
-		void (*ads1148_pins_drdy_set_hight)(void);
-		void (*ads1148_pins_drdy_set_low)(void);
+		void (*pins_drdy_mode_out)(void);
+		void (*pins_drdy_set_hight)(void);
+		void (*pins_drdy_set_low)(void);
 		
 		uint8_t (*ads1148_write_read_via_spi)(uint8_t);	
+        uint8_t chipNm;
 	}st_ads1148Obj,ads1148Obj_t;
 	
 	extern ads1148Obj_t adsii48Chip0,adsii48Chip1;

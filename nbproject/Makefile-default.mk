@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=mcc_generated_files/rtcc.c mcc_generated_files/pin_manager.c mcc_generated_files/interrupt_manager.c mcc_generated_files/mcc.c mcc_generated_files/tmr2.c mcc_generated_files/tmr1.c src/app/main.c src/depend/crc16.c src/depend/m_string.c src/driver/lcd.c src/driver/gpio.c src/global/globle.c src/soc/delay.c src/soc/ticker.c
+SOURCEFILES_QUOTED_IF_SPACED=mcc_generated_files/rtcc.c mcc_generated_files/pin_manager.c mcc_generated_files/interrupt_manager.c mcc_generated_files/mcc.c mcc_generated_files/tmr2.c mcc_generated_files/tmr1.c src/app/main.c src/depend/crc16.c src/depend/m_string.c src/driver/lcd.c src/driver/gpio.c src/global/globle.c src/soc/delay.c src/soc/ticker.c src/driver/ads1148.c src/driver/ads1148_hal.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/mcc_generated_files/rtcc.o ${OBJECTDIR}/mcc_generated_files/pin_manager.o ${OBJECTDIR}/mcc_generated_files/interrupt_manager.o ${OBJECTDIR}/mcc_generated_files/mcc.o ${OBJECTDIR}/mcc_generated_files/tmr2.o ${OBJECTDIR}/mcc_generated_files/tmr1.o ${OBJECTDIR}/src/app/main.o ${OBJECTDIR}/src/depend/crc16.o ${OBJECTDIR}/src/depend/m_string.o ${OBJECTDIR}/src/driver/lcd.o ${OBJECTDIR}/src/driver/gpio.o ${OBJECTDIR}/src/global/globle.o ${OBJECTDIR}/src/soc/delay.o ${OBJECTDIR}/src/soc/ticker.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/mcc_generated_files/rtcc.o.d ${OBJECTDIR}/mcc_generated_files/pin_manager.o.d ${OBJECTDIR}/mcc_generated_files/interrupt_manager.o.d ${OBJECTDIR}/mcc_generated_files/mcc.o.d ${OBJECTDIR}/mcc_generated_files/tmr2.o.d ${OBJECTDIR}/mcc_generated_files/tmr1.o.d ${OBJECTDIR}/src/app/main.o.d ${OBJECTDIR}/src/depend/crc16.o.d ${OBJECTDIR}/src/depend/m_string.o.d ${OBJECTDIR}/src/driver/lcd.o.d ${OBJECTDIR}/src/driver/gpio.o.d ${OBJECTDIR}/src/global/globle.o.d ${OBJECTDIR}/src/soc/delay.o.d ${OBJECTDIR}/src/soc/ticker.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/mcc_generated_files/rtcc.o ${OBJECTDIR}/mcc_generated_files/pin_manager.o ${OBJECTDIR}/mcc_generated_files/interrupt_manager.o ${OBJECTDIR}/mcc_generated_files/mcc.o ${OBJECTDIR}/mcc_generated_files/tmr2.o ${OBJECTDIR}/mcc_generated_files/tmr1.o ${OBJECTDIR}/src/app/main.o ${OBJECTDIR}/src/depend/crc16.o ${OBJECTDIR}/src/depend/m_string.o ${OBJECTDIR}/src/driver/lcd.o ${OBJECTDIR}/src/driver/gpio.o ${OBJECTDIR}/src/global/globle.o ${OBJECTDIR}/src/soc/delay.o ${OBJECTDIR}/src/soc/ticker.o ${OBJECTDIR}/src/driver/ads1148.o ${OBJECTDIR}/src/driver/ads1148_hal.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/mcc_generated_files/rtcc.o.d ${OBJECTDIR}/mcc_generated_files/pin_manager.o.d ${OBJECTDIR}/mcc_generated_files/interrupt_manager.o.d ${OBJECTDIR}/mcc_generated_files/mcc.o.d ${OBJECTDIR}/mcc_generated_files/tmr2.o.d ${OBJECTDIR}/mcc_generated_files/tmr1.o.d ${OBJECTDIR}/src/app/main.o.d ${OBJECTDIR}/src/depend/crc16.o.d ${OBJECTDIR}/src/depend/m_string.o.d ${OBJECTDIR}/src/driver/lcd.o.d ${OBJECTDIR}/src/driver/gpio.o.d ${OBJECTDIR}/src/global/globle.o.d ${OBJECTDIR}/src/soc/delay.o.d ${OBJECTDIR}/src/soc/ticker.o.d ${OBJECTDIR}/src/driver/ads1148.o.d ${OBJECTDIR}/src/driver/ads1148_hal.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/mcc_generated_files/rtcc.o ${OBJECTDIR}/mcc_generated_files/pin_manager.o ${OBJECTDIR}/mcc_generated_files/interrupt_manager.o ${OBJECTDIR}/mcc_generated_files/mcc.o ${OBJECTDIR}/mcc_generated_files/tmr2.o ${OBJECTDIR}/mcc_generated_files/tmr1.o ${OBJECTDIR}/src/app/main.o ${OBJECTDIR}/src/depend/crc16.o ${OBJECTDIR}/src/depend/m_string.o ${OBJECTDIR}/src/driver/lcd.o ${OBJECTDIR}/src/driver/gpio.o ${OBJECTDIR}/src/global/globle.o ${OBJECTDIR}/src/soc/delay.o ${OBJECTDIR}/src/soc/ticker.o
+OBJECTFILES=${OBJECTDIR}/mcc_generated_files/rtcc.o ${OBJECTDIR}/mcc_generated_files/pin_manager.o ${OBJECTDIR}/mcc_generated_files/interrupt_manager.o ${OBJECTDIR}/mcc_generated_files/mcc.o ${OBJECTDIR}/mcc_generated_files/tmr2.o ${OBJECTDIR}/mcc_generated_files/tmr1.o ${OBJECTDIR}/src/app/main.o ${OBJECTDIR}/src/depend/crc16.o ${OBJECTDIR}/src/depend/m_string.o ${OBJECTDIR}/src/driver/lcd.o ${OBJECTDIR}/src/driver/gpio.o ${OBJECTDIR}/src/global/globle.o ${OBJECTDIR}/src/soc/delay.o ${OBJECTDIR}/src/soc/ticker.o ${OBJECTDIR}/src/driver/ads1148.o ${OBJECTDIR}/src/driver/ads1148_hal.o
 
 # Source Files
-SOURCEFILES=mcc_generated_files/rtcc.c mcc_generated_files/pin_manager.c mcc_generated_files/interrupt_manager.c mcc_generated_files/mcc.c mcc_generated_files/tmr2.c mcc_generated_files/tmr1.c src/app/main.c src/depend/crc16.c src/depend/m_string.c src/driver/lcd.c src/driver/gpio.c src/global/globle.c src/soc/delay.c src/soc/ticker.c
+SOURCEFILES=mcc_generated_files/rtcc.c mcc_generated_files/pin_manager.c mcc_generated_files/interrupt_manager.c mcc_generated_files/mcc.c mcc_generated_files/tmr2.c mcc_generated_files/tmr1.c src/app/main.c src/depend/crc16.c src/depend/m_string.c src/driver/lcd.c src/driver/gpio.c src/global/globle.c src/soc/delay.c src/soc/ticker.c src/driver/ads1148.c src/driver/ads1148_hal.c
 
 
 CFLAGS=
@@ -192,6 +192,20 @@ ${OBJECTDIR}/src/soc/ticker.o: src/soc/ticker.c  nbproject/Makefile-${CND_CONF}.
 	${MP_CC} $(MP_EXTRA_CC_PRE)  src/soc/ticker.c  -o ${OBJECTDIR}/src/soc/ticker.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/soc/ticker.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
 	@${FIXDEPS} "${OBJECTDIR}/src/soc/ticker.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
+${OBJECTDIR}/src/driver/ads1148.o: src/driver/ads1148.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/src/driver" 
+	@${RM} ${OBJECTDIR}/src/driver/ads1148.o.d 
+	@${RM} ${OBJECTDIR}/src/driver/ads1148.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  src/driver/ads1148.c  -o ${OBJECTDIR}/src/driver/ads1148.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/driver/ads1148.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/src/driver/ads1148.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
+${OBJECTDIR}/src/driver/ads1148_hal.o: src/driver/ads1148_hal.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/src/driver" 
+	@${RM} ${OBJECTDIR}/src/driver/ads1148_hal.o.d 
+	@${RM} ${OBJECTDIR}/src/driver/ads1148_hal.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  src/driver/ads1148_hal.c  -o ${OBJECTDIR}/src/driver/ads1148_hal.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/driver/ads1148_hal.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/src/driver/ads1148_hal.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
 else
 ${OBJECTDIR}/mcc_generated_files/rtcc.o: mcc_generated_files/rtcc.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/mcc_generated_files" 
@@ -290,6 +304,20 @@ ${OBJECTDIR}/src/soc/ticker.o: src/soc/ticker.c  nbproject/Makefile-${CND_CONF}.
 	@${RM} ${OBJECTDIR}/src/soc/ticker.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  src/soc/ticker.c  -o ${OBJECTDIR}/src/soc/ticker.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/soc/ticker.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
 	@${FIXDEPS} "${OBJECTDIR}/src/soc/ticker.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
+${OBJECTDIR}/src/driver/ads1148.o: src/driver/ads1148.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/src/driver" 
+	@${RM} ${OBJECTDIR}/src/driver/ads1148.o.d 
+	@${RM} ${OBJECTDIR}/src/driver/ads1148.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  src/driver/ads1148.c  -o ${OBJECTDIR}/src/driver/ads1148.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/driver/ads1148.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/src/driver/ads1148.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
+${OBJECTDIR}/src/driver/ads1148_hal.o: src/driver/ads1148_hal.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/src/driver" 
+	@${RM} ${OBJECTDIR}/src/driver/ads1148_hal.o.d 
+	@${RM} ${OBJECTDIR}/src/driver/ads1148_hal.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  src/driver/ads1148_hal.c  -o ${OBJECTDIR}/src/driver/ads1148_hal.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/driver/ads1148_hal.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/src/driver/ads1148_hal.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
 endif
 
