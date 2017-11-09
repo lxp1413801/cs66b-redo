@@ -12,11 +12,11 @@
 	//rd10
 	#define ADS1148_SCK_PIN		PIN10
 	#define ADS1148_SCK_PORT	portd
-	//rd9
-	#define ADS1148_DIN_PIN		PIN9
-	#define ADS1148_DIN_PORT 	portd
 	//rd8
-	#define ADS1148_DOUT_PIN	PIN8
+	#define ADS1148_DIN_PIN		PIN8
+	#define ADS1148_DIN_PORT 	portd
+	//rd9
+	#define ADS1148_DOUT_PIN	PIN9
 	#define ADS1148_DOUT_PORT 	portd
 	//ra15 ADS1-DRDY
 	#define ADS1148_DRDY_0_PIN		PIN15
@@ -36,6 +36,35 @@
 	//rg2 ADS2-START
 	#define ADS1148_START_1_PIN		PIN2
 	#define ADS1148_START_1_PORT 	portg		
+
+	//common pins
+	extern void ads1148_hal_sck_set_hight(void);
+	extern void ads1148_hal_sck_set_low(void);
+	extern void ads1148_hal_dout_set_hight(void);
+	extern void ads1148_hal_dout_set_low(void);
+	extern uint16_t ads1148_hal_din_get(void);
+	//chip0
+	extern void ads1148_hal_cs_0_set_hight(void);
+	extern void ads1148_hal_cs_0_set_low(void);
+	
+	extern void ads1148_hal_start_0_set_hight(void);
+	extern void ads1148_hal_start_0_set_low(void);
+	
+	extern uint16_t ads1148_hal_drdy_0_get(void);
+    //extern void ads1148_hal_port_deinit_chip0(void);
+	extern void ads1148_hal_port_init_chip0(void);
+	//chip1
+	extern void ads1148_hal_cs_1_set_hight(void);
+	extern void ads1148_hal_cs_1_set_low(void);
+	
+	extern void ads1148_hal_start_1_set_hight(void);
+	extern void ads1148_hal_start_1_set_low(void);
+	
+	extern uint16_t ads1148_hal_drdy_1_get(void);
+	extern void ads1148_hal_port_init_chip1(void);
+    //
+    extern uint8_t ads1148_hal_write_read_byte(uint8_t x);
+	
 #ifdef __cplusplus
 	}
 #endif

@@ -1,5 +1,5 @@
-build/default/debug/src/driver/lcd.o:  \
-src/driver/lcd.c  \
+build/default/debug/src/driver/ads1148_hal.o:  \
+src/driver/ads1148_hal.c  \
  src/driver/drivers.h  \
 src/driver/../../mcc_generated_files/mcc.h  \
  src/driver/../../mcc_generated_files/pin_manager.h  \
@@ -12,5 +12,5 @@ src/driver/gpio_config.h  \
 src/driver/lcd.h  \
 src/driver/ads1148_hal.h  \
  src/driver/ads1148.h  \
-src/driver/lcd_code_table.h  \
- src/driver/lcd_code_table_ex.h 
+src/driver/../soc/delay.h  \
+ src/driver/../soc/../../mcc_generated_files/mcc.h 

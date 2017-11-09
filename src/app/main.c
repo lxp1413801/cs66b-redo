@@ -54,12 +54,16 @@ int main(void)
     uint8_t i=0,j=0;
     // initialize the device
     SYSTEM_Initialize();
+
     lcd_init();
     lcd_disp_clear_buffer();
     lcd_show_string((uint8_t*)"77777777");
     lcd_show_string_sm((uint8_t*)"123");
     lcd_show_string_ex((uint8_t*)"123");
     lcd_disp_refresh();
+	asm("NOP");
+	ads1148_init_all();
+	asm("NOP");    
     while (1)
     {
         // Add your application code

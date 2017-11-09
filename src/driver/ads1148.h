@@ -234,7 +234,7 @@
 			uint8_t	vrefcon:2;
 			uint8_t clkstat:1;
 		}bits;
-	}st_ads1148RegMUX1,ads1146RegMUX8_t;
+	}st_ads1148RegMUX1,ads1148RegMUX1_t;
 	
 	//SYS0—System Control Register 0 (offset = 03h) [reset = 00h]
 	#define ADS1148_SYS0_DR_5SPS	0x00
@@ -306,16 +306,45 @@
 		}bits;
 	}st_ads1148RegIDAC1,ads1148RegIDAC1_t;
 	#endif
+
+	typedef union{
+		uint8_t buf[16];
+		struct{
+			ads1148RegMUX0_t 	regMUX0;
+			ads1148RegVBIAS_t	regVBIAS;
+			ads1148RegMUX1_t	regMUX1;
+			ads1148RegSYS0_t	regSYS0;
+			uint8_t	regOFC0;
+			uint8_t	regOFC1;
+			uint8_t	regOFC2;
+			uint8_t	regFSC0;
+			uint8_t	regFSC1;
+			uint8_t	regFSC2;
+			ads1148RegIDAC0_t	regIDAC0;
+			ads1148RegIDAC1_t	regIDAC1;
+			uint8_t regGPIOCFG;
+			uint8_t regGPIODIR;
+			uint8_t regGPIODAT;
+		}regs;
+	}st_ads1148Reg,ads1148Reg_t;
 	
 	typedef struct{
+		
 		void (*pins_init)(void);
 		void (*pins_deinit)(void);
+
+		void (*pins_sck_set_low)(void);
+		void (*pins_sck_set_hight)(void);
+		
+		//void (*pins_din_set_low)(void);
+		//void (*pins_din_set_hight)(void);
+        uint16_t (*pins_din_get)(void);
+
+		void (*pins_dout_set_low)(void);
+		void (*pins_dout_set_hight)(void);
 		
 		void (*pins_cs_set_low)(void);
 		void (*pins_cs_set_hight)(void);
-		
-		//void (*pins_reset_set_hight)(void);
-		//void (*pins_reset_set_low)(void);
 		
 		void (*pins_start_set_hight)(void);
 		void (*pins_start_set_low)(void);
@@ -323,15 +352,18 @@
 		void (*pins_drdy_mode_in)(void);
 		uint16_t (*pins_drdy_get)(void);
 		
+		/*
 		void (*pins_drdy_mode_out)(void);
 		void (*pins_drdy_set_hight)(void);
 		void (*pins_drdy_set_low)(void);
-		
+		*/
 		uint8_t (*ads1148_write_read_via_spi)(uint8_t);	
+		ads1148Reg_t ads1148Regs;
         uint8_t chipNm;
 	}st_ads1148Obj,ads1148Obj_t;
 	
-	extern ads1148Obj_t adsii48Chip0,adsii48Chip1;
+	extern ads1148Obj_t ads1148Chip0,ads1148Chip1;
+	extern void ads1148_init_all(void);
 	
 #ifdef __cplusplus
 	}
