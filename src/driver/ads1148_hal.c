@@ -1,11 +1,16 @@
 #include "drivers.h"
+#include "ads1148.h"
 #include "../soc/delay.h"
 //rd10
 void ads1148_hal_sck_mod_out(void)
 {
     set_port_mode_dig(ADS1148_SCK_PORT,ADS1148_SCK_PIN);
 	set_port_mode_out(ADS1148_SCK_PORT,ADS1148_SCK_PIN);
+	#if ADS1148_SCK_IDLE_STATUE==0
+	set_port_value_low(ADS1148_SCK_PORT,ADS1148_SCK_PIN);
+	#else
 	set_port_value_hight(ADS1148_SCK_PORT,ADS1148_SCK_PIN);
+	#endif
 }
 
 void ads1148_hal_sck_set_hight(void)
@@ -92,6 +97,7 @@ uint16_t ads1148_hal_drdy_0_get(void)
 {
 	uint16_t t16;
 	t16=get_port_value(ADS1148_DRDY_0_PORT,ADS1148_DRDY_0_PIN);
+    asm("nop");
 	return t16;
 }
 
@@ -285,31 +291,9 @@ void ads1148_hal_port_deinit_chip1(void)
 	ads1148_hal_drdy_1_mod_in();	
 }
 /*
-uint8_t ads1148_hal_write_read_byte(uint8_t x)
-{
-	uint8_t i,ret=0;
-	ads1148_hal_sck_set_hight();
-	for(i=0;i<8;i++){
-		if(x&0x80){
-			ads1148_hal_dout_set_hight();
-		}else{
-			ads1148_hal_dout_set_low();
-		}
-        x<<=1;
-		ads1148_hal_sck_set_low();
-		ret<<=1;
-		ads1148_hal_sck_set_hight();
-		asm("nop");
-		asm("nop");
-		if(ads1148_hal_din_get()){
-			ret|=1;
-		}
-	}
-	ads1148_hal_sck_set_hight();
-	return ret;
-}
+
 */
-extern void delay_us(uint16_t us);
+#if( ADS1148_SCK_IDLE_STATUE == 0)
 uint8_t ads1148_hal_write_read_byte(uint8_t x)
 {
 	uint8_t i,ret=0;
@@ -330,8 +314,42 @@ uint8_t ads1148_hal_write_read_byte(uint8_t x)
 		x<<=1;
 		ads1148_hal_sck_set_low();
 	}
-	//ads1148_hal_sck_set_low();
+	ads1148_hal_sck_set_low();
 	return ret;
 }
-
+#else
+uint8_t ads1148_hal_write_read_byte(uint8_t x)
+{
+	uint8_t i,ret=0;
+	ads1148_hal_sck_set_hight();
+	for(i=0;i<8;i++){
+		if(x&0x80){
+			ads1148_hal_dout_set_hight();
+		}else{
+			ads1148_hal_dout_set_low();
+		}
+        x<<=1;
+		ads1148_hal_sck_set_low();
+		ret<<=1;
+		ads1148_hal_sck_set_hight();
+		if(ads1148_hal_din_get()){
+			ret|=1;
+		}
+	}
+	ads1148_hal_sck_set_hight();
+	return ret;
+}
+#endif	
+void ads1148_hal_pwr_off(void)
+{
+    set_port_mode_dig(ADS1148_PWR_PORT,ADS1148_PWR_PIN);
+	set_port_mode_out(ADS1148_PWR_PORT,ADS1148_PWR_PIN);
+	set_port_value_hight(ADS1148_PWR_PORT,ADS1148_PWR_PIN);	
+}
+void ads1148_hal_pwr_on(void)
+{
+    set_port_mode_dig(ADS1148_PWR_PORT,ADS1148_PWR_PIN);
+	set_port_mode_out(ADS1148_PWR_PORT,ADS1148_PWR_PIN);
+	set_port_value_low(ADS1148_PWR_PORT,ADS1148_PWR_PIN);	
+}
 

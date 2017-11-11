@@ -23,13 +23,16 @@
 	//SYSGCAL System gain calibration 0110 0001 (61h)
 	//SELFOCAL Self offset calibration 0110 0010 (62h)
 	//Restricted Restricted command. Never send to the device. 1111 0001 (F1h)
+	#ifndef ADS1148_SCK_IDLE_STATUE	
+	#define ADS1148_SCK_IDLE_STATUE 0
+	#endif
 	
 	#define ADS1148_CMD_WAKEUP 		0x00
 	#define ADS1148_CMD_SLEEP		0x03
 	#define ADS1148_CMD_SYNC		0x05
 	#define ADS1148_CMD_RESET		0x07
 	#define ADS1148_CMD_NOP			0xff
-	#define ADS1148_CMD_RDATA		0x13
+	#define ADS1148_CMD_RDATA		0x12
 	#define ADS1148_CMD_RDATAC		0x15
 	#define ADS1148_CMD_SDATAC		0x17
 	#define ADS1148_CMD_RREG		0x20
@@ -364,6 +367,7 @@
 	
 	extern ads1148Obj_t ads1148Chip0,ads1148Chip1;
 	extern void ads1148_init_all(void);
+	extern void ads1148_test(void);
 	
 #ifdef __cplusplus
 	}

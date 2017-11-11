@@ -64,6 +64,7 @@ int main(void)
 	asm("NOP");
 	ads1148_init_all();
 	asm("NOP");    
+    ads1148_test();
     while (1)
     {
         // Add your application code

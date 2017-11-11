@@ -36,7 +36,10 @@
 	//rg2 ADS2-START
 	#define ADS1148_START_1_PIN		PIN2
 	#define ADS1148_START_1_PORT 	portg		
-
+	//#define ADS1148_POR_
+	#define ADS1148_PWR_PIN			PIN9
+	#define ADS1148_PWR_PORT		portg
+	
 	//common pins
 	extern void ads1148_hal_sck_set_hight(void);
 	extern void ads1148_hal_sck_set_low(void);
@@ -64,6 +67,9 @@
 	extern void ads1148_hal_port_init_chip1(void);
     //
     extern uint8_t ads1148_hal_write_read_byte(uint8_t x);
+	//
+	extern void ads1148_hal_pwr_off(void);
+	extern void ads1148_hal_pwr_on(void);
 	
 #ifdef __cplusplus
 	}
