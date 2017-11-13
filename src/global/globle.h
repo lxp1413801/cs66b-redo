@@ -8,6 +8,9 @@
     #include <stdint.h>
 	extern volatile uint32_t globleTickerMs;
 	extern volatile uint32_t globleTickerSec;
+	#ifndef __nop
+		#define __nop() asm("NOP");
+	#endif
 
 #ifdef __cplusplus
 	}

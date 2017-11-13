@@ -11,6 +11,7 @@ extern "C"{
 
 	extern uint32_t  tickerMs;
 	extern uint32_t  tickerSec;    
+    extern uint32_t ticker_ms_get(void);
 #ifdef __cplusplus
 }
 #endif

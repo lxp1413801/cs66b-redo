@@ -1,5 +1,6 @@
 #include "drivers.h"
 #include "../soc/delay.h"
+#include "../soc/ticker.h"
 #include "ads1148.h"
 ads1148Obj_t ads1148Chip0,ads1148Chip1;
 
@@ -314,32 +315,40 @@ void ads1148_stop_convert(ads1148Obj_t* obj)
 void ads1148_waite_convert(ads1148Obj_t* obj)
 {
     while(!(obj->pins_drdy_get())){
-    asm("nop");
+		asm("nop");
     }
     while(obj->pins_drdy_get())
     {
         asm("nop");
     };
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    asm("nop");
 }
 void ads1148_test(void)
 {
+	volatile uint32_t staTm,eclipsTm,convertNum;
     uint16_t t16;
 	ads1148_set_bcs(&ads1148Chip0,ADS1148_BCS_10uA0);
 	ads1148_set_vref(&ads1148Chip0,ADS1148_REFSELT_INREF);
 	ads1148_set_muxcal(&ads1148Chip0,ADS1148_MUXCAL_AVDD_AVSS_DIV_4);
 	ads1148_set_ani_pga(&ads1148Chip0,ADS1148_PGA_1);
+	ads1148_set_data_rate(&ads1148Chip0,ADS1148_SYS0_DR_2000SPS);
     delay_ms(10);
     ads1148_get_all_register(&ads1148Chip0);
     delay_ms(10);
 	ads1148_start_convert(&ads1148Chip0);
     delay_us(5);
-    while(1){
+	staTm=ticker_ms_get();
+    convertNum=0x00ul;
+	while(1){
         ads1148_waite_convert(&ads1148Chip0);
-        delay_us(5);
+        //delay_us(5);
         t16=ads1148_read_data(&ads1148Chip0);
 		asm("nop");
 		asm("nop");
+		eclipsTm=ticker_ms_get()-staTm;
+		convertNum++;		
     }
-	
-	
 }

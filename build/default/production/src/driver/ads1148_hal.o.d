@@ -13,4 +13,6 @@ src/driver/lcd.h  \
 src/driver/ads1148_hal.h  \
  src/driver/ads1148.h  \
 src/driver/../soc/delay.h  \
- src/driver/../soc/../../mcc_generated_files/mcc.h 
+ src/driver/../soc/../../mcc_generated_files/mcc.h  \
+ src/driver/../global/globle.h  \
+ src/driver/../global/../../mcc_generated_files/mcc.h 

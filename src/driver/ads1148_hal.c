@@ -1,7 +1,9 @@
 #include "drivers.h"
 #include "ads1148.h"
 #include "../soc/delay.h"
+#include "../global/globle.h"
 //rd10
+#define __some_nop() __nop();__nop();__nop();
 void ads1148_hal_sck_mod_out(void)
 {
     set_port_mode_dig(ADS1148_SCK_PORT,ADS1148_SCK_PIN);
@@ -299,13 +301,15 @@ uint8_t ads1148_hal_write_read_byte(uint8_t x)
 	uint8_t i,ret=0;
 	//ads1148_hal_sck_set_low();
 	for(i=0;i<8;i++){
-		delay_us(1);
+		//delay_us(1);
+        __some_nop();
 		ret<<=1;
 		ads1148_hal_sck_set_hight();
 		if(ads1148_hal_din_get()){
 			ret|=1;
 		}
-		delay_us(1);
+		//delay_us(1);
+        __some_nop();
 		if(x&0x80){
 			ads1148_hal_dout_set_hight();
 		}else{
