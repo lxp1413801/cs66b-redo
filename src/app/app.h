@@ -7,7 +7,9 @@
 	#include "../../mcc_generated_files/mcc.h"
     #include <stdint.h>
 	#include "main.h"
-
+	#include "event.h"
+	#include "sample.h"
+	
 #ifdef __cplusplus
 	}
 #endif

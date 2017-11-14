@@ -70,7 +70,7 @@
 #ifndef FREERTOS_CONFIG_H
 #define FREERTOS_CONFIG_H
 
-#include <p24FJ128GA010.h>
+#include <p24FJ128GA310.h>
 
 /*-----------------------------------------------------------
  * Application specific definitions.
@@ -88,7 +88,7 @@
 #define configUSE_IDLE_HOOK				1
 #define configUSE_TICK_HOOK				0
 #define configTICK_RATE_HZ				( ( TickType_t ) 1000 )
-#define configCPU_CLOCK_HZ				( ( unsigned long ) 16000000 )  /* Fosc / 2 */
+#define configCPU_CLOCK_HZ				( ( unsigned long ) 5529600 )  /* Fosc / 2 */
 #define configMAX_PRIORITIES			( 4 )
 #define configMINIMAL_STACK_SIZE		( 115 )
 #define configTOTAL_HEAP_SIZE			( ( size_t ) 5120 )
@@ -115,5 +115,10 @@ to exclude the API function. */
 
 
 #define configKERNEL_INTERRUPT_PRIORITY	0x01
+//add by lxp
+#ifndef osDelay__
+    #define osDelay__
+    #define osDelay(ms) vTaskDelay(ms/(1000/configTICK_RATE_HZ))
+#endif
 
 #endif /* FREERTOS_CONFIG_H */

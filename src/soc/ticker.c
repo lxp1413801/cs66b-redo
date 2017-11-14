@@ -1,8 +1,9 @@
 #include <stdint.h>
 #include "ticker.h"
-
+#include "../app/event.h"
 uint32_t  tickerMs=0x00ul;
 uint32_t  tickerSec=0x00ul;
+uint32_t  tickerMsPer10Ms=0x00ul;
 
 void  TMR1_CallBack(void)
 {
@@ -32,3 +33,21 @@ void ticker_ms_delay(uint16_t ms)
 		tm=ticker_ms_get();
 	}
 }
+//
+void TMR2_CallBack(void)
+{
+    tickerMsPer10Ms++;
+    event |=  flg_TICKER_10MS_PER;
+}
+
+uint32_t ticker_10ms_per_get(void)
+{
+    return tickerMsPer10Ms;
+}
+
+void ticker_10ms_per_set(uint32_t tick)
+{
+    tickerMsPer10Ms=tick;
+}
+
+

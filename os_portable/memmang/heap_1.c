@@ -111,8 +111,8 @@ static size_t xNextFreeByte = ( size_t ) 0;
 void *pvPortMalloc( size_t xWantedSize )
 {
 void *pvReturn = NULL;
-static uint8_t *pucAlignedHeap = NULL;
-
+//static uint8_t *pucAlignedHeap = NULL;
+uint8_t *pucAlignedHeap = NULL;
 	/* Ensure that blocks are always aligned to the required number of bytes. */
 	#if( portBYTE_ALIGNMENT != 1 )
 	{

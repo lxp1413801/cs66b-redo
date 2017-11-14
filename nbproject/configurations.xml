@@ -24,11 +24,28 @@
         <itemPath>mcc_generated_files/tmr2.c</itemPath>
         <itemPath>mcc_generated_files/tmr1.c</itemPath>
       </logicalFolder>
+      <logicalFolder name="os_kernel" displayName="os_kernel" projectFiles="true">
+        <itemPath>os_kernel/croutine.c</itemPath>
+        <itemPath>os_kernel/event_groups.c</itemPath>
+        <itemPath>os_kernel/list.c</itemPath>
+        <itemPath>os_kernel/queue.c</itemPath>
+        <itemPath>os_kernel/tasks.c</itemPath>
+        <itemPath>os_kernel/timers.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="os_portable" displayName="os_portable" projectFiles="true">
+        <logicalFolder name="memmang" displayName="memmang" projectFiles="true">
+          <itemPath>os_portable/memmang/heap_2.c</itemPath>
+        </logicalFolder>
+        <itemPath>os_portable/port.c</itemPath>
+        <itemPath>os_portable/portasm_PIC24.S</itemPath>
+      </logicalFolder>
       <logicalFolder name="src" displayName="src" projectFiles="true">
         <logicalFolder name="api" displayName="api" projectFiles="true">
         </logicalFolder>
         <logicalFolder name="app" displayName="app" projectFiles="true">
           <itemPath>src/app/main.c</itemPath>
+          <itemPath>src/app/event.c</itemPath>
+          <itemPath>src/app/sample.c</itemPath>
         </logicalFolder>
         <logicalFolder name="configs" displayName="configs" projectFiles="true">
         </logicalFolder>
@@ -62,6 +79,8 @@
   </logicalFolder>
   <sourceRootList>
     <Elem>src</Elem>
+    <Elem>os_portable</Elem>
+    <Elem>os_kernel</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -209,7 +228,8 @@
         <property key="warn-section-align" value="false"/>
       </C30-LD>
       <C30Global>
-        <property key="common-include-directories" value=""/>
+        <property key="common-include-directories"
+                  value="os_configs;os_kernel\include;os_portable;os_portable\memmang"/>
         <property key="dual-boot-partition" value="0"/>
         <property key="fast-math" value="false"/>
         <property key="generic-16-bit" value="false"/>
