@@ -24,21 +24,6 @@
         <itemPath>mcc_generated_files/tmr2.c</itemPath>
         <itemPath>mcc_generated_files/tmr1.c</itemPath>
       </logicalFolder>
-      <logicalFolder name="os_kernel" displayName="os_kernel" projectFiles="true">
-        <itemPath>os_kernel/croutine.c</itemPath>
-        <itemPath>os_kernel/event_groups.c</itemPath>
-        <itemPath>os_kernel/list.c</itemPath>
-        <itemPath>os_kernel/queue.c</itemPath>
-        <itemPath>os_kernel/tasks.c</itemPath>
-        <itemPath>os_kernel/timers.c</itemPath>
-      </logicalFolder>
-      <logicalFolder name="os_portable" displayName="os_portable" projectFiles="true">
-        <logicalFolder name="memmang" displayName="memmang" projectFiles="true">
-          <itemPath>os_portable/memmang/heap_2.c</itemPath>
-        </logicalFolder>
-        <itemPath>os_portable/port.c</itemPath>
-        <itemPath>os_portable/portasm_PIC24.S</itemPath>
-      </logicalFolder>
       <logicalFolder name="src" displayName="src" projectFiles="true">
         <logicalFolder name="api" displayName="api" projectFiles="true">
         </logicalFolder>
@@ -92,7 +77,7 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>PICkit3PlatformTool</platformTool>
         <languageToolchain>XC16</languageToolchain>
-        <languageToolchainVersion>1.33</languageToolchainVersion>
+        <languageToolchainVersion>1.30</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <compileType>

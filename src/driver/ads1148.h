@@ -32,7 +32,7 @@
 	#define ADS1148_CMD_SYNC		0x05
 	#define ADS1148_CMD_RESET		0x07
 	#define ADS1148_CMD_NOP			0xff
-	#define ADS1148_CMD_RDATA		0x12
+	#define ADS1148_CMD_RDATA		0x13
 	#define ADS1148_CMD_RDATAC		0x15
 	#define ADS1148_CMD_SDATAC		0x17
 	#define ADS1148_CMD_RREG		0x20
@@ -248,7 +248,7 @@
 	#define ADS1148_SYS0_DR_160SPS	0x05
 	#define ADS1148_SYS0_DR_320SPS	0x06
 	#define ADS1148_SYS0_DR_640SPS	0x07
-	#define ADS1148_SYS0_DR_1000SPS	0x08l
+	#define ADS1148_SYS0_DR_1000SPS	0x08
 	#define ADS1148_SYS0_DR_2000SPS	0x09
 	
 	#define ADS1148_PGA_1			0x00
@@ -360,14 +360,27 @@
 		void (*pins_drdy_set_hight)(void);
 		void (*pins_drdy_set_low)(void);
 		*/
-		uint8_t (*ads1148_write_read_via_spi)(uint8_t);	
+		volatile uint8_t (*ads1148_write_read_via_spi)(uint8_t);	
 		ads1148Reg_t ads1148Regs;
+		float  fullFactor;
         uint8_t chipNm;
+		bool inited;
 	}st_ads1148Obj,ads1148Obj_t;
 	
 	extern ads1148Obj_t ads1148Chip0,ads1148Chip1;
+	extern void ads1148_init_all_obj(void);
+	extern void ads1148_init_chip_regs(ads1148Obj_t* obj);
+	
+	extern void ads1148_init_all_obj(void);
 	extern void ads1148_init_all(void);
 	extern void ads1148_test(void);
+    
+    extern void ads1148_start_convert(ads1148Obj_t* obj);
+    extern void ads1148_waite_convert(ads1148Obj_t* obj);
+    extern void ads1148_stop_convert(ads1148Obj_t* obj);
+    extern volatile uint16_t ads1148_read_data(ads1148Obj_t* obj);
+    
+    
 	
 #ifdef __cplusplus
 	}

@@ -31,14 +31,4 @@ src/app/../includes/../api/api.h  \
  src/app/../includes/../app/../../mcc_generated_files/mcc.h  \
  src/app/../includes/../app/main.h  \
 src/app/../includes/../app/event.h  \
- src/app/../includes/../app/sample.h  \
- src/app/../includes/../../os_configs/FreeRTOSConfig.h  \
- src/app/../includes/../../os_kernel/include/FreeRTOS.h  \
- os_configs/FreeRTOSConfig.h  \
- src/app/../includes/../../os_kernel/include/projdefs.h  \
- src/app/../includes/../../os_kernel/include/portable.h  \
- src/app/../includes/../../os_kernel/include/deprecated_definitions.h  \
- os_portable/portmacro.h  \
- src/app/../includes/../../os_kernel/include/mpu_wrappers.h  \
- src/app/../includes/../../os_kernel/include/task.h  \
- src/app/../includes/../../os_kernel/include/list.h 
+ src/app/../includes/../app/sample.h 

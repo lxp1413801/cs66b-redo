@@ -10,9 +10,9 @@ CND_CONF=default
 CND_DISTDIR=dist
 TMPDIR=build/${CND_CONF}/${IMAGE_TYPE}/tmp-packaging
 TMPDIRNAME=tmp-packaging
-OUTPUT_PATH=dist/${CND_CONF}/${IMAGE_TYPE}/cs66b-redo.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
-OUTPUT_BASENAME=cs66b-redo.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
-PACKAGE_TOP_DIR=cs66b-redo/
+OUTPUT_PATH=dist/${CND_CONF}/${IMAGE_TYPE}/cs66b.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+OUTPUT_BASENAME=cs66b.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+PACKAGE_TOP_DIR=cs66b.x/
 
 # Functions
 function checkReturnCode
@@ -57,15 +57,15 @@ mkdir -p ${TMPDIR}
 
 # Copy files and create directories and links
 cd "${TOP}"
-makeDirectory ${TMPDIR}/cs66b-redo/bin
+makeDirectory ${TMPDIR}/cs66b.x/bin
 copyFileToTmpDir "${OUTPUT_PATH}" "${TMPDIR}/${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}" 0755
 
 
 # Generate tar file
 cd "${TOP}"
-rm -f ${CND_DISTDIR}/${CND_CONF}/package/cs66b-redo.tar
+rm -f ${CND_DISTDIR}/${CND_CONF}/package/cs66b.x.tar
 cd ${TMPDIR}
-tar -vcf ../../../../${CND_DISTDIR}/${CND_CONF}/package/cs66b-redo.tar *
+tar -vcf ../../../../${CND_DISTDIR}/${CND_CONF}/package/cs66b.x.tar *
 checkReturnCode
 
 # Cleanup
