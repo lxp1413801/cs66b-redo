@@ -101,11 +101,11 @@ section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200               0x1f6           0x2f1  (753)
 .const                       0x3f6               0x166           0x219  (537)
-.text                        0x55c              0x34e0          0x4f50  (20304)
-.dinit                      0x3a3c                0x54            0x7e  (126)
-.text                       0x3a90                0x7c            0xba  (186)
+.text                        0x55c              0x34a4          0x4ef6  (20214)
+.dinit                      0x3a00                0x5a            0x87  (135)
+.text                       0x3a5a                0xfa           0x177  (375)
 
-                 Total program memory used (bytes):         0x5592  (21906) 16%
+                 Total program memory used (bytes):         0x55fe  (22014) 16%
 
 
 Ivt Memory  [Origin = 0x4, Length = 0xfc]
@@ -123,10 +123,10 @@ section                    address      alignment gaps    total length  (dec)
 -------                    -------      --------------    -------------------
 .nbss                        0x800                   0            0x34  (52)
 .ndata                       0x834                   0             0x4  (4)
-.nbss                        0x838                   0             0x2  (2)
-.bss                         0x83a                   0          0x14f0  (5360)
+.nbss                        0x838                   0             0x4  (4)
+.bss                         0x83c                   0          0x14f0  (5360)
 
-                 Total data memory used (bytes):         0x152a  (5418) 66%
+                 Total data memory used (bytes):         0x152c  (5420) 66%
 
 
 Dynamic Memory Usage
@@ -134,9 +134,9 @@ Dynamic Memory Usage
 region                     address                      maximum length  (dec)
 ------                     -------                      ---------------------
 heap                             0                                   0  (0)
-stack                       0x1d2a                               0xad6  (2774)
+stack                       0x1d2c                               0xad4  (2772)
 
-                 Maximum dynamic memory (bytes):          0xad6  (2774)
+                 Maximum dynamic memory (bytes):          0xad4  (2772)
 
 
 External Symbols in Data Memory (by address):
@@ -147,17 +147,19 @@ External Symbols in Data Memory (by address):
                     0x0824                  _tickerMsPer10Ms
                     0x0836                  _uxCriticalNesting
                     0x0838                  _event
-                    0x1c3a                  _ads1148Chip0
-                    0x1c68                  _ads1148Chip1
-                    0x1ce6                  _pLCD
+                    0x083a                  _sampleIndex
+                    0x1c3c                  _ads1148Chip0
+                    0x1c6a                  _ads1148Chip1
+                    0x1ce8                  _pLCD
 
 External Symbols in Data Memory (by name):
 
-                    0x1c3a                  _ads1148Chip0
-                    0x1c68                  _ads1148Chip1
+                    0x1c3c                  _ads1148Chip0
+                    0x1c6a                  _ads1148Chip1
                     0x0838                  _event
-                    0x1ce6                  _pLCD
+                    0x1ce8                  _pLCD
                     0x0800                  _pxCurrentTCB
+                    0x083a                  _sampleIndex
                     0x081c                  _tickerMs
                     0x0824                  _tickerMsPer10Ms
                     0x0820                  _tickerSec
@@ -400,23 +402,27 @@ External Symbols in Program Memory (by address):
                   0x0038ec                  _back_night_on
                   0x003908                  _back_night_off
                   0x003926                  _PIN_MANAGER_Initialize
-                  0x003994                  _vPortYield
-                  0x0039e8                  _delay_us
-                  0x003a1a                  _delay_ms
-                  0x003a90                  _SYSTEM_Initialize
-                  0x003aa2                  _OSCILLATOR_Initialize
-                  0x003abe                  _thread_sample
-                  0x003acc                  _thread_sample_void
-                  0x003ae8                  _INTERRUPT_Initialize
+                  0x003994                  _samlpe_chip0_channle_diff_press
+                  0x00399a                  _samlpe_chip0_channle_press
+                  0x0039a0                  _samlpe_chip0_channle_temperature
+                  0x0039ac                  _sample_fast_mode
+                  0x0039d6                  _thread_sample
+                  0x0039e4                  _thread_sample_void
+                  0x003a5a                  _vPortYield
+                  0x003aae                  _delay_us
+                  0x003ae0                  _delay_ms
+                  0x003b02                  _SYSTEM_Initialize
+                  0x003b14                  _OSCILLATOR_Initialize
+                  0x003b30                  _INTERRUPT_Initialize
 
 External Symbols in Program Memory (by name):
 
-                  0x003ae8                  _INTERRUPT_Initialize
+                  0x003b30                  _INTERRUPT_Initialize
                   0x0003f6                  _LCDDigitalIndexTable
                   0x000421                  _LCDDigitalTable
                   0x00048a                  _LCDDigitalTableEx
                   0x00044b                  _LCDDigitalTableIndexEx
-                  0x003aa2                  _OSCILLATOR_Initialize
+                  0x003b14                  _OSCILLATOR_Initialize
                   0x003926                  _PIN_MANAGER_Initialize
                   0x0030e2                  _RTCC_BCDTimeGet
                   0x00317c                  _RTCC_BCDTimeSet
@@ -424,7 +430,7 @@ External Symbols in Program Memory (by name):
                   0x002fac                  _RTCC_TimeGet
                   0x002f96                  _RTCC_TimeReset
                   0x00305e                  _RTCC_TimeSet
-                  0x003a90                  _SYSTEM_Initialize
+                  0x003b02                  _SYSTEM_Initialize
                   0x003818                  _TMR1_CallBack
                   0x0037c0                  _TMR1_Counter16BitGet
                   0x0037ae                  _TMR1_Counter16BitSet
@@ -521,8 +527,8 @@ External Symbols in Program Memory (by name):
                   0x0026cc                  _ads1148_write_register
                   0x003908                  _back_night_off
                   0x0038ec                  _back_night_on
-                  0x003a1a                  _delay_ms
-                  0x0039e8                  _delay_us
+                  0x003ae0                  _delay_ms
+                  0x003aae                  _delay_us
                   0x0038d0                  _kz_vadd_off
                   0x0038b2                  _kz_vadd_on
                   0x0018a6                  _lcd_bl_init
@@ -599,10 +605,14 @@ External Symbols in Program Memory (by name):
                   0x001e6c                  _pcTaskGetName
                   0x003220                  _pvPortMalloc
                   0x00339a                  _pxPortInitialiseStack
+                  0x003994                  _samlpe_chip0_channle_diff_press
+                  0x00399a                  _samlpe_chip0_channle_press
+                  0x0039a0                  _samlpe_chip0_channle_temperature
+                  0x0039ac                  _sample_fast_mode
                   0x0035fe                  _thread_main
                   0x003614                  _thread_main_create
-                  0x003abe                  _thread_sample
-                  0x003acc                  _thread_sample_void
+                  0x0039d6                  _thread_sample
+                  0x0039e4                  _thread_sample_void
                   0x00389a                  _ticker_10ms_per_get
                   0x0038a4                  _ticker_10ms_per_set
                   0x003842                  _ticker_ms_delay
@@ -623,7 +633,7 @@ External Symbols in Program Memory (by name):
                   0x0034ac                  _vPortExitCritical
                   0x00330a                  _vPortFree
                   0x00336a                  _vPortInitialiseBlocks
-                  0x003994                  _vPortYield
+                  0x003a5a                  _vPortYield
                   0x001af0                  _vTaskDelay
                   0x001a74                  _vTaskDelayUntil
                   0x001d76                  _vTaskEndScheduler
@@ -771,7 +781,7 @@ __CONFIG1
 .comment
  *(.comment)
 
-.debug_info       0x000000       0xc456
+.debug_info       0x000000       0xc548
  *(.debug_info)
  .debug_info      0x000000        0x7df build/default/production/mcc_generated_files/rtcc.o
  .debug_info      0x0007df        0x5f8 build/default/production/mcc_generated_files/pin_manager.o
@@ -790,19 +800,19 @@ __CONFIG1
  .debug_info      0x0077c9         0x7b build/default/production/os_portable/portasm_PIC24.o
  .debug_info      0x007844        0x35d build/default/production/src/app/main.o
  .debug_info      0x007ba1        0x153 build/default/production/src/app/event.o
- .debug_info      0x007cf4        0x1f7 build/default/production/src/app/sample.o
- .debug_info      0x007eeb        0x2c4 build/default/production/src/depend/crc16.o
- .debug_info      0x0081af        0x564 build/default/production/src/depend/m_string.o
- .debug_info      0x008713       0x1b69 build/default/production/src/driver/lcd.o
- .debug_info      0x00a27c        0x254 build/default/production/src/driver/gpio.o
- .debug_info      0x00a4d0       0x10a2 build/default/production/src/driver/ads1148.o
- .debug_info      0x00b572        0x921 build/default/production/src/driver/ads1148_hal.o
- .debug_info      0x00be93        0x169 build/default/production/src/global/globle.o
- .debug_info      0x00bffc        0x175 build/default/production/src/soc/delay.o
- .debug_info      0x00c171        0x2e5 build/default/production/src/soc/ticker.o
+ .debug_info      0x007cf4        0x2e9 build/default/production/src/app/sample.o
+ .debug_info      0x007fdd        0x2c4 build/default/production/src/depend/crc16.o
+ .debug_info      0x0082a1        0x564 build/default/production/src/depend/m_string.o
+ .debug_info      0x008805       0x1b69 build/default/production/src/driver/lcd.o
+ .debug_info      0x00a36e        0x254 build/default/production/src/driver/gpio.o
+ .debug_info      0x00a5c2       0x10a2 build/default/production/src/driver/ads1148.o
+ .debug_info      0x00b664        0x921 build/default/production/src/driver/ads1148_hal.o
+ .debug_info      0x00bf85        0x169 build/default/production/src/global/globle.o
+ .debug_info      0x00c0ee        0x175 build/default/production/src/soc/delay.o
+ .debug_info      0x00c263        0x2e5 build/default/production/src/soc/ticker.o
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev     0x000000       0x1afa
+.debug_abbrev     0x000000       0x1b23
  *(.debug_abbrev)
  .debug_abbrev    0x000000        0x199 build/default/production/mcc_generated_files/rtcc.o
  .debug_abbrev    0x000199         0x6a build/default/production/mcc_generated_files/pin_manager.o
@@ -821,18 +831,18 @@ __CONFIG1
  .debug_abbrev    0x0010f9         0x14 build/default/production/os_portable/portasm_PIC24.o
  .debug_abbrev    0x00110d         0xce build/default/production/src/app/main.o
  .debug_abbrev    0x0011db         0x44 build/default/production/src/app/event.o
- .debug_abbrev    0x00121f         0x7d build/default/production/src/app/sample.o
- .debug_abbrev    0x00129c         0xbe build/default/production/src/depend/crc16.o
- .debug_abbrev    0x00135a         0xe4 build/default/production/src/depend/m_string.o
- .debug_abbrev    0x00143e        0x1f0 build/default/production/src/driver/lcd.o
- .debug_abbrev    0x00162e         0x59 build/default/production/src/driver/gpio.o
- .debug_abbrev    0x001687        0x223 build/default/production/src/driver/ads1148.o
- .debug_abbrev    0x0018aa         0xcd build/default/production/src/driver/ads1148_hal.o
- .debug_abbrev    0x001977         0x44 build/default/production/src/global/globle.o
- .debug_abbrev    0x0019bb         0x67 build/default/production/src/soc/delay.o
- .debug_abbrev    0x001a22         0xd8 build/default/production/src/soc/ticker.o
+ .debug_abbrev    0x00121f         0xa6 build/default/production/src/app/sample.o
+ .debug_abbrev    0x0012c5         0xbe build/default/production/src/depend/crc16.o
+ .debug_abbrev    0x001383         0xe4 build/default/production/src/depend/m_string.o
+ .debug_abbrev    0x001467        0x1f0 build/default/production/src/driver/lcd.o
+ .debug_abbrev    0x001657         0x59 build/default/production/src/driver/gpio.o
+ .debug_abbrev    0x0016b0        0x223 build/default/production/src/driver/ads1148.o
+ .debug_abbrev    0x0018d3         0xcd build/default/production/src/driver/ads1148_hal.o
+ .debug_abbrev    0x0019a0         0x44 build/default/production/src/global/globle.o
+ .debug_abbrev    0x0019e4         0x67 build/default/production/src/soc/delay.o
+ .debug_abbrev    0x001a4b         0xd8 build/default/production/src/soc/ticker.o
 
-.debug_line       0x000000       0x2372
+.debug_line       0x000000       0x2381
  *(.debug_line)
  .debug_line      0x000000        0x182 build/default/production/mcc_generated_files/rtcc.o
  .debug_line      0x000182        0x11d build/default/production/mcc_generated_files/pin_manager.o
@@ -851,18 +861,18 @@ __CONFIG1
  .debug_line      0x0014d1         0x71 build/default/production/os_portable/portasm_PIC24.o
  .debug_line      0x001542        0x137 build/default/production/src/app/main.o
  .debug_line      0x001679         0x7c build/default/production/src/app/event.o
- .debug_line      0x0016f5         0xe4 build/default/production/src/app/sample.o
- .debug_line      0x0017d9         0xa6 build/default/production/src/depend/crc16.o
- .debug_line      0x00187f        0x138 build/default/production/src/depend/m_string.o
- .debug_line      0x0019b7        0x398 build/default/production/src/driver/lcd.o
- .debug_line      0x001d4f         0xf6 build/default/production/src/driver/gpio.o
- .debug_line      0x001e45        0x18a build/default/production/src/driver/ads1148.o
- .debug_line      0x001fcf        0x1b2 build/default/production/src/driver/ads1148_hal.o
- .debug_line      0x002181         0x80 build/default/production/src/global/globle.o
- .debug_line      0x002201         0xa3 build/default/production/src/soc/delay.o
- .debug_line      0x0022a4         0xce build/default/production/src/soc/ticker.o
+ .debug_line      0x0016f5         0xf3 build/default/production/src/app/sample.o
+ .debug_line      0x0017e8         0xa6 build/default/production/src/depend/crc16.o
+ .debug_line      0x00188e        0x138 build/default/production/src/depend/m_string.o
+ .debug_line      0x0019c6        0x398 build/default/production/src/driver/lcd.o
+ .debug_line      0x001d5e         0xf6 build/default/production/src/driver/gpio.o
+ .debug_line      0x001e54        0x18a build/default/production/src/driver/ads1148.o
+ .debug_line      0x001fde        0x1b2 build/default/production/src/driver/ads1148_hal.o
+ .debug_line      0x002190         0x80 build/default/production/src/global/globle.o
+ .debug_line      0x002210         0xa3 build/default/production/src/soc/delay.o
+ .debug_line      0x0022b3         0xce build/default/production/src/soc/ticker.o
 
-.debug_frame      0x000000       0x2334
+.debug_frame      0x000000       0x23a4
  *(.debug_frame)
  .debug_frame     0x000000        0x132 build/default/production/mcc_generated_files/rtcc.o
  .debug_frame     0x000132         0x30 build/default/production/mcc_generated_files/pin_manager.o
@@ -878,17 +888,17 @@ __CONFIG1
  .debug_frame     0x000e6c         0xa0 build/default/production/os_portable/memmang/heap_2.o
  .debug_frame     0x000f0c        0x100 build/default/production/os_portable/port.o
  .debug_frame     0x00100c         0xbc build/default/production/src/app/main.o
- .debug_frame     0x0010c8         0x4c build/default/production/src/app/sample.o
- .debug_frame     0x001114         0x68 build/default/production/src/depend/crc16.o
- .debug_frame     0x00117c        0x180 build/default/production/src/depend/m_string.o
- .debug_frame     0x0012fc        0x768 build/default/production/src/driver/lcd.o
- .debug_frame     0x001a64         0x84 build/default/production/src/driver/gpio.o
- .debug_frame     0x001ae8        0x2ec build/default/production/src/driver/ads1148.o
- .debug_frame     0x001dd4        0x43c build/default/production/src/driver/ads1148_hal.o
- .debug_frame     0x002210         0x4c build/default/production/src/soc/delay.o
- .debug_frame     0x00225c         0xd8 build/default/production/src/soc/ticker.o
+ .debug_frame     0x0010c8         0xbc build/default/production/src/app/sample.o
+ .debug_frame     0x001184         0x68 build/default/production/src/depend/crc16.o
+ .debug_frame     0x0011ec        0x180 build/default/production/src/depend/m_string.o
+ .debug_frame     0x00136c        0x768 build/default/production/src/driver/lcd.o
+ .debug_frame     0x001ad4         0x84 build/default/production/src/driver/gpio.o
+ .debug_frame     0x001b58        0x2ec build/default/production/src/driver/ads1148.o
+ .debug_frame     0x001e44        0x43c build/default/production/src/driver/ads1148_hal.o
+ .debug_frame     0x002280         0x4c build/default/production/src/soc/delay.o
+ .debug_frame     0x0022cc         0xd8 build/default/production/src/soc/ticker.o
 
-.debug_str        0x000000        0x75b
+.debug_str        0x000000        0x767
  *(.debug_str)
  .debug_str       0x000000         0x57 build/default/production/mcc_generated_files/rtcc.o
  .debug_str       0x000057         0x1c build/default/production/mcc_generated_files/interrupt_manager.o
@@ -902,11 +912,12 @@ __CONFIG1
  .debug_str       0x00049a         0x16 build/default/production/os_portable/memmang/heap_2.o
  .debug_str       0x0004b0         0x37 build/default/production/os_portable/port.o
  .debug_str       0x0004e7         0x2c build/default/production/src/app/main.o
- .debug_str       0x000513         0x14 build/default/production/src/depend/crc16.o
- .debug_str       0x000527          0x9 build/default/production/src/depend/m_string.o
- .debug_str       0x000530        0x1b9 build/default/production/src/driver/lcd.o
- .debug_str       0x0006e9         0x59 build/default/production/src/driver/ads1148.o
- .debug_str       0x000742         0x19 build/default/production/src/soc/ticker.o
+ .debug_str       0x000513          0xc build/default/production/src/app/sample.o
+ .debug_str       0x00051f         0x14 build/default/production/src/depend/crc16.o
+ .debug_str       0x000533          0x9 build/default/production/src/depend/m_string.o
+ .debug_str       0x00053c        0x1b9 build/default/production/src/driver/lcd.o
+ .debug_str       0x0006f5         0x59 build/default/production/src/driver/ads1148.o
+ .debug_str       0x00074e         0x19 build/default/production/src/soc/ticker.o
 
 .debug_loc
  *(.debug_loc)
@@ -915,7 +926,7 @@ __CONFIG1
  *(.debug_macinfo)
 
 .debug_pubnames
-                  0x000000       0x1c96
+                  0x000000       0x1d23
  *(.debug_pubnames)
  .debug_pubnames
                   0x000000         0x96 build/default/production/mcc_generated_files/rtcc.o
@@ -948,25 +959,25 @@ __CONFIG1
  .debug_pubnames
                   0x000bf2         0x1c build/default/production/src/app/event.o
  .debug_pubnames
-                  0x000c0e         0x3b build/default/production/src/app/sample.o
+                  0x000c0e         0xc8 build/default/production/src/app/sample.o
  .debug_pubnames
-                  0x000c49         0x58 build/default/production/src/depend/crc16.o
+                  0x000cd6         0x58 build/default/production/src/depend/crc16.o
  .debug_pubnames
-                  0x000ca1         0xea build/default/production/src/depend/m_string.o
+                  0x000d2e         0xea build/default/production/src/depend/m_string.o
  .debug_pubnames
-                  0x000d8b        0x63e build/default/production/src/driver/lcd.o
+                  0x000e18        0x63e build/default/production/src/driver/lcd.o
  .debug_pubnames
-                  0x0013c9         0x56 build/default/production/src/driver/gpio.o
+                  0x001456         0x56 build/default/production/src/driver/gpio.o
  .debug_pubnames
-                  0x00141f        0x2c7 build/default/production/src/driver/ads1148.o
+                  0x0014ac        0x2c7 build/default/production/src/driver/ads1148.o
  .debug_pubnames
-                  0x0016e6        0x47e build/default/production/src/driver/ads1148_hal.o
+                  0x001773        0x47e build/default/production/src/driver/ads1148_hal.o
  .debug_pubnames
-                  0x001b64         0x39 build/default/production/src/global/globle.o
+                  0x001bf1         0x39 build/default/production/src/global/globle.o
  .debug_pubnames
-                  0x001b9d         0x2c build/default/production/src/soc/delay.o
+                  0x001c2a         0x2c build/default/production/src/soc/delay.o
  .debug_pubnames
-                  0x001bc9         0xcd build/default/production/src/soc/ticker.o
+                  0x001c56         0xcd build/default/production/src/soc/ticker.o
 
 .debug_ranges
  *(.debug_ranges)
@@ -2286,7 +2297,7 @@ LOAD default_isr
 LOAD data_init
 
 .debug_pubtypes
-                  0x000240        0xd80
+                  0x000240        0xd8c
  .debug_pubtypes
                   0x000240         0x9d build/default/production/mcc_generated_files/rtcc.o
  .debug_pubtypes
@@ -2320,98 +2331,98 @@ LOAD data_init
  .debug_pubtypes
                   0x000c93         0x1f build/default/production/src/app/event.o
  .debug_pubtypes
-                  0x000cb2         0x4e build/default/production/src/app/sample.o
+                  0x000cb2         0x5a build/default/production/src/app/sample.o
  .debug_pubtypes
-                  0x000d00         0x2b build/default/production/src/depend/crc16.o
+                  0x000d0c         0x2b build/default/production/src/depend/crc16.o
  .debug_pubtypes
-                  0x000d2b         0x43 build/default/production/src/depend/m_string.o
+                  0x000d37         0x43 build/default/production/src/depend/m_string.o
  .debug_pubtypes
-                  0x000d6e         0xad build/default/production/src/driver/lcd.o
+                  0x000d7a         0xad build/default/production/src/driver/lcd.o
  .debug_pubtypes
-                  0x000e1b         0x1f build/default/production/src/driver/gpio.o
+                  0x000e27         0x1f build/default/production/src/driver/gpio.o
  .debug_pubtypes
-                  0x000e3a         0xf1 build/default/production/src/driver/ads1148.o
+                  0x000e46         0xf1 build/default/production/src/driver/ads1148.o
  .debug_pubtypes
-                  0x000f2b         0x2b build/default/production/src/driver/ads1148_hal.o
+                  0x000f37         0x2b build/default/production/src/driver/ads1148_hal.o
  .debug_pubtypes
-                  0x000f56         0x1f build/default/production/src/global/globle.o
+                  0x000f62         0x1f build/default/production/src/global/globle.o
  .debug_pubtypes
-                  0x000f75         0x1f build/default/production/src/soc/delay.o
+                  0x000f81         0x1f build/default/production/src/soc/delay.o
  .debug_pubtypes
-                  0x000f94         0x2c build/default/production/src/soc/ticker.o
+                  0x000fa0         0x2c build/default/production/src/soc/ticker.o
 
 __c30_signature
-                  0x000fc0         0xd2
+                  0x000fcc         0xd2
  __c30_signature
-                  0x000fc0          0x6 build/default/production/mcc_generated_files/rtcc.o
+                  0x000fcc          0x6 build/default/production/mcc_generated_files/rtcc.o
  __c30_signature
-                  0x000fc6          0x6 build/default/production/mcc_generated_files/pin_manager.o
+                  0x000fd2          0x6 build/default/production/mcc_generated_files/pin_manager.o
  __c30_signature
-                  0x000fcc          0x6 build/default/production/mcc_generated_files/interrupt_manager.o
+                  0x000fd8          0x6 build/default/production/mcc_generated_files/interrupt_manager.o
  __c30_signature
-                  0x000fd2          0x6 build/default/production/mcc_generated_files/mcc.o
+                  0x000fde          0x6 build/default/production/mcc_generated_files/mcc.o
  __c30_signature
-                  0x000fd8          0x6 build/default/production/mcc_generated_files/tmr2.o
+                  0x000fe4          0x6 build/default/production/mcc_generated_files/tmr2.o
  __c30_signature
-                  0x000fde          0x6 build/default/production/mcc_generated_files/tmr1.o
+                  0x000fea          0x6 build/default/production/mcc_generated_files/tmr1.o
  __c30_signature
-                  0x000fe4          0x6 build/default/production/os_kernel/croutine.o
+                  0x000ff0          0x6 build/default/production/os_kernel/croutine.o
  __c30_signature
-                  0x000fea          0x6 build/default/production/os_kernel/event_groups.o
+                  0x000ff6          0x6 build/default/production/os_kernel/event_groups.o
  __c30_signature
-                  0x000ff0          0x6 build/default/production/os_kernel/list.o
+                  0x000ffc          0x6 build/default/production/os_kernel/list.o
  __c30_signature
-                  0x000ff6          0x6 build/default/production/os_kernel/queue.o
+                  0x001002          0x6 build/default/production/os_kernel/queue.o
  __c30_signature
-                  0x000ffc          0x6 build/default/production/os_kernel/tasks.o
+                  0x001008          0x6 build/default/production/os_kernel/tasks.o
  __c30_signature
-                  0x001002          0x6 build/default/production/os_kernel/timers.o
+                  0x00100e          0x6 build/default/production/os_kernel/timers.o
  __c30_signature
-                  0x001008          0x6 build/default/production/os_portable/memmang/heap_2.o
+                  0x001014          0x6 build/default/production/os_portable/memmang/heap_2.o
  __c30_signature
-                  0x00100e          0x6 build/default/production/os_portable/port.o
+                  0x00101a          0x6 build/default/production/os_portable/port.o
  __c30_signature
-                  0x001014          0x6 build/default/production/src/app/main.o
+                  0x001020          0x6 build/default/production/src/app/main.o
  __c30_signature
-                  0x00101a          0x6 build/default/production/src/app/event.o
+                  0x001026          0x6 build/default/production/src/app/event.o
  __c30_signature
-                  0x001020          0x6 build/default/production/src/app/sample.o
+                  0x00102c          0x6 build/default/production/src/app/sample.o
  __c30_signature
-                  0x001026          0x6 build/default/production/src/depend/crc16.o
+                  0x001032          0x6 build/default/production/src/depend/crc16.o
  __c30_signature
-                  0x00102c          0x6 build/default/production/src/depend/m_string.o
+                  0x001038          0x6 build/default/production/src/depend/m_string.o
  __c30_signature
-                  0x001032          0x6 build/default/production/src/driver/lcd.o
+                  0x00103e          0x6 build/default/production/src/driver/lcd.o
  __c30_signature
-                  0x001038          0x6 build/default/production/src/driver/gpio.o
+                  0x001044          0x6 build/default/production/src/driver/gpio.o
  __c30_signature
-                  0x00103e          0x6 build/default/production/src/driver/ads1148.o
+                  0x00104a          0x6 build/default/production/src/driver/ads1148.o
  __c30_signature
-                  0x001044          0x6 build/default/production/src/driver/ads1148_hal.o
+                  0x001050          0x6 build/default/production/src/driver/ads1148_hal.o
  __c30_signature
-                  0x00104a          0x6 build/default/production/src/global/globle.o
+                  0x001056          0x6 build/default/production/src/global/globle.o
  __c30_signature
-                  0x001050          0x6 build/default/production/src/soc/delay.o
+                  0x00105c          0x6 build/default/production/src/soc/delay.o
  __c30_signature
-                  0x001056          0x6 build/default/production/src/soc/ticker.o
+                  0x001062          0x6 build/default/production/src/soc/ticker.o
  __c30_signature
-                  0x00105c          0x6 c:/program files/microchip/xc16/v1.33/bin/bin/../../lib\liblega-pic30-elf.a(crt0_extended24.o)
+                  0x001068          0x6 c:/program files/microchip/xc16/v1.33/bin/bin/../../lib\liblega-pic30-elf.a(crt0_extended24.o)
  __c30_signature
-                  0x001062          0x6 c:/program files/microchip/xc16/v1.33/bin/bin/../../lib\liblega-pic30-elf.a(data_init_24.o)
+                  0x00106e          0x6 c:/program files/microchip/xc16/v1.33/bin/bin/../../lib\liblega-pic30-elf.a(data_init_24.o)
  __c30_signature
-                  0x001068          0x6 c:/program files/microchip/xc16/v1.33/bin/bin/../../lib\libm-elf.a(divsi3.daeo)
+                  0x001074          0x6 c:/program files/microchip/xc16/v1.33/bin/bin/../../lib\libm-elf.a(divsi3.daeo)
  __c30_signature
-                  0x00106e          0x6 c:/program files/microchip/xc16/v1.33/bin/bin/../../lib\libm-elf.a(modsi3.daeo)
+                  0x00107a          0x6 c:/program files/microchip/xc16/v1.33/bin/bin/../../lib\libm-elf.a(modsi3.daeo)
  __c30_signature
-                  0x001074          0x6 c:/program files/microchip/xc16/v1.33/bin/bin/../../lib\libm-elf.a(udivsi3.daeo)
+                  0x001080          0x6 c:/program files/microchip/xc16/v1.33/bin/bin/../../lib\libm-elf.a(udivsi3.daeo)
  __c30_signature
-                  0x00107a          0x6 c:/program files/microchip/xc16/v1.33/bin/bin/../../lib\libm-elf.a(umodsi3.daeo)
+                  0x001086          0x6 c:/program files/microchip/xc16/v1.33/bin/bin/../../lib\libm-elf.a(umodsi3.daeo)
  __c30_signature
-                  0x001080          0x6 c:/program files/microchip/xc16/v1.33/bin/bin/../../lib\liblega-c-elf.a(memcmp.DA_eo)
+                  0x00108c          0x6 c:/program files/microchip/xc16/v1.33/bin/bin/../../lib\liblega-c-elf.a(memcmp.DA_eo)
  __c30_signature
-                  0x001086          0x6 c:/program files/microchip/xc16/v1.33/bin/bin/../../lib\liblega-c-elf.a(memcpy.DA_eo)
+                  0x001092          0x6 c:/program files/microchip/xc16/v1.33/bin/bin/../../lib\liblega-c-elf.a(memcpy.DA_eo)
  __c30_signature
-                  0x00108c          0x6 c:/program files/microchip/xc16/v1.33/bin/bin/../../lib\liblega-c-elf.a(memset.DA_eo)
+                  0x001098          0x6 c:/program files/microchip/xc16/v1.33/bin/bin/../../lib\liblega-c-elf.a(memset.DA_eo)
 
 .nbss               0x0800         0x34
  .nbss              0x0800         0x1c build/default/production/os_kernel/tasks.o
@@ -2428,20 +2439,22 @@ __c30_signature
  .ndata             0x0836          0x2 build/default/production/os_portable/port.o
                     0x0836                  _uxCriticalNesting
 
-.nbss               0x0838          0x2
+.nbss               0x0838          0x4
  .nbss              0x0838          0x2 build/default/production/src/app/event.o
                     0x0838                  _event
+ .nbss              0x083a          0x2 build/default/production/src/app/sample.o
+                    0x083a                  _sampleIndex
 
-.bss                0x083a       0x14f0
- .bss               0x083a       0x1400 build/default/production/os_portable/memmang/heap_2.o
- .bss               0x1c3a         0x5c build/default/production/src/driver/ads1148.o
-                    0x1c3a                  _ads1148Chip0
-                    0x1c68                  _ads1148Chip1
- .bss               0x1c96         0x50 build/default/production/os_kernel/tasks.o
- .bss               0x1ce6         0x40 build/default/production/src/driver/lcd.o
-                    0x1ce6                  _pLCD
- .bss               0x1d26          0x2 build/default/production/mcc_generated_files/tmr2.o
- .bss               0x1d28          0x2 build/default/production/mcc_generated_files/tmr1.o
+.bss                0x083c       0x14f0
+ .bss               0x083c       0x1400 build/default/production/os_portable/memmang/heap_2.o
+ .bss               0x1c3c         0x5c build/default/production/src/driver/ads1148.o
+                    0x1c3c                  _ads1148Chip0
+                    0x1c6a                  _ads1148Chip1
+ .bss               0x1c98         0x50 build/default/production/os_kernel/tasks.o
+ .bss               0x1ce8         0x40 build/default/production/src/driver/lcd.o
+                    0x1ce8                  _pLCD
+ .bss               0x1d28          0x2 build/default/production/mcc_generated_files/tmr2.o
+ .bss               0x1d2a          0x2 build/default/production/mcc_generated_files/tmr1.o
 
 .ivt._RTCCInterrupt
                   0x000090          0x2
@@ -2484,7 +2497,7 @@ __c30_signature
  .const             0x8552          0x8 build/default/production/src/app/sample.o
  .const             0x855a          0x2 build/default/production/os_portable/memmang/heap_2.o
 
-.text             0x00055c       0x34e0
+.text             0x00055c       0x34a4
  .text            0x00055c       0x136c build/default/production/src/driver/lcd.o
                   0x00055c                  _lcd_set_com_seg
                   0x0005dc                  _lcd_disp_level_bar
@@ -2721,21 +2734,25 @@ __c30_signature
                   0x003908                  _back_night_off
  .text            0x003926         0x6e build/default/production/mcc_generated_files/pin_manager.o
                   0x003926                  _PIN_MANAGER_Initialize
- .text            0x003994         0x54 build/default/production/os_portable/portasm_PIC24.o
-                  0x003994                  _vPortYield
- .text            0x0039e8         0x54 build/default/production/src/soc/delay.o
-                  0x0039e8                  _delay_us
-                  0x003a1a                  _delay_ms
+ .text            0x003994         0x6c build/default/production/src/app/sample.o
+                  0x003994                  _samlpe_chip0_channle_diff_press
+                  0x00399a                  _samlpe_chip0_channle_press
+                  0x0039a0                  _samlpe_chip0_channle_temperature
+                  0x0039ac                  _sample_fast_mode
+                  0x0039d6                  _thread_sample
+                  0x0039e4                  _thread_sample_void
 
-.dinit            0x003a3c         0x54
- .dinit           0x003a3c         0x54 data_init
+.dinit            0x003a00         0x5a
+ .dinit           0x003a00         0x5a data_init
 
-.text             0x003a90         0x7c
- .text            0x003a90         0x2e build/default/production/mcc_generated_files/mcc.o
-                  0x003a90                  _SYSTEM_Initialize
-                  0x003aa2                  _OSCILLATOR_Initialize
- .text            0x003abe         0x2a build/default/production/src/app/sample.o
-                  0x003abe                  _thread_sample
-                  0x003acc                  _thread_sample_void
- .text            0x003ae8         0x24 build/default/production/mcc_generated_files/interrupt_manager.o
-                  0x003ae8                  _INTERRUPT_Initialize
+.text             0x003a5a         0xfa
+ .text            0x003a5a         0x54 build/default/production/os_portable/portasm_PIC24.o
+                  0x003a5a                  _vPortYield
+ .text            0x003aae         0x54 build/default/production/src/soc/delay.o
+                  0x003aae                  _delay_us
+                  0x003ae0                  _delay_ms
+ .text            0x003b02         0x2e build/default/production/mcc_generated_files/mcc.o
+                  0x003b02                  _SYSTEM_Initialize
+                  0x003b14                  _OSCILLATOR_Initialize
+ .text            0x003b30         0x24 build/default/production/mcc_generated_files/interrupt_manager.o
+                  0x003b30                  _INTERRUPT_Initialize

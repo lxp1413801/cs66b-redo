@@ -11,7 +11,7 @@ void samlpe_chip0_channle_press(void)
 }
 void samlpe_chip0_channle_temperature(void)
 {
-	
+	__builtin_tblwtl(0,0);
 }
 
 void sample_fast_mode(void)
@@ -21,7 +21,7 @@ void sample_fast_mode(void)
 	switch(t8){
 		case 0x00:samlpe_chip0_channle_diff_press();break;
 		case 0x01:samlpe_chip0_channle_press();break;
-		case 0x03:samlpe_chip0_channle_temperature;break;
+		case 0x03:samlpe_chip0_channle_temperature();break;
 		default:break;
 	}
 }
