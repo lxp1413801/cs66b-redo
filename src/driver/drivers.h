@@ -11,6 +11,8 @@
     #include "lcd.h"
 	#include "ads1148_hal.h"
 	#include "ads1148.h"
+	#include "i2c.h"
+	#include "ex_eeprom.h"
 
 #ifdef __cplusplus
 	}

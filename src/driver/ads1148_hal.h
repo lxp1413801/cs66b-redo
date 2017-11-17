@@ -35,7 +35,7 @@
 	#define ADS1148_CS_1_PORT 	porta		
 	//rg2 ADS2-START
 	#define ADS1148_START_1_PIN		PIN2
-	#define ADS1148_START_1_PORT 	portg		
+	#define ADS1148_START_1_PORT 	porta		
 	//#define ADS1148_POR_
 	#define ADS1148_PWR_PIN			PIN9
 	#define ADS1148_PWR_PORT		portg
@@ -66,7 +66,7 @@
 	extern uint16_t ads1148_hal_drdy_1_get(void);
 	extern void ads1148_hal_port_init_chip1(void);
     //
-    extern uint8_t ads1148_hal_write_read_byte(uint8_t x);
+    extern volatile uint8_t ads1148_hal_write_read_byte(uint8_t x);
 	//
 	extern void ads1148_hal_pwr_off(void);
 	extern void ads1148_hal_pwr_on(void);

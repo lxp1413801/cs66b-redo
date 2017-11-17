@@ -2,6 +2,13 @@
 #include "../soc/delay.h"
 #include "../soc/ticker.h"
 #include "ads1148.h"
+#include "float.h"
+
+// #include "../../os_configs/FreeRTOSConfig.h"
+// #include "../../os_kernel/include/FreeRTOS.h"
+// #include "../../os_kernel/include/task.h"  
+#include "../global/globle.h"
+
 ads1148Obj_t ads1148Chip0,ads1148Chip1;
 
 
@@ -17,18 +24,20 @@ uint8_t ads1148_send_cmd(ads1148Obj_t* obj,uint8_t cmd)
     ret=obj->ads1148_write_read_via_spi(cmd);
 	delay_us(10);
 	obj->pins_cs_set_hight();
+	delay_us(2);
     return ret;
 }
 
-uint16_t ads1148_read_data(ads1148Obj_t* obj)
+volatile uint16_t ads1148_read_data(ads1148Obj_t* obj)
 {
-	uint16_t t16=0;
+	volatile uint16_t t16=0;
 	uint8_t t8=0;
 	#if ADS1148_SCK_IDLE_STATUE==0
     obj->pins_sck_set_low();
 	#else
 	obj->pins_sck_set_hight();
 	#endif
+    delay_us(10);
 	obj->pins_cs_set_low();
 	obj->ads1148_write_read_via_spi(ADS1148_CMD_RDATA);
     delay_us(5);
@@ -40,6 +49,7 @@ uint16_t ads1148_read_data(ads1148Obj_t* obj)
 	t16 |= t8;
     delay_us(10);
 	obj->pins_cs_set_hight();
+	delay_us(2);
 	return t16;
 }
 
@@ -64,6 +74,7 @@ void ads1148_write_register(ads1148Obj_t* obj,uint8_t offsetaddr,uint8_t *buf,ui
 	}
     delay_us(10);
 	obj->pins_cs_set_hight();
+	delay_us(2);
 }
 
 void ads1148_read_register(ads1148Obj_t* obj,uint8_t offsetaddr,uint8_t *buf,uint8_t num)
@@ -89,6 +100,7 @@ void ads1148_read_register(ads1148Obj_t* obj,uint8_t offsetaddr,uint8_t *buf,uin
 	//obj->pins_sck_set_hight();
 	delay_us(10);
 	obj->pins_cs_set_hight();
+	delay_us(2);
 }
 //api
 void ads1148_slef_calibration(ads1148Obj_t* obj)
@@ -99,9 +111,10 @@ void ads1148_slef_calibration(ads1148Obj_t* obj)
 	obj->pins_sck_set_hight();
 	#endif
 	obj->pins_cs_set_low();
-	obj->ads1148_write_read_via_spi(ADS1148_CMD_SELFOCAL);
-	delay_ms(30);//bug
+	obj->ads1148_write_read_via_spi(ADS1148_CMD_SYSOCAL);
+	delay_ms(300);//bug
 	obj->pins_cs_set_hight();
+	delay_us(2);
 }
 
 void ads1148_set_channle_normal(ads1148Obj_t* obj,uint8_t chp,uint8_t chn)
@@ -245,7 +258,7 @@ void ads1148_init_obj_0(void)
 }
 void ads1148_init_obj_1(void)
 {
-	ads1148Chip1.chipNm=0;
+	ads1148Chip1.chipNm=1;
     ads1148Chip1.pins_sck_set_hight=ads1148_hal_sck_set_hight;
     ads1148Chip1.pins_sck_set_low=ads1148_hal_sck_set_low;
     
@@ -274,36 +287,62 @@ void ads1148_set_sync(ads1148Obj_t* obj)
 	obj->pins_sck_set_hight();
 	#endif
 	obj->pins_cs_set_low();
-    ret=obj->ads1148_write_read_via_spi(ADS1148_CMD_RESET);
-    delay_ms(1);
+    //ret=obj->ads1148_write_read_via_spi(ADS1148_CMD_RESET);
+    //delay_ms(1);
     ret=obj->ads1148_write_read_via_spi(ADS1148_CMD_SYNC);
-    delay_ms(1);
+    //delay_ms(1);
     ret=obj->ads1148_write_read_via_spi(ADS1148_CMD_SYNC);
 	delay_ms(1);
 	obj->pins_cs_set_hight();
+	delay_us(2);
 }
 const uint8_t ads1148DefaultBuf[]={1,0,0,0,0,0,0,0,0,0x40,0x90,0xff};
-void ads1148_init_all(void)
+
+void ads1148_init_chip_regs(ads1148Obj_t* obj)
+{
+	uint16_t t16;
+    float f;
+	obj->pins_init();
+	ads1148_send_cmd(obj,ADS1148_CMD_RESET);
+    delay_ms(10);
+	//delay_ms(1);
+	ads1148_set_bcs(obj,ADS1148_BCS_10uA0);
+	ads1148_set_vref(obj,ADS1148_REFSELT_INREF);
+	ads1148_set_data_rate(obj,ADS1148_SYS0_DR_2000SPS);
+	ads1148_set_muxcal(obj,ADS1148_MUXCAL_GAIN_CALIB);
+	ads1148_set_ani_pga(obj,ADS1148_PGA_1);	
+	ads1148_get_all_register(obj);
+    __nop();
+	ads1148_start_convert(obj);
+	delay_us(5);
+	ads1148_stop_convert(obj);
+	ads1148_waite_convert(obj);
+	__nop();
+    t16=ads1148_read_data(obj);
+	
+	f=(float)32767;
+    f=f/t16;
+    obj->fullFactor=f;
+	obj->inited=true;
+	ads1148_start_convert(obj);
+	
+	ads1148_get_all_register(obj);
+	__nop();
+
+}
+
+void ads1148_init_all_obj(void)
 {
 	ads1148_init_obj_0();
 	ads1148_init_obj_1();
-	ads1148Chip0.pins_init();
-	ads1148_send_cmd(&ads1148Chip0,ADS1148_CMD_RESET);
-    delay_ms(10);
-    //ads1148_set_sync(&ads1148Chip0);
-	//delay_ms(1);
-    //ads1148_write_register(&ads1148Chip0,ADS1148_REG_ADDR_MUX0,(uint8_t*)ads1148DefaultBuf,sizeof(ads1148DefaultBuf));
-    //delay_ms(1);
-	ads1148_get_all_register(&ads1148Chip0);
-    
-    ads1148Chip1.pins_init();
-	ads1148_send_cmd(&ads1148Chip1,ADS1148_CMD_RESET);
-	delay_ms(10);
-    //ads1148_set_sync(&ads1148Chip1);
-	//delay_ms(1);  
-	ads1148_get_all_register(&ads1148Chip1);
-    asm("NOP");
 }
+
+void ads1148_init_device(void)
+{
+    ads1148_init_chip_regs(&ads1148Chip0);
+    ads1148_init_chip_regs(&ads1148Chip1);  
+}
+
 void ads1148_start_convert(ads1148Obj_t* obj)
 {
 	obj->pins_start_set_hight();
@@ -330,23 +369,22 @@ void ads1148_test(void)
 {
 	volatile uint32_t staTm,eclipsTm,convertNum;
     uint16_t t16;
-	ads1148_set_bcs(&ads1148Chip0,ADS1148_BCS_10uA0);
-	ads1148_set_vref(&ads1148Chip0,ADS1148_REFSELT_INREF);
-	ads1148_set_muxcal(&ads1148Chip0,ADS1148_MUXCAL_AVDD_AVSS_DIV_4);
-	ads1148_set_ani_pga(&ads1148Chip0,ADS1148_PGA_1);
-	ads1148_set_data_rate(&ads1148Chip0,ADS1148_SYS0_DR_2000SPS);
-    delay_ms(10);
-    ads1148_get_all_register(&ads1148Chip0);
-    delay_ms(10);
-	ads1148_start_convert(&ads1148Chip0);
+	
+    ads1148_init_chip_regs(&ads1148Chip0);
+    ads1148_init_chip_regs(&ads1148Chip1);  
+	
+	ads1148_set_muxcal(&ads1148Chip1,ADS1148_MUXCAL_AVDD_AVSS_DIV_4);
+    
+	ads1148_start_convert(&ads1148Chip1);
     delay_us(5);
 	staTm=ticker_ms_get();
     convertNum=0x00ul;
 	while(1){
-        ads1148_waite_convert(&ads1148Chip0);
+        ads1148_waite_convert(&ads1148Chip1);
         //delay_us(5);
-        t16=ads1148_read_data(&ads1148Chip0);
-		asm("nop");
+        t16=ads1148_read_data(&ads1148Chip1);
+		__nop();
+		__nop();
 		asm("nop");
 		eclipsTm=ticker_ms_get()-staTm;
 		convertNum++;		

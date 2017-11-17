@@ -7,8 +7,26 @@
 	#include "../../mcc_generated_files/mcc.h"
     #include <stdint.h>
 
-	extern void thread_sample_void(void);
+	//extern void thread_sample_void(void);
+	extern volatile int16_t rtAdcValueDPrBridge;
+	extern volatile int16_t rtAdcValueDPrSignal;
+	extern volatile int16_t rtAdcValuePrBridge;
+	extern volatile int16_t rtAdcValuePrSignal;
 	
+	extern volatile int16_t rtAdcValueTemperatureIn;
+	extern volatile int16_t rtAdcValueChip0Ref0;
+	extern volatile int16_t rtAdcValueChip0Ref1;
+
+	extern volatile int16_t rtAdcValuePrEx0Bridge;
+	extern volatile int16_t rtAdcValuePrEx0Signal;
+	extern volatile int16_t rtAdcValuePrEx1Bridge;
+	extern volatile int16_t rtAdcValuePrEx1Signal;
+	
+	extern volatile int16_t rtAdcValueTemperatureEx;
+	extern volatile int16_t rtAdcValueChip1Ref0;
+	extern volatile int16_t rtAdcValueChip1Ref1;	
+	
+	extern void sample_process(void);
 
 #ifdef __cplusplus
 	}

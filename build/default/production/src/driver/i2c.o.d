@@ -1,7 +1,7 @@
-build/default/production/src/driver/ads1148_hal.o:  \
- src/driver/ads1148_hal.c  \
-src/driver/drivers.h  \
- src/driver/../../mcc_generated_files/mcc.h  \
+build/default/production/src/driver/i2c.o:  \
+src/driver/i2c.c  \
+ src/driver/drivers.h  \
+src/driver/../../mcc_generated_files/mcc.h  \
  src/driver/../../mcc_generated_files/pin_manager.h  \
  src/driver/../../mcc_generated_files/rtcc.h  \
  src/driver/../../mcc_generated_files/interrupt_manager.h  \

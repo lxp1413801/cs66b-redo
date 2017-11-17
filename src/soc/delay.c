@@ -9,15 +9,7 @@ void delay_us(uint16_t us)
 		asm("NOP");
 		asm("NOP");
 		asm("NOP");
-		
 		asm("NOP");
-		asm("NOP");
-		asm("NOP");
-		asm("NOP");
-		
-		asm("NOP");
-		asm("NOP");
-		//asm("NOP");
 	}
 }
 void delay_ms(uint16_t ms)

@@ -24,21 +24,6 @@
         <itemPath>mcc_generated_files/tmr2.c</itemPath>
         <itemPath>mcc_generated_files/tmr1.c</itemPath>
       </logicalFolder>
-      <logicalFolder name="os_kernel" displayName="os_kernel" projectFiles="true">
-        <itemPath>os_kernel/croutine.c</itemPath>
-        <itemPath>os_kernel/event_groups.c</itemPath>
-        <itemPath>os_kernel/list.c</itemPath>
-        <itemPath>os_kernel/queue.c</itemPath>
-        <itemPath>os_kernel/tasks.c</itemPath>
-        <itemPath>os_kernel/timers.c</itemPath>
-      </logicalFolder>
-      <logicalFolder name="os_portable" displayName="os_portable" projectFiles="true">
-        <logicalFolder name="memmang" displayName="memmang" projectFiles="true">
-          <itemPath>os_portable/memmang/heap_2.c</itemPath>
-        </logicalFolder>
-        <itemPath>os_portable/port.c</itemPath>
-        <itemPath>os_portable/portasm_PIC24.S</itemPath>
-      </logicalFolder>
       <logicalFolder name="src" displayName="src" projectFiles="true">
         <logicalFolder name="api" displayName="api" projectFiles="true">
         </logicalFolder>
@@ -58,6 +43,8 @@
           <itemPath>src/driver/gpio.c</itemPath>
           <itemPath>src/driver/ads1148.c</itemPath>
           <itemPath>src/driver/ads1148_hal.c</itemPath>
+          <itemPath>src/driver/ex_eeprom.c</itemPath>
+          <itemPath>src/driver/i2c.c</itemPath>
         </logicalFolder>
         <logicalFolder name="global" displayName="global" projectFiles="true">
           <itemPath>src/global/globle.c</itemPath>
