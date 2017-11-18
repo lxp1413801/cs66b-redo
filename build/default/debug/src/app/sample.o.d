@@ -22,6 +22,8 @@ src/app/../includes/../soc/ticker.h  \
 src/app/../includes/../driver/lcd.h  \
  src/app/../includes/../driver/ads1148_hal.h  \
  src/app/../includes/../driver/ads1148.h  \
+ src/app/../includes/../driver/i2c.h  \
+ src/app/../includes/../driver/ex_eeprom.h  \
  src/app/../includes/../depend/depend.h  \
  src/app/../includes/../depend/m_string.h  \
  src/app/../includes/../depend/crc16.h  \

@@ -1,5 +1,5 @@
-build/default/production/src/driver/ex_eeprom.o:  \
-src/driver/ex_eeprom.c  \
+build/default/debug/src/driver/i2c.o:  \
+src/driver/i2c.c  \
  src/driver/drivers.h  \
 src/driver/../../mcc_generated_files/mcc.h  \
  src/driver/../../mcc_generated_files/pin_manager.h  \
@@ -15,4 +15,6 @@ src/driver/ads1148_hal.h  \
 src/driver/i2c.h  \
 src/driver/ex_eeprom.h  \
  src/driver/../soc/delay.h  \
- src/driver/../soc/../../mcc_generated_files/mcc.h 
+ src/driver/../soc/../../mcc_generated_files/mcc.h  \
+ src/driver/../global/globle.h  \
+ src/driver/../global/../../mcc_generated_files/mcc.h 

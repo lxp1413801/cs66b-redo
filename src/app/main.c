@@ -67,31 +67,15 @@ int main(void)
      
 	asm("NOP");
     ads1148_init_all_obj();
-	//ads1148_init_all();
-	asm("NOP");    
-    ads1148_test();
-    
-    while (1)
-    {
-        // Add your application code
-        str[3]='\0';
-        str[0]=LCDDigitalIndexTable[i];
-        str[1]=LCDDigitalIndexTable[i];
-        str[2]=LCDDigitalIndexTable[i];
-        lcd_show_string_sm(str);
-        str[0]=LCDDigitalTableIndexEx[j];
-        str[1]=LCDDigitalTableIndexEx[j];
-        str[2]=LCDDigitalTableIndexEx[j];
-        lcd_show_string_ex(str);
-        i++;
-        j++;
-        if(i>42-1)i=0;
-        if(j>62-1)j=0;
-        lcd_disp_refresh();
-        delay_ms(300);
+	ads1148_init_device();
+
+    while (1){
+		if(event | flg_TICKER_10MS_PER){
+			event &= ~flg_TICKER_10MS_PER;
+			sample_process();
+		}
         
     }
-
     return -1;
 }
 /*

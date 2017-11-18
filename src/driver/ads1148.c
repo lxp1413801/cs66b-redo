@@ -301,31 +301,33 @@ const uint8_t ads1148DefaultBuf[]={1,0,0,0,0,0,0,0,0,0x40,0x90,0xff};
 void ads1148_init_chip_regs(ads1148Obj_t* obj)
 {
 	uint16_t t16;
-    float f;
+    //float f;
 	obj->pins_init();
 	ads1148_send_cmd(obj,ADS1148_CMD_RESET);
     delay_ms(10);
 	//delay_ms(1);
-	ads1148_set_bcs(obj,ADS1148_BCS_10uA0);
+	//ads1148_set_bcs(obj,ADS1148_BCS_2uA0);
 	ads1148_set_vref(obj,ADS1148_REFSELT_INREF);
-	ads1148_set_data_rate(obj,ADS1148_SYS0_DR_2000SPS);
+	//ads1148_set_data_rate(obj,ADS1148_SYS0_DR_2000SPS);
 	ads1148_set_muxcal(obj,ADS1148_MUXCAL_GAIN_CALIB);
 	ads1148_set_ani_pga(obj,ADS1148_PGA_1);	
 	ads1148_get_all_register(obj);
     __nop();
 	ads1148_start_convert(obj);
-	delay_us(5);
-	ads1148_stop_convert(obj);
+	//delay_us(5);
 	ads1148_waite_convert(obj);
-	__nop();
+	ads1148_waite_convert(obj);
     t16=ads1148_read_data(obj);
+	obj->fullSacle=t16;
 	
-	f=(float)32767;
-    f=f/t16;
-    obj->fullFactor=f;
-	obj->inited=true;
+	ads1148_set_muxcal(obj,ADS1148_MUXCAL_OFFSET_CALIB);
+	ads1148_waite_convert(obj);
+	ads1148_waite_convert(obj);
+    t16=ads1148_read_data(obj);
+	obj->offset=t16;
+
 	ads1148_start_convert(obj);
-	
+	//ads1148_set_data_rate(obj,ADS1148_SYS0_DR_2000SPS);
 	ads1148_get_all_register(obj);
 	__nop();
 
@@ -373,17 +375,16 @@ void ads1148_test(void)
     ads1148_init_chip_regs(&ads1148Chip0);
     ads1148_init_chip_regs(&ads1148Chip1);  
 	
-	ads1148_set_muxcal(&ads1148Chip1,ADS1148_MUXCAL_AVDD_AVSS_DIV_4);
+	ads1148_set_muxcal(&ads1148Chip0,ADS1148_MUXCAL_AVDD_AVSS_DIV_4);
     
-	ads1148_start_convert(&ads1148Chip1);
+	ads1148_start_convert(&ads1148Chip0);
     delay_us(5);
 	staTm=ticker_ms_get();
     convertNum=0x00ul;
 	while(1){
-        ads1148_waite_convert(&ads1148Chip1);
+        ads1148_waite_convert(&ads1148Chip0);
         //delay_us(5);
-        t16=ads1148_read_data(&ads1148Chip1);
-		__nop();
+        t16=ads1148_read_data(&ads1148Chip0);
 		__nop();
 		asm("nop");
 		eclipsTm=ticker_ms_get()-staTm;

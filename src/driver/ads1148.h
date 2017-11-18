@@ -183,6 +183,24 @@
 	#define ADS1148_MUX_SN_AIN6	0x06
 	#define ADS1148_MUX_SN_AIN7	0x07
 	
+	#define AIN0N	0x00
+	#define AIN1N	0x01
+	#define AIN2N	0x02
+	#define AIN3N	0x03
+	#define AIN4N	0x04
+	#define AIN5N	0x05
+	#define AIN6N	0x06
+	#define AIN7N	0x07
+
+	#define AIN0P	0x00
+	#define AIN1P	0x01
+	#define AIN2P	0x02
+	#define AIN3P	0x03
+	#define AIN4P	0x04
+	#define AIN5P	0x05
+	#define AIN6P	0x06
+	#define AIN7P	0x07
+	
 	typedef union{
 		uint8_t mux0;
 		struct{
@@ -194,6 +212,16 @@
 	//VBIAS—Bias Voltage Register (offset = 01h) [reset = 00h]
 	#define ADS1148_VBIAS_ENABLE 	1
 	#define ADS1148_VBIAS_DISABLE	0
+	
+	#define ADS1148_VBIAS_0  (1<<0)
+	#define ADS1148_VBIAS_1  (1<<1)
+	#define ADS1148_VBIAS_2  (1<<2)
+	#define ADS1148_VBIAS_3  (1<<3)
+	#define ADS1148_VBIAS_4  (1<<4)
+	#define ADS1148_VBIAS_5  (1<<5)
+	#define ADS1148_VBIAS_6  (1<<6)
+	#define ADS1148_VBIAS_7  (1<<7)
+	
 	typedef union{
 		uint8_t vbias;
 		struct{
@@ -301,6 +329,9 @@
 	#define ADS1148_IDAC_OUT_PINS_IEXC1	8
 	#define ADS1148_IDAC_OUT_PINS_IEXC2	9
 	#define ADS1148_IDAC_OUT_PINS_NC	0x0f
+	#define IDAC_OUT_IEXC1	8
+	#define IDAC_OUT_IEXC2	9
+	#define IDAC_OUT_NC		0x0f
 	typedef union{
 		uint8_t idac1;
 		struct{
@@ -362,7 +393,8 @@
 		*/
 		volatile uint8_t (*ads1148_write_read_via_spi)(uint8_t);	
 		ads1148Reg_t ads1148Regs;
-		float  fullFactor;
+		int16_t offset;
+		int16_t  fullSacle;
         uint8_t chipNm;
 		bool inited;
 	}st_ads1148Obj,ads1148Obj_t;
@@ -381,7 +413,16 @@
     extern void ads1148_stop_convert(ads1148Obj_t* obj);
     extern volatile uint16_t ads1148_read_data(ads1148Obj_t* obj);
     
-    
+    extern void ads1148_set_channle_normal(ads1148Obj_t* obj,uint8_t chp,uint8_t chn);
+	extern void ads1148_set_idac12_pins(ads1148Obj_t* obj,uint8_t i1dir,uint8_t i2dir);
+	extern void ads1148_set_ani_pga(ads1148Obj_t* obj,uint8_t pga);
+	extern void ads1148_set_imag_idac(ads1148Obj_t* obj,uint8_t imag);
+	extern void ads1148_set_data_rate(ads1148Obj_t* obj,uint8_t dr);
+	
+	extern void ads1148_set_muxcal(ads1148Obj_t* obj,uint8_t muxcal);
+	extern void ads1148_get_all_register(ads1148Obj_t* obj);
+	extern void ads1148_set_bcs(ads1148Obj_t* obj,uint8_t bcs);
+	
 	
 #ifdef __cplusplus
 	}

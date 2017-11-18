@@ -1,4 +1,4 @@
-build/default/production/src/driver/ex_eeprom.o:  \
+build/default/debug/src/driver/ex_eeprom.o:  \
 src/driver/ex_eeprom.c  \
  src/driver/drivers.h  \
 src/driver/../../mcc_generated_files/mcc.h  \
