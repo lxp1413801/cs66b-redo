@@ -7,6 +7,7 @@
 	#include "../../mcc_generated_files/mcc.h"
     #include <stdint.h>
 
+	#include "sysdata.h"
 
 #ifdef __cplusplus
 	}

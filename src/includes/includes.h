@@ -18,9 +18,10 @@
     #include "../api/api.h"
     #include "../app/app.h"
 
-    // #include "../../os_configs/FreeRTOSConfig.h"
-    // #include "../../os_kernel/include/FreeRTOS.h"
-    // #include "../../os_kernel/include/task.h"        
+
+     #include "../os/os_configs/FreeRTOSConfig.h"
+     #include "../os/os_kernel/include/FreeRTOS.h"
+     #include "../os/os_kernel/include/task.h"        
 #ifdef __cplusplus
 	}
 #endif

@@ -278,7 +278,7 @@ void sample_process(void)
 	sampleIndex++;
     if(sampleIndex>0x16)sampleIndex=0;
 }
-/*
+
 void samlpe_chip0_channle_gain_calib(void)
 {
 	uint32_t tm;
@@ -304,28 +304,17 @@ void samlpe_chip0_channle_gain_calib(void)
 	__nop();
 	__nop();
 }
-void sample_fast_mode(void)
-{
-	uint8_t t8;
-	t8=sampleIndex;
-	switch(t8){
-		case 0x00:samlpe_chip0_channle_diff_press();break;
-		case 0x01:samlpe_chip0_channle_press();break;
-		case 0x03:samlpe_chip0_channle_temperature();break;
-		default:break;
-	}
-}
+
 
 void thread_sample( void * pvParameters )
 {
-	ads1148_init_all_obj();
-	ads1148_init_chip_regs(&ads1148Chip0);
-	ads1148_init_chip_regs(&ads1148Chip1);
+    ads1148_init_all_obj();
+	ads1148_init_device();
 	while(1){
-		osDelay(10);
-		samlpe_chip0_channle_gain_calib();
-		__nop();
-		__nop();
+        sample_process();
+        osDelay(10);
+        __nop();
+        __nop();
 	}
 }
 void thread_sample_void(void)
@@ -342,5 +331,5 @@ void thread_sample_void(void)
 		1, 
 		&xHandle );	
 }
-*/
+
 

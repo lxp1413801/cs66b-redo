@@ -10,7 +10,7 @@ void m_system_init(void)
     RTCC_Initialize();
     //TMR1_Initialize();    
 }
-/*
+
 void thread_main( void * pvParameters )
 {
     //configASSERT( ( ( uint32_t ) pvParameters ) == 1 );
@@ -41,7 +41,7 @@ void thread_main_create(void)
 		tskIDLE_PRIORITY, 
 		&xHandle );
 }
-*/
+
 void event_proess(void)
 {
 	if(event | flg_TICKER_10MS_PER){
@@ -55,15 +55,16 @@ int main(void)
     uint8_t str[4]={0x11,0x22,0x33,0x44};
     uint8_t i=0,j=0;
     // initialize the device
-    SYSTEM_Initialize();
+    //SYSTEM_Initialize();
+    m_system_init();
     lcd_init();
     lcd_disp_clear_buffer();
     lcd_show_string((uint8_t*)"77777777");
     lcd_show_string_sm((uint8_t*)"123");
     lcd_show_string_ex((uint8_t*)"123");
     lcd_disp_refresh();
-    // thread_main_create();
-     // vTaskStartScheduler();
+     thread_main_create();
+      vTaskStartScheduler();
     m_flash_erase(user_FLASH_ADDR_START,4);
     m_flash_write(user_FLASH_ADDR_START,str,4);
     m_flash_read(user_FLASH_ADDR_START,str,4);
@@ -81,7 +82,7 @@ int main(void)
     }
     return -1;
 }
-/*
+
 void vApplicationStackOverflowHook( TaskHandle_t xTask, char *pcTaskName )
 {
     
@@ -90,7 +91,7 @@ void vApplicationIdleHook( void )
 {
     
 }
-*/
+
 /**
  End of File
 */

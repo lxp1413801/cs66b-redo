@@ -26,6 +26,7 @@
       </logicalFolder>
       <logicalFolder name="src" displayName="src" projectFiles="true">
         <logicalFolder name="api" displayName="api" projectFiles="true">
+          <itemPath>src/api/sysdata.c</itemPath>
         </logicalFolder>
         <logicalFolder name="app" displayName="app" projectFiles="true">
           <itemPath>src/app/main.c</itemPath>
@@ -50,6 +51,27 @@
           <itemPath>src/global/globle.c</itemPath>
         </logicalFolder>
         <logicalFolder name="includes" displayName="includes" projectFiles="true">
+        </logicalFolder>
+        <logicalFolder name="os" displayName="os" projectFiles="true">
+          <logicalFolder name="os_configs" displayName="os_configs" projectFiles="true">
+          </logicalFolder>
+          <logicalFolder name="os_kernel" displayName="os_kernel" projectFiles="true">
+            <logicalFolder name="include" displayName="include" projectFiles="true">
+            </logicalFolder>
+            <itemPath>src/os/os_kernel/croutine.c</itemPath>
+            <itemPath>src/os/os_kernel/event_groups.c</itemPath>
+            <itemPath>src/os/os_kernel/list.c</itemPath>
+            <itemPath>src/os/os_kernel/queue.c</itemPath>
+            <itemPath>src/os/os_kernel/tasks.c</itemPath>
+            <itemPath>src/os/os_kernel/timers.c</itemPath>
+          </logicalFolder>
+          <logicalFolder name="os_portable" displayName="os_portable" projectFiles="true">
+            <logicalFolder name="memmang" displayName="memmang" projectFiles="true">
+              <itemPath>src/os/os_portable/memmang/heap_2.c</itemPath>
+            </logicalFolder>
+            <itemPath>src/os/os_portable/port.c</itemPath>
+            <itemPath>src/os/os_portable/portasm_PIC24.S</itemPath>
+          </logicalFolder>
         </logicalFolder>
         <logicalFolder name="soc" displayName="soc" projectFiles="true">
           <itemPath>src/soc/delay.c</itemPath>
@@ -218,7 +240,7 @@
       </C30-LD>
       <C30Global>
         <property key="common-include-directories"
-                  value="os_configs;os_kernel\include;os_portable;os_portable\memmang"/>
+                  value="src\os\os_configs;src\os\os_kernel\include;src\os\os_portable"/>
         <property key="dual-boot-partition" value="0"/>
         <property key="fast-math" value="false"/>
         <property key="generic-16-bit" value="false"/>

@@ -101,7 +101,7 @@ void TMR1_Initialize (void)
 }
 
 
-#if 1
+#if 0
 void __attribute__ ( ( interrupt, no_auto_psv ) ) _T1Interrupt (  )
 {
     /* Check if the Timer Interrupt/Status is set */

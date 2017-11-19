@@ -1,0 +1,48 @@
+build/default/debug/src/api/sysdata.o:  \
+src/api/sysdata.c  \
+ src/api/../includes/includes.h  \
+ src/api/../includes/../../mcc_generated_files/mcc.h  \
+ src/api/../includes/../../mcc_generated_files/pin_manager.h  \
+ src/api/../includes/../../mcc_generated_files/rtcc.h  \
+ src/api/../includes/../../mcc_generated_files/interrupt_manager.h  \
+ src/api/../includes/../../mcc_generated_files/tmr2.h  \
+ src/api/../includes/../../mcc_generated_files/tmr1.h  \
+ src/api/../includes/../configs/configs.h  \
+ src/api/../includes/../configs/../../mcc_generated_files/mcc.h  \
+ src/api/../includes/../global/globle.h  \
+ src/api/../includes/../global/../../mcc_generated_files/mcc.h  \
+ src/api/../includes/../soc/soc.h  \
+ src/api/../includes/../soc/../../mcc_generated_files/mcc.h  \
+ src/api/../includes/../soc/delay.h  \
+src/api/../includes/../soc/ticker.h  \
+ src/api/../includes/../soc/flash.h  \
+ src/api/../includes/../driver/drivers.h  \
+ src/api/../includes/../driver/../../mcc_generated_files/mcc.h  \
+ src/api/../includes/../driver/gpio_config.h  \
+ src/api/../includes/../driver/gpio.h  \
+src/api/../includes/../driver/lcd.h  \
+ src/api/../includes/../driver/ads1148_hal.h  \
+ src/api/../includes/../driver/ads1148.h  \
+ src/api/../includes/../driver/i2c.h  \
+ src/api/../includes/../driver/ex_eeprom.h  \
+ src/api/../includes/../depend/depend.h  \
+ src/api/../includes/../depend/m_string.h  \
+ src/api/../includes/../depend/crc16.h  \
+src/api/../includes/../api/api.h  \
+ src/api/../includes/../api/../../mcc_generated_files/mcc.h  \
+ src/api/../includes/../api/sysdata.h  \
+src/api/../includes/../app/app.h  \
+ src/api/../includes/../app/../../mcc_generated_files/mcc.h  \
+ src/api/../includes/../app/main.h  \
+src/api/../includes/../app/event.h  \
+ src/api/../includes/../app/sample.h  \
+ src/api/../includes/../os/os_configs/FreeRTOSConfig.h  \
+ src/api/../includes/../os/os_kernel/include/FreeRTOS.h  \
+ src/os/os_configs/FreeRTOSConfig.h  \
+ src/api/../includes/../os/os_kernel/include/projdefs.h  \
+ src/api/../includes/../os/os_kernel/include/portable.h  \
+ src/api/../includes/../os/os_kernel/include/deprecated_definitions.h  \
+ src/os/os_portable/portmacro.h  \
+ src/api/../includes/../os/os_kernel/include/mpu_wrappers.h  \
+ src/api/../includes/../os/os_kernel/include/task.h  \
+ src/api/../includes/../os/os_kernel/include/list.h 
