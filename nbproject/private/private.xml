@@ -6,9 +6,17 @@
             <file>file:/D:/lxp/cs66b-redo/src/app/sample.c</file>
         </group>
         <group name="cs600_test">
+            <file>file:/F:/2017/cs66-b/cs66b.X/src/soc/flash.c</file>
             <file>file:/F:/2017/cs66-b/cs66b.X/src/driver/ads1148.c</file>
+            <file>file:/F:/2017/cs66-b/cs66b.X/src/global/globle.h</file>
+            <file>file:/F:/2017/cs66-b/cs66b.X/src/app/main.c</file>
             <file>file:/F:/2017/cs66-b/cs66b.X/src/driver/ads1148.h</file>
+            <file>file:/F:/2017/cs66-b/cs66b.X/src/driver/ads1148_hal.c</file>
+            <file>file:/F:/2017/cs66-b/cs66b.X/src/app/sample.c</file>
             <file>file:/F:/2017/cs66-b/cs66b.X/src/driver/ex_eeprom.c</file>
+            <file>file:/F:/2017/cs66-b/cs66b.X/src/driver/gpio.c</file>
+            <file>file:/F:/2017/cs66-b/cs66b.X/nbproject/Makefile-default.mk</file>
+            <file>file:/F:/2017/cs66-b/cs66b.X/src/soc/flash.h</file>
         </group>
     </open-files>
 </project-private>

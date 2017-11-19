@@ -8,6 +8,7 @@
     #include <stdint.h>
 	#include "delay.h"
 	#include "ticker.h"
+	#include "flash.h"
 	
 #ifdef __cplusplus
 	}

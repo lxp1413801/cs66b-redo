@@ -49,13 +49,13 @@ void event_proess(void)
 		sample_process();
 	}
 }
+
 int main(void)
 {
-    uint8_t str[4]={0};
+    uint8_t str[4]={0x11,0x22,0x33,0x44};
     uint8_t i=0,j=0;
     // initialize the device
     SYSTEM_Initialize();
-    //m_system_init();
     lcd_init();
     lcd_disp_clear_buffer();
     lcd_show_string((uint8_t*)"77777777");
@@ -64,8 +64,11 @@ int main(void)
     lcd_disp_refresh();
     // thread_main_create();
      // vTaskStartScheduler();
-     
-	asm("NOP");
+    m_flash_erase(user_FLASH_ADDR_START,4);
+    m_flash_write(user_FLASH_ADDR_START,str,4);
+    m_flash_read(user_FLASH_ADDR_START,str,4);
+	__nop();
+    __nop();
     ads1148_init_all_obj();
 	ads1148_init_device();
 

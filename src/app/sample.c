@@ -145,7 +145,6 @@ void samlpe_chip0_ch_pr_bridge(void)
 	rtAdcValuePrBridge=samlpe_read_adc(&ads1148Chip0,NULL,8);
 	__nop();
 	__nop();
-    
 }
 
 void samlpe_chip0_ch_pr_signal(void)

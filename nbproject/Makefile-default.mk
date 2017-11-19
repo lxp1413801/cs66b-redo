@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=mcc_generated_files/rtcc.c mcc_generated_files/pin_manager.c mcc_generated_files/interrupt_manager.c mcc_generated_files/mcc.c mcc_generated_files/tmr2.c mcc_generated_files/tmr1.c src/app/main.c src/app/event.c src/app/sample.c src/depend/crc16.c src/depend/m_string.c src/driver/lcd.c src/driver/gpio.c src/driver/ads1148.c src/driver/ads1148_hal.c src/driver/ex_eeprom.c src/driver/i2c.c src/global/globle.c src/soc/delay.c src/soc/ticker.c
+SOURCEFILES_QUOTED_IF_SPACED=mcc_generated_files/rtcc.c mcc_generated_files/pin_manager.c mcc_generated_files/interrupt_manager.c mcc_generated_files/mcc.c mcc_generated_files/tmr2.c mcc_generated_files/tmr1.c src/app/main.c src/app/event.c src/app/sample.c src/depend/crc16.c src/depend/m_string.c src/driver/lcd.c src/driver/gpio.c src/driver/ads1148.c src/driver/ads1148_hal.c src/driver/ex_eeprom.c src/driver/i2c.c src/global/globle.c src/soc/delay.c src/soc/ticker.c src/soc/flash.c src/soc/m_asm.s
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/mcc_generated_files/rtcc.o ${OBJECTDIR}/mcc_generated_files/pin_manager.o ${OBJECTDIR}/mcc_generated_files/interrupt_manager.o ${OBJECTDIR}/mcc_generated_files/mcc.o ${OBJECTDIR}/mcc_generated_files/tmr2.o ${OBJECTDIR}/mcc_generated_files/tmr1.o ${OBJECTDIR}/src/app/main.o ${OBJECTDIR}/src/app/event.o ${OBJECTDIR}/src/app/sample.o ${OBJECTDIR}/src/depend/crc16.o ${OBJECTDIR}/src/depend/m_string.o ${OBJECTDIR}/src/driver/lcd.o ${OBJECTDIR}/src/driver/gpio.o ${OBJECTDIR}/src/driver/ads1148.o ${OBJECTDIR}/src/driver/ads1148_hal.o ${OBJECTDIR}/src/driver/ex_eeprom.o ${OBJECTDIR}/src/driver/i2c.o ${OBJECTDIR}/src/global/globle.o ${OBJECTDIR}/src/soc/delay.o ${OBJECTDIR}/src/soc/ticker.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/mcc_generated_files/rtcc.o.d ${OBJECTDIR}/mcc_generated_files/pin_manager.o.d ${OBJECTDIR}/mcc_generated_files/interrupt_manager.o.d ${OBJECTDIR}/mcc_generated_files/mcc.o.d ${OBJECTDIR}/mcc_generated_files/tmr2.o.d ${OBJECTDIR}/mcc_generated_files/tmr1.o.d ${OBJECTDIR}/src/app/main.o.d ${OBJECTDIR}/src/app/event.o.d ${OBJECTDIR}/src/app/sample.o.d ${OBJECTDIR}/src/depend/crc16.o.d ${OBJECTDIR}/src/depend/m_string.o.d ${OBJECTDIR}/src/driver/lcd.o.d ${OBJECTDIR}/src/driver/gpio.o.d ${OBJECTDIR}/src/driver/ads1148.o.d ${OBJECTDIR}/src/driver/ads1148_hal.o.d ${OBJECTDIR}/src/driver/ex_eeprom.o.d ${OBJECTDIR}/src/driver/i2c.o.d ${OBJECTDIR}/src/global/globle.o.d ${OBJECTDIR}/src/soc/delay.o.d ${OBJECTDIR}/src/soc/ticker.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/mcc_generated_files/rtcc.o ${OBJECTDIR}/mcc_generated_files/pin_manager.o ${OBJECTDIR}/mcc_generated_files/interrupt_manager.o ${OBJECTDIR}/mcc_generated_files/mcc.o ${OBJECTDIR}/mcc_generated_files/tmr2.o ${OBJECTDIR}/mcc_generated_files/tmr1.o ${OBJECTDIR}/src/app/main.o ${OBJECTDIR}/src/app/event.o ${OBJECTDIR}/src/app/sample.o ${OBJECTDIR}/src/depend/crc16.o ${OBJECTDIR}/src/depend/m_string.o ${OBJECTDIR}/src/driver/lcd.o ${OBJECTDIR}/src/driver/gpio.o ${OBJECTDIR}/src/driver/ads1148.o ${OBJECTDIR}/src/driver/ads1148_hal.o ${OBJECTDIR}/src/driver/ex_eeprom.o ${OBJECTDIR}/src/driver/i2c.o ${OBJECTDIR}/src/global/globle.o ${OBJECTDIR}/src/soc/delay.o ${OBJECTDIR}/src/soc/ticker.o ${OBJECTDIR}/src/soc/flash.o ${OBJECTDIR}/src/soc/m_asm.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/mcc_generated_files/rtcc.o.d ${OBJECTDIR}/mcc_generated_files/pin_manager.o.d ${OBJECTDIR}/mcc_generated_files/interrupt_manager.o.d ${OBJECTDIR}/mcc_generated_files/mcc.o.d ${OBJECTDIR}/mcc_generated_files/tmr2.o.d ${OBJECTDIR}/mcc_generated_files/tmr1.o.d ${OBJECTDIR}/src/app/main.o.d ${OBJECTDIR}/src/app/event.o.d ${OBJECTDIR}/src/app/sample.o.d ${OBJECTDIR}/src/depend/crc16.o.d ${OBJECTDIR}/src/depend/m_string.o.d ${OBJECTDIR}/src/driver/lcd.o.d ${OBJECTDIR}/src/driver/gpio.o.d ${OBJECTDIR}/src/driver/ads1148.o.d ${OBJECTDIR}/src/driver/ads1148_hal.o.d ${OBJECTDIR}/src/driver/ex_eeprom.o.d ${OBJECTDIR}/src/driver/i2c.o.d ${OBJECTDIR}/src/global/globle.o.d ${OBJECTDIR}/src/soc/delay.o.d ${OBJECTDIR}/src/soc/ticker.o.d ${OBJECTDIR}/src/soc/flash.o.d ${OBJECTDIR}/src/soc/m_asm.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/mcc_generated_files/rtcc.o ${OBJECTDIR}/mcc_generated_files/pin_manager.o ${OBJECTDIR}/mcc_generated_files/interrupt_manager.o ${OBJECTDIR}/mcc_generated_files/mcc.o ${OBJECTDIR}/mcc_generated_files/tmr2.o ${OBJECTDIR}/mcc_generated_files/tmr1.o ${OBJECTDIR}/src/app/main.o ${OBJECTDIR}/src/app/event.o ${OBJECTDIR}/src/app/sample.o ${OBJECTDIR}/src/depend/crc16.o ${OBJECTDIR}/src/depend/m_string.o ${OBJECTDIR}/src/driver/lcd.o ${OBJECTDIR}/src/driver/gpio.o ${OBJECTDIR}/src/driver/ads1148.o ${OBJECTDIR}/src/driver/ads1148_hal.o ${OBJECTDIR}/src/driver/ex_eeprom.o ${OBJECTDIR}/src/driver/i2c.o ${OBJECTDIR}/src/global/globle.o ${OBJECTDIR}/src/soc/delay.o ${OBJECTDIR}/src/soc/ticker.o
+OBJECTFILES=${OBJECTDIR}/mcc_generated_files/rtcc.o ${OBJECTDIR}/mcc_generated_files/pin_manager.o ${OBJECTDIR}/mcc_generated_files/interrupt_manager.o ${OBJECTDIR}/mcc_generated_files/mcc.o ${OBJECTDIR}/mcc_generated_files/tmr2.o ${OBJECTDIR}/mcc_generated_files/tmr1.o ${OBJECTDIR}/src/app/main.o ${OBJECTDIR}/src/app/event.o ${OBJECTDIR}/src/app/sample.o ${OBJECTDIR}/src/depend/crc16.o ${OBJECTDIR}/src/depend/m_string.o ${OBJECTDIR}/src/driver/lcd.o ${OBJECTDIR}/src/driver/gpio.o ${OBJECTDIR}/src/driver/ads1148.o ${OBJECTDIR}/src/driver/ads1148_hal.o ${OBJECTDIR}/src/driver/ex_eeprom.o ${OBJECTDIR}/src/driver/i2c.o ${OBJECTDIR}/src/global/globle.o ${OBJECTDIR}/src/soc/delay.o ${OBJECTDIR}/src/soc/ticker.o ${OBJECTDIR}/src/soc/flash.o ${OBJECTDIR}/src/soc/m_asm.o
 
 # Source Files
-SOURCEFILES=mcc_generated_files/rtcc.c mcc_generated_files/pin_manager.c mcc_generated_files/interrupt_manager.c mcc_generated_files/mcc.c mcc_generated_files/tmr2.c mcc_generated_files/tmr1.c src/app/main.c src/app/event.c src/app/sample.c src/depend/crc16.c src/depend/m_string.c src/driver/lcd.c src/driver/gpio.c src/driver/ads1148.c src/driver/ads1148_hal.c src/driver/ex_eeprom.c src/driver/i2c.c src/global/globle.c src/soc/delay.c src/soc/ticker.c
+SOURCEFILES=mcc_generated_files/rtcc.c mcc_generated_files/pin_manager.c mcc_generated_files/interrupt_manager.c mcc_generated_files/mcc.c mcc_generated_files/tmr2.c mcc_generated_files/tmr1.c src/app/main.c src/app/event.c src/app/sample.c src/depend/crc16.c src/depend/m_string.c src/driver/lcd.c src/driver/gpio.c src/driver/ads1148.c src/driver/ads1148_hal.c src/driver/ex_eeprom.c src/driver/i2c.c src/global/globle.c src/soc/delay.c src/soc/ticker.c src/soc/flash.c src/soc/m_asm.s
 
 
 CFLAGS=
@@ -234,6 +234,13 @@ ${OBJECTDIR}/src/soc/ticker.o: src/soc/ticker.c  nbproject/Makefile-${CND_CONF}.
 	${MP_CC} $(MP_EXTRA_CC_PRE)  src/soc/ticker.c  -o ${OBJECTDIR}/src/soc/ticker.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/soc/ticker.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -I"os_configs" -I"os_kernel/include" -I"os_portable" -I"os_portable/memmang" -O0 -msmart-io=1 -Wall -msfr-warn=off  
 	@${FIXDEPS} "${OBJECTDIR}/src/soc/ticker.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
+${OBJECTDIR}/src/soc/flash.o: src/soc/flash.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/src/soc" 
+	@${RM} ${OBJECTDIR}/src/soc/flash.o.d 
+	@${RM} ${OBJECTDIR}/src/soc/flash.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  src/soc/flash.c  -o ${OBJECTDIR}/src/soc/flash.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/soc/flash.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -I"os_configs" -I"os_kernel/include" -I"os_portable" -I"os_portable/memmang" -O0 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/src/soc/flash.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
 else
 ${OBJECTDIR}/mcc_generated_files/rtcc.o: mcc_generated_files/rtcc.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/mcc_generated_files" 
@@ -375,12 +382,33 @@ ${OBJECTDIR}/src/soc/ticker.o: src/soc/ticker.c  nbproject/Makefile-${CND_CONF}.
 	${MP_CC} $(MP_EXTRA_CC_PRE)  src/soc/ticker.c  -o ${OBJECTDIR}/src/soc/ticker.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/soc/ticker.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -I"os_configs" -I"os_kernel/include" -I"os_portable" -I"os_portable/memmang" -O0 -msmart-io=1 -Wall -msfr-warn=off  
 	@${FIXDEPS} "${OBJECTDIR}/src/soc/ticker.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
+${OBJECTDIR}/src/soc/flash.o: src/soc/flash.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/src/soc" 
+	@${RM} ${OBJECTDIR}/src/soc/flash.o.d 
+	@${RM} ${OBJECTDIR}/src/soc/flash.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  src/soc/flash.c  -o ${OBJECTDIR}/src/soc/flash.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/soc/flash.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -I"os_configs" -I"os_kernel/include" -I"os_portable" -I"os_portable/memmang" -O0 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/src/soc/flash.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
 endif
 
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: assemble
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
+${OBJECTDIR}/src/soc/m_asm.o: src/soc/m_asm.s  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/src/soc" 
+	@${RM} ${OBJECTDIR}/src/soc/m_asm.o.d 
+	@${RM} ${OBJECTDIR}/src/soc/m_asm.o 
+	${MP_CC} $(MP_EXTRA_AS_PRE)  src/soc/m_asm.s  -o ${OBJECTDIR}/src/soc/m_asm.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -D__DEBUG -D__MPLAB_DEBUGGER_PK3=1  -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  -I"os_configs" -I"os_kernel/include" -I"os_portable" -I"os_portable/memmang" -Wa,-MD,"${OBJECTDIR}/src/soc/m_asm.o.d",--defsym=__MPLAB_BUILD=1,--defsym=__ICD2RAM=1,--defsym=__MPLAB_DEBUG=1,--defsym=__DEBUG=1,--defsym=__MPLAB_DEBUGGER_PK3=1,-g,--no-relax$(MP_EXTRA_AS_POST)
+	@${FIXDEPS} "${OBJECTDIR}/src/soc/m_asm.o.d"  $(SILENT)  -rsi ${MP_CC_DIR}../  
+	
 else
+${OBJECTDIR}/src/soc/m_asm.o: src/soc/m_asm.s  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/src/soc" 
+	@${RM} ${OBJECTDIR}/src/soc/m_asm.o.d 
+	@${RM} ${OBJECTDIR}/src/soc/m_asm.o 
+	${MP_CC} $(MP_EXTRA_AS_PRE)  src/soc/m_asm.s  -o ${OBJECTDIR}/src/soc/m_asm.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  -I"os_configs" -I"os_kernel/include" -I"os_portable" -I"os_portable/memmang" -Wa,-MD,"${OBJECTDIR}/src/soc/m_asm.o.d",--defsym=__MPLAB_BUILD=1,-g,--no-relax$(MP_EXTRA_AS_POST)
+	@${FIXDEPS} "${OBJECTDIR}/src/soc/m_asm.o.d"  $(SILENT)  -rsi ${MP_CC_DIR}../  
+	
 endif
 
 # ------------------------------------------------------------------------------------

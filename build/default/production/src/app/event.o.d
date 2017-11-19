@@ -15,6 +15,7 @@ src/app/event.c  \
  src/app/../includes/../soc/../../mcc_generated_files/mcc.h  \
  src/app/../includes/../soc/delay.h  \
 src/app/../includes/../soc/ticker.h  \
+ src/app/../includes/../soc/flash.h  \
  src/app/../includes/../driver/drivers.h  \
  src/app/../includes/../driver/../../mcc_generated_files/mcc.h  \
  src/app/../includes/../driver/gpio_config.h  \
