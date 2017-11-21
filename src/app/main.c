@@ -1,5 +1,5 @@
 #include "../includes/includes.h"
-
+EventGroupHandle_t threadMainEvent;
 
 void m_system_init(void)
 {
@@ -14,15 +14,24 @@ void m_system_init(void)
 void thread_main( void * pvParameters )
 {
     //configASSERT( ( ( uint32_t ) pvParameters ) == 1 );
+    EventBits_t event;
     kz_vadd_on();
-	thread_sample_void();
-    for( ;; )
-    {
+	
+    ui_disp_start_cs600(4);
+    thread_sample_void();
+    while(1) {
+        event=xEventGroupWaitBits(threadMainEvent,flg_ALL_BITS,pdTRUE,pdFALSE,portMAX_DELAY);
+        if(event | flg_RTC_SECOND){
+            __nop();
+            __nop();    
+        }
+        if(event | flg_KEY_DOWN){
+            __nop();
+            __nop();
+        }
 
-        //task_delay_ms(500);
         osDelay(500);
         back_night_off();
-        //task_delay_ms(500);
         osDelay(500);
         back_night_on();
     }
@@ -40,6 +49,14 @@ void thread_main_create(void)
 		NULL, 
 		tskIDLE_PRIORITY, 
 		&xHandle );
+    
+    threadMainEvent = xEventGroupCreate();
+    if(threadMainEvent== NULL){
+        while(1){
+            __nop();
+            __nop();
+        }
+    }
 }
 
 void event_proess(void)
@@ -57,6 +74,7 @@ int main(void)
     // initialize the device
     //SYSTEM_Initialize();
     m_system_init();
+    key_init();
     lcd_init();
     lcd_disp_clear_buffer();
     lcd_show_string((uint8_t*)"77777777");
@@ -78,7 +96,6 @@ int main(void)
 			event &= ~flg_TICKER_10MS_PER;
 			sample_process();
 		}
-        
     }
     return -1;
 }

@@ -116,6 +116,7 @@ to exclude the API function. */
 
 #define configKERNEL_INTERRUPT_PRIORITY	0x01
 //add by lxp
+
 #ifndef osDelay__
     #define osDelay__
     #define osDelay(ms) vTaskDelay(ms/(1000/configTICK_RATE_HZ))

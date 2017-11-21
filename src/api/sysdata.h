@@ -45,7 +45,7 @@
 		int32_t	value;
 		uint16_t adcValue;
 		uint16_t reverse;
-	}st_exCalibDef,exClibDef_t;
+	}st_exCalibDef,exClibDef_t,comTwoPointCalib_t;
 	
 	//差压，压力二次修正
 	typedef struct{
@@ -82,7 +82,7 @@
 		
 		uint16_t		ployCoeffic[4];					//v0'=a0.v0+a1.v1+ ...+an.vn
 
-		st_exCalibDef	TmepCalib[2];				//温度标定，
+		comTwoPointCalib_t	TmepCalib[2];				//温度标定，
 		
 		st_exCalibDef	exPr0Calib[2];				//外部压力传传感器标定
 		st_exCalibDef	exPr1Calib[2];
@@ -98,8 +98,11 @@
 		uint16_t	crc;
 	}st_sysDataDef,sysDataDef_t;
 	extern const st_sysDataDef defultSystemData;
+    #ifndef SYSTEM_DATA_ADDR 
 
-	//#define SYSTEM_DATA_ADDR	0xf400
+    #define SYSTEM_DATA_ADDR user_FLASH_ADDR_START
+#endif
+
 	extern st_sysDataDef stSysData;
 	extern uint8_t data_sys_init(void); 
     extern uint8_t data_sys_save(uint16_t offset,uint8_t* mbuf,uint16_t len);

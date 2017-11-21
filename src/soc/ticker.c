@@ -1,6 +1,4 @@
-#include <stdint.h>
-#include "ticker.h"
-#include "../app/event.h"
+#include "../includes/includes.h"
 uint32_t  tickerMs=0x00ul;
 uint32_t  tickerSec=0x00ul;
 uint32_t  tickerMsPer10Ms=0x00ul;

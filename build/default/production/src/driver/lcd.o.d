@@ -14,5 +14,6 @@ src/driver/ads1148_hal.h  \
  src/driver/ads1148.h  \
 src/driver/i2c.h  \
 src/driver/ex_eeprom.h  \
- src/driver/lcd_code_table.h  \
-src/driver/lcd_code_table_ex.h 
+ src/driver/key.h  \
+src/driver/lcd_code_table.h  \
+ src/driver/lcd_code_table_ex.h 

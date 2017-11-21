@@ -11,7 +11,12 @@
 	
 	#include "../configs/configs.h"
 	#include "../global/globle.h"
-	
+
+     #include "../os/os_configs/FreeRTOSConfig.h"
+     #include "../os/os_kernel/include/FreeRTOS.h"
+ #include "event_groups.h"
+     #include "../os/os_kernel/include/task.h"               
+        
 	#include "../soc/soc.h"
 	#include "../driver/drivers.h"
 	#include "../depend/depend.h"
@@ -19,9 +24,7 @@
     #include "../app/app.h"
 
 
-     #include "../os/os_configs/FreeRTOSConfig.h"
-     #include "../os/os_kernel/include/FreeRTOS.h"
-     #include "../os/os_kernel/include/task.h"        
+     
 #ifdef __cplusplus
 	}
 #endif

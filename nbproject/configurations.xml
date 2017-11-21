@@ -27,6 +27,7 @@
       <logicalFolder name="src" displayName="src" projectFiles="true">
         <logicalFolder name="api" displayName="api" projectFiles="true">
           <itemPath>src/api/sysdata.c</itemPath>
+          <itemPath>src/api/ui.c</itemPath>
         </logicalFolder>
         <logicalFolder name="app" displayName="app" projectFiles="true">
           <itemPath>src/app/main.c</itemPath>
@@ -46,6 +47,7 @@
           <itemPath>src/driver/ads1148_hal.c</itemPath>
           <itemPath>src/driver/ex_eeprom.c</itemPath>
           <itemPath>src/driver/i2c.c</itemPath>
+          <itemPath>src/driver/key.c</itemPath>
         </logicalFolder>
         <logicalFolder name="global" displayName="global" projectFiles="true">
           <itemPath>src/global/globle.c</itemPath>
@@ -291,6 +293,7 @@
         <property key="UART 2" value="true"/>
         <property key="UART 3" value="true"/>
         <property key="UART 4" value="true"/>
+        <property key="firmware.download.all" value="false"/>
         <property key="hwtoolclock.frcindebug" value="false"/>
         <property key="memories.aux" value="false"/>
         <property key="memories.bootflash" value="true"/>

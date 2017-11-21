@@ -21,6 +21,7 @@ Command:
   build/default/debug/mcc_generated_files/mcc.o \
   build/default/debug/mcc_generated_files/tmr2.o \
   build/default/debug/mcc_generated_files/tmr1.o \
+  build/default/debug/src/api/sysdata.o \
   build/default/debug/src/app/main.o \
   build/default/debug/src/app/event.o \
   build/default/debug/src/app/sample.o \
@@ -33,11 +34,6 @@ Command:
   build/default/debug/src/driver/ex_eeprom.o \
   build/default/debug/src/driver/i2c.o \
   build/default/debug/src/global/globle.o \
-  build/default/debug/src/soc/delay.o \
-  build/default/debug/src/soc/ticker.o \
-  build/default/debug/src/soc/flash.o \
-  build/default/debug/src/soc/m_asm.o \
-  build/default/debug/src/api/sysdata.o \
   build/default/debug/src/os/os_kernel/croutine.o \
   build/default/debug/src/os/os_kernel/event_groups.o \
   build/default/debug/src/os/os_kernel/list.o \
@@ -47,13 +43,19 @@ Command:
   build/default/debug/src/os/os_portable/memmang/heap_2.o \
   build/default/debug/src/os/os_portable/port.o \
   build/default/debug/src/os/os_portable/portasm_PIC24.o \
-  -TC:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\tmp0002cfe0.00 \
-  -TC:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\tmp0002cfe0.01 \
-  -TC:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\tmp0002cfe0.02 \
-  -TC:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\tmp0002cfe0.03 \
-  -TC:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\tmp0002cfe0.04 \
-  -TC:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\tmp0002cfe0.05 \
-  -TC:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\tmp0002cfe0.06 \
+  build/default/debug/src/soc/delay.o \
+  build/default/debug/src/soc/ticker.o \
+  build/default/debug/src/soc/flash.o \
+  build/default/debug/src/soc/m_asm.o \
+  build/default/debug/src/driver/key.o \
+  build/default/debug/src/api/ui.o \
+  -TC:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\tmp0000738c.00 \
+  -TC:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\tmp0000738c.01 \
+  -TC:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\tmp0000738c.02 \
+  -TC:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\tmp0000738c.03 \
+  -TC:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\tmp0000738c.04 \
+  -TC:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\tmp0000738c.05 \
+  -TC:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\tmp0000738c.06 \
   --local-stack \
   --defsym=__MPLAB_BUILD=1 \
   --defsym=__MPLAB_DEBUG=1 \
@@ -114,12 +116,12 @@ Program Memory  [Origin = 0x200, Length = 0x155f8]
 section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200               0x1fe           0x2fd  (765)
-.const                       0x3fe               0x17c           0x23a  (570)
-.text                        0x57a              0x41a4          0x6276  (25206)
-.dinit                      0x471e                0x66            0x99  (153)
-.text                       0x4784               0x16a           0x21f  (543)
+.const                       0x3fe               0x188           0x24c  (588)
+.text                        0x586              0x4540          0x67e0  (26592)
+.dinit                      0x4ac6                0x72            0xab  (171)
+.text                       0x4b38               0x24a           0x36f  (879)
 
-                 Total program memory used (bytes):         0x6a65  (27237) 20%
+                 Total program memory used (bytes):         0x7143  (28995) 22%
 
 
 Ivt Memory  [Origin = 0x4, Length = 0xfc]
@@ -128,6 +130,7 @@ section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .ivt._T1Interrupt             0x1a                 0x2             0x3  (3)
 .ivt._T2Interrupt             0x22                 0x2             0x3  (3)
+.ivt._CNInterrupt             0x3a                 0x2             0x3  (3)
 .ivt._RTCCInterrupt           0x90                 0x2             0x3  (3)
 
 
@@ -144,11 +147,12 @@ reserve_data_0x824           0x824                 0x4             0x4  (4)
 .nbss                        0x828                   0             0x2  (2)
 reserve_data_0x82a           0x82a                0x26            0x26  (38)
 .nbss                        0x850                   0            0x56  (86)
-.nbss                        0x8a6                   0             0x2  (2)
-.ndata                       0x8a8                   0             0x4  (4)
-.bss                         0x8ac                   0          0x1538  (5432)
+.nbss                        0x8a6                   0             0x4  (4)
+.ndata                       0x8aa                   0             0x4  (4)
+.nbss                        0x8ae                   0             0x2  (2)
+.bss                         0x8b0                   0          0x1538  (5432)
 
-                 Total data memory used (bytes):         0x15e4  (5604) 68%
+                 Total data memory used (bytes):         0x15e8  (5608) 68%
 
 
 Dynamic Memory Usage
@@ -156,9 +160,9 @@ Dynamic Memory Usage
 region                     address                      maximum length  (dec)
 ------                     -------                      ---------------------
 heap                             0                                   0  (0)
-stack                       0x1de4                               0xa1c  (2588)
+stack                       0x1de8                               0xa18  (2584)
 
-                 Maximum dynamic memory (bytes):          0xa1c  (2588)
+                 Maximum dynamic memory (bytes):          0xa18  (2584)
 
 
 External Symbols in Data Memory (by address):
@@ -198,30 +202,33 @@ External Symbols in Data Memory (by address):
                     0x08a0                  _flashOffsetAddr
                     0x08a2                  _flashByteTemp
                     0x08a4                  _sh_SR
-                    0x08a6                  _event
-                    0x08aa                  _uxCriticalNesting
-                    0x1cac                  _ads1148Chip0
-                    0x1cde                  _ads1148Chip1
-                    0x1d10                  _pxReadyTasksLists
-                    0x1d38                  _xDelayedTaskList1
-                    0x1d42                  _xDelayedTaskList2
-                    0x1d4c                  _xPendingReadyList
-                    0x1d56                  _xSuspendedTaskList
-                    0x1d60                  _samlpeBuf
-                    0x1da0                  _pLCD
+                    0x08a6                  _threadMainEvent
+                    0x08a8                  _event
+                    0x08ac                  _uxCriticalNesting
+                    0x08ae                  _keyValue
+                    0x1cb0                  _ads1148Chip0
+                    0x1ce2                  _ads1148Chip1
+                    0x1d14                  _pxReadyTasksLists
+                    0x1d3c                  _xDelayedTaskList1
+                    0x1d46                  _xDelayedTaskList2
+                    0x1d50                  _xPendingReadyList
+                    0x1d5a                  _xSuspendedTaskList
+                    0x1d64                  _samlpeBuf
+                    0x1da4                  _pLCD
 
 External Symbols in Data Memory (by name):
 
-                    0x1cac                  _ads1148Chip0
-                    0x1cde                  _ads1148Chip1
-                    0x08a6                  _event
+                    0x1cb0                  _ads1148Chip0
+                    0x1ce2                  _ads1148Chip1
+                    0x08a8                  _event
                     0x08a2                  _flashByteTemp
                     0x08a0                  _flashOffsetAddr
-                    0x1da0                  _pLCD
+                    0x08ae                  _keyValue
+                    0x1da4                  _pLCD
                     0x086e                  _pxCurrentTCB
                     0x0870                  _pxDelayedTaskList
                     0x0872                  _pxOverflowDelayedTaskList
-                    0x1d10                  _pxReadyTasksLists
+                    0x1d14                  _pxReadyTasksLists
                     0x085c                  _rtAdcValueChip0Ref0
                     0x085e                  _rtAdcValueChip0Ref1
                     0x086a                  _rtAdcValueChip1Ref0
@@ -236,26 +243,27 @@ External Symbols in Data Memory (by name):
                     0x0858                  _rtAdcValuePrSignal
                     0x0868                  _rtAdcValueTemperatureEx
                     0x085a                  _rtAdcValueTemperatureIn
-                    0x1d60                  _samlpeBuf
+                    0x1d64                  _samlpeBuf
                     0x0850                  _sampleIndex
                     0x08a4                  _sh_SR
+                    0x08a6                  _threadMainEvent
                     0x088a                  _tickerMs
                     0x0892                  _tickerMsPer10Ms
                     0x088e                  _tickerSec
-                    0x08aa                  _uxCriticalNesting
+                    0x08ac                  _uxCriticalNesting
                     0x0874                  _uxCurrentNumberOfTasks
                     0x087c                  _uxPendedTicks
                     0x0888                  _uxSchedulerSuspended
                     0x0882                  _uxTaskNumber
                     0x0878                  _uxTopReadyPriority
-                    0x1d38                  _xDelayedTaskList1
-                    0x1d42                  _xDelayedTaskList2
+                    0x1d3c                  _xDelayedTaskList1
+                    0x1d46                  _xDelayedTaskList2
                     0x0886                  _xIdleTaskHandle
                     0x0884                  _xNextTaskUnblockTime
                     0x0880                  _xNumOfOverflows
-                    0x1d4c                  _xPendingReadyList
+                    0x1d50                  _xPendingReadyList
                     0x087a                  _xSchedulerRunning
-                    0x1d56                  _xSuspendedTaskList
+                    0x1d5a                  _xSuspendedTaskList
                     0x0876                  _xTickCount
                     0x087e                  _xYieldPending
 
@@ -277,341 +285,357 @@ External Symbols in Program Memory (by address):
                   0x000453                  _LCDDigitalTableIndexEx
                   0x000492                  _LCDDigitalTableEx
                   0x00055e                  _HexTable
-                  0x00057a                  _lcd_set_com_seg
-                  0x0005fa                  _lcd_disp_level_bar
-                  0x000946                  _lcd_disp_level
-                  0x00098a                  _lcd_disp_level_off
-                  0x0009a6                  _lcd_disp_battary_bar
-                  0x000a0c                  _lcd_disp_battary
-                  0x000a5e                  _lcd_disp_battary_off
-                  0x000a78                  _lcd_disp_rf_bar
-                  0x000ade                  _lcd_disp_rf
-                  0x000b30                  _lcd_disp_rf_off
-                  0x000b4a                  _lcd_disp_light_bar
-                  0x000b84                  _lcd_disp_light
-                  0x000bc8                  _lcd_disp_light_off
-                  0x000bda                  _lcd_disp_chr_loc_0
-                  0x000c3a                  _lcd_disp_dp_loc_0
-                  0x000c5a                  _lcd_disp_chr_loc_1
-                  0x000cba                  _lcd_disp_dp_loc_1
-                  0x000cda                  _lcd_disp_chr_loc_2
-                  0x000d3a                  _lcd_disp_dp_loc_2
-                  0x000d5a                  _lcd_disp_chr_loc_3
-                  0x000dba                  _lcd_disp_chr_loc_4
-                  0x000e1a                  _lcd_disp_dp_loc_4
-                  0x000e3a                  _lcd_disp_chr_loc_5
-                  0x000e9a                  _lcd_disp_dp_loc_5
-                  0x000eba                  _lcd_disp_chr_loc_6
-                  0x000f1a                  _lcd_disp_dp_loc_6
-                  0x000f3a                  _lcd_disp_chr_loc_7
-                  0x000f9a                  _lcd_disp_logo
-                  0x000fa2                  _lcd_disp_unit_t
-                  0x000fd2                  _lcd_disp_unit_1st_m
-                  0x001002                  _lcd_disp_unit_1st_m3
-                  0x00103a                  _lcd_disp_unit_temperature
-                  0x001072                  _lcd_disp_unit_2nd_m
-                  0x0010aa                  _lcd_disp_unit_2nd_m3
-                  0x0010ea                  _lcd_disp_unit_mpa
-                  0x001122                  _lcd_disp_chr_loc_0_ex
-                  0x0011ba                  _lcd_disp_chr_loc_1_ex
-                  0x001252                  _lcd_disp_chr_loc_2_ex
-                  0x0012ea                  _lcd_disp_chr_loc_0_sm
-                  0x00134a                  _lcd_disp_chr_loc_1_sm
-                  0x0013aa                  _lcd_disp_chr_loc_2_sm
-                  0x00140a                  _lcd_disp_dp_loc_0_sm
-                  0x00142a                  _lcd_disp_dp_loc_1_sm
-                  0x00144a                  _lcd_disp_dp_loc_sign_sm
-                  0x00146a                  _lcd_disp_dp_loc_sm_temperature
-                  0x00148a                  _lcd_show_dp_sm
-                  0x0014ac                  _lcd_clear_all_dp_sm
-                  0x0014ba                  _lcd_disp_get_code
-                  0x0014f4                  _lcd_disp_get_code_ex
-                  0x001532                  _lcd_clear_all_dp
-                  0x001550                  _lcd_show_dp
-                  0x0015a0                  _lcd_show_chr
-                  0x00160c                  _lcd_show_chr_sm
-                  0x001642                  _lcd_show_chr_ex
-                  0x001678                  _lcd_show_string_sm
-                  0x0016a6                  _lcd_show_string_ex
-                  0x0016d4                  _lcd_show_chr_lc
-                  0x001704                  _lcd_show_string_l0
-                  0x001732                  _lcd_show_string_l1
-                  0x001760                  _lcd_show_string
-                  0x00178e                  _lcd_disp_refresh
-                  0x001814                  _lcd_disp_all
-                  0x001836                  _lcd_config
-                  0x0018b8                  _lcd_bl_on
-                  0x0018be                  _lcd_bl_off
-                  0x0018c4                  _lcd_bl_init
-                  0x0018d6                  _lcd_init
-                  0x0018e4                  _xTaskCreate
-                  0x00194e                  _prvInitialiseNewTask
-                  0x001a14                  _prvAddNewTaskToReadyList
-                  0x001a90                  _vTaskDelayUntil
-                  0x001b0c                  _vTaskDelay
-                  0x001b36                  _vTaskPrioritySet
-                  0x001bfe                  _vTaskSuspend
-                  0x001c62                  _prvTaskIsTaskSuspended
-                  0x001c94                  _vTaskResume
-                  0x001cf2                  _xTaskResumeFromISR
-                  0x001d5c                  _vTaskStartScheduler
-                  0x001d92                  _vTaskEndScheduler
-                  0x001daa                  _vTaskSuspendAll
-                  0x001db6                  _xTaskResumeAll
-                  0x001e60                  _xTaskGetTickCount
-                  0x001e70                  _xTaskGetTickCountFromISR
-                  0x001e80                  _uxTaskGetNumberOfTasks
-                  0x001e88                  _pcTaskGetName
-                  0x001ea2                  _xTaskIncrementTick
-                  0x001f80                  _vTaskSwitchContext
-                  0x00200e                  _vTaskPlaceOnEventList
-                  0x002028                  _vTaskPlaceOnUnorderedEventList
-                  0x00204e                  _xTaskRemoveFromEventList
-                  0x0020bc                  _xTaskRemoveFromUnorderedEventList
-                  0x002120                  _vTaskSetTimeOutState
-                  0x002134                  _xTaskCheckForTimeOut
-                  0x0021a0                  _vTaskMissedYield
-                  0x0021aa                  _prvIdleTask
-                  0x0021c0                  _prvInitialiseTaskLists
-                  0x0021f8                  _prvCheckTasksWaitingTermination
-                  0x0021fe                  _prvResetNextTaskUnblockTime
-                  0x002220                  _uxTaskResetEventItemValue
-                  0x002238                  _ulTaskNotifyTake
-                  0x0022a4                  _xTaskNotifyWait
-                  0x002360                  _xTaskGenericNotify
-                  0x002448                  _xTaskGenericNotifyFromISR
-                  0x002550                  _vTaskNotifyGiveFromISR
-                  0x0025da                  _xTaskNotifyStateClear
-                  0x00260e                  _prvAddCurrentTaskToDelayedList
-                  0x00266a                  _ads1148_send_cmd
-                  0x00269a                  _ads1148_read_data
-                  0x002700                  _ads1148_write_register
-                  0x002772                  _ads1148_read_register
-                  0x0027ea                  _ads1148_slef_calibration
-                  0x002814                  _ads1148_set_channle_normal
-                  0x00285e                  _ads1148_set_bcs
-                  0x002892                  _ads1148_set_vbias
-                  0x0028aa                  _ads1148_set_vref
-                  0x002900                  _ads1148_set_muxcal
-                  0x002938                  _ads1148_set_data_rate
-                  0x002966                  _ads1148_set_ani_pga
-                  0x002998                  _ads1148_set_imag_idac
-                  0x0029c6                  _ads1148_set_drdy_mode
-                  0x0029f6                  _ads1148_set_idac1_pins
-                  0x002a24                  _ads1148_set_idac2_pins
-                  0x002a52                  _ads1148_set_idac12_pins
-                  0x002a92                  _ads1148_get_all_register
-                  0x002aa8                  _ads1148_init_obj_0
-                  0x002ae4                  _ads1148_init_obj_1
-                  0x002b20                  _ads1148_set_sync
-                  0x002b56                  _ads1148_init_chip_regs
-                  0x002bc2                  _ads1148_init_all_obj
-                  0x002bcc                  _ads1148_init_device
-                  0x002bda                  _ads1148_start_convert
-                  0x002be8                  _ads1148_stop_convert
-                  0x002bf6                  _ads1148_waite_convert
-                  0x002c22                  _ads1148_test
-                  0x002c72                  _samlpe_get_adc_average_value
-                  0x002d74                  _samlpe_read_adc
-                  0x002dfe                  _samlpe_chip0_ch_diff_pr_bridge
-                  0x002e3e                  _samlpe_chip0_ch_diff_pr_signal
-                  0x002e70                  _samlpe_chip0_ch_diff_pr_ref0
-                  0x002ea4                  _samlpe_chip0_ch_pr_bridge
-                  0x002ee4                  _samlpe_chip0_ch_pr_signal
-                  0x002f16                  _samlpe_chip0_ch_pr_ref1
-                  0x002f3e                  _samlpe_chip0_ch_temperature_in
-                  0x002f72                  _samlpe_chip1_ch_expr0_bridge
-                  0x002f78                  _samlpe_chip1_ch_expr0_signal
-                  0x002f7e                  _samlpe_chip1_ch_ex0_temperature
-                  0x002f84                  _samlpe_chip1_ch_expr0_ref0
-                  0x002f8a                  _samlpe_chip1_ch_expr1_bridge
-                  0x002f90                  _samlpe_chip1_ch_expr1_signal
-                  0x002f96                  _samlpe_chip1_ch_ex1_temperature
-                  0x002f9c                  _samlpe_chip1_ch_expr1_ref1
-                  0x002fa2                  _sample_in_soc_solar
-                  0x002fa8                  _samlpe_in_soc_battery
-                  0x002fae                  _samlpe_in_soc_ref
-                  0x002fb4                  _sample_post_calc
-                  0x002fba                  _sample_process
-                  0x00305c                  _samlpe_chip0_channle_gain_calib
-                  0x0030d2                  _thread_sample
-                  0x0030e6                  _thread_sample_void
-                  0x003102                  _m_mem_set
-                  0x00312c                  _m_mem_cpy_len
-                  0x003156                  _m_mem_cpy
-                  0x003180                  _m_str_cmp
-                  0x0031c0                  _m_str_cmp_len
-                  0x003206                  _m_math_pow
-                  0x00325e                  _m_int_2_str
-                  0x0032e2                  _m_str_head_hide
-                  0x003324                  _HEX8
-                  0x003358                  _m_str_b2h
-                  0x0033b4                  _m_str_h2b
-                  0x0034be                  _m_int8_2_hex
-                  0x0034f4                  _m_int16_2_str_4
-                  0x003586                  _ads1148_hal_sck_mod_out
-                  0x00359e                  _ads1148_hal_sck_set_hight
-                  0x0035aa                  _ads1148_hal_sck_set_low
-                  0x0035b6                  _ads1148_hal_sck_mod_in
-                  0x0035c8                  _ads1148_hal_din_mod_in
-                  0x0035da                  _ads1148_hal_din_get
-                  0x0035e8                  _ads1148_hal_dout_mod_out
-                  0x003600                  _ads1148_hal_dout_set_hight
-                  0x00360c                  _ads1148_hal_dout_set_low
-                  0x003618                  _ads1148_hal_dout_mod_in
-                  0x00362a                  _ads1148_hal_drdy_0_mod_in
-                  0x003640                  _ads1148_hal_drdy_0_get
-                  0x003650                  _ads1148_hal_cs_0_mod_out
-                  0x003668                  _ads1148_hal_cs_0_mod_in
-                  0x00367a                  _ads1148_hal_cs_0_set_hight
-                  0x003686                  _ads1148_hal_cs_0_set_low
-                  0x003698                  _ads1148_hal_start_0_mod_out
-                  0x0036b0                  _ads1148_hal_start_0_set_hight
-                  0x0036bc                  _ads1148_hal_start_0_set_low
-                  0x0036c8                  _ads1148_hal_start_0_mod_in
-                  0x0036da                  _ads1148_hal_drdy_1_mod_in
-                  0x0036ec                  _ads1148_hal_drdy_1_get
-                  0x0036f8                  _ads1148_hal_cs_1_mod_out
-                  0x003710                  _ads1148_hal_cs_1_set_hight
-                  0x00371c                  _ads1148_hal_cs_1_set_low
-                  0x00372e                  _ads1148_hal_cs_1_mod_in
-                  0x003740                  _ads1148_hal_start_1_mod_out
-                  0x003758                  _ads1148_hal_start_1_set_hight
-                  0x003764                  _ads1148_hal_start_1_set_low
-                  0x003770                  _ads1148_hal_start_1_mod_in
-                  0x003782                  _ads1148_hal_port_mode_dig_all
-                  0x0037c0                  _ads1148_hal_port_init_chip0
-                  0x0037d2                  _ads1148_hal_port_deinit_chip0
-                  0x0037e4                  _ads1148_hal_port_init_chip1
-                  0x0037f6                  _ads1148_hal_port_deinit_chip1
-                  0x003808                  _ads1148_hal_write_read_byte
-                  0x003872                  _ads1148_hal_pwr_off
-                  0x00388a                  _ads1148_hal_pwr_on
-                  0x0038a2                  _iic_start
-                  0x0038e4                  _iic_stop
-                  0x003920                  _iic_send_ack
-                  0x0039b6                  _iic_waite_ack
-                  0x003a52                  _iic_send_byte
-                  0x003afe                  _iic_received_byte
-                  0x003b94                  _iic_received_byte_if_ack
-                  0x003baa                  _RTCC_Initialize
-                  0x003be4                  _RTCC_TimeReset
-                  0x003bfa                  _RTCC_TimeGet
-                  0x003cac                  _RTCC_TimeSet
-                  0x003d30                  _RTCC_BCDTimeGet
-                  0x003dca                  _RTCC_BCDTimeSet
-                  0x003e6e                  __RTCCInterrupt
-                  0x003e76                  _pvPortMalloc
-                  0x003f5e                  _vPortFree
-                  0x003fb6                  _xPortGetFreeHeapSize
-                  0x003fbe                  _vPortInitialiseBlocks
-                  0x003fec                  _m_flash_unlock_write
-                  0x004020                  _m_flash_read
-                  0x0040a0                  _m_flash_erase
-                  0x0040ca                  _m_flash_write
-                  0x00415e                  _pxPortInitialiseStack
-                  0x0041f8                  _xPortStartScheduler
-                  0x004228                  _vPortEndScheduler
-                  0x004256                  _vPortEnterCritical
-                  0x004270                  _vPortExitCritical
-                  0x00428c                  __T1Interrupt
-                  0x0042c4                  _vListInitialise
-                  0x0042f6                  _vListInitialiseItem
-                  0x004304                  _vListInsertEnd
-                  0x004340                  _vListInsert
-                  0x0043a4                  _uxListRemove
-                  0x0043ec                  _TMR2_Initialize
-                  0x004406                  __T2Interrupt
-                  0x004434                  _TMR2_Period16BitSet
-                  0x004446                  _TMR2_Period16BitGet
-                  0x00444e                  _TMR2_Counter16BitSet
-                  0x004460                  _TMR2_Counter16BitGet
-                  0x00446e                  _TMR2_Start
-                  0x00447e                  _TMR2_Stop
-                  0x004488                  _TMR2_GetElapsedThenClear
-                  0x0044a0                  _TMR2_SoftwareCounterGet
-                  0x0044ac                  _TMR2_SoftwareCounterClear
-                  0x0044b8                  _m_system_init
-                  0x0044c6                  _thread_main
-                  0x0044dc                  _thread_main_create
-                  0x0044f8                  _event_proess
-                  0x004508                  _main
-                  0x004568                  _vApplicationStackOverflowHook
-                  0x004572                  _vApplicationIdleHook
-                  0x004578                  _TMR1_Initialize
-                  0x004592                  _TMR1_Period16BitSet
-                  0x0045a4                  _TMR1_Period16BitGet
-                  0x0045ac                  _TMR1_Counter16BitSet
-                  0x0045be                  _TMR1_Counter16BitGet
-                  0x0045cc                  _TMR1_Start
-                  0x0045dc                  _TMR1_Stop
-                  0x0045e6                  _TMR1_GetElapsedThenClear
-                  0x0045fe                  _TMR1_SoftwareCounterGet
-                  0x00460a                  _TMR1_SoftwareCounterClear
-                  0x004616                  _TMR1_CallBack
-                  0x004628                  _ticker_ms_set
-                  0x004636                  _ticker_ms_get
-                  0x004640                  _ticker_ms_delay
-                  0x004680                  _TMR2_CallBack
-                  0x004698                  _ticker_10ms_per_get
-                  0x0046a2                  _ticker_10ms_per_set
-                  0x0046b0                  _PIN_MANAGER_Initialize
-                  0x004784                  _kz_vadd_on
-                  0x00479c                  _kz_vadd_off
-                  0x0047b4                  _back_night_on
-                  0x0047cc                  _back_night_off
-                  0x0047e4                  _vPortYield
-                  0x004838                  _delay_us
-                  0x004860                  _delay_ms
-                  0x004882                  _SYSTEM_Initialize
-                  0x004894                  _OSCILLATOR_Initialize
-                  0x0048b0                  _INTERRUPT_Initialize
-                  0x0048d4                  _flash_unlock_pm
+                  0x000586                  _lcd_set_com_seg
+                  0x000606                  _lcd_disp_level_bar
+                  0x000952                  _lcd_disp_level
+                  0x000996                  _lcd_disp_level_off
+                  0x0009b2                  _lcd_disp_battary_bar
+                  0x000a18                  _lcd_disp_battary
+                  0x000a6a                  _lcd_disp_battary_off
+                  0x000a84                  _lcd_disp_rf_bar
+                  0x000aea                  _lcd_disp_rf
+                  0x000b3c                  _lcd_disp_rf_off
+                  0x000b56                  _lcd_disp_light_bar
+                  0x000b90                  _lcd_disp_light
+                  0x000bd4                  _lcd_disp_light_off
+                  0x000be6                  _lcd_disp_chr_loc_0
+                  0x000c46                  _lcd_disp_dp_loc_0
+                  0x000c66                  _lcd_disp_chr_loc_1
+                  0x000cc6                  _lcd_disp_dp_loc_1
+                  0x000ce6                  _lcd_disp_chr_loc_2
+                  0x000d46                  _lcd_disp_dp_loc_2
+                  0x000d66                  _lcd_disp_chr_loc_3
+                  0x000dc6                  _lcd_disp_chr_loc_4
+                  0x000e26                  _lcd_disp_dp_loc_4
+                  0x000e46                  _lcd_disp_chr_loc_5
+                  0x000ea6                  _lcd_disp_dp_loc_5
+                  0x000ec6                  _lcd_disp_chr_loc_6
+                  0x000f26                  _lcd_disp_dp_loc_6
+                  0x000f46                  _lcd_disp_chr_loc_7
+                  0x000fa6                  _lcd_disp_logo
+                  0x000fae                  _lcd_disp_unit_t
+                  0x000fde                  _lcd_disp_unit_1st_m
+                  0x00100e                  _lcd_disp_unit_1st_m3
+                  0x001046                  _lcd_disp_unit_temperature
+                  0x00107e                  _lcd_disp_unit_2nd_m
+                  0x0010b6                  _lcd_disp_unit_2nd_m3
+                  0x0010f6                  _lcd_disp_unit_mpa
+                  0x00112e                  _lcd_disp_chr_loc_0_ex
+                  0x0011c6                  _lcd_disp_chr_loc_1_ex
+                  0x00125e                  _lcd_disp_chr_loc_2_ex
+                  0x0012f6                  _lcd_disp_chr_loc_0_sm
+                  0x001356                  _lcd_disp_chr_loc_1_sm
+                  0x0013b6                  _lcd_disp_chr_loc_2_sm
+                  0x001416                  _lcd_disp_dp_loc_0_sm
+                  0x001436                  _lcd_disp_dp_loc_1_sm
+                  0x001456                  _lcd_disp_dp_loc_sign_sm
+                  0x001476                  _lcd_disp_dp_loc_sm_temperature
+                  0x001496                  _lcd_show_dp_sm
+                  0x0014b8                  _lcd_clear_all_dp_sm
+                  0x0014c6                  _lcd_disp_get_code
+                  0x001500                  _lcd_disp_get_code_ex
+                  0x00153e                  _lcd_clear_all_dp
+                  0x00155c                  _lcd_show_dp
+                  0x0015ac                  _lcd_show_chr
+                  0x001618                  _lcd_show_chr_sm
+                  0x00164e                  _lcd_show_chr_ex
+                  0x001684                  _lcd_show_string_sm
+                  0x0016b2                  _lcd_show_string_ex
+                  0x0016e0                  _lcd_show_chr_lc
+                  0x001710                  _lcd_show_string_l0
+                  0x00173e                  _lcd_show_string_l1
+                  0x00176c                  _lcd_show_string
+                  0x00179a                  _lcd_disp_refresh
+                  0x001820                  _lcd_disp_all
+                  0x001842                  _lcd_config
+                  0x0018c4                  _lcd_bl_on
+                  0x0018ca                  _lcd_bl_off
+                  0x0018d0                  _lcd_bl_init
+                  0x0018e2                  _lcd_init
+                  0x0018f0                  _xTaskCreate
+                  0x00195a                  _prvInitialiseNewTask
+                  0x001a20                  _prvAddNewTaskToReadyList
+                  0x001a9c                  _vTaskDelayUntil
+                  0x001b18                  _vTaskDelay
+                  0x001b42                  _vTaskPrioritySet
+                  0x001c0a                  _vTaskSuspend
+                  0x001c6e                  _prvTaskIsTaskSuspended
+                  0x001ca0                  _vTaskResume
+                  0x001cfe                  _xTaskResumeFromISR
+                  0x001d68                  _vTaskStartScheduler
+                  0x001d9e                  _vTaskEndScheduler
+                  0x001db6                  _vTaskSuspendAll
+                  0x001dc2                  _xTaskResumeAll
+                  0x001e6c                  _xTaskGetTickCount
+                  0x001e7c                  _xTaskGetTickCountFromISR
+                  0x001e8c                  _uxTaskGetNumberOfTasks
+                  0x001e94                  _pcTaskGetName
+                  0x001eae                  _xTaskIncrementTick
+                  0x001f8c                  _vTaskSwitchContext
+                  0x00201a                  _vTaskPlaceOnEventList
+                  0x002034                  _vTaskPlaceOnUnorderedEventList
+                  0x00205a                  _xTaskRemoveFromEventList
+                  0x0020c8                  _xTaskRemoveFromUnorderedEventList
+                  0x00212c                  _vTaskSetTimeOutState
+                  0x002140                  _xTaskCheckForTimeOut
+                  0x0021ac                  _vTaskMissedYield
+                  0x0021b6                  _prvIdleTask
+                  0x0021cc                  _prvInitialiseTaskLists
+                  0x002204                  _prvCheckTasksWaitingTermination
+                  0x00220a                  _prvResetNextTaskUnblockTime
+                  0x00222c                  _uxTaskResetEventItemValue
+                  0x002244                  _ulTaskNotifyTake
+                  0x0022b0                  _xTaskNotifyWait
+                  0x00236c                  _xTaskGenericNotify
+                  0x002454                  _xTaskGenericNotifyFromISR
+                  0x00255c                  _vTaskNotifyGiveFromISR
+                  0x0025e6                  _xTaskNotifyStateClear
+                  0x00261a                  _prvAddCurrentTaskToDelayedList
+                  0x002676                  _ads1148_send_cmd
+                  0x0026a6                  _ads1148_read_data
+                  0x00270c                  _ads1148_write_register
+                  0x00277e                  _ads1148_read_register
+                  0x0027f6                  _ads1148_slef_calibration
+                  0x002820                  _ads1148_set_channle_normal
+                  0x00286a                  _ads1148_set_bcs
+                  0x00289e                  _ads1148_set_vbias
+                  0x0028b6                  _ads1148_set_vref
+                  0x00290c                  _ads1148_set_muxcal
+                  0x002944                  _ads1148_set_data_rate
+                  0x002972                  _ads1148_set_ani_pga
+                  0x0029a4                  _ads1148_set_imag_idac
+                  0x0029d2                  _ads1148_set_drdy_mode
+                  0x002a02                  _ads1148_set_idac1_pins
+                  0x002a30                  _ads1148_set_idac2_pins
+                  0x002a5e                  _ads1148_set_idac12_pins
+                  0x002a9e                  _ads1148_get_all_register
+                  0x002ab4                  _ads1148_init_obj_0
+                  0x002af0                  _ads1148_init_obj_1
+                  0x002b2c                  _ads1148_set_sync
+                  0x002b62                  _ads1148_init_chip_regs
+                  0x002bce                  _ads1148_init_all_obj
+                  0x002bd8                  _ads1148_init_device
+                  0x002be6                  _ads1148_start_convert
+                  0x002bf4                  _ads1148_stop_convert
+                  0x002c02                  _ads1148_waite_convert
+                  0x002c2e                  _ads1148_test
+                  0x002c7e                  _samlpe_get_adc_average_value
+                  0x002d80                  _samlpe_read_adc
+                  0x002e0a                  _samlpe_chip0_ch_diff_pr_bridge
+                  0x002e4a                  _samlpe_chip0_ch_diff_pr_signal
+                  0x002e7c                  _samlpe_chip0_ch_diff_pr_ref0
+                  0x002eb0                  _samlpe_chip0_ch_pr_bridge
+                  0x002ef0                  _samlpe_chip0_ch_pr_signal
+                  0x002f22                  _samlpe_chip0_ch_pr_ref1
+                  0x002f4a                  _samlpe_chip0_ch_temperature_in
+                  0x002f7e                  _samlpe_chip1_ch_expr0_bridge
+                  0x002f84                  _samlpe_chip1_ch_expr0_signal
+                  0x002f8a                  _samlpe_chip1_ch_ex0_temperature
+                  0x002f90                  _samlpe_chip1_ch_expr0_ref0
+                  0x002f96                  _samlpe_chip1_ch_expr1_bridge
+                  0x002f9c                  _samlpe_chip1_ch_expr1_signal
+                  0x002fa2                  _samlpe_chip1_ch_ex1_temperature
+                  0x002fa8                  _samlpe_chip1_ch_expr1_ref1
+                  0x002fae                  _sample_in_soc_solar
+                  0x002fb4                  _samlpe_in_soc_battery
+                  0x002fba                  _samlpe_in_soc_ref
+                  0x002fc0                  _sample_post_calc
+                  0x002fc6                  _sample_process
+                  0x003068                  _samlpe_chip0_channle_gain_calib
+                  0x0030de                  _thread_sample
+                  0x0030f2                  _thread_sample_void
+                  0x00310e                  _m_mem_set
+                  0x003138                  _m_mem_cpy_len
+                  0x003162                  _m_mem_cpy
+                  0x00318c                  _m_str_cmp
+                  0x0031cc                  _m_str_cmp_len
+                  0x003212                  _m_math_pow
+                  0x00326a                  _m_int_2_str
+                  0x0032ee                  _m_str_head_hide
+                  0x003330                  _HEX8
+                  0x003364                  _m_str_b2h
+                  0x0033c0                  _m_str_h2b
+                  0x0034ca                  _m_int8_2_hex
+                  0x003500                  _m_int16_2_str_4
+                  0x003592                  _xEventGroupCreate
+                  0x0035b0                  _xEventGroupSync
+                  0x003668                  _xEventGroupWaitBits
+                  0x003744                  _xEventGroupClearBits
+                  0x00376c                  _xEventGroupGetBitsFromISR
+                  0x003784                  _xEventGroupSetBits
+                  0x00384e                  _vEventGroupDelete
+                  0x003878                  _vEventGroupSetBitsCallback
+                  0x00388c                  _vEventGroupClearBitsCallback
+                  0x0038d8                  _ads1148_hal_sck_mod_out
+                  0x0038f0                  _ads1148_hal_sck_set_hight
+                  0x0038fc                  _ads1148_hal_sck_set_low
+                  0x003908                  _ads1148_hal_sck_mod_in
+                  0x00391a                  _ads1148_hal_din_mod_in
+                  0x00392c                  _ads1148_hal_din_get
+                  0x00393a                  _ads1148_hal_dout_mod_out
+                  0x003952                  _ads1148_hal_dout_set_hight
+                  0x00395e                  _ads1148_hal_dout_set_low
+                  0x00396a                  _ads1148_hal_dout_mod_in
+                  0x00397c                  _ads1148_hal_drdy_0_mod_in
+                  0x003992                  _ads1148_hal_drdy_0_get
+                  0x0039a2                  _ads1148_hal_cs_0_mod_out
+                  0x0039ba                  _ads1148_hal_cs_0_mod_in
+                  0x0039cc                  _ads1148_hal_cs_0_set_hight
+                  0x0039d8                  _ads1148_hal_cs_0_set_low
+                  0x0039ea                  _ads1148_hal_start_0_mod_out
+                  0x003a02                  _ads1148_hal_start_0_set_hight
+                  0x003a0e                  _ads1148_hal_start_0_set_low
+                  0x003a1a                  _ads1148_hal_start_0_mod_in
+                  0x003a2c                  _ads1148_hal_drdy_1_mod_in
+                  0x003a3e                  _ads1148_hal_drdy_1_get
+                  0x003a4a                  _ads1148_hal_cs_1_mod_out
+                  0x003a62                  _ads1148_hal_cs_1_set_hight
+                  0x003a6e                  _ads1148_hal_cs_1_set_low
+                  0x003a80                  _ads1148_hal_cs_1_mod_in
+                  0x003a92                  _ads1148_hal_start_1_mod_out
+                  0x003aaa                  _ads1148_hal_start_1_set_hight
+                  0x003ab6                  _ads1148_hal_start_1_set_low
+                  0x003ac2                  _ads1148_hal_start_1_mod_in
+                  0x003ad4                  _ads1148_hal_port_mode_dig_all
+                  0x003b12                  _ads1148_hal_port_init_chip0
+                  0x003b24                  _ads1148_hal_port_deinit_chip0
+                  0x003b36                  _ads1148_hal_port_init_chip1
+                  0x003b48                  _ads1148_hal_port_deinit_chip1
+                  0x003b5a                  _ads1148_hal_write_read_byte
+                  0x003bc4                  _ads1148_hal_pwr_off
+                  0x003bdc                  _ads1148_hal_pwr_on
+                  0x003bf4                  _iic_start
+                  0x003c36                  _iic_stop
+                  0x003c72                  _iic_send_ack
+                  0x003d08                  _iic_waite_ack
+                  0x003da4                  _iic_send_byte
+                  0x003e50                  _iic_received_byte
+                  0x003ee6                  _iic_received_byte_if_ack
+                  0x003efc                  _RTCC_Initialize
+                  0x003f36                  _RTCC_TimeReset
+                  0x003f4c                  _RTCC_TimeGet
+                  0x003ffe                  _RTCC_TimeSet
+                  0x004082                  _RTCC_BCDTimeGet
+                  0x00411c                  _RTCC_BCDTimeSet
+                  0x0041c0                  __RTCCInterrupt
+                  0x0041c8                  _pvPortMalloc
+                  0x0042b0                  _vPortFree
+                  0x004308                  _xPortGetFreeHeapSize
+                  0x004310                  _vPortInitialiseBlocks
+                  0x00433e                  _m_flash_unlock_write
+                  0x004372                  _m_flash_read
+                  0x0043f2                  _m_flash_erase
+                  0x00441c                  _m_flash_write
+                  0x0044b0                  _pxPortInitialiseStack
+                  0x00454a                  _xPortStartScheduler
+                  0x00457a                  _vPortEndScheduler
+                  0x0045a8                  _vPortEnterCritical
+                  0x0045c2                  _vPortExitCritical
+                  0x0045de                  __T1Interrupt
+                  0x004616                  _vListInitialise
+                  0x004648                  _vListInitialiseItem
+                  0x004656                  _vListInsertEnd
+                  0x004692                  _vListInsert
+                  0x0046f6                  _uxListRemove
+                  0x00473e                  _m_system_init
+                  0x00474c                  _thread_main
+                  0x00477c                  _thread_main_create
+                  0x0047a8                  _event_proess
+                  0x0047b8                  _main
+                  0x00481a                  _vApplicationStackOverflowHook
+                  0x004824                  _vApplicationIdleHook
+                  0x00482a                  _TMR2_Initialize
+                  0x004844                  __T2Interrupt
+                  0x004872                  _TMR2_Period16BitSet
+                  0x004884                  _TMR2_Period16BitGet
+                  0x00488c                  _TMR2_Counter16BitSet
+                  0x00489e                  _TMR2_Counter16BitGet
+                  0x0048ac                  _TMR2_Start
+                  0x0048bc                  _TMR2_Stop
+                  0x0048c6                  _TMR2_GetElapsedThenClear
+                  0x0048de                  _TMR2_SoftwareCounterGet
+                  0x0048ea                  _TMR2_SoftwareCounterClear
+                  0x0048f6                  _TMR1_Initialize
+                  0x004910                  _TMR1_Period16BitSet
+                  0x004922                  _TMR1_Period16BitGet
+                  0x00492a                  _TMR1_Counter16BitSet
+                  0x00493c                  _TMR1_Counter16BitGet
+                  0x00494a                  _TMR1_Start
+                  0x00495a                  _TMR1_Stop
+                  0x004964                  _TMR1_GetElapsedThenClear
+                  0x00497c                  _TMR1_SoftwareCounterGet
+                  0x004988                  _TMR1_SoftwareCounterClear
+                  0x004994                  _TMR1_CallBack
+                  0x0049a6                  _ticker_ms_set
+                  0x0049b4                  _ticker_ms_get
+                  0x0049be                  _ticker_ms_delay
+                  0x0049fe                  _TMR2_CallBack
+                  0x004a16                  _ticker_10ms_per_get
+                  0x004a20                  _ticker_10ms_per_set
+                  0x004a2e                  _get_key_value
+                  0x004a6e                  _key_init
+                  0x004a9c                  __CNInterrupt
+                  0x004b38                  _PIN_MANAGER_Initialize
+                  0x004ba6                  _kz_vadd_on
+                  0x004bbe                  _kz_vadd_off
+                  0x004bd6                  _back_night_on
+                  0x004bee                  _back_night_off
+                  0x004c06                  _vPortYield
+                  0x004c5a                  _ui_disp_start_cs600
+                  0x004ca6                  _delay_us
+                  0x004cce                  _delay_ms
+                  0x004cf0                  _SYSTEM_Initialize
+                  0x004d02                  _OSCILLATOR_Initialize
+                  0x004d1e                  _send_event_group
+                  0x004d30                  _send_thread_main_event
+                  0x004d44                  _INTERRUPT_Initialize
+                  0x004d68                  _flash_unlock_pm
 
 External Symbols in Program Memory (by name):
 
-                  0x003324                  _HEX8
+                  0x003330                  _HEX8
                   0x00055e                  _HexTable
-                  0x0048b0                  _INTERRUPT_Initialize
+                  0x004d44                  _INTERRUPT_Initialize
                   0x0003fe                  _LCDDigitalIndexTable
                   0x000429                  _LCDDigitalTable
                   0x000492                  _LCDDigitalTableEx
                   0x000453                  _LCDDigitalTableIndexEx
-                  0x004894                  _OSCILLATOR_Initialize
-                  0x0046b0                  _PIN_MANAGER_Initialize
-                  0x003d30                  _RTCC_BCDTimeGet
-                  0x003dca                  _RTCC_BCDTimeSet
-                  0x003baa                  _RTCC_Initialize
-                  0x003bfa                  _RTCC_TimeGet
-                  0x003be4                  _RTCC_TimeReset
-                  0x003cac                  _RTCC_TimeSet
-                  0x004882                  _SYSTEM_Initialize
-                  0x004616                  _TMR1_CallBack
-                  0x0045be                  _TMR1_Counter16BitGet
-                  0x0045ac                  _TMR1_Counter16BitSet
-                  0x0045e6                  _TMR1_GetElapsedThenClear
-                  0x004578                  _TMR1_Initialize
-                  0x0045a4                  _TMR1_Period16BitGet
-                  0x004592                  _TMR1_Period16BitSet
-                  0x00460a                  _TMR1_SoftwareCounterClear
-                  0x0045fe                  _TMR1_SoftwareCounterGet
-                  0x0045cc                  _TMR1_Start
-                  0x0045dc                  _TMR1_Stop
-                  0x004680                  _TMR2_CallBack
-                  0x004460                  _TMR2_Counter16BitGet
-                  0x00444e                  _TMR2_Counter16BitSet
-                  0x004488                  _TMR2_GetElapsedThenClear
-                  0x0043ec                  _TMR2_Initialize
-                  0x004446                  _TMR2_Period16BitGet
-                  0x004434                  _TMR2_Period16BitSet
-                  0x0044ac                  _TMR2_SoftwareCounterClear
-                  0x0044a0                  _TMR2_SoftwareCounterGet
-                  0x00446e                  _TMR2_Start
-                  0x00447e                  _TMR2_Stop
+                  0x004d02                  _OSCILLATOR_Initialize
+                  0x004b38                  _PIN_MANAGER_Initialize
+                  0x004082                  _RTCC_BCDTimeGet
+                  0x00411c                  _RTCC_BCDTimeSet
+                  0x003efc                  _RTCC_Initialize
+                  0x003f4c                  _RTCC_TimeGet
+                  0x003f36                  _RTCC_TimeReset
+                  0x003ffe                  _RTCC_TimeSet
+                  0x004cf0                  _SYSTEM_Initialize
+                  0x004994                  _TMR1_CallBack
+                  0x00493c                  _TMR1_Counter16BitGet
+                  0x00492a                  _TMR1_Counter16BitSet
+                  0x004964                  _TMR1_GetElapsedThenClear
+                  0x0048f6                  _TMR1_Initialize
+                  0x004922                  _TMR1_Period16BitGet
+                  0x004910                  _TMR1_Period16BitSet
+                  0x004988                  _TMR1_SoftwareCounterClear
+                  0x00497c                  _TMR1_SoftwareCounterGet
+                  0x00494a                  _TMR1_Start
+                  0x00495a                  _TMR1_Stop
+                  0x0049fe                  _TMR2_CallBack
+                  0x00489e                  _TMR2_Counter16BitGet
+                  0x00488c                  _TMR2_Counter16BitSet
+                  0x0048c6                  _TMR2_GetElapsedThenClear
+                  0x00482a                  _TMR2_Initialize
+                  0x004884                  _TMR2_Period16BitGet
+                  0x004872                  _TMR2_Period16BitSet
+                  0x0048ea                  _TMR2_SoftwareCounterClear
+                  0x0048de                  _TMR2_SoftwareCounterGet
+                  0x0048ac                  _TMR2_Start
+                  0x0048bc                  _TMR2_Stop
+                  0x004a9c                  __CNInterrupt
                   0x00036c                  __DefaultInterrupt
-                  0x003e6e                  __RTCCInterrupt
-                  0x00428c                  __T1Interrupt
-                  0x004406                  __T2Interrupt
+                  0x0041c0                  __RTCCInterrupt
+                  0x0045de                  __T1Interrupt
+                  0x004844                  __T2Interrupt
                   0x000372                  ___divsi3
                   0x000390                  ___modsi3
                   0x0003ae                  ___udivsi3
@@ -620,262 +644,276 @@ External Symbols in Program Memory (by name):
                   0x000252                  __data_init_da
                   0x00023c                  __psv_init
                   0x000200                  __resetPRI
-                  0x002a92                  _ads1148_get_all_register
-                  0x003668                  _ads1148_hal_cs_0_mod_in
-                  0x003650                  _ads1148_hal_cs_0_mod_out
-                  0x00367a                  _ads1148_hal_cs_0_set_hight
-                  0x003686                  _ads1148_hal_cs_0_set_low
-                  0x00372e                  _ads1148_hal_cs_1_mod_in
-                  0x0036f8                  _ads1148_hal_cs_1_mod_out
-                  0x003710                  _ads1148_hal_cs_1_set_hight
-                  0x00371c                  _ads1148_hal_cs_1_set_low
-                  0x0035da                  _ads1148_hal_din_get
-                  0x0035c8                  _ads1148_hal_din_mod_in
-                  0x003618                  _ads1148_hal_dout_mod_in
-                  0x0035e8                  _ads1148_hal_dout_mod_out
-                  0x003600                  _ads1148_hal_dout_set_hight
-                  0x00360c                  _ads1148_hal_dout_set_low
-                  0x003640                  _ads1148_hal_drdy_0_get
-                  0x00362a                  _ads1148_hal_drdy_0_mod_in
-                  0x0036ec                  _ads1148_hal_drdy_1_get
-                  0x0036da                  _ads1148_hal_drdy_1_mod_in
-                  0x0037d2                  _ads1148_hal_port_deinit_chip0
-                  0x0037f6                  _ads1148_hal_port_deinit_chip1
-                  0x0037c0                  _ads1148_hal_port_init_chip0
-                  0x0037e4                  _ads1148_hal_port_init_chip1
-                  0x003782                  _ads1148_hal_port_mode_dig_all
-                  0x003872                  _ads1148_hal_pwr_off
-                  0x00388a                  _ads1148_hal_pwr_on
-                  0x0035b6                  _ads1148_hal_sck_mod_in
-                  0x003586                  _ads1148_hal_sck_mod_out
-                  0x00359e                  _ads1148_hal_sck_set_hight
-                  0x0035aa                  _ads1148_hal_sck_set_low
-                  0x0036c8                  _ads1148_hal_start_0_mod_in
-                  0x003698                  _ads1148_hal_start_0_mod_out
-                  0x0036b0                  _ads1148_hal_start_0_set_hight
-                  0x0036bc                  _ads1148_hal_start_0_set_low
-                  0x003770                  _ads1148_hal_start_1_mod_in
-                  0x003740                  _ads1148_hal_start_1_mod_out
-                  0x003758                  _ads1148_hal_start_1_set_hight
-                  0x003764                  _ads1148_hal_start_1_set_low
-                  0x003808                  _ads1148_hal_write_read_byte
-                  0x002bc2                  _ads1148_init_all_obj
-                  0x002b56                  _ads1148_init_chip_regs
-                  0x002bcc                  _ads1148_init_device
-                  0x002aa8                  _ads1148_init_obj_0
-                  0x002ae4                  _ads1148_init_obj_1
-                  0x00269a                  _ads1148_read_data
-                  0x002772                  _ads1148_read_register
-                  0x00266a                  _ads1148_send_cmd
-                  0x002966                  _ads1148_set_ani_pga
-                  0x00285e                  _ads1148_set_bcs
-                  0x002814                  _ads1148_set_channle_normal
-                  0x002938                  _ads1148_set_data_rate
-                  0x0029c6                  _ads1148_set_drdy_mode
-                  0x002a52                  _ads1148_set_idac12_pins
-                  0x0029f6                  _ads1148_set_idac1_pins
-                  0x002a24                  _ads1148_set_idac2_pins
-                  0x002998                  _ads1148_set_imag_idac
-                  0x002900                  _ads1148_set_muxcal
-                  0x002b20                  _ads1148_set_sync
-                  0x002892                  _ads1148_set_vbias
-                  0x0028aa                  _ads1148_set_vref
-                  0x0027ea                  _ads1148_slef_calibration
-                  0x002bda                  _ads1148_start_convert
-                  0x002be8                  _ads1148_stop_convert
-                  0x002c22                  _ads1148_test
-                  0x002bf6                  _ads1148_waite_convert
-                  0x002700                  _ads1148_write_register
-                  0x0047cc                  _back_night_off
-                  0x0047b4                  _back_night_on
-                  0x004860                  _delay_ms
-                  0x004838                  _delay_us
-                  0x0044f8                  _event_proess
-                  0x0048d4                  _flash_unlock_pm
-                  0x003afe                  _iic_received_byte
-                  0x003b94                  _iic_received_byte_if_ack
-                  0x003920                  _iic_send_ack
-                  0x003a52                  _iic_send_byte
-                  0x0038a2                  _iic_start
-                  0x0038e4                  _iic_stop
-                  0x0039b6                  _iic_waite_ack
-                  0x00479c                  _kz_vadd_off
-                  0x004784                  _kz_vadd_on
-                  0x0018c4                  _lcd_bl_init
-                  0x0018be                  _lcd_bl_off
-                  0x0018b8                  _lcd_bl_on
-                  0x001532                  _lcd_clear_all_dp
-                  0x0014ac                  _lcd_clear_all_dp_sm
-                  0x001836                  _lcd_config
-                  0x001814                  _lcd_disp_all
-                  0x000a0c                  _lcd_disp_battary
-                  0x0009a6                  _lcd_disp_battary_bar
-                  0x000a5e                  _lcd_disp_battary_off
-                  0x000bda                  _lcd_disp_chr_loc_0
-                  0x001122                  _lcd_disp_chr_loc_0_ex
-                  0x0012ea                  _lcd_disp_chr_loc_0_sm
-                  0x000c5a                  _lcd_disp_chr_loc_1
-                  0x0011ba                  _lcd_disp_chr_loc_1_ex
-                  0x00134a                  _lcd_disp_chr_loc_1_sm
-                  0x000cda                  _lcd_disp_chr_loc_2
-                  0x001252                  _lcd_disp_chr_loc_2_ex
-                  0x0013aa                  _lcd_disp_chr_loc_2_sm
-                  0x000d5a                  _lcd_disp_chr_loc_3
-                  0x000dba                  _lcd_disp_chr_loc_4
-                  0x000e3a                  _lcd_disp_chr_loc_5
-                  0x000eba                  _lcd_disp_chr_loc_6
-                  0x000f3a                  _lcd_disp_chr_loc_7
-                  0x000c3a                  _lcd_disp_dp_loc_0
-                  0x00140a                  _lcd_disp_dp_loc_0_sm
-                  0x000cba                  _lcd_disp_dp_loc_1
-                  0x00142a                  _lcd_disp_dp_loc_1_sm
-                  0x000d3a                  _lcd_disp_dp_loc_2
-                  0x000e1a                  _lcd_disp_dp_loc_4
-                  0x000e9a                  _lcd_disp_dp_loc_5
-                  0x000f1a                  _lcd_disp_dp_loc_6
-                  0x00144a                  _lcd_disp_dp_loc_sign_sm
-                  0x00146a                  _lcd_disp_dp_loc_sm_temperature
-                  0x0014ba                  _lcd_disp_get_code
-                  0x0014f4                  _lcd_disp_get_code_ex
-                  0x000946                  _lcd_disp_level
-                  0x0005fa                  _lcd_disp_level_bar
-                  0x00098a                  _lcd_disp_level_off
-                  0x000b84                  _lcd_disp_light
-                  0x000b4a                  _lcd_disp_light_bar
-                  0x000bc8                  _lcd_disp_light_off
-                  0x000f9a                  _lcd_disp_logo
-                  0x00178e                  _lcd_disp_refresh
-                  0x000ade                  _lcd_disp_rf
-                  0x000a78                  _lcd_disp_rf_bar
-                  0x000b30                  _lcd_disp_rf_off
-                  0x000fd2                  _lcd_disp_unit_1st_m
-                  0x001002                  _lcd_disp_unit_1st_m3
-                  0x001072                  _lcd_disp_unit_2nd_m
-                  0x0010aa                  _lcd_disp_unit_2nd_m3
-                  0x0010ea                  _lcd_disp_unit_mpa
-                  0x000fa2                  _lcd_disp_unit_t
-                  0x00103a                  _lcd_disp_unit_temperature
-                  0x0018d6                  _lcd_init
-                  0x00057a                  _lcd_set_com_seg
-                  0x0015a0                  _lcd_show_chr
-                  0x001642                  _lcd_show_chr_ex
-                  0x0016d4                  _lcd_show_chr_lc
-                  0x00160c                  _lcd_show_chr_sm
-                  0x001550                  _lcd_show_dp
-                  0x00148a                  _lcd_show_dp_sm
-                  0x001760                  _lcd_show_string
-                  0x0016a6                  _lcd_show_string_ex
-                  0x001704                  _lcd_show_string_l0
-                  0x001732                  _lcd_show_string_l1
-                  0x001678                  _lcd_show_string_sm
-                  0x0040a0                  _m_flash_erase
-                  0x004020                  _m_flash_read
-                  0x003fec                  _m_flash_unlock_write
-                  0x0040ca                  _m_flash_write
-                  0x0034f4                  _m_int16_2_str_4
-                  0x0034be                  _m_int8_2_hex
-                  0x00325e                  _m_int_2_str
-                  0x003206                  _m_math_pow
-                  0x003156                  _m_mem_cpy
-                  0x00312c                  _m_mem_cpy_len
-                  0x003102                  _m_mem_set
-                  0x003358                  _m_str_b2h
-                  0x003180                  _m_str_cmp
-                  0x0031c0                  _m_str_cmp_len
-                  0x0033b4                  _m_str_h2b
-                  0x0032e2                  _m_str_head_hide
-                  0x0044b8                  _m_system_init
-                  0x004508                  _main
+                  0x002a9e                  _ads1148_get_all_register
+                  0x0039ba                  _ads1148_hal_cs_0_mod_in
+                  0x0039a2                  _ads1148_hal_cs_0_mod_out
+                  0x0039cc                  _ads1148_hal_cs_0_set_hight
+                  0x0039d8                  _ads1148_hal_cs_0_set_low
+                  0x003a80                  _ads1148_hal_cs_1_mod_in
+                  0x003a4a                  _ads1148_hal_cs_1_mod_out
+                  0x003a62                  _ads1148_hal_cs_1_set_hight
+                  0x003a6e                  _ads1148_hal_cs_1_set_low
+                  0x00392c                  _ads1148_hal_din_get
+                  0x00391a                  _ads1148_hal_din_mod_in
+                  0x00396a                  _ads1148_hal_dout_mod_in
+                  0x00393a                  _ads1148_hal_dout_mod_out
+                  0x003952                  _ads1148_hal_dout_set_hight
+                  0x00395e                  _ads1148_hal_dout_set_low
+                  0x003992                  _ads1148_hal_drdy_0_get
+                  0x00397c                  _ads1148_hal_drdy_0_mod_in
+                  0x003a3e                  _ads1148_hal_drdy_1_get
+                  0x003a2c                  _ads1148_hal_drdy_1_mod_in
+                  0x003b24                  _ads1148_hal_port_deinit_chip0
+                  0x003b48                  _ads1148_hal_port_deinit_chip1
+                  0x003b12                  _ads1148_hal_port_init_chip0
+                  0x003b36                  _ads1148_hal_port_init_chip1
+                  0x003ad4                  _ads1148_hal_port_mode_dig_all
+                  0x003bc4                  _ads1148_hal_pwr_off
+                  0x003bdc                  _ads1148_hal_pwr_on
+                  0x003908                  _ads1148_hal_sck_mod_in
+                  0x0038d8                  _ads1148_hal_sck_mod_out
+                  0x0038f0                  _ads1148_hal_sck_set_hight
+                  0x0038fc                  _ads1148_hal_sck_set_low
+                  0x003a1a                  _ads1148_hal_start_0_mod_in
+                  0x0039ea                  _ads1148_hal_start_0_mod_out
+                  0x003a02                  _ads1148_hal_start_0_set_hight
+                  0x003a0e                  _ads1148_hal_start_0_set_low
+                  0x003ac2                  _ads1148_hal_start_1_mod_in
+                  0x003a92                  _ads1148_hal_start_1_mod_out
+                  0x003aaa                  _ads1148_hal_start_1_set_hight
+                  0x003ab6                  _ads1148_hal_start_1_set_low
+                  0x003b5a                  _ads1148_hal_write_read_byte
+                  0x002bce                  _ads1148_init_all_obj
+                  0x002b62                  _ads1148_init_chip_regs
+                  0x002bd8                  _ads1148_init_device
+                  0x002ab4                  _ads1148_init_obj_0
+                  0x002af0                  _ads1148_init_obj_1
+                  0x0026a6                  _ads1148_read_data
+                  0x00277e                  _ads1148_read_register
+                  0x002676                  _ads1148_send_cmd
+                  0x002972                  _ads1148_set_ani_pga
+                  0x00286a                  _ads1148_set_bcs
+                  0x002820                  _ads1148_set_channle_normal
+                  0x002944                  _ads1148_set_data_rate
+                  0x0029d2                  _ads1148_set_drdy_mode
+                  0x002a5e                  _ads1148_set_idac12_pins
+                  0x002a02                  _ads1148_set_idac1_pins
+                  0x002a30                  _ads1148_set_idac2_pins
+                  0x0029a4                  _ads1148_set_imag_idac
+                  0x00290c                  _ads1148_set_muxcal
+                  0x002b2c                  _ads1148_set_sync
+                  0x00289e                  _ads1148_set_vbias
+                  0x0028b6                  _ads1148_set_vref
+                  0x0027f6                  _ads1148_slef_calibration
+                  0x002be6                  _ads1148_start_convert
+                  0x002bf4                  _ads1148_stop_convert
+                  0x002c2e                  _ads1148_test
+                  0x002c02                  _ads1148_waite_convert
+                  0x00270c                  _ads1148_write_register
+                  0x004bee                  _back_night_off
+                  0x004bd6                  _back_night_on
+                  0x004cce                  _delay_ms
+                  0x004ca6                  _delay_us
+                  0x0047a8                  _event_proess
+                  0x004d68                  _flash_unlock_pm
+                  0x004a2e                  _get_key_value
+                  0x003e50                  _iic_received_byte
+                  0x003ee6                  _iic_received_byte_if_ack
+                  0x003c72                  _iic_send_ack
+                  0x003da4                  _iic_send_byte
+                  0x003bf4                  _iic_start
+                  0x003c36                  _iic_stop
+                  0x003d08                  _iic_waite_ack
+                  0x004a6e                  _key_init
+                  0x004bbe                  _kz_vadd_off
+                  0x004ba6                  _kz_vadd_on
+                  0x0018d0                  _lcd_bl_init
+                  0x0018ca                  _lcd_bl_off
+                  0x0018c4                  _lcd_bl_on
+                  0x00153e                  _lcd_clear_all_dp
+                  0x0014b8                  _lcd_clear_all_dp_sm
+                  0x001842                  _lcd_config
+                  0x001820                  _lcd_disp_all
+                  0x000a18                  _lcd_disp_battary
+                  0x0009b2                  _lcd_disp_battary_bar
+                  0x000a6a                  _lcd_disp_battary_off
+                  0x000be6                  _lcd_disp_chr_loc_0
+                  0x00112e                  _lcd_disp_chr_loc_0_ex
+                  0x0012f6                  _lcd_disp_chr_loc_0_sm
+                  0x000c66                  _lcd_disp_chr_loc_1
+                  0x0011c6                  _lcd_disp_chr_loc_1_ex
+                  0x001356                  _lcd_disp_chr_loc_1_sm
+                  0x000ce6                  _lcd_disp_chr_loc_2
+                  0x00125e                  _lcd_disp_chr_loc_2_ex
+                  0x0013b6                  _lcd_disp_chr_loc_2_sm
+                  0x000d66                  _lcd_disp_chr_loc_3
+                  0x000dc6                  _lcd_disp_chr_loc_4
+                  0x000e46                  _lcd_disp_chr_loc_5
+                  0x000ec6                  _lcd_disp_chr_loc_6
+                  0x000f46                  _lcd_disp_chr_loc_7
+                  0x000c46                  _lcd_disp_dp_loc_0
+                  0x001416                  _lcd_disp_dp_loc_0_sm
+                  0x000cc6                  _lcd_disp_dp_loc_1
+                  0x001436                  _lcd_disp_dp_loc_1_sm
+                  0x000d46                  _lcd_disp_dp_loc_2
+                  0x000e26                  _lcd_disp_dp_loc_4
+                  0x000ea6                  _lcd_disp_dp_loc_5
+                  0x000f26                  _lcd_disp_dp_loc_6
+                  0x001456                  _lcd_disp_dp_loc_sign_sm
+                  0x001476                  _lcd_disp_dp_loc_sm_temperature
+                  0x0014c6                  _lcd_disp_get_code
+                  0x001500                  _lcd_disp_get_code_ex
+                  0x000952                  _lcd_disp_level
+                  0x000606                  _lcd_disp_level_bar
+                  0x000996                  _lcd_disp_level_off
+                  0x000b90                  _lcd_disp_light
+                  0x000b56                  _lcd_disp_light_bar
+                  0x000bd4                  _lcd_disp_light_off
+                  0x000fa6                  _lcd_disp_logo
+                  0x00179a                  _lcd_disp_refresh
+                  0x000aea                  _lcd_disp_rf
+                  0x000a84                  _lcd_disp_rf_bar
+                  0x000b3c                  _lcd_disp_rf_off
+                  0x000fde                  _lcd_disp_unit_1st_m
+                  0x00100e                  _lcd_disp_unit_1st_m3
+                  0x00107e                  _lcd_disp_unit_2nd_m
+                  0x0010b6                  _lcd_disp_unit_2nd_m3
+                  0x0010f6                  _lcd_disp_unit_mpa
+                  0x000fae                  _lcd_disp_unit_t
+                  0x001046                  _lcd_disp_unit_temperature
+                  0x0018e2                  _lcd_init
+                  0x000586                  _lcd_set_com_seg
+                  0x0015ac                  _lcd_show_chr
+                  0x00164e                  _lcd_show_chr_ex
+                  0x0016e0                  _lcd_show_chr_lc
+                  0x001618                  _lcd_show_chr_sm
+                  0x00155c                  _lcd_show_dp
+                  0x001496                  _lcd_show_dp_sm
+                  0x00176c                  _lcd_show_string
+                  0x0016b2                  _lcd_show_string_ex
+                  0x001710                  _lcd_show_string_l0
+                  0x00173e                  _lcd_show_string_l1
+                  0x001684                  _lcd_show_string_sm
+                  0x0043f2                  _m_flash_erase
+                  0x004372                  _m_flash_read
+                  0x00433e                  _m_flash_unlock_write
+                  0x00441c                  _m_flash_write
+                  0x003500                  _m_int16_2_str_4
+                  0x0034ca                  _m_int8_2_hex
+                  0x00326a                  _m_int_2_str
+                  0x003212                  _m_math_pow
+                  0x003162                  _m_mem_cpy
+                  0x003138                  _m_mem_cpy_len
+                  0x00310e                  _m_mem_set
+                  0x003364                  _m_str_b2h
+                  0x00318c                  _m_str_cmp
+                  0x0031cc                  _m_str_cmp_len
+                  0x0033c0                  _m_str_h2b
+                  0x0032ee                  _m_str_head_hide
+                  0x00473e                  _m_system_init
+                  0x0047b8                  _main
                   0x0003d4                  _memcmp
                   0x0003f0                  _memset
-                  0x001e88                  _pcTaskGetName
-                  0x00260e                  _prvAddCurrentTaskToDelayedList
-                  0x001a14                  _prvAddNewTaskToReadyList
-                  0x0021f8                  _prvCheckTasksWaitingTermination
-                  0x0021aa                  _prvIdleTask
-                  0x00194e                  _prvInitialiseNewTask
-                  0x0021c0                  _prvInitialiseTaskLists
-                  0x0021fe                  _prvResetNextTaskUnblockTime
-                  0x001c62                  _prvTaskIsTaskSuspended
-                  0x003e76                  _pvPortMalloc
-                  0x00415e                  _pxPortInitialiseStack
-                  0x002dfe                  _samlpe_chip0_ch_diff_pr_bridge
-                  0x002e70                  _samlpe_chip0_ch_diff_pr_ref0
-                  0x002e3e                  _samlpe_chip0_ch_diff_pr_signal
-                  0x002ea4                  _samlpe_chip0_ch_pr_bridge
-                  0x002f16                  _samlpe_chip0_ch_pr_ref1
-                  0x002ee4                  _samlpe_chip0_ch_pr_signal
-                  0x002f3e                  _samlpe_chip0_ch_temperature_in
-                  0x00305c                  _samlpe_chip0_channle_gain_calib
-                  0x002f7e                  _samlpe_chip1_ch_ex0_temperature
-                  0x002f96                  _samlpe_chip1_ch_ex1_temperature
-                  0x002f72                  _samlpe_chip1_ch_expr0_bridge
-                  0x002f84                  _samlpe_chip1_ch_expr0_ref0
-                  0x002f78                  _samlpe_chip1_ch_expr0_signal
-                  0x002f8a                  _samlpe_chip1_ch_expr1_bridge
-                  0x002f9c                  _samlpe_chip1_ch_expr1_ref1
-                  0x002f90                  _samlpe_chip1_ch_expr1_signal
-                  0x002c72                  _samlpe_get_adc_average_value
-                  0x002fa8                  _samlpe_in_soc_battery
-                  0x002fae                  _samlpe_in_soc_ref
-                  0x002d74                  _samlpe_read_adc
-                  0x002fa2                  _sample_in_soc_solar
-                  0x002fb4                  _sample_post_calc
-                  0x002fba                  _sample_process
-                  0x0044c6                  _thread_main
-                  0x0044dc                  _thread_main_create
-                  0x0030d2                  _thread_sample
-                  0x0030e6                  _thread_sample_void
-                  0x004698                  _ticker_10ms_per_get
-                  0x0046a2                  _ticker_10ms_per_set
-                  0x004640                  _ticker_ms_delay
-                  0x004636                  _ticker_ms_get
-                  0x004628                  _ticker_ms_set
-                  0x002238                  _ulTaskNotifyTake
-                  0x0043a4                  _uxListRemove
-                  0x001e80                  _uxTaskGetNumberOfTasks
-                  0x002220                  _uxTaskResetEventItemValue
-                  0x004572                  _vApplicationIdleHook
-                  0x004568                  _vApplicationStackOverflowHook
-                  0x0042c4                  _vListInitialise
-                  0x0042f6                  _vListInitialiseItem
-                  0x004340                  _vListInsert
-                  0x004304                  _vListInsertEnd
-                  0x004228                  _vPortEndScheduler
-                  0x004256                  _vPortEnterCritical
-                  0x004270                  _vPortExitCritical
-                  0x003f5e                  _vPortFree
-                  0x003fbe                  _vPortInitialiseBlocks
-                  0x0047e4                  _vPortYield
-                  0x001b0c                  _vTaskDelay
-                  0x001a90                  _vTaskDelayUntil
-                  0x001d92                  _vTaskEndScheduler
-                  0x0021a0                  _vTaskMissedYield
-                  0x002550                  _vTaskNotifyGiveFromISR
-                  0x00200e                  _vTaskPlaceOnEventList
-                  0x002028                  _vTaskPlaceOnUnorderedEventList
-                  0x001b36                  _vTaskPrioritySet
-                  0x001c94                  _vTaskResume
-                  0x002120                  _vTaskSetTimeOutState
-                  0x001d5c                  _vTaskStartScheduler
-                  0x001bfe                  _vTaskSuspend
-                  0x001daa                  _vTaskSuspendAll
-                  0x001f80                  _vTaskSwitchContext
-                  0x003fb6                  _xPortGetFreeHeapSize
-                  0x0041f8                  _xPortStartScheduler
-                  0x002134                  _xTaskCheckForTimeOut
-                  0x0018e4                  _xTaskCreate
-                  0x002360                  _xTaskGenericNotify
-                  0x002448                  _xTaskGenericNotifyFromISR
-                  0x001e60                  _xTaskGetTickCount
-                  0x001e70                  _xTaskGetTickCountFromISR
-                  0x001ea2                  _xTaskIncrementTick
-                  0x0025da                  _xTaskNotifyStateClear
-                  0x0022a4                  _xTaskNotifyWait
-                  0x00204e                  _xTaskRemoveFromEventList
-                  0x0020bc                  _xTaskRemoveFromUnorderedEventList
-                  0x001db6                  _xTaskResumeAll
-                  0x001cf2                  _xTaskResumeFromISR
+                  0x001e94                  _pcTaskGetName
+                  0x00261a                  _prvAddCurrentTaskToDelayedList
+                  0x001a20                  _prvAddNewTaskToReadyList
+                  0x002204                  _prvCheckTasksWaitingTermination
+                  0x0021b6                  _prvIdleTask
+                  0x00195a                  _prvInitialiseNewTask
+                  0x0021cc                  _prvInitialiseTaskLists
+                  0x00220a                  _prvResetNextTaskUnblockTime
+                  0x001c6e                  _prvTaskIsTaskSuspended
+                  0x0041c8                  _pvPortMalloc
+                  0x0044b0                  _pxPortInitialiseStack
+                  0x002e0a                  _samlpe_chip0_ch_diff_pr_bridge
+                  0x002e7c                  _samlpe_chip0_ch_diff_pr_ref0
+                  0x002e4a                  _samlpe_chip0_ch_diff_pr_signal
+                  0x002eb0                  _samlpe_chip0_ch_pr_bridge
+                  0x002f22                  _samlpe_chip0_ch_pr_ref1
+                  0x002ef0                  _samlpe_chip0_ch_pr_signal
+                  0x002f4a                  _samlpe_chip0_ch_temperature_in
+                  0x003068                  _samlpe_chip0_channle_gain_calib
+                  0x002f8a                  _samlpe_chip1_ch_ex0_temperature
+                  0x002fa2                  _samlpe_chip1_ch_ex1_temperature
+                  0x002f7e                  _samlpe_chip1_ch_expr0_bridge
+                  0x002f90                  _samlpe_chip1_ch_expr0_ref0
+                  0x002f84                  _samlpe_chip1_ch_expr0_signal
+                  0x002f96                  _samlpe_chip1_ch_expr1_bridge
+                  0x002fa8                  _samlpe_chip1_ch_expr1_ref1
+                  0x002f9c                  _samlpe_chip1_ch_expr1_signal
+                  0x002c7e                  _samlpe_get_adc_average_value
+                  0x002fb4                  _samlpe_in_soc_battery
+                  0x002fba                  _samlpe_in_soc_ref
+                  0x002d80                  _samlpe_read_adc
+                  0x002fae                  _sample_in_soc_solar
+                  0x002fc0                  _sample_post_calc
+                  0x002fc6                  _sample_process
+                  0x004d1e                  _send_event_group
+                  0x004d30                  _send_thread_main_event
+                  0x00474c                  _thread_main
+                  0x00477c                  _thread_main_create
+                  0x0030de                  _thread_sample
+                  0x0030f2                  _thread_sample_void
+                  0x004a16                  _ticker_10ms_per_get
+                  0x004a20                  _ticker_10ms_per_set
+                  0x0049be                  _ticker_ms_delay
+                  0x0049b4                  _ticker_ms_get
+                  0x0049a6                  _ticker_ms_set
+                  0x004c5a                  _ui_disp_start_cs600
+                  0x002244                  _ulTaskNotifyTake
+                  0x0046f6                  _uxListRemove
+                  0x001e8c                  _uxTaskGetNumberOfTasks
+                  0x00222c                  _uxTaskResetEventItemValue
+                  0x004824                  _vApplicationIdleHook
+                  0x00481a                  _vApplicationStackOverflowHook
+                  0x00388c                  _vEventGroupClearBitsCallback
+                  0x00384e                  _vEventGroupDelete
+                  0x003878                  _vEventGroupSetBitsCallback
+                  0x004616                  _vListInitialise
+                  0x004648                  _vListInitialiseItem
+                  0x004692                  _vListInsert
+                  0x004656                  _vListInsertEnd
+                  0x00457a                  _vPortEndScheduler
+                  0x0045a8                  _vPortEnterCritical
+                  0x0045c2                  _vPortExitCritical
+                  0x0042b0                  _vPortFree
+                  0x004310                  _vPortInitialiseBlocks
+                  0x004c06                  _vPortYield
+                  0x001b18                  _vTaskDelay
+                  0x001a9c                  _vTaskDelayUntil
+                  0x001d9e                  _vTaskEndScheduler
+                  0x0021ac                  _vTaskMissedYield
+                  0x00255c                  _vTaskNotifyGiveFromISR
+                  0x00201a                  _vTaskPlaceOnEventList
+                  0x002034                  _vTaskPlaceOnUnorderedEventList
+                  0x001b42                  _vTaskPrioritySet
+                  0x001ca0                  _vTaskResume
+                  0x00212c                  _vTaskSetTimeOutState
+                  0x001d68                  _vTaskStartScheduler
+                  0x001c0a                  _vTaskSuspend
+                  0x001db6                  _vTaskSuspendAll
+                  0x001f8c                  _vTaskSwitchContext
+                  0x003744                  _xEventGroupClearBits
+                  0x003592                  _xEventGroupCreate
+                  0x00376c                  _xEventGroupGetBitsFromISR
+                  0x003784                  _xEventGroupSetBits
+                  0x0035b0                  _xEventGroupSync
+                  0x003668                  _xEventGroupWaitBits
+                  0x004308                  _xPortGetFreeHeapSize
+                  0x00454a                  _xPortStartScheduler
+                  0x002140                  _xTaskCheckForTimeOut
+                  0x0018f0                  _xTaskCreate
+                  0x00236c                  _xTaskGenericNotify
+                  0x002454                  _xTaskGenericNotifyFromISR
+                  0x001e6c                  _xTaskGetTickCount
+                  0x001e7c                  _xTaskGetTickCountFromISR
+                  0x001eae                  _xTaskIncrementTick
+                  0x0025e6                  _xTaskNotifyStateClear
+                  0x0022b0                  _xTaskNotifyWait
+                  0x00205a                  _xTaskRemoveFromEventList
+                  0x0020c8                  _xTaskRemoveFromUnorderedEventList
+                  0x001dc2                  _xTaskResumeAll
+                  0x001cfe                  _xTaskResumeFromISR
 
 Memory Configuration
 
@@ -900,6 +938,7 @@ LOAD build/default/debug/mcc_generated_files/interrupt_manager.o
 LOAD build/default/debug/mcc_generated_files/mcc.o
 LOAD build/default/debug/mcc_generated_files/tmr2.o
 LOAD build/default/debug/mcc_generated_files/tmr1.o
+LOAD build/default/debug/src/api/sysdata.o
 LOAD build/default/debug/src/app/main.o
 LOAD build/default/debug/src/app/event.o
 LOAD build/default/debug/src/app/sample.o
@@ -912,11 +951,6 @@ LOAD build/default/debug/src/driver/ads1148_hal.o
 LOAD build/default/debug/src/driver/ex_eeprom.o
 LOAD build/default/debug/src/driver/i2c.o
 LOAD build/default/debug/src/global/globle.o
-LOAD build/default/debug/src/soc/delay.o
-LOAD build/default/debug/src/soc/ticker.o
-LOAD build/default/debug/src/soc/flash.o
-LOAD build/default/debug/src/soc/m_asm.o
-LOAD build/default/debug/src/api/sysdata.o
 LOAD build/default/debug/src/os/os_kernel/croutine.o
 LOAD build/default/debug/src/os/os_kernel/event_groups.o
 LOAD build/default/debug/src/os/os_kernel/list.o
@@ -926,6 +960,12 @@ LOAD build/default/debug/src/os/os_kernel/timers.o
 LOAD build/default/debug/src/os/os_portable/memmang/heap_2.o
 LOAD build/default/debug/src/os/os_portable/port.o
 LOAD build/default/debug/src/os/os_portable/portasm_PIC24.o
+LOAD build/default/debug/src/soc/delay.o
+LOAD build/default/debug/src/soc/ticker.o
+LOAD build/default/debug/src/soc/flash.o
+LOAD build/default/debug/src/soc/m_asm.o
+LOAD build/default/debug/src/driver/key.o
+LOAD build/default/debug/src/api/ui.o
 
 reserve_data_0x800
                     0x0800         0x1c
@@ -1038,7 +1078,7 @@ __CONFIG1
 .comment
  *(.comment)
 
-.debug_info       0x000000       0xe5e1
+.debug_info       0x000000       0xf52e
  *(.debug_info)
  .debug_info      0x000000        0x7e4 build/default/debug/mcc_generated_files/rtcc.o
  .debug_info      0x0007e4        0x57a build/default/debug/mcc_generated_files/pin_manager.o
@@ -1046,35 +1086,37 @@ __CONFIG1
  .debug_info      0x0012d7        0x1e6 build/default/debug/mcc_generated_files/mcc.o
  .debug_info      0x0014bd        0x7e1 build/default/debug/mcc_generated_files/tmr2.o
  .debug_info      0x001c9e        0x85f build/default/debug/mcc_generated_files/tmr1.o
- .debug_info      0x0024fd        0x375 build/default/debug/src/app/main.o
- .debug_info      0x002872        0x161 build/default/debug/src/app/event.o
- .debug_info      0x0029d3       0x10a0 build/default/debug/src/app/sample.o
- .debug_info      0x003a73        0x2c9 build/default/debug/src/depend/crc16.o
- .debug_info      0x003d3c        0x569 build/default/debug/src/depend/m_string.o
- .debug_info      0x0042a5       0x1b6e build/default/debug/src/driver/lcd.o
- .debug_info      0x005e13        0x249 build/default/debug/src/driver/gpio.o
- .debug_info      0x00605c       0x117e build/default/debug/src/driver/ads1148.o
- .debug_info      0x0071da        0x934 build/default/debug/src/driver/ads1148_hal.o
- .debug_info      0x007b0e        0x4d7 build/default/debug/src/driver/ex_eeprom.o
- .debug_info      0x007fe5        0x329 build/default/debug/src/driver/i2c.o
- .debug_info      0x00830e        0x16e build/default/debug/src/global/globle.o
- .debug_info      0x00847c        0x17a build/default/debug/src/soc/delay.o
- .debug_info      0x0085f6        0x2ea build/default/debug/src/soc/ticker.o
- .debug_info      0x0088e0        0x41e build/default/debug/src/soc/flash.o
- .debug_info      0x008cfe         0x74 build/default/debug/src/soc/m_asm.o
- .debug_info      0x008d72        0x5c4 build/default/debug/src/api/sysdata.o
- .debug_info      0x009336        0x8da build/default/debug/src/os/os_kernel/croutine.o
- .debug_info      0x009c10        0x8d4 build/default/debug/src/os/os_kernel/event_groups.o
- .debug_info      0x00a4e4        0x42b build/default/debug/src/os/os_kernel/list.o
- .debug_info      0x00a90f       0x1113 build/default/debug/src/os/os_kernel/queue.o
- .debug_info      0x00ba22       0x1991 build/default/debug/src/os/os_kernel/tasks.o
- .debug_info      0x00d3b3        0x139 build/default/debug/src/os/os_kernel/timers.o
- .debug_info      0x00d4ec        0x488 build/default/debug/src/os/os_portable/memmang/heap_2.o
- .debug_info      0x00d974        0xbe6 build/default/debug/src/os/os_portable/port.o
- .debug_info      0x00e55a         0x87 build/default/debug/src/os/os_portable/portasm_PIC24.o
+ .debug_info      0x0024fd        0x5c4 build/default/debug/src/api/sysdata.o
+ .debug_info      0x002ac1        0x3d1 build/default/debug/src/app/main.o
+ .debug_info      0x002e92        0x250 build/default/debug/src/app/event.o
+ .debug_info      0x0030e2       0x10a0 build/default/debug/src/app/sample.o
+ .debug_info      0x004182        0x2c9 build/default/debug/src/depend/crc16.o
+ .debug_info      0x00444b        0x569 build/default/debug/src/depend/m_string.o
+ .debug_info      0x0049b4       0x1b6e build/default/debug/src/driver/lcd.o
+ .debug_info      0x006522        0x249 build/default/debug/src/driver/gpio.o
+ .debug_info      0x00676b       0x117e build/default/debug/src/driver/ads1148.o
+ .debug_info      0x0078e9        0x934 build/default/debug/src/driver/ads1148_hal.o
+ .debug_info      0x00821d        0x4d7 build/default/debug/src/driver/ex_eeprom.o
+ .debug_info      0x0086f4        0x329 build/default/debug/src/driver/i2c.o
+ .debug_info      0x008a1d        0x16e build/default/debug/src/global/globle.o
+ .debug_info      0x008b8b        0x8da build/default/debug/src/os/os_kernel/croutine.o
+ .debug_info      0x009465        0x8d4 build/default/debug/src/os/os_kernel/event_groups.o
+ .debug_info      0x009d39        0x42b build/default/debug/src/os/os_kernel/list.o
+ .debug_info      0x00a164       0x1113 build/default/debug/src/os/os_kernel/queue.o
+ .debug_info      0x00b277       0x1991 build/default/debug/src/os/os_kernel/tasks.o
+ .debug_info      0x00cc08        0x139 build/default/debug/src/os/os_kernel/timers.o
+ .debug_info      0x00cd41        0x488 build/default/debug/src/os/os_portable/memmang/heap_2.o
+ .debug_info      0x00d1c9        0xbe6 build/default/debug/src/os/os_portable/port.o
+ .debug_info      0x00ddaf         0x87 build/default/debug/src/os/os_portable/portasm_PIC24.o
+ .debug_info      0x00de36        0x17a build/default/debug/src/soc/delay.o
+ .debug_info      0x00dfb0        0x308 build/default/debug/src/soc/ticker.o
+ .debug_info      0x00e2b8        0x41e build/default/debug/src/soc/flash.o
+ .debug_info      0x00e6d6         0x74 build/default/debug/src/soc/m_asm.o
+ .debug_info      0x00e74a        0xc21 build/default/debug/src/driver/key.o
+ .debug_info      0x00f36b        0x1c3 build/default/debug/src/api/ui.o
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev     0x000000       0x1f83
+.debug_abbrev     0x000000       0x2197
  *(.debug_abbrev)
  .debug_abbrev    0x000000        0x199 build/default/debug/mcc_generated_files/rtcc.o
  .debug_abbrev    0x000199         0x5d build/default/debug/mcc_generated_files/pin_manager.o
@@ -1082,34 +1124,36 @@ __CONFIG1
  .debug_abbrev    0x00029d         0x59 build/default/debug/mcc_generated_files/mcc.o
  .debug_abbrev    0x0002f6        0x15b build/default/debug/mcc_generated_files/tmr2.o
  .debug_abbrev    0x000451        0x148 build/default/debug/mcc_generated_files/tmr1.o
- .debug_abbrev    0x000599         0xdf build/default/debug/src/app/main.o
- .debug_abbrev    0x000678         0x44 build/default/debug/src/app/event.o
- .debug_abbrev    0x0006bc        0x1ea build/default/debug/src/app/sample.o
- .debug_abbrev    0x0008a6         0xbe build/default/debug/src/depend/crc16.o
- .debug_abbrev    0x000964         0xe4 build/default/debug/src/depend/m_string.o
- .debug_abbrev    0x000a48        0x1f0 build/default/debug/src/driver/lcd.o
- .debug_abbrev    0x000c38         0x4c build/default/debug/src/driver/gpio.o
- .debug_abbrev    0x000c84        0x223 build/default/debug/src/driver/ads1148.o
- .debug_abbrev    0x000ea7         0xcd build/default/debug/src/driver/ads1148_hal.o
- .debug_abbrev    0x000f74        0x12f build/default/debug/src/driver/ex_eeprom.o
- .debug_abbrev    0x0010a3         0xa7 build/default/debug/src/driver/i2c.o
- .debug_abbrev    0x00114a         0x44 build/default/debug/src/global/globle.o
- .debug_abbrev    0x00118e         0x67 build/default/debug/src/soc/delay.o
- .debug_abbrev    0x0011f5         0xd8 build/default/debug/src/soc/ticker.o
- .debug_abbrev    0x0012cd        0x129 build/default/debug/src/soc/flash.o
- .debug_abbrev    0x0013f6         0x14 build/default/debug/src/soc/m_asm.o
- .debug_abbrev    0x00140a         0x88 build/default/debug/src/api/sysdata.o
- .debug_abbrev    0x001492        0x1dd build/default/debug/src/os/os_kernel/croutine.o
- .debug_abbrev    0x00166f        0x140 build/default/debug/src/os/os_kernel/event_groups.o
- .debug_abbrev    0x0017af         0xda build/default/debug/src/os/os_kernel/list.o
- .debug_abbrev    0x001889        0x185 build/default/debug/src/os/os_kernel/queue.o
- .debug_abbrev    0x001a0e        0x218 build/default/debug/src/os/os_kernel/tasks.o
- .debug_abbrev    0x001c26         0x1f build/default/debug/src/os/os_kernel/timers.o
- .debug_abbrev    0x001c45        0x147 build/default/debug/src/os/os_portable/memmang/heap_2.o
- .debug_abbrev    0x001d8c        0x1e3 build/default/debug/src/os/os_portable/port.o
- .debug_abbrev    0x001f6f         0x14 build/default/debug/src/os/os_portable/portasm_PIC24.o
+ .debug_abbrev    0x000599         0x88 build/default/debug/src/api/sysdata.o
+ .debug_abbrev    0x000621        0x101 build/default/debug/src/app/main.o
+ .debug_abbrev    0x000722         0x91 build/default/debug/src/app/event.o
+ .debug_abbrev    0x0007b3        0x1ea build/default/debug/src/app/sample.o
+ .debug_abbrev    0x00099d         0xbe build/default/debug/src/depend/crc16.o
+ .debug_abbrev    0x000a5b         0xe4 build/default/debug/src/depend/m_string.o
+ .debug_abbrev    0x000b3f        0x1f0 build/default/debug/src/driver/lcd.o
+ .debug_abbrev    0x000d2f         0x4c build/default/debug/src/driver/gpio.o
+ .debug_abbrev    0x000d7b        0x223 build/default/debug/src/driver/ads1148.o
+ .debug_abbrev    0x000f9e         0xcd build/default/debug/src/driver/ads1148_hal.o
+ .debug_abbrev    0x00106b        0x12f build/default/debug/src/driver/ex_eeprom.o
+ .debug_abbrev    0x00119a         0xa7 build/default/debug/src/driver/i2c.o
+ .debug_abbrev    0x001241         0x44 build/default/debug/src/global/globle.o
+ .debug_abbrev    0x001285        0x1dd build/default/debug/src/os/os_kernel/croutine.o
+ .debug_abbrev    0x001462        0x140 build/default/debug/src/os/os_kernel/event_groups.o
+ .debug_abbrev    0x0015a2         0xda build/default/debug/src/os/os_kernel/list.o
+ .debug_abbrev    0x00167c        0x185 build/default/debug/src/os/os_kernel/queue.o
+ .debug_abbrev    0x001801        0x218 build/default/debug/src/os/os_kernel/tasks.o
+ .debug_abbrev    0x001a19         0x1f build/default/debug/src/os/os_kernel/timers.o
+ .debug_abbrev    0x001a38        0x147 build/default/debug/src/os/os_portable/memmang/heap_2.o
+ .debug_abbrev    0x001b7f        0x1e3 build/default/debug/src/os/os_portable/port.o
+ .debug_abbrev    0x001d62         0x14 build/default/debug/src/os/os_portable/portasm_PIC24.o
+ .debug_abbrev    0x001d76         0x67 build/default/debug/src/soc/delay.o
+ .debug_abbrev    0x001ddd         0xd8 build/default/debug/src/soc/ticker.o
+ .debug_abbrev    0x001eb5        0x129 build/default/debug/src/soc/flash.o
+ .debug_abbrev    0x001fde         0x14 build/default/debug/src/soc/m_asm.o
+ .debug_abbrev    0x001ff2        0x134 build/default/debug/src/driver/key.o
+ .debug_abbrev    0x002126         0x71 build/default/debug/src/api/ui.o
 
-.debug_line       0x000000       0x297a
+.debug_line       0x000000       0x2bff
  *(.debug_line)
  .debug_line      0x000000        0x181 build/default/debug/mcc_generated_files/rtcc.o
  .debug_line      0x000181         0xd4 build/default/debug/mcc_generated_files/pin_manager.o
@@ -1117,34 +1161,36 @@ __CONFIG1
  .debug_line      0x00030b        0x107 build/default/debug/mcc_generated_files/mcc.o
  .debug_line      0x000412        0x12e build/default/debug/mcc_generated_files/tmr2.o
  .debug_line      0x000540        0x12a build/default/debug/mcc_generated_files/tmr1.o
- .debug_line      0x00066a        0x13f build/default/debug/src/app/main.o
- .debug_line      0x0007a9         0x82 build/default/debug/src/app/event.o
- .debug_line      0x00082b        0x21b build/default/debug/src/app/sample.o
- .debug_line      0x000a46         0xac build/default/debug/src/depend/crc16.o
- .debug_line      0x000af2        0x13e build/default/debug/src/depend/m_string.o
- .debug_line      0x000c30        0x3a4 build/default/debug/src/driver/lcd.o
- .debug_line      0x000fd4         0xad build/default/debug/src/driver/gpio.o
- .debug_line      0x001081        0x1a3 build/default/debug/src/driver/ads1148.o
- .debug_line      0x001224        0x1bf build/default/debug/src/driver/ads1148_hal.o
- .debug_line      0x0013e3         0xf0 build/default/debug/src/driver/ex_eeprom.o
- .debug_line      0x0014d3        0x165 build/default/debug/src/driver/i2c.o
- .debug_line      0x001638         0x86 build/default/debug/src/global/globle.o
- .debug_line      0x0016be         0xa2 build/default/debug/src/soc/delay.o
- .debug_line      0x001760         0xd4 build/default/debug/src/soc/ticker.o
- .debug_line      0x001834        0x13d build/default/debug/src/soc/flash.o
- .debug_line      0x001971         0x46 build/default/debug/src/soc/m_asm.o
- .debug_line      0x0019b7         0xac build/default/debug/src/api/sysdata.o
- .debug_line      0x001a63        0x1c8 build/default/debug/src/os/os_kernel/croutine.o
- .debug_line      0x001c2b        0x1a4 build/default/debug/src/os/os_kernel/event_groups.o
- .debug_line      0x001dcf        0x10f build/default/debug/src/os/os_kernel/list.o
- .debug_line      0x001ede        0x345 build/default/debug/src/os/os_kernel/queue.o
- .debug_line      0x002223        0x43a build/default/debug/src/os/os_kernel/tasks.o
- .debug_line      0x00265d         0x1a build/default/debug/src/os/os_kernel/timers.o
- .debug_line      0x002677        0x11c build/default/debug/src/os/os_portable/memmang/heap_2.o
- .debug_line      0x002793        0x16f build/default/debug/src/os/os_portable/port.o
- .debug_line      0x002902         0x78 build/default/debug/src/os/os_portable/portasm_PIC24.o
+ .debug_line      0x00066a         0xac build/default/debug/src/api/sysdata.o
+ .debug_line      0x000716        0x154 build/default/debug/src/app/main.o
+ .debug_line      0x00086a        0x109 build/default/debug/src/app/event.o
+ .debug_line      0x000973        0x208 build/default/debug/src/app/sample.o
+ .debug_line      0x000b7b         0xac build/default/debug/src/depend/crc16.o
+ .debug_line      0x000c27        0x13e build/default/debug/src/depend/m_string.o
+ .debug_line      0x000d65        0x3a4 build/default/debug/src/driver/lcd.o
+ .debug_line      0x001109         0xad build/default/debug/src/driver/gpio.o
+ .debug_line      0x0011b6        0x1a3 build/default/debug/src/driver/ads1148.o
+ .debug_line      0x001359        0x1bf build/default/debug/src/driver/ads1148_hal.o
+ .debug_line      0x001518         0xf0 build/default/debug/src/driver/ex_eeprom.o
+ .debug_line      0x001608        0x165 build/default/debug/src/driver/i2c.o
+ .debug_line      0x00176d         0x86 build/default/debug/src/global/globle.o
+ .debug_line      0x0017f3        0x1c8 build/default/debug/src/os/os_kernel/croutine.o
+ .debug_line      0x0019bb        0x1a4 build/default/debug/src/os/os_kernel/event_groups.o
+ .debug_line      0x001b5f        0x10f build/default/debug/src/os/os_kernel/list.o
+ .debug_line      0x001c6e        0x345 build/default/debug/src/os/os_kernel/queue.o
+ .debug_line      0x001fb3        0x43a build/default/debug/src/os/os_kernel/tasks.o
+ .debug_line      0x0023ed         0x1a build/default/debug/src/os/os_kernel/timers.o
+ .debug_line      0x002407        0x11c build/default/debug/src/os/os_portable/memmang/heap_2.o
+ .debug_line      0x002523        0x16f build/default/debug/src/os/os_portable/port.o
+ .debug_line      0x002692         0x78 build/default/debug/src/os/os_portable/portasm_PIC24.o
+ .debug_line      0x00270a         0xa2 build/default/debug/src/soc/delay.o
+ .debug_line      0x0027ac         0xfb build/default/debug/src/soc/ticker.o
+ .debug_line      0x0028a7        0x13d build/default/debug/src/soc/flash.o
+ .debug_line      0x0029e4         0x46 build/default/debug/src/soc/m_asm.o
+ .debug_line      0x002a2a        0x115 build/default/debug/src/driver/key.o
+ .debug_line      0x002b3f         0xc0 build/default/debug/src/api/ui.o
 
-.debug_frame      0x000000       0x2840
+.debug_frame      0x000000       0x2948
  *(.debug_frame)
  .debug_frame     0x000000        0x132 build/default/debug/mcc_generated_files/rtcc.o
  .debug_frame     0x000132         0x30 build/default/debug/mcc_generated_files/pin_manager.o
@@ -1153,47 +1199,53 @@ __CONFIG1
  .debug_frame     0x0001de        0x188 build/default/debug/mcc_generated_files/tmr2.o
  .debug_frame     0x000366        0x148 build/default/debug/mcc_generated_files/tmr1.o
  .debug_frame     0x0004ae         0xd8 build/default/debug/src/app/main.o
- .debug_frame     0x000586        0x2d0 build/default/debug/src/app/sample.o
- .debug_frame     0x000856         0x68 build/default/debug/src/depend/crc16.o
- .debug_frame     0x0008be        0x180 build/default/debug/src/depend/m_string.o
- .debug_frame     0x000a3e        0x768 build/default/debug/src/driver/lcd.o
- .debug_frame     0x0011a6         0x84 build/default/debug/src/driver/gpio.o
- .debug_frame     0x00122a        0x324 build/default/debug/src/driver/ads1148.o
- .debug_frame     0x00154e        0x43c build/default/debug/src/driver/ads1148_hal.o
- .debug_frame     0x00198a         0xd8 build/default/debug/src/driver/ex_eeprom.o
- .debug_frame     0x001a62         0xd8 build/default/debug/src/driver/i2c.o
- .debug_frame     0x001b3a         0x4c build/default/debug/src/soc/delay.o
- .debug_frame     0x001b86         0xd8 build/default/debug/src/soc/ticker.o
- .debug_frame     0x001c5e         0x84 build/default/debug/src/soc/flash.o
- .debug_frame     0x001ce2         0xd8 build/default/debug/src/os/os_kernel/croutine.o
- .debug_frame     0x001dba        0x12c build/default/debug/src/os/os_kernel/event_groups.o
- .debug_frame     0x001ee6         0xa0 build/default/debug/src/os/os_kernel/list.o
- .debug_frame     0x001f86        0x2b4 build/default/debug/src/os/os_kernel/queue.o
- .debug_frame     0x00223a        0x466 build/default/debug/src/os/os_kernel/tasks.o
- .debug_frame     0x0026a0         0xa0 build/default/debug/src/os/os_portable/memmang/heap_2.o
- .debug_frame     0x002740        0x100 build/default/debug/src/os/os_portable/port.o
+ .debug_frame     0x000586         0x4c build/default/debug/src/app/event.o
+ .debug_frame     0x0005d2        0x2d0 build/default/debug/src/app/sample.o
+ .debug_frame     0x0008a2         0x68 build/default/debug/src/depend/crc16.o
+ .debug_frame     0x00090a        0x180 build/default/debug/src/depend/m_string.o
+ .debug_frame     0x000a8a        0x768 build/default/debug/src/driver/lcd.o
+ .debug_frame     0x0011f2         0x84 build/default/debug/src/driver/gpio.o
+ .debug_frame     0x001276        0x324 build/default/debug/src/driver/ads1148.o
+ .debug_frame     0x00159a        0x43c build/default/debug/src/driver/ads1148_hal.o
+ .debug_frame     0x0019d6         0xd8 build/default/debug/src/driver/ex_eeprom.o
+ .debug_frame     0x001aae         0xd8 build/default/debug/src/driver/i2c.o
+ .debug_frame     0x001b86         0xd8 build/default/debug/src/os/os_kernel/croutine.o
+ .debug_frame     0x001c5e        0x12c build/default/debug/src/os/os_kernel/event_groups.o
+ .debug_frame     0x001d8a         0xa0 build/default/debug/src/os/os_kernel/list.o
+ .debug_frame     0x001e2a        0x2b4 build/default/debug/src/os/os_kernel/queue.o
+ .debug_frame     0x0020de        0x466 build/default/debug/src/os/os_kernel/tasks.o
+ .debug_frame     0x002544         0xa0 build/default/debug/src/os/os_portable/memmang/heap_2.o
+ .debug_frame     0x0025e4        0x100 build/default/debug/src/os/os_portable/port.o
+ .debug_frame     0x0026e4         0x4c build/default/debug/src/soc/delay.o
+ .debug_frame     0x002730         0xd8 build/default/debug/src/soc/ticker.o
+ .debug_frame     0x002808         0x84 build/default/debug/src/soc/flash.o
+ .debug_frame     0x00288c         0x8c build/default/debug/src/driver/key.o
+ .debug_frame     0x002918         0x30 build/default/debug/src/api/ui.o
 
-.debug_str        0x000000        0xa51
+.debug_str        0x000000        0xab4
  *(.debug_str)
  .debug_str       0x000000         0x57 build/default/debug/mcc_generated_files/rtcc.o
  .debug_str       0x000057         0x1c build/default/debug/mcc_generated_files/interrupt_manager.o
  .debug_str       0x000073         0x1c build/default/debug/mcc_generated_files/tmr2.o
  .debug_str       0x00008f         0x1c build/default/debug/mcc_generated_files/tmr1.o
- .debug_str       0x0000ab         0xc3 build/default/debug/src/app/sample.o
- .debug_str       0x00016e         0x14 build/default/debug/src/depend/crc16.o
- .debug_str       0x000182          0x9 build/default/debug/src/depend/m_string.o
- .debug_str       0x00018b        0x1b9 build/default/debug/src/driver/lcd.o
- .debug_str       0x000344         0x59 build/default/debug/src/driver/ads1148.o
- .debug_str       0x00039d         0x1f build/default/debug/src/driver/ex_eeprom.o
- .debug_str       0x0003bc         0x19 build/default/debug/src/soc/ticker.o
- .debug_str       0x0003d5         0x1e build/default/debug/src/soc/flash.o
- .debug_str       0x0003f3        0x131 build/default/debug/src/os/os_kernel/croutine.o
- .debug_str       0x000524         0xe6 build/default/debug/src/os/os_kernel/event_groups.o
- .debug_str       0x00060a         0x2b build/default/debug/src/os/os_kernel/list.o
- .debug_str       0x000635        0x129 build/default/debug/src/os/os_kernel/queue.o
- .debug_str       0x00075e        0x2a6 build/default/debug/src/os/os_kernel/tasks.o
- .debug_str       0x000a04         0x16 build/default/debug/src/os/os_portable/memmang/heap_2.o
- .debug_str       0x000a1a         0x37 build/default/debug/src/os/os_portable/port.o
+ .debug_str       0x0000ab         0x10 build/default/debug/src/app/main.o
+ .debug_str       0x0000bb         0x10 build/default/debug/src/app/event.o
+ .debug_str       0x0000cb         0xc3 build/default/debug/src/app/sample.o
+ .debug_str       0x00018e         0x14 build/default/debug/src/depend/crc16.o
+ .debug_str       0x0001a2          0x9 build/default/debug/src/depend/m_string.o
+ .debug_str       0x0001ab        0x1b9 build/default/debug/src/driver/lcd.o
+ .debug_str       0x000364         0x59 build/default/debug/src/driver/ads1148.o
+ .debug_str       0x0003bd         0x1f build/default/debug/src/driver/ex_eeprom.o
+ .debug_str       0x0003dc        0x131 build/default/debug/src/os/os_kernel/croutine.o
+ .debug_str       0x00050d         0xe6 build/default/debug/src/os/os_kernel/event_groups.o
+ .debug_str       0x0005f3         0x2b build/default/debug/src/os/os_kernel/list.o
+ .debug_str       0x00061e        0x129 build/default/debug/src/os/os_kernel/queue.o
+ .debug_str       0x000747        0x2a6 build/default/debug/src/os/os_kernel/tasks.o
+ .debug_str       0x0009ed         0x16 build/default/debug/src/os/os_portable/memmang/heap_2.o
+ .debug_str       0x000a03         0x37 build/default/debug/src/os/os_portable/port.o
+ .debug_str       0x000a3a         0x19 build/default/debug/src/soc/ticker.o
+ .debug_str       0x000a53         0x1e build/default/debug/src/soc/flash.o
+ .debug_str       0x000a71         0x43 build/default/debug/src/driver/key.o
 
 .debug_loc
  *(.debug_loc)
@@ -1202,7 +1254,7 @@ __CONFIG1
  *(.debug_macinfo)
 
 .debug_pubnames
-                  0x000000       0x26f9
+                  0x000000       0x27b6
  *(.debug_pubnames)
  .debug_pubnames
                   0x000000         0x96 build/default/debug/mcc_generated_files/rtcc.o
@@ -1217,56 +1269,60 @@ __CONFIG1
  .debug_pubnames
                   0x00024f        0x10e build/default/debug/mcc_generated_files/tmr1.o
  .debug_pubnames
-                  0x00035d         0xa0 build/default/debug/src/app/main.o
+                  0x00035d         0x27 build/default/debug/src/api/sysdata.o
  .debug_pubnames
-                  0x0003fd         0x1c build/default/debug/src/app/event.o
+                  0x000384         0xb4 build/default/debug/src/app/main.o
  .debug_pubnames
-                  0x000419        0x46c build/default/debug/src/app/sample.o
+                  0x000438         0x4c build/default/debug/src/app/event.o
  .debug_pubnames
-                  0x000885         0x58 build/default/debug/src/depend/crc16.o
+                  0x000484        0x46c build/default/debug/src/app/sample.o
  .debug_pubnames
-                  0x0008dd         0xea build/default/debug/src/depend/m_string.o
+                  0x0008f0         0x58 build/default/debug/src/depend/crc16.o
  .debug_pubnames
-                  0x0009c7        0x63e build/default/debug/src/driver/lcd.o
+                  0x000948         0xea build/default/debug/src/depend/m_string.o
  .debug_pubnames
-                  0x001005         0x56 build/default/debug/src/driver/gpio.o
+                  0x000a32        0x63e build/default/debug/src/driver/lcd.o
  .debug_pubnames
-                  0x00105b        0x2fe build/default/debug/src/driver/ads1148.o
+                  0x001070         0x56 build/default/debug/src/driver/gpio.o
  .debug_pubnames
-                  0x001359        0x47e build/default/debug/src/driver/ads1148_hal.o
+                  0x0010c6        0x2fe build/default/debug/src/driver/ads1148.o
  .debug_pubnames
-                  0x0017d7         0xd4 build/default/debug/src/driver/ex_eeprom.o
+                  0x0013c4        0x47e build/default/debug/src/driver/ads1148_hal.o
  .debug_pubnames
-                  0x0018ab         0x95 build/default/debug/src/driver/i2c.o
+                  0x001842         0xd4 build/default/debug/src/driver/ex_eeprom.o
  .debug_pubnames
-                  0x001940         0x39 build/default/debug/src/global/globle.o
+                  0x001916         0x95 build/default/debug/src/driver/i2c.o
  .debug_pubnames
-                  0x001979         0x2c build/default/debug/src/soc/delay.o
+                  0x0019ab         0x39 build/default/debug/src/global/globle.o
  .debug_pubnames
-                  0x0019a5         0xcd build/default/debug/src/soc/ticker.o
+                  0x0019e4        0x1f4 build/default/debug/src/os/os_kernel/croutine.o
  .debug_pubnames
-                  0x001a72         0x90 build/default/debug/src/soc/flash.o
+                  0x001bd8         0xf8 build/default/debug/src/os/os_kernel/event_groups.o
  .debug_pubnames
-                  0x001b02         0x27 build/default/debug/src/api/sysdata.o
+                  0x001cd0         0x72 build/default/debug/src/os/os_kernel/list.o
  .debug_pubnames
-                  0x001b29        0x1f4 build/default/debug/src/os/os_kernel/croutine.o
+                  0x001d42        0x1ce build/default/debug/src/os/os_kernel/queue.o
  .debug_pubnames
-                  0x001d1d         0xf8 build/default/debug/src/os/os_kernel/event_groups.o
+                  0x001f10        0x56a build/default/debug/src/os/os_kernel/tasks.o
  .debug_pubnames
-                  0x001e15         0x72 build/default/debug/src/os/os_kernel/list.o
+                  0x00247a         0x64 build/default/debug/src/os/os_portable/memmang/heap_2.o
  .debug_pubnames
-                  0x001e87        0x1ce build/default/debug/src/os/os_kernel/queue.o
+                  0x0024de         0xd6 build/default/debug/src/os/os_portable/port.o
  .debug_pubnames
-                  0x002055        0x56a build/default/debug/src/os/os_kernel/tasks.o
+                  0x0025b4         0x2c build/default/debug/src/soc/delay.o
  .debug_pubnames
-                  0x0025bf         0x64 build/default/debug/src/os/os_portable/memmang/heap_2.o
+                  0x0025e0         0xcd build/default/debug/src/soc/ticker.o
  .debug_pubnames
-                  0x002623         0xd6 build/default/debug/src/os/os_portable/port.o
+                  0x0026ad         0x90 build/default/debug/src/soc/flash.o
+ .debug_pubnames
+                  0x00273d         0x4f build/default/debug/src/driver/key.o
+ .debug_pubnames
+                  0x00278c         0x2a build/default/debug/src/api/ui.o
 
 .debug_ranges
  *(.debug_ranges)
 
-.debug_aranges    0x000000        0x2a0
+.debug_aranges    0x000000        0x2e8
  *(.debug_aranges)
  .debug_aranges
                   0x000000         0x18 build/default/debug/mcc_generated_files/rtcc.o
@@ -1283,47 +1339,53 @@ __CONFIG1
  .debug_aranges
                   0x000090         0x18 build/default/debug/src/app/main.o
  .debug_aranges
-                  0x0000a8         0x18 build/default/debug/src/app/sample.o
+                  0x0000a8         0x18 build/default/debug/src/app/event.o
  .debug_aranges
-                  0x0000c0         0x18 build/default/debug/src/depend/crc16.o
+                  0x0000c0         0x18 build/default/debug/src/app/sample.o
  .debug_aranges
-                  0x0000d8         0x18 build/default/debug/src/depend/m_string.o
+                  0x0000d8         0x18 build/default/debug/src/depend/crc16.o
  .debug_aranges
-                  0x0000f0         0x18 build/default/debug/src/driver/lcd.o
+                  0x0000f0         0x18 build/default/debug/src/depend/m_string.o
  .debug_aranges
-                  0x000108         0x18 build/default/debug/src/driver/gpio.o
+                  0x000108         0x18 build/default/debug/src/driver/lcd.o
  .debug_aranges
-                  0x000120         0x18 build/default/debug/src/driver/ads1148.o
+                  0x000120         0x18 build/default/debug/src/driver/gpio.o
  .debug_aranges
-                  0x000138         0x18 build/default/debug/src/driver/ads1148_hal.o
+                  0x000138         0x18 build/default/debug/src/driver/ads1148.o
  .debug_aranges
-                  0x000150         0x18 build/default/debug/src/driver/ex_eeprom.o
+                  0x000150         0x18 build/default/debug/src/driver/ads1148_hal.o
  .debug_aranges
-                  0x000168         0x18 build/default/debug/src/driver/i2c.o
+                  0x000168         0x18 build/default/debug/src/driver/ex_eeprom.o
  .debug_aranges
-                  0x000180         0x18 build/default/debug/src/soc/delay.o
+                  0x000180         0x18 build/default/debug/src/driver/i2c.o
  .debug_aranges
-                  0x000198         0x18 build/default/debug/src/soc/ticker.o
+                  0x000198         0x18 build/default/debug/src/os/os_kernel/croutine.o
  .debug_aranges
-                  0x0001b0         0x18 build/default/debug/src/soc/flash.o
+                  0x0001b0         0x18 build/default/debug/src/os/os_kernel/event_groups.o
  .debug_aranges
-                  0x0001c8         0x18 build/default/debug/src/soc/m_asm.o
+                  0x0001c8         0x18 build/default/debug/src/os/os_kernel/list.o
  .debug_aranges
-                  0x0001e0         0x18 build/default/debug/src/os/os_kernel/croutine.o
+                  0x0001e0         0x18 build/default/debug/src/os/os_kernel/queue.o
  .debug_aranges
-                  0x0001f8         0x18 build/default/debug/src/os/os_kernel/event_groups.o
+                  0x0001f8         0x18 build/default/debug/src/os/os_kernel/tasks.o
  .debug_aranges
-                  0x000210         0x18 build/default/debug/src/os/os_kernel/list.o
+                  0x000210         0x18 build/default/debug/src/os/os_portable/memmang/heap_2.o
  .debug_aranges
-                  0x000228         0x18 build/default/debug/src/os/os_kernel/queue.o
+                  0x000228         0x18 build/default/debug/src/os/os_portable/port.o
  .debug_aranges
-                  0x000240         0x18 build/default/debug/src/os/os_kernel/tasks.o
+                  0x000240         0x18 build/default/debug/src/os/os_portable/portasm_PIC24.o
  .debug_aranges
-                  0x000258         0x18 build/default/debug/src/os/os_portable/memmang/heap_2.o
+                  0x000258         0x18 build/default/debug/src/soc/delay.o
  .debug_aranges
-                  0x000270         0x18 build/default/debug/src/os/os_portable/port.o
+                  0x000270         0x18 build/default/debug/src/soc/ticker.o
  .debug_aranges
-                  0x000288         0x18 build/default/debug/src/os/os_portable/portasm_PIC24.o
+                  0x000288         0x18 build/default/debug/src/soc/flash.o
+ .debug_aranges
+                  0x0002a0         0x18 build/default/debug/src/soc/m_asm.o
+ .debug_aranges
+                  0x0002b8         0x18 build/default/debug/src/driver/key.o
+ .debug_aranges
+                  0x0002d0         0x18 build/default/debug/src/api/ui.o
                     0x0000                  WREG0 = 0x0
                     0x0000                  _WREG0 = 0x0
                     0x0002                  WREG1 = 0x2
@@ -2589,148 +2651,156 @@ LOAD default_isr
 LOAD data_init
 
 .debug_pubtypes
-                  0x0002a0        0xfa1
+                  0x0002e8       0x1119
  .debug_pubtypes
-                  0x0002a0         0x9d build/default/debug/mcc_generated_files/rtcc.o
+                  0x0002e8         0x9d build/default/debug/mcc_generated_files/rtcc.o
  .debug_pubtypes
-                  0x00033d         0x12 build/default/debug/mcc_generated_files/pin_manager.o
+                  0x000385         0x12 build/default/debug/mcc_generated_files/pin_manager.o
  .debug_pubtypes
-                  0x00034f         0x6b build/default/debug/mcc_generated_files/interrupt_manager.o
+                  0x000397         0x6b build/default/debug/mcc_generated_files/interrupt_manager.o
  .debug_pubtypes
-                  0x0003ba         0x1e build/default/debug/mcc_generated_files/mcc.o
+                  0x000402         0x1e build/default/debug/mcc_generated_files/mcc.o
  .debug_pubtypes
-                  0x0003d8         0xa4 build/default/debug/mcc_generated_files/tmr2.o
+                  0x000420         0xa4 build/default/debug/mcc_generated_files/tmr2.o
  .debug_pubtypes
-                  0x00047c         0xa4 build/default/debug/mcc_generated_files/tmr1.o
+                  0x0004c4         0xa4 build/default/debug/mcc_generated_files/tmr1.o
  .debug_pubtypes
-                  0x000520         0x6a build/default/debug/src/app/main.o
+                  0x000568         0xbc build/default/debug/src/api/sysdata.o
  .debug_pubtypes
-                  0x00058a         0x1f build/default/debug/src/app/event.o
+                  0x000624         0x91 build/default/debug/src/app/main.o
  .debug_pubtypes
-                  0x0005a9        0x122 build/default/debug/src/app/sample.o
+                  0x0006b5         0x55 build/default/debug/src/app/event.o
  .debug_pubtypes
-                  0x0006cb         0x2b build/default/debug/src/depend/crc16.o
+                  0x00070a        0x122 build/default/debug/src/app/sample.o
  .debug_pubtypes
-                  0x0006f6         0x43 build/default/debug/src/depend/m_string.o
+                  0x00082c         0x2b build/default/debug/src/depend/crc16.o
  .debug_pubtypes
-                  0x000739         0xad build/default/debug/src/driver/lcd.o
+                  0x000857         0x43 build/default/debug/src/depend/m_string.o
  .debug_pubtypes
-                  0x0007e6         0x12 build/default/debug/src/driver/gpio.o
+                  0x00089a         0xad build/default/debug/src/driver/lcd.o
  .debug_pubtypes
-                  0x0007f8         0xfd build/default/debug/src/driver/ads1148.o
+                  0x000947         0x12 build/default/debug/src/driver/gpio.o
  .debug_pubtypes
-                  0x0008f5         0x2b build/default/debug/src/driver/ads1148_hal.o
+                  0x000959         0xfd build/default/debug/src/driver/ads1148.o
  .debug_pubtypes
-                  0x000920         0x3f build/default/debug/src/driver/ex_eeprom.o
+                  0x000a56         0x2b build/default/debug/src/driver/ads1148_hal.o
  .debug_pubtypes
-                  0x00095f         0x29 build/default/debug/src/driver/i2c.o
+                  0x000a81         0x3f build/default/debug/src/driver/ex_eeprom.o
  .debug_pubtypes
-                  0x000988         0x1f build/default/debug/src/global/globle.o
+                  0x000ac0         0x29 build/default/debug/src/driver/i2c.o
  .debug_pubtypes
-                  0x0009a7         0x1f build/default/debug/src/soc/delay.o
+                  0x000ae9         0x1f build/default/debug/src/global/globle.o
  .debug_pubtypes
-                  0x0009c6         0x2c build/default/debug/src/soc/ticker.o
+                  0x000b08        0x113 build/default/debug/src/os/os_kernel/croutine.o
  .debug_pubtypes
-                  0x0009f2         0x51 build/default/debug/src/soc/flash.o
+                  0x000c1b        0x106 build/default/debug/src/os/os_kernel/event_groups.o
  .debug_pubtypes
-                  0x000a43         0xbc build/default/debug/src/api/sysdata.o
+                  0x000d21         0x98 build/default/debug/src/os/os_kernel/list.o
  .debug_pubtypes
-                  0x000aff        0x113 build/default/debug/src/os/os_kernel/croutine.o
+                  0x000db9        0x146 build/default/debug/src/os/os_kernel/queue.o
  .debug_pubtypes
-                  0x000c12        0x106 build/default/debug/src/os/os_kernel/event_groups.o
+                  0x000eff        0x1af build/default/debug/src/os/os_kernel/tasks.o
  .debug_pubtypes
-                  0x000d18         0x98 build/default/debug/src/os/os_kernel/list.o
+                  0x0010ae         0x12 build/default/debug/src/os/os_kernel/timers.o
  .debug_pubtypes
-                  0x000db0        0x146 build/default/debug/src/os/os_kernel/queue.o
+                  0x0010c0         0x7e build/default/debug/src/os/os_portable/memmang/heap_2.o
  .debug_pubtypes
-                  0x000ef6        0x1af build/default/debug/src/os/os_kernel/tasks.o
+                  0x00113e        0x10c build/default/debug/src/os/os_portable/port.o
  .debug_pubtypes
-                  0x0010a5         0x12 build/default/debug/src/os/os_kernel/timers.o
+                  0x00124a         0x1f build/default/debug/src/soc/delay.o
  .debug_pubtypes
-                  0x0010b7         0x7e build/default/debug/src/os/os_portable/memmang/heap_2.o
+                  0x001269         0x2c build/default/debug/src/soc/ticker.o
  .debug_pubtypes
-                  0x001135        0x10c build/default/debug/src/os/os_portable/port.o
+                  0x001295         0x51 build/default/debug/src/soc/flash.o
+ .debug_pubtypes
+                  0x0012e6         0xe1 build/default/debug/src/driver/key.o
+ .debug_pubtypes
+                  0x0013c7         0x3a build/default/debug/src/api/ui.o
 
 __c30_signature
-                  0x001241         0xea
+                  0x001401         0xf6
  __c30_signature
-                  0x001241          0x6 build/default/debug/mcc_generated_files/rtcc.o
+                  0x001401          0x6 build/default/debug/mcc_generated_files/rtcc.o
  __c30_signature
-                  0x001247          0x6 build/default/debug/mcc_generated_files/pin_manager.o
+                  0x001407          0x6 build/default/debug/mcc_generated_files/pin_manager.o
  __c30_signature
-                  0x00124d          0x6 build/default/debug/mcc_generated_files/interrupt_manager.o
+                  0x00140d          0x6 build/default/debug/mcc_generated_files/interrupt_manager.o
  __c30_signature
-                  0x001253          0x6 build/default/debug/mcc_generated_files/mcc.o
+                  0x001413          0x6 build/default/debug/mcc_generated_files/mcc.o
  __c30_signature
-                  0x001259          0x6 build/default/debug/mcc_generated_files/tmr2.o
+                  0x001419          0x6 build/default/debug/mcc_generated_files/tmr2.o
  __c30_signature
-                  0x00125f          0x6 build/default/debug/mcc_generated_files/tmr1.o
+                  0x00141f          0x6 build/default/debug/mcc_generated_files/tmr1.o
  __c30_signature
-                  0x001265          0x6 build/default/debug/src/app/main.o
+                  0x001425          0x6 build/default/debug/src/api/sysdata.o
  __c30_signature
-                  0x00126b          0x6 build/default/debug/src/app/event.o
+                  0x00142b          0x6 build/default/debug/src/app/main.o
  __c30_signature
-                  0x001271          0x6 build/default/debug/src/app/sample.o
+                  0x001431          0x6 build/default/debug/src/app/event.o
  __c30_signature
-                  0x001277          0x6 build/default/debug/src/depend/crc16.o
+                  0x001437          0x6 build/default/debug/src/app/sample.o
  __c30_signature
-                  0x00127d          0x6 build/default/debug/src/depend/m_string.o
+                  0x00143d          0x6 build/default/debug/src/depend/crc16.o
  __c30_signature
-                  0x001283          0x6 build/default/debug/src/driver/lcd.o
+                  0x001443          0x6 build/default/debug/src/depend/m_string.o
  __c30_signature
-                  0x001289          0x6 build/default/debug/src/driver/gpio.o
+                  0x001449          0x6 build/default/debug/src/driver/lcd.o
  __c30_signature
-                  0x00128f          0x6 build/default/debug/src/driver/ads1148.o
+                  0x00144f          0x6 build/default/debug/src/driver/gpio.o
  __c30_signature
-                  0x001295          0x6 build/default/debug/src/driver/ads1148_hal.o
+                  0x001455          0x6 build/default/debug/src/driver/ads1148.o
  __c30_signature
-                  0x00129b          0x6 build/default/debug/src/driver/ex_eeprom.o
+                  0x00145b          0x6 build/default/debug/src/driver/ads1148_hal.o
  __c30_signature
-                  0x0012a1          0x6 build/default/debug/src/driver/i2c.o
+                  0x001461          0x6 build/default/debug/src/driver/ex_eeprom.o
  __c30_signature
-                  0x0012a7          0x6 build/default/debug/src/global/globle.o
+                  0x001467          0x6 build/default/debug/src/driver/i2c.o
  __c30_signature
-                  0x0012ad          0x6 build/default/debug/src/soc/delay.o
+                  0x00146d          0x6 build/default/debug/src/global/globle.o
  __c30_signature
-                  0x0012b3          0x6 build/default/debug/src/soc/ticker.o
+                  0x001473          0x6 build/default/debug/src/os/os_kernel/croutine.o
  __c30_signature
-                  0x0012b9          0x6 build/default/debug/src/soc/flash.o
+                  0x001479          0x6 build/default/debug/src/os/os_kernel/event_groups.o
  __c30_signature
-                  0x0012bf          0x6 build/default/debug/src/api/sysdata.o
+                  0x00147f          0x6 build/default/debug/src/os/os_kernel/list.o
  __c30_signature
-                  0x0012c5          0x6 build/default/debug/src/os/os_kernel/croutine.o
+                  0x001485          0x6 build/default/debug/src/os/os_kernel/queue.o
  __c30_signature
-                  0x0012cb          0x6 build/default/debug/src/os/os_kernel/event_groups.o
+                  0x00148b          0x6 build/default/debug/src/os/os_kernel/tasks.o
  __c30_signature
-                  0x0012d1          0x6 build/default/debug/src/os/os_kernel/list.o
+                  0x001491          0x6 build/default/debug/src/os/os_kernel/timers.o
  __c30_signature
-                  0x0012d7          0x6 build/default/debug/src/os/os_kernel/queue.o
+                  0x001497          0x6 build/default/debug/src/os/os_portable/memmang/heap_2.o
  __c30_signature
-                  0x0012dd          0x6 build/default/debug/src/os/os_kernel/tasks.o
+                  0x00149d          0x6 build/default/debug/src/os/os_portable/port.o
  __c30_signature
-                  0x0012e3          0x6 build/default/debug/src/os/os_kernel/timers.o
+                  0x0014a3          0x6 build/default/debug/src/soc/delay.o
  __c30_signature
-                  0x0012e9          0x6 build/default/debug/src/os/os_portable/memmang/heap_2.o
+                  0x0014a9          0x6 build/default/debug/src/soc/ticker.o
  __c30_signature
-                  0x0012ef          0x6 build/default/debug/src/os/os_portable/port.o
+                  0x0014af          0x6 build/default/debug/src/soc/flash.o
  __c30_signature
-                  0x0012f5          0x6 c:/program files (x86)/microchip/xc16/v1.30/bin/bin/../../lib\liblega-pic30-elf.a(crt0_extended24.o)
+                  0x0014b5          0x6 build/default/debug/src/driver/key.o
  __c30_signature
-                  0x0012fb          0x6 c:/program files (x86)/microchip/xc16/v1.30/bin/bin/../../lib\liblega-pic30-elf.a(data_init_24.o)
+                  0x0014bb          0x6 build/default/debug/src/api/ui.o
  __c30_signature
-                  0x001301          0x6 c:/program files (x86)/microchip/xc16/v1.30/bin/bin/../../lib\libm-elf.a(divsi3.daeo)
+                  0x0014c1          0x6 c:/program files (x86)/microchip/xc16/v1.30/bin/bin/../../lib\liblega-pic30-elf.a(crt0_extended24.o)
  __c30_signature
-                  0x001307          0x6 c:/program files (x86)/microchip/xc16/v1.30/bin/bin/../../lib\libm-elf.a(modsi3.daeo)
+                  0x0014c7          0x6 c:/program files (x86)/microchip/xc16/v1.30/bin/bin/../../lib\liblega-pic30-elf.a(data_init_24.o)
  __c30_signature
-                  0x00130d          0x6 c:/program files (x86)/microchip/xc16/v1.30/bin/bin/../../lib\libm-elf.a(udivsi3.daeo)
+                  0x0014cd          0x6 c:/program files (x86)/microchip/xc16/v1.30/bin/bin/../../lib\libm-elf.a(divsi3.daeo)
  __c30_signature
-                  0x001313          0x6 c:/program files (x86)/microchip/xc16/v1.30/bin/bin/../../lib\libm-elf.a(umodsi3.daeo)
+                  0x0014d3          0x6 c:/program files (x86)/microchip/xc16/v1.30/bin/bin/../../lib\libm-elf.a(modsi3.daeo)
  __c30_signature
-                  0x001319          0x6 c:/program files (x86)/microchip/xc16/v1.30/bin/bin/../../lib\liblega-c-elf.a(memcmp.DA_eo)
+                  0x0014d9          0x6 c:/program files (x86)/microchip/xc16/v1.30/bin/bin/../../lib\libm-elf.a(udivsi3.daeo)
  __c30_signature
-                  0x00131f          0x6 c:/program files (x86)/microchip/xc16/v1.30/bin/bin/../../lib\liblega-c-elf.a(memcpy.DA_eo)
+                  0x0014df          0x6 c:/program files (x86)/microchip/xc16/v1.30/bin/bin/../../lib\libm-elf.a(umodsi3.daeo)
  __c30_signature
-                  0x001325          0x6 c:/program files (x86)/microchip/xc16/v1.30/bin/bin/../../lib\liblega-c-elf.a(memset.DA_eo)
+                  0x0014e5          0x6 c:/program files (x86)/microchip/xc16/v1.30/bin/bin/../../lib\liblega-c-elf.a(memcmp.DA_eo)
+ __c30_signature
+                  0x0014eb          0x6 c:/program files (x86)/microchip/xc16/v1.30/bin/bin/../../lib\liblega-c-elf.a(memcpy.DA_eo)
+ __c30_signature
+                  0x0014f1          0x6 c:/program files (x86)/microchip/xc16/v1.30/bin/bin/../../lib\liblega-c-elf.a(memset.DA_eo)
 
 .nbss               0x0850         0x56
  .nbss              0x0850         0x1e build/default/debug/src/app/sample.o
@@ -2777,32 +2847,38 @@ __c30_signature
 .nbss               0x0828          0x2
  .nbss              0x0828          0x2 build/default/debug/mcc_generated_files/rtcc.o
 
-.nbss               0x08a6          0x2
- .nbss              0x08a6          0x2 build/default/debug/src/app/event.o
-                    0x08a6                  _event
+.nbss               0x08a6          0x4
+ .nbss              0x08a6          0x2 build/default/debug/src/app/main.o
+                    0x08a6                  _threadMainEvent
+ .nbss              0x08a8          0x2 build/default/debug/src/app/event.o
+                    0x08a8                  _event
 
-.ndata              0x08a8          0x4
- .ndata             0x08a8          0x2 build/default/debug/src/os/os_portable/memmang/heap_2.o
- .ndata             0x08aa          0x2 build/default/debug/src/os/os_portable/port.o
-                    0x08aa                  _uxCriticalNesting
+.ndata              0x08aa          0x4
+ .ndata             0x08aa          0x2 build/default/debug/src/os/os_portable/memmang/heap_2.o
+ .ndata             0x08ac          0x2 build/default/debug/src/os/os_portable/port.o
+                    0x08ac                  _uxCriticalNesting
 
-.bss                0x08ac       0x1538
- .bss               0x08ac       0x1400 build/default/debug/src/os/os_portable/memmang/heap_2.o
- .bss               0x1cac         0x64 build/default/debug/src/driver/ads1148.o
-                    0x1cac                  _ads1148Chip0
-                    0x1cde                  _ads1148Chip1
- .bss               0x1d10         0x50 build/default/debug/src/os/os_kernel/tasks.o
-                    0x1d10                  _pxReadyTasksLists
-                    0x1d38                  _xDelayedTaskList1
-                    0x1d42                  _xDelayedTaskList2
-                    0x1d4c                  _xPendingReadyList
-                    0x1d56                  _xSuspendedTaskList
- .bss               0x1d60         0x40 build/default/debug/src/app/sample.o
-                    0x1d60                  _samlpeBuf
- .bss               0x1da0         0x40 build/default/debug/src/driver/lcd.o
-                    0x1da0                  _pLCD
- .bss               0x1de0          0x2 build/default/debug/mcc_generated_files/tmr2.o
- .bss               0x1de2          0x2 build/default/debug/mcc_generated_files/tmr1.o
+.nbss               0x08ae          0x2
+ .nbss              0x08ae          0x2 build/default/debug/src/driver/key.o
+                    0x08ae                  _keyValue
+
+.bss                0x08b0       0x1538
+ .bss               0x08b0       0x1400 build/default/debug/src/os/os_portable/memmang/heap_2.o
+ .bss               0x1cb0         0x64 build/default/debug/src/driver/ads1148.o
+                    0x1cb0                  _ads1148Chip0
+                    0x1ce2                  _ads1148Chip1
+ .bss               0x1d14         0x50 build/default/debug/src/os/os_kernel/tasks.o
+                    0x1d14                  _pxReadyTasksLists
+                    0x1d3c                  _xDelayedTaskList1
+                    0x1d46                  _xDelayedTaskList2
+                    0x1d50                  _xPendingReadyList
+                    0x1d5a                  _xSuspendedTaskList
+ .bss               0x1d64         0x40 build/default/debug/src/app/sample.o
+                    0x1d64                  _samlpeBuf
+ .bss               0x1da4         0x40 build/default/debug/src/driver/lcd.o
+                    0x1da4                  _pLCD
+ .bss               0x1de4          0x2 build/default/debug/mcc_generated_files/tmr2.o
+ .bss               0x1de6          0x2 build/default/debug/mcc_generated_files/tmr1.o
 
 .ivt._RTCCInterrupt
                   0x000090          0x2
@@ -2833,7 +2909,12 @@ __c30_signature
  .ivt._T1Interrupt
                   0x00001a          0x2 build/default/debug/src/os/os_portable/port.o
 
-.const              0x83fe        0x17c load address 0x0003fe  
+.ivt._CNInterrupt
+                  0x00003a          0x2
+ .ivt._CNInterrupt
+                  0x00003a          0x2 build/default/debug/src/driver/key.o
+
+.const              0x83fe        0x188 load address 0x0003fe  
  .const             0x83fe        0x110 build/default/debug/src/driver/lcd.o
                     0x83fe                  _LCDDigitalIndexTable
                     0x8429                  _LCDDigitalTable
@@ -2844,326 +2925,346 @@ __c30_signature
  .const             0x8548         0x16 build/default/debug/src/app/main.o
  .const             0x855e         0x12 build/default/debug/src/depend/m_string.o
                     0x855e                  _HexTable
- .const             0x8570          0x8 build/default/debug/src/app/sample.o
- .const             0x8578          0x2 build/default/debug/src/os/os_portable/memmang/heap_2.o
+ .const             0x8570          0xc build/default/debug/src/api/ui.o
+ .const             0x857c          0x8 build/default/debug/src/app/sample.o
+ .const             0x8584          0x2 build/default/debug/src/os/os_portable/memmang/heap_2.o
 
-.text             0x00057a       0x41a4
- .text            0x00057a       0x136a build/default/debug/src/driver/lcd.o
-                  0x00057a                  _lcd_set_com_seg
-                  0x0005fa                  _lcd_disp_level_bar
-                  0x000946                  _lcd_disp_level
-                  0x00098a                  _lcd_disp_level_off
-                  0x0009a6                  _lcd_disp_battary_bar
-                  0x000a0c                  _lcd_disp_battary
-                  0x000a5e                  _lcd_disp_battary_off
-                  0x000a78                  _lcd_disp_rf_bar
-                  0x000ade                  _lcd_disp_rf
-                  0x000b30                  _lcd_disp_rf_off
-                  0x000b4a                  _lcd_disp_light_bar
-                  0x000b84                  _lcd_disp_light
-                  0x000bc8                  _lcd_disp_light_off
-                  0x000bda                  _lcd_disp_chr_loc_0
-                  0x000c3a                  _lcd_disp_dp_loc_0
-                  0x000c5a                  _lcd_disp_chr_loc_1
-                  0x000cba                  _lcd_disp_dp_loc_1
-                  0x000cda                  _lcd_disp_chr_loc_2
-                  0x000d3a                  _lcd_disp_dp_loc_2
-                  0x000d5a                  _lcd_disp_chr_loc_3
-                  0x000dba                  _lcd_disp_chr_loc_4
-                  0x000e1a                  _lcd_disp_dp_loc_4
-                  0x000e3a                  _lcd_disp_chr_loc_5
-                  0x000e9a                  _lcd_disp_dp_loc_5
-                  0x000eba                  _lcd_disp_chr_loc_6
-                  0x000f1a                  _lcd_disp_dp_loc_6
-                  0x000f3a                  _lcd_disp_chr_loc_7
-                  0x000f9a                  _lcd_disp_logo
-                  0x000fa2                  _lcd_disp_unit_t
-                  0x000fd2                  _lcd_disp_unit_1st_m
-                  0x001002                  _lcd_disp_unit_1st_m3
-                  0x00103a                  _lcd_disp_unit_temperature
-                  0x001072                  _lcd_disp_unit_2nd_m
-                  0x0010aa                  _lcd_disp_unit_2nd_m3
-                  0x0010ea                  _lcd_disp_unit_mpa
-                  0x001122                  _lcd_disp_chr_loc_0_ex
-                  0x0011ba                  _lcd_disp_chr_loc_1_ex
-                  0x001252                  _lcd_disp_chr_loc_2_ex
-                  0x0012ea                  _lcd_disp_chr_loc_0_sm
-                  0x00134a                  _lcd_disp_chr_loc_1_sm
-                  0x0013aa                  _lcd_disp_chr_loc_2_sm
-                  0x00140a                  _lcd_disp_dp_loc_0_sm
-                  0x00142a                  _lcd_disp_dp_loc_1_sm
-                  0x00144a                  _lcd_disp_dp_loc_sign_sm
-                  0x00146a                  _lcd_disp_dp_loc_sm_temperature
-                  0x00148a                  _lcd_show_dp_sm
-                  0x0014ac                  _lcd_clear_all_dp_sm
-                  0x0014ba                  _lcd_disp_get_code
-                  0x0014f4                  _lcd_disp_get_code_ex
-                  0x001532                  _lcd_clear_all_dp
-                  0x001550                  _lcd_show_dp
-                  0x0015a0                  _lcd_show_chr
-                  0x00160c                  _lcd_show_chr_sm
-                  0x001642                  _lcd_show_chr_ex
-                  0x001678                  _lcd_show_string_sm
-                  0x0016a6                  _lcd_show_string_ex
-                  0x0016d4                  _lcd_show_chr_lc
-                  0x001704                  _lcd_show_string_l0
-                  0x001732                  _lcd_show_string_l1
-                  0x001760                  _lcd_show_string
-                  0x00178e                  _lcd_disp_refresh
-                  0x001814                  _lcd_disp_all
-                  0x001836                  _lcd_config
-                  0x0018b8                  _lcd_bl_on
-                  0x0018be                  _lcd_bl_off
-                  0x0018c4                  _lcd_bl_init
-                  0x0018d6                  _lcd_init
- .text            0x0018e4        0xd86 build/default/debug/src/os/os_kernel/tasks.o
-                  0x0018e4                  _xTaskCreate
-                  0x00194e                  _prvInitialiseNewTask
-                  0x001a14                  _prvAddNewTaskToReadyList
-                  0x001a90                  _vTaskDelayUntil
-                  0x001b0c                  _vTaskDelay
-                  0x001b36                  _vTaskPrioritySet
-                  0x001bfe                  _vTaskSuspend
-                  0x001c62                  _prvTaskIsTaskSuspended
-                  0x001c94                  _vTaskResume
-                  0x001cf2                  _xTaskResumeFromISR
-                  0x001d5c                  _vTaskStartScheduler
-                  0x001d92                  _vTaskEndScheduler
-                  0x001daa                  _vTaskSuspendAll
-                  0x001db6                  _xTaskResumeAll
-                  0x001e60                  _xTaskGetTickCount
-                  0x001e70                  _xTaskGetTickCountFromISR
-                  0x001e80                  _uxTaskGetNumberOfTasks
-                  0x001e88                  _pcTaskGetName
-                  0x001ea2                  _xTaskIncrementTick
-                  0x001f80                  _vTaskSwitchContext
-                  0x00200e                  _vTaskPlaceOnEventList
-                  0x002028                  _vTaskPlaceOnUnorderedEventList
-                  0x00204e                  _xTaskRemoveFromEventList
-                  0x0020bc                  _xTaskRemoveFromUnorderedEventList
-                  0x002120                  _vTaskSetTimeOutState
-                  0x002134                  _xTaskCheckForTimeOut
-                  0x0021a0                  _vTaskMissedYield
-                  0x0021aa                  _prvIdleTask
-                  0x0021c0                  _prvInitialiseTaskLists
-                  0x0021f8                  _prvCheckTasksWaitingTermination
-                  0x0021fe                  _prvResetNextTaskUnblockTime
-                  0x002220                  _uxTaskResetEventItemValue
-                  0x002238                  _ulTaskNotifyTake
-                  0x0022a4                  _xTaskNotifyWait
-                  0x002360                  _xTaskGenericNotify
-                  0x002448                  _xTaskGenericNotifyFromISR
-                  0x002550                  _vTaskNotifyGiveFromISR
-                  0x0025da                  _xTaskNotifyStateClear
-                  0x00260e                  _prvAddCurrentTaskToDelayedList
- .text            0x00266a        0x608 build/default/debug/src/driver/ads1148.o
-                  0x00266a                  _ads1148_send_cmd
-                  0x00269a                  _ads1148_read_data
-                  0x002700                  _ads1148_write_register
-                  0x002772                  _ads1148_read_register
-                  0x0027ea                  _ads1148_slef_calibration
-                  0x002814                  _ads1148_set_channle_normal
-                  0x00285e                  _ads1148_set_bcs
-                  0x002892                  _ads1148_set_vbias
-                  0x0028aa                  _ads1148_set_vref
-                  0x002900                  _ads1148_set_muxcal
-                  0x002938                  _ads1148_set_data_rate
-                  0x002966                  _ads1148_set_ani_pga
-                  0x002998                  _ads1148_set_imag_idac
-                  0x0029c6                  _ads1148_set_drdy_mode
-                  0x0029f6                  _ads1148_set_idac1_pins
-                  0x002a24                  _ads1148_set_idac2_pins
-                  0x002a52                  _ads1148_set_idac12_pins
-                  0x002a92                  _ads1148_get_all_register
-                  0x002aa8                  _ads1148_init_obj_0
-                  0x002ae4                  _ads1148_init_obj_1
-                  0x002b20                  _ads1148_set_sync
-                  0x002b56                  _ads1148_init_chip_regs
-                  0x002bc2                  _ads1148_init_all_obj
-                  0x002bcc                  _ads1148_init_device
-                  0x002bda                  _ads1148_start_convert
-                  0x002be8                  _ads1148_stop_convert
-                  0x002bf6                  _ads1148_waite_convert
-                  0x002c22                  _ads1148_test
- .text            0x002c72        0x490 build/default/debug/src/app/sample.o
-                  0x002c72                  _samlpe_get_adc_average_value
-                  0x002d74                  _samlpe_read_adc
-                  0x002dfe                  _samlpe_chip0_ch_diff_pr_bridge
-                  0x002e3e                  _samlpe_chip0_ch_diff_pr_signal
-                  0x002e70                  _samlpe_chip0_ch_diff_pr_ref0
-                  0x002ea4                  _samlpe_chip0_ch_pr_bridge
-                  0x002ee4                  _samlpe_chip0_ch_pr_signal
-                  0x002f16                  _samlpe_chip0_ch_pr_ref1
-                  0x002f3e                  _samlpe_chip0_ch_temperature_in
-                  0x002f72                  _samlpe_chip1_ch_expr0_bridge
-                  0x002f78                  _samlpe_chip1_ch_expr0_signal
-                  0x002f7e                  _samlpe_chip1_ch_ex0_temperature
-                  0x002f84                  _samlpe_chip1_ch_expr0_ref0
-                  0x002f8a                  _samlpe_chip1_ch_expr1_bridge
-                  0x002f90                  _samlpe_chip1_ch_expr1_signal
-                  0x002f96                  _samlpe_chip1_ch_ex1_temperature
-                  0x002f9c                  _samlpe_chip1_ch_expr1_ref1
-                  0x002fa2                  _sample_in_soc_solar
-                  0x002fa8                  _samlpe_in_soc_battery
-                  0x002fae                  _samlpe_in_soc_ref
-                  0x002fb4                  _sample_post_calc
-                  0x002fba                  _sample_process
-                  0x00305c                  _samlpe_chip0_channle_gain_calib
-                  0x0030d2                  _thread_sample
-                  0x0030e6                  _thread_sample_void
- .text            0x003102        0x484 build/default/debug/src/depend/m_string.o
-                  0x003102                  _m_mem_set
-                  0x00312c                  _m_mem_cpy_len
-                  0x003156                  _m_mem_cpy
-                  0x003180                  _m_str_cmp
-                  0x0031c0                  _m_str_cmp_len
-                  0x003206                  _m_math_pow
-                  0x00325e                  _m_int_2_str
-                  0x0032e2                  _m_str_head_hide
-                  0x003324                  _HEX8
-                  0x003358                  _m_str_b2h
-                  0x0033b4                  _m_str_h2b
-                  0x0034be                  _m_int8_2_hex
-                  0x0034f4                  _m_int16_2_str_4
- .text            0x003586        0x31c build/default/debug/src/driver/ads1148_hal.o
-                  0x003586                  _ads1148_hal_sck_mod_out
-                  0x00359e                  _ads1148_hal_sck_set_hight
-                  0x0035aa                  _ads1148_hal_sck_set_low
-                  0x0035b6                  _ads1148_hal_sck_mod_in
-                  0x0035c8                  _ads1148_hal_din_mod_in
-                  0x0035da                  _ads1148_hal_din_get
-                  0x0035e8                  _ads1148_hal_dout_mod_out
-                  0x003600                  _ads1148_hal_dout_set_hight
-                  0x00360c                  _ads1148_hal_dout_set_low
-                  0x003618                  _ads1148_hal_dout_mod_in
-                  0x00362a                  _ads1148_hal_drdy_0_mod_in
-                  0x003640                  _ads1148_hal_drdy_0_get
-                  0x003650                  _ads1148_hal_cs_0_mod_out
-                  0x003668                  _ads1148_hal_cs_0_mod_in
-                  0x00367a                  _ads1148_hal_cs_0_set_hight
-                  0x003686                  _ads1148_hal_cs_0_set_low
-                  0x003698                  _ads1148_hal_start_0_mod_out
-                  0x0036b0                  _ads1148_hal_start_0_set_hight
-                  0x0036bc                  _ads1148_hal_start_0_set_low
-                  0x0036c8                  _ads1148_hal_start_0_mod_in
-                  0x0036da                  _ads1148_hal_drdy_1_mod_in
-                  0x0036ec                  _ads1148_hal_drdy_1_get
-                  0x0036f8                  _ads1148_hal_cs_1_mod_out
-                  0x003710                  _ads1148_hal_cs_1_set_hight
-                  0x00371c                  _ads1148_hal_cs_1_set_low
-                  0x00372e                  _ads1148_hal_cs_1_mod_in
-                  0x003740                  _ads1148_hal_start_1_mod_out
-                  0x003758                  _ads1148_hal_start_1_set_hight
-                  0x003764                  _ads1148_hal_start_1_set_low
-                  0x003770                  _ads1148_hal_start_1_mod_in
-                  0x003782                  _ads1148_hal_port_mode_dig_all
-                  0x0037c0                  _ads1148_hal_port_init_chip0
-                  0x0037d2                  _ads1148_hal_port_deinit_chip0
-                  0x0037e4                  _ads1148_hal_port_init_chip1
-                  0x0037f6                  _ads1148_hal_port_deinit_chip1
-                  0x003808                  _ads1148_hal_write_read_byte
-                  0x003872                  _ads1148_hal_pwr_off
-                  0x00388a                  _ads1148_hal_pwr_on
- .text            0x0038a2        0x308 build/default/debug/src/driver/i2c.o
-                  0x0038a2                  _iic_start
-                  0x0038e4                  _iic_stop
-                  0x003920                  _iic_send_ack
-                  0x0039b6                  _iic_waite_ack
-                  0x003a52                  _iic_send_byte
-                  0x003afe                  _iic_received_byte
-                  0x003b94                  _iic_received_byte_if_ack
- .text            0x003baa        0x2cc build/default/debug/mcc_generated_files/rtcc.o
-                  0x003baa                  _RTCC_Initialize
-                  0x003be4                  _RTCC_TimeReset
-                  0x003bfa                  _RTCC_TimeGet
-                  0x003cac                  _RTCC_TimeSet
-                  0x003d30                  _RTCC_BCDTimeGet
-                  0x003dca                  _RTCC_BCDTimeSet
-                  0x003e6e                  __RTCCInterrupt
- .text            0x003e76        0x176 build/default/debug/src/os/os_portable/memmang/heap_2.o
-                  0x003e76                  _pvPortMalloc
-                  0x003f5e                  _vPortFree
-                  0x003fb6                  _xPortGetFreeHeapSize
-                  0x003fbe                  _vPortInitialiseBlocks
- .text            0x003fec        0x172 build/default/debug/src/soc/flash.o
-                  0x003fec                  _m_flash_unlock_write
-                  0x004020                  _m_flash_read
-                  0x0040a0                  _m_flash_erase
-                  0x0040ca                  _m_flash_write
- .text            0x00415e        0x166 build/default/debug/src/os/os_portable/port.o
-                  0x00415e                  _pxPortInitialiseStack
-                  0x0041f8                  _xPortStartScheduler
-                  0x004228                  _vPortEndScheduler
-                  0x00422e                  _vApplicationSetupTickTimerInterrupt
-                  0x004256                  _vPortEnterCritical
-                  0x004270                  _vPortExitCritical
-                  0x00428c                  __T1Interrupt
- .text            0x0042c4        0x128 build/default/debug/src/os/os_kernel/list.o
-                  0x0042c4                  _vListInitialise
-                  0x0042f6                  _vListInitialiseItem
-                  0x004304                  _vListInsertEnd
-                  0x004340                  _vListInsert
-                  0x0043a4                  _uxListRemove
- .text            0x0043ec         0xcc build/default/debug/mcc_generated_files/tmr2.o
-                  0x0043ec                  _TMR2_Initialize
-                  0x004406                  __T2Interrupt
-                  0x004434                  _TMR2_Period16BitSet
-                  0x004446                  _TMR2_Period16BitGet
-                  0x00444e                  _TMR2_Counter16BitSet
-                  0x004460                  _TMR2_Counter16BitGet
-                  0x00446e                  _TMR2_Start
-                  0x00447e                  _TMR2_Stop
-                  0x004488                  _TMR2_GetElapsedThenClear
-                  0x0044a0                  _TMR2_SoftwareCounterGet
-                  0x0044ac                  _TMR2_SoftwareCounterClear
- .text            0x0044b8         0xc0 build/default/debug/src/app/main.o
-                  0x0044b8                  _m_system_init
-                  0x0044c6                  _thread_main
-                  0x0044dc                  _thread_main_create
-                  0x0044f8                  _event_proess
-                  0x004508                  _main
-                  0x004568                  _vApplicationStackOverflowHook
-                  0x004572                  _vApplicationIdleHook
- .text            0x004578         0x9e build/default/debug/mcc_generated_files/tmr1.o
-                  0x004578                  _TMR1_Initialize
-                  0x004592                  _TMR1_Period16BitSet
-                  0x0045a4                  _TMR1_Period16BitGet
-                  0x0045ac                  _TMR1_Counter16BitSet
-                  0x0045be                  _TMR1_Counter16BitGet
-                  0x0045cc                  _TMR1_Start
-                  0x0045dc                  _TMR1_Stop
-                  0x0045e6                  _TMR1_GetElapsedThenClear
-                  0x0045fe                  _TMR1_SoftwareCounterGet
-                  0x00460a                  _TMR1_SoftwareCounterClear
- .text            0x004616         0x9a build/default/debug/src/soc/ticker.o
-                  0x004616                  _TMR1_CallBack
-                  0x004628                  _ticker_ms_set
-                  0x004636                  _ticker_ms_get
-                  0x004640                  _ticker_ms_delay
-                  0x004680                  _TMR2_CallBack
-                  0x004698                  _ticker_10ms_per_get
-                  0x0046a2                  _ticker_10ms_per_set
- .text            0x0046b0         0x6e build/default/debug/mcc_generated_files/pin_manager.o
-                  0x0046b0                  _PIN_MANAGER_Initialize
+.text             0x000586       0x4540
+ .text            0x000586       0x136a build/default/debug/src/driver/lcd.o
+                  0x000586                  _lcd_set_com_seg
+                  0x000606                  _lcd_disp_level_bar
+                  0x000952                  _lcd_disp_level
+                  0x000996                  _lcd_disp_level_off
+                  0x0009b2                  _lcd_disp_battary_bar
+                  0x000a18                  _lcd_disp_battary
+                  0x000a6a                  _lcd_disp_battary_off
+                  0x000a84                  _lcd_disp_rf_bar
+                  0x000aea                  _lcd_disp_rf
+                  0x000b3c                  _lcd_disp_rf_off
+                  0x000b56                  _lcd_disp_light_bar
+                  0x000b90                  _lcd_disp_light
+                  0x000bd4                  _lcd_disp_light_off
+                  0x000be6                  _lcd_disp_chr_loc_0
+                  0x000c46                  _lcd_disp_dp_loc_0
+                  0x000c66                  _lcd_disp_chr_loc_1
+                  0x000cc6                  _lcd_disp_dp_loc_1
+                  0x000ce6                  _lcd_disp_chr_loc_2
+                  0x000d46                  _lcd_disp_dp_loc_2
+                  0x000d66                  _lcd_disp_chr_loc_3
+                  0x000dc6                  _lcd_disp_chr_loc_4
+                  0x000e26                  _lcd_disp_dp_loc_4
+                  0x000e46                  _lcd_disp_chr_loc_5
+                  0x000ea6                  _lcd_disp_dp_loc_5
+                  0x000ec6                  _lcd_disp_chr_loc_6
+                  0x000f26                  _lcd_disp_dp_loc_6
+                  0x000f46                  _lcd_disp_chr_loc_7
+                  0x000fa6                  _lcd_disp_logo
+                  0x000fae                  _lcd_disp_unit_t
+                  0x000fde                  _lcd_disp_unit_1st_m
+                  0x00100e                  _lcd_disp_unit_1st_m3
+                  0x001046                  _lcd_disp_unit_temperature
+                  0x00107e                  _lcd_disp_unit_2nd_m
+                  0x0010b6                  _lcd_disp_unit_2nd_m3
+                  0x0010f6                  _lcd_disp_unit_mpa
+                  0x00112e                  _lcd_disp_chr_loc_0_ex
+                  0x0011c6                  _lcd_disp_chr_loc_1_ex
+                  0x00125e                  _lcd_disp_chr_loc_2_ex
+                  0x0012f6                  _lcd_disp_chr_loc_0_sm
+                  0x001356                  _lcd_disp_chr_loc_1_sm
+                  0x0013b6                  _lcd_disp_chr_loc_2_sm
+                  0x001416                  _lcd_disp_dp_loc_0_sm
+                  0x001436                  _lcd_disp_dp_loc_1_sm
+                  0x001456                  _lcd_disp_dp_loc_sign_sm
+                  0x001476                  _lcd_disp_dp_loc_sm_temperature
+                  0x001496                  _lcd_show_dp_sm
+                  0x0014b8                  _lcd_clear_all_dp_sm
+                  0x0014c6                  _lcd_disp_get_code
+                  0x001500                  _lcd_disp_get_code_ex
+                  0x00153e                  _lcd_clear_all_dp
+                  0x00155c                  _lcd_show_dp
+                  0x0015ac                  _lcd_show_chr
+                  0x001618                  _lcd_show_chr_sm
+                  0x00164e                  _lcd_show_chr_ex
+                  0x001684                  _lcd_show_string_sm
+                  0x0016b2                  _lcd_show_string_ex
+                  0x0016e0                  _lcd_show_chr_lc
+                  0x001710                  _lcd_show_string_l0
+                  0x00173e                  _lcd_show_string_l1
+                  0x00176c                  _lcd_show_string
+                  0x00179a                  _lcd_disp_refresh
+                  0x001820                  _lcd_disp_all
+                  0x001842                  _lcd_config
+                  0x0018c4                  _lcd_bl_on
+                  0x0018ca                  _lcd_bl_off
+                  0x0018d0                  _lcd_bl_init
+                  0x0018e2                  _lcd_init
+ .text            0x0018f0        0xd86 build/default/debug/src/os/os_kernel/tasks.o
+                  0x0018f0                  _xTaskCreate
+                  0x00195a                  _prvInitialiseNewTask
+                  0x001a20                  _prvAddNewTaskToReadyList
+                  0x001a9c                  _vTaskDelayUntil
+                  0x001b18                  _vTaskDelay
+                  0x001b42                  _vTaskPrioritySet
+                  0x001c0a                  _vTaskSuspend
+                  0x001c6e                  _prvTaskIsTaskSuspended
+                  0x001ca0                  _vTaskResume
+                  0x001cfe                  _xTaskResumeFromISR
+                  0x001d68                  _vTaskStartScheduler
+                  0x001d9e                  _vTaskEndScheduler
+                  0x001db6                  _vTaskSuspendAll
+                  0x001dc2                  _xTaskResumeAll
+                  0x001e6c                  _xTaskGetTickCount
+                  0x001e7c                  _xTaskGetTickCountFromISR
+                  0x001e8c                  _uxTaskGetNumberOfTasks
+                  0x001e94                  _pcTaskGetName
+                  0x001eae                  _xTaskIncrementTick
+                  0x001f8c                  _vTaskSwitchContext
+                  0x00201a                  _vTaskPlaceOnEventList
+                  0x002034                  _vTaskPlaceOnUnorderedEventList
+                  0x00205a                  _xTaskRemoveFromEventList
+                  0x0020c8                  _xTaskRemoveFromUnorderedEventList
+                  0x00212c                  _vTaskSetTimeOutState
+                  0x002140                  _xTaskCheckForTimeOut
+                  0x0021ac                  _vTaskMissedYield
+                  0x0021b6                  _prvIdleTask
+                  0x0021cc                  _prvInitialiseTaskLists
+                  0x002204                  _prvCheckTasksWaitingTermination
+                  0x00220a                  _prvResetNextTaskUnblockTime
+                  0x00222c                  _uxTaskResetEventItemValue
+                  0x002244                  _ulTaskNotifyTake
+                  0x0022b0                  _xTaskNotifyWait
+                  0x00236c                  _xTaskGenericNotify
+                  0x002454                  _xTaskGenericNotifyFromISR
+                  0x00255c                  _vTaskNotifyGiveFromISR
+                  0x0025e6                  _xTaskNotifyStateClear
+                  0x00261a                  _prvAddCurrentTaskToDelayedList
+ .text            0x002676        0x608 build/default/debug/src/driver/ads1148.o
+                  0x002676                  _ads1148_send_cmd
+                  0x0026a6                  _ads1148_read_data
+                  0x00270c                  _ads1148_write_register
+                  0x00277e                  _ads1148_read_register
+                  0x0027f6                  _ads1148_slef_calibration
+                  0x002820                  _ads1148_set_channle_normal
+                  0x00286a                  _ads1148_set_bcs
+                  0x00289e                  _ads1148_set_vbias
+                  0x0028b6                  _ads1148_set_vref
+                  0x00290c                  _ads1148_set_muxcal
+                  0x002944                  _ads1148_set_data_rate
+                  0x002972                  _ads1148_set_ani_pga
+                  0x0029a4                  _ads1148_set_imag_idac
+                  0x0029d2                  _ads1148_set_drdy_mode
+                  0x002a02                  _ads1148_set_idac1_pins
+                  0x002a30                  _ads1148_set_idac2_pins
+                  0x002a5e                  _ads1148_set_idac12_pins
+                  0x002a9e                  _ads1148_get_all_register
+                  0x002ab4                  _ads1148_init_obj_0
+                  0x002af0                  _ads1148_init_obj_1
+                  0x002b2c                  _ads1148_set_sync
+                  0x002b62                  _ads1148_init_chip_regs
+                  0x002bce                  _ads1148_init_all_obj
+                  0x002bd8                  _ads1148_init_device
+                  0x002be6                  _ads1148_start_convert
+                  0x002bf4                  _ads1148_stop_convert
+                  0x002c02                  _ads1148_waite_convert
+                  0x002c2e                  _ads1148_test
+ .text            0x002c7e        0x490 build/default/debug/src/app/sample.o
+                  0x002c7e                  _samlpe_get_adc_average_value
+                  0x002d80                  _samlpe_read_adc
+                  0x002e0a                  _samlpe_chip0_ch_diff_pr_bridge
+                  0x002e4a                  _samlpe_chip0_ch_diff_pr_signal
+                  0x002e7c                  _samlpe_chip0_ch_diff_pr_ref0
+                  0x002eb0                  _samlpe_chip0_ch_pr_bridge
+                  0x002ef0                  _samlpe_chip0_ch_pr_signal
+                  0x002f22                  _samlpe_chip0_ch_pr_ref1
+                  0x002f4a                  _samlpe_chip0_ch_temperature_in
+                  0x002f7e                  _samlpe_chip1_ch_expr0_bridge
+                  0x002f84                  _samlpe_chip1_ch_expr0_signal
+                  0x002f8a                  _samlpe_chip1_ch_ex0_temperature
+                  0x002f90                  _samlpe_chip1_ch_expr0_ref0
+                  0x002f96                  _samlpe_chip1_ch_expr1_bridge
+                  0x002f9c                  _samlpe_chip1_ch_expr1_signal
+                  0x002fa2                  _samlpe_chip1_ch_ex1_temperature
+                  0x002fa8                  _samlpe_chip1_ch_expr1_ref1
+                  0x002fae                  _sample_in_soc_solar
+                  0x002fb4                  _samlpe_in_soc_battery
+                  0x002fba                  _samlpe_in_soc_ref
+                  0x002fc0                  _sample_post_calc
+                  0x002fc6                  _sample_process
+                  0x003068                  _samlpe_chip0_channle_gain_calib
+                  0x0030de                  _thread_sample
+                  0x0030f2                  _thread_sample_void
+ .text            0x00310e        0x484 build/default/debug/src/depend/m_string.o
+                  0x00310e                  _m_mem_set
+                  0x003138                  _m_mem_cpy_len
+                  0x003162                  _m_mem_cpy
+                  0x00318c                  _m_str_cmp
+                  0x0031cc                  _m_str_cmp_len
+                  0x003212                  _m_math_pow
+                  0x00326a                  _m_int_2_str
+                  0x0032ee                  _m_str_head_hide
+                  0x003330                  _HEX8
+                  0x003364                  _m_str_b2h
+                  0x0033c0                  _m_str_h2b
+                  0x0034ca                  _m_int8_2_hex
+                  0x003500                  _m_int16_2_str_4
+ .text            0x003592        0x346 build/default/debug/src/os/os_kernel/event_groups.o
+                  0x003592                  _xEventGroupCreate
+                  0x0035b0                  _xEventGroupSync
+                  0x003668                  _xEventGroupWaitBits
+                  0x003744                  _xEventGroupClearBits
+                  0x00376c                  _xEventGroupGetBitsFromISR
+                  0x003784                  _xEventGroupSetBits
+                  0x00384e                  _vEventGroupDelete
+                  0x003878                  _vEventGroupSetBitsCallback
+                  0x00388c                  _vEventGroupClearBitsCallback
+ .text            0x0038d8        0x31c build/default/debug/src/driver/ads1148_hal.o
+                  0x0038d8                  _ads1148_hal_sck_mod_out
+                  0x0038f0                  _ads1148_hal_sck_set_hight
+                  0x0038fc                  _ads1148_hal_sck_set_low
+                  0x003908                  _ads1148_hal_sck_mod_in
+                  0x00391a                  _ads1148_hal_din_mod_in
+                  0x00392c                  _ads1148_hal_din_get
+                  0x00393a                  _ads1148_hal_dout_mod_out
+                  0x003952                  _ads1148_hal_dout_set_hight
+                  0x00395e                  _ads1148_hal_dout_set_low
+                  0x00396a                  _ads1148_hal_dout_mod_in
+                  0x00397c                  _ads1148_hal_drdy_0_mod_in
+                  0x003992                  _ads1148_hal_drdy_0_get
+                  0x0039a2                  _ads1148_hal_cs_0_mod_out
+                  0x0039ba                  _ads1148_hal_cs_0_mod_in
+                  0x0039cc                  _ads1148_hal_cs_0_set_hight
+                  0x0039d8                  _ads1148_hal_cs_0_set_low
+                  0x0039ea                  _ads1148_hal_start_0_mod_out
+                  0x003a02                  _ads1148_hal_start_0_set_hight
+                  0x003a0e                  _ads1148_hal_start_0_set_low
+                  0x003a1a                  _ads1148_hal_start_0_mod_in
+                  0x003a2c                  _ads1148_hal_drdy_1_mod_in
+                  0x003a3e                  _ads1148_hal_drdy_1_get
+                  0x003a4a                  _ads1148_hal_cs_1_mod_out
+                  0x003a62                  _ads1148_hal_cs_1_set_hight
+                  0x003a6e                  _ads1148_hal_cs_1_set_low
+                  0x003a80                  _ads1148_hal_cs_1_mod_in
+                  0x003a92                  _ads1148_hal_start_1_mod_out
+                  0x003aaa                  _ads1148_hal_start_1_set_hight
+                  0x003ab6                  _ads1148_hal_start_1_set_low
+                  0x003ac2                  _ads1148_hal_start_1_mod_in
+                  0x003ad4                  _ads1148_hal_port_mode_dig_all
+                  0x003b12                  _ads1148_hal_port_init_chip0
+                  0x003b24                  _ads1148_hal_port_deinit_chip0
+                  0x003b36                  _ads1148_hal_port_init_chip1
+                  0x003b48                  _ads1148_hal_port_deinit_chip1
+                  0x003b5a                  _ads1148_hal_write_read_byte
+                  0x003bc4                  _ads1148_hal_pwr_off
+                  0x003bdc                  _ads1148_hal_pwr_on
+ .text            0x003bf4        0x308 build/default/debug/src/driver/i2c.o
+                  0x003bf4                  _iic_start
+                  0x003c36                  _iic_stop
+                  0x003c72                  _iic_send_ack
+                  0x003d08                  _iic_waite_ack
+                  0x003da4                  _iic_send_byte
+                  0x003e50                  _iic_received_byte
+                  0x003ee6                  _iic_received_byte_if_ack
+ .text            0x003efc        0x2cc build/default/debug/mcc_generated_files/rtcc.o
+                  0x003efc                  _RTCC_Initialize
+                  0x003f36                  _RTCC_TimeReset
+                  0x003f4c                  _RTCC_TimeGet
+                  0x003ffe                  _RTCC_TimeSet
+                  0x004082                  _RTCC_BCDTimeGet
+                  0x00411c                  _RTCC_BCDTimeSet
+                  0x0041c0                  __RTCCInterrupt
+ .text            0x0041c8        0x176 build/default/debug/src/os/os_portable/memmang/heap_2.o
+                  0x0041c8                  _pvPortMalloc
+                  0x0042b0                  _vPortFree
+                  0x004308                  _xPortGetFreeHeapSize
+                  0x004310                  _vPortInitialiseBlocks
+ .text            0x00433e        0x172 build/default/debug/src/soc/flash.o
+                  0x00433e                  _m_flash_unlock_write
+                  0x004372                  _m_flash_read
+                  0x0043f2                  _m_flash_erase
+                  0x00441c                  _m_flash_write
+ .text            0x0044b0        0x166 build/default/debug/src/os/os_portable/port.o
+                  0x0044b0                  _pxPortInitialiseStack
+                  0x00454a                  _xPortStartScheduler
+                  0x00457a                  _vPortEndScheduler
+                  0x004580                  _vApplicationSetupTickTimerInterrupt
+                  0x0045a8                  _vPortEnterCritical
+                  0x0045c2                  _vPortExitCritical
+                  0x0045de                  __T1Interrupt
+ .text            0x004616        0x128 build/default/debug/src/os/os_kernel/list.o
+                  0x004616                  _vListInitialise
+                  0x004648                  _vListInitialiseItem
+                  0x004656                  _vListInsertEnd
+                  0x004692                  _vListInsert
+                  0x0046f6                  _uxListRemove
+ .text            0x00473e         0xec build/default/debug/src/app/main.o
+                  0x00473e                  _m_system_init
+                  0x00474c                  _thread_main
+                  0x00477c                  _thread_main_create
+                  0x0047a8                  _event_proess
+                  0x0047b8                  _main
+                  0x00481a                  _vApplicationStackOverflowHook
+                  0x004824                  _vApplicationIdleHook
+ .text            0x00482a         0xcc build/default/debug/mcc_generated_files/tmr2.o
+                  0x00482a                  _TMR2_Initialize
+                  0x004844                  __T2Interrupt
+                  0x004872                  _TMR2_Period16BitSet
+                  0x004884                  _TMR2_Period16BitGet
+                  0x00488c                  _TMR2_Counter16BitSet
+                  0x00489e                  _TMR2_Counter16BitGet
+                  0x0048ac                  _TMR2_Start
+                  0x0048bc                  _TMR2_Stop
+                  0x0048c6                  _TMR2_GetElapsedThenClear
+                  0x0048de                  _TMR2_SoftwareCounterGet
+                  0x0048ea                  _TMR2_SoftwareCounterClear
+ .text            0x0048f6         0x9e build/default/debug/mcc_generated_files/tmr1.o
+                  0x0048f6                  _TMR1_Initialize
+                  0x004910                  _TMR1_Period16BitSet
+                  0x004922                  _TMR1_Period16BitGet
+                  0x00492a                  _TMR1_Counter16BitSet
+                  0x00493c                  _TMR1_Counter16BitGet
+                  0x00494a                  _TMR1_Start
+                  0x00495a                  _TMR1_Stop
+                  0x004964                  _TMR1_GetElapsedThenClear
+                  0x00497c                  _TMR1_SoftwareCounterGet
+                  0x004988                  _TMR1_SoftwareCounterClear
+ .text            0x004994         0x9a build/default/debug/src/soc/ticker.o
+                  0x004994                  _TMR1_CallBack
+                  0x0049a6                  _ticker_ms_set
+                  0x0049b4                  _ticker_ms_get
+                  0x0049be                  _ticker_ms_delay
+                  0x0049fe                  _TMR2_CallBack
+                  0x004a16                  _ticker_10ms_per_get
+                  0x004a20                  _ticker_10ms_per_set
+ .text            0x004a2e         0x98 build/default/debug/src/driver/key.o
+                  0x004a2e                  _get_key_value
+                  0x004a6e                  _key_init
+                  0x004a9c                  __CNInterrupt
 
-.dinit            0x00471e         0x66
- .dinit           0x00471e         0x66 data_init
+.dinit            0x004ac6         0x72
+ .dinit           0x004ac6         0x72 data_init
 
-.text             0x004784        0x16a
- .text            0x004784         0x60 build/default/debug/src/driver/gpio.o
-                  0x004784                  _kz_vadd_on
-                  0x00479c                  _kz_vadd_off
-                  0x0047b4                  _back_night_on
-                  0x0047cc                  _back_night_off
- .text            0x0047e4         0x54 build/default/debug/src/os/os_portable/portasm_PIC24.o
-                  0x0047e4                  _vPortYield
- .text            0x004838         0x4a build/default/debug/src/soc/delay.o
-                  0x004838                  _delay_us
-                  0x004860                  _delay_ms
- .text            0x004882         0x2e build/default/debug/mcc_generated_files/mcc.o
-                  0x004882                  _SYSTEM_Initialize
-                  0x004894                  _OSCILLATOR_Initialize
- .text            0x0048b0         0x24 build/default/debug/mcc_generated_files/interrupt_manager.o
-                  0x0048b0                  _INTERRUPT_Initialize
- .text            0x0048d4         0x1a build/default/debug/src/soc/m_asm.o
-                  0x0048d4                  _flash_unlock_pm
+.text             0x004b38        0x24a
+ .text            0x004b38         0x6e build/default/debug/mcc_generated_files/pin_manager.o
+                  0x004b38                  _PIN_MANAGER_Initialize
+ .text            0x004ba6         0x60 build/default/debug/src/driver/gpio.o
+                  0x004ba6                  _kz_vadd_on
+                  0x004bbe                  _kz_vadd_off
+                  0x004bd6                  _back_night_on
+                  0x004bee                  _back_night_off
+ .text            0x004c06         0x54 build/default/debug/src/os/os_portable/portasm_PIC24.o
+                  0x004c06                  _vPortYield
+ .text            0x004c5a         0x4c build/default/debug/src/api/ui.o
+                  0x004c5a                  _ui_disp_start_cs600
+ .text            0x004ca6         0x4a build/default/debug/src/soc/delay.o
+                  0x004ca6                  _delay_us
+                  0x004cce                  _delay_ms
+ .text            0x004cf0         0x2e build/default/debug/mcc_generated_files/mcc.o
+                  0x004cf0                  _SYSTEM_Initialize
+                  0x004d02                  _OSCILLATOR_Initialize
+ .text            0x004d1e         0x26 build/default/debug/src/app/event.o
+                  0x004d1e                  _send_event_group
+                  0x004d30                  _send_thread_main_event
+ .text            0x004d44         0x24 build/default/debug/mcc_generated_files/interrupt_manager.o
+                  0x004d44                  _INTERRUPT_Initialize
+ .text            0x004d68         0x1a build/default/debug/src/soc/m_asm.o
+                  0x004d68                  _flash_unlock_pm

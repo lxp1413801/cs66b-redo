@@ -8,6 +8,7 @@
     #include <stdint.h>
 
 	#include "sysdata.h"
+	#include "ui.h"
 
 #ifdef __cplusplus
 	}
