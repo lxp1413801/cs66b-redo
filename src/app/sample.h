@@ -26,7 +26,7 @@
 	extern volatile int16_t rtAdcValueChip1Ref0;
 	extern volatile int16_t rtAdcValueChip1Ref1;	
 	
-	extern void sample_process(void);
+	extern void thread_sample_create(void);
 
 #ifdef __cplusplus
 	}

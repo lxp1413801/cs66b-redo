@@ -310,6 +310,7 @@ void thread_sample( void * pvParameters )
 {
     ads1148_init_all_obj();
 	ads1148_init_device();
+
 	while(1){
         sample_process();
         osDelay(10);
@@ -317,7 +318,7 @@ void thread_sample( void * pvParameters )
         __nop();
 	}
 }
-void thread_sample_void(void)
+void thread_sample_create(void)
 {
     BaseType_t xReturned;
     TaskHandle_t xHandle = NULL;
@@ -326,7 +327,7 @@ void thread_sample_void(void)
     xReturned = xTaskCreate(
 		thread_sample, 
 		"samlpe", 
-		configMINIMAL_STACK_SIZE, 
+		configMINIMAL_STACK_SIZE*2, 
 		NULL, 
 		1, 
 		&xHandle );	

@@ -1,11 +1,14 @@
-//file name :sys_data.h
-#ifndef __sys_data_h__
-#define __sys_data_h__
+#ifndef __sysdata_h__
+#define __sysdata_h__
+
 #ifdef __cplusplus
-	extern "C"{
+extern "C"{
 #endif
+
 	#include "../../mcc_generated_files/mcc.h"
     #include <stdint.h>
+	#include <stdbool.h>
+	
 	#define get_offset_addr_of_str(TYPE, MEMBER) ((uint32_t) (&((TYPE *)0)->MEMBER))
 	#define __STR_OFFSET get_offset_addr_of_str
 	
@@ -26,28 +29,31 @@
 	extern volatile st_deviceOpMode dwm;
 	
 	typedef enum{
-		HIGHT_HI=0,	//¸ß¶È±¨¾¯
+		HIGHT_HI=0,	//é«˜åº¦æŠ¥è­¦
 		HIGHT_LO,
-		PRESSURE_HI,	//Ñ¹Á¦±¨¾¯,
+		PRESSURE_HI,	//å‹åŠ›æŠ¥è­¦,
 		PRESSURE_LO,
 	}em_warnType,warnType_t;	
 	
 	typedef struct{
-		uint32_t 	warnValueLo;//±¨¾¯Öµ
-		uint32_t	warnValueHi;//»Ø²î
+		uint32_t 	warnValueLo;//æŠ¥è­¦ï¿½?
+		uint32_t	warnValueHi;//å›å·®
 		//bool upLimit;
 		em_warnType	type;
 		uint8_t reverse[3];
 	}st_warnDef,warnDef_t;
 	
-	//Íâ²¿²îÑ¹ÎÂ¶È±ê¶¨µã
+	//å¤–éƒ¨å·®å‹æ¸©åº¦æ ‡å®šï¿½?
 	typedef struct{
 		int32_t	value;
+		int16_t	sigAdcValue;
+		int16_t tAdcValue;		
+	}xCalibPointEx_t;
+	typedef struct{
+		int16_t	value;
 		uint16_t adcValue;
-		uint16_t reverse;
-	}st_exCalibDef,exClibDef_t,comTwoPointCalib_t;
-	
-	//²îÑ¹£¬Ñ¹Á¦¶ş´ÎĞŞÕı
+	}exClibDef_t;	
+	//å·®å‹ï¼Œå‹åŠ›äºŒæ¬¡ä¿®ï¿½?
 	typedef struct{
 		int32_t prOut;
 		int32_t prIn;
@@ -56,60 +62,123 @@
 		int32_t ilpLow;
 		int32_t ilpHi;
 	}st_ilpScaleDef;
-	//¶¨µãÊı¹Ì¶¨·Å´ó1000±¶
+	//å®šç‚¹æ•°å›ºå®šæ”¾ï¿½?000ï¿½?
 	typedef struct{
 		uint32_t 	id;
-		em_posture	pos;							//Á¢Ê½»òÕßÎÔÊ½
-		uint8_t		maxValueForlevelBar;			//×´Ì¬ÌõÏÔÊ¾ÂúÊ±¶ÔÓ¦µÄ¸ß¶ÈÖµ,
-													//(95%»òÕß100%)
-		uint16_t	density;						//ÃÜ¶È
+		em_posture	pos;							//ç«‹å¼æˆ–è€…å§ï¿½?
+		uint8_t		maxValueForlevelBar;			//çŠ¶æ€æ¡æ˜¾ç¤ºæ»¡æ—¶å¯¹åº”çš„é«˜åº¦ï¿½?
+													//(95%æˆ–ï¿½?00%)
+		uint16_t	density;						//å¯†åº¦
 		
-		int32_t		h;								//¸ß
-		uint32_t	d;								//Ö±¾¶
+		int32_t		h;								//ï¿½?
+		uint32_t	d;								//ç›´å¾„
 		
-		int32_t		V1;								//Ô²Í²²¿·ÖÌå»ı
-		int32_t		V2;								//·âÍ·ÍÖÇòÌå»ı
+		int32_t		V1;								//åœ†ç­’éƒ¨åˆ†ä½“ç§¯
+		int32_t		V2;								//å°å¤´æ¤­çƒä½“ç§¯
 		
-		int32_t		baseZero;						//»ù´¡ÁãÎ»
+		int32_t		baseZero;						//åŸºç¡€é›¶ä½
 		//
 
-		st_2ndCalibDef	_2ndPrDiffCalib[2];			//¶ş´ÎĞŞÕı£¬²îÑ¹
-		st_2ndCalibDef	_2ndPrCalib[2];				//¶ş´ÎĞŞÕı£¬Ñ¹Á¦
+		st_2ndCalibDef	_2ndPrDiffCalib[2];			//äºŒæ¬¡ä¿®æ­£ï¼Œå·®ï¿½?
+		st_2ndCalibDef	_2ndPrCalib[2];				//äºŒæ¬¡ä¿®æ­£ï¼Œå‹ï¿½?
 		
-		st_warnDef		diffPressureWarnSet[4];		//²îÑ¹±¨¾¯ÉèÖÃ
-		st_warnDef		pressureWarnSet[2];			//Ñ¹Á¦±¨¾¯ÉèÖÃ
+		st_warnDef		diffPressureWarnSet[4];		//å·®å‹æŠ¥è­¦è®¾ç½®
+		st_warnDef		pressureWarnSet[2];			//å‹åŠ›æŠ¥è­¦è®¾ç½®
 
 		
 		uint16_t		ployCoeffic[4];					//v0'=a0.v0+a1.v1+ ...+an.vn
 
-		comTwoPointCalib_t	TmepCalib[2];				//ÎÂ¶È±ê¶¨£¬
+		exClibDef_t	TmepCalib[2];				//æ¸©åº¦æ ‡å®šï¿½?
 		
-		st_exCalibDef	exPr0Calib[2];				//Íâ²¿Ñ¹Á¦´«´«¸ĞÆ÷±ê¶¨
-		st_exCalibDef	exPr1Calib[2];
-		st_exCalibDef	exTempCalib[2];				//Íâ²¿ÎÂ¶È±ê¶¨
+		exClibDef_t	exPr0Calib[2];				//å¤–éƒ¨å‹åŠ›ä¼ ä¼ æ„Ÿå™¨æ ‡å®š
+		exClibDef_t	exPr1Calib[2];
+		exClibDef_t	exTempCalib[2];				//å¤–éƒ¨æ¸©åº¦æ ‡å®š
 		
-		st_ilpScaleDef	diffPrilpScale0;			//Ñ¹Á¦4-20ºÁ°²·¶Î§
-		st_ilpScaleDef	PrilpScale0;				//Ñ¹Á¦4-20ºÁ°²·¶Î§
+		st_ilpScaleDef	diffPrilpScale0;			//å‹åŠ›4-20æ¯«å®‰èŒƒå›´
+		st_ilpScaleDef	PrilpScale0;				//å‹åŠ›4-20æ¯«å®‰èŒƒå›´
 		st_ilpScaleDef	exPrIpScaleCh0;
 		st_ilpScaleDef	exPrIpScaleCh1;
 		//st_ilpScaleDef	
 		uint16_t	barScale;
 		//
 		uint16_t	crc;
-	}st_sysDataDef,sysDataDef_t;
-	extern const st_sysDataDef defultSystemData;
-    #ifndef SYSTEM_DATA_ADDR 
-
-    #define SYSTEM_DATA_ADDR user_FLASH_ADDR_START
-#endif
-
-	extern st_sysDataDef stSysData;
+	}sysDataDef_t;
+	extern const sysDataDef_t defultSystemData;
+	#define SYSTEM_DATA_ADDR	0xf400
+	extern sysDataDef_t stSysData;
 	extern uint8_t data_sys_init(void); 
     extern uint8_t data_sys_save(uint16_t offset,uint8_t* mbuf,uint16_t len);
 	
+	//å®šä¹‰ä¿®æ­£è¡¨æ ¼ï¿½?
+	//è¿™æ®µç®—æ³•å¥½åƒå¾ˆæ¶ï¿½?
+	#define CALIB_P_POINT_NUM 6
+	typedef struct{
+		int16_t	value;
+		int16_t	sigAdcValue;
+		int16_t tAdcValue;		
+	}xCalibPoint_t;
+	
+	typedef struct{
+		uint8_t pCount;	//æœ‰æ•ˆç‚¹ä¸ªï¿½?
+		uint8_t reverse;
+		xCalibPoint_t calibPoint[CALIB_P_POINT_NUM];
+	}xCalibRow_t;
+	
+	typedef struct{
+		uint8_t rowCount;	//æœ‰æ•ˆçš„è¡Œï¿½?ç»„æ•°,
+		uint8_t reverse;
+		xCalibRow_t calibRow[3];
+		uint16_t crc;		
+	}xCalibTab_t;	
+	
+	//
+	extern xCalibTab_t calibTab0;
+	extern xCalibTab_t calibTab1;
+	extern xCalibTab_t calibTab2;
+	extern xCalibTab_t calibTab3;
+	//extern xCalibTab_t ;
+	//
 
+	extern volatile int16_t 	adc_inPt100;
+	
+	extern volatile int16_t		adc_pressure;
+	extern volatile int16_t		adc_exPt100;
+
+	extern volatile int16_t		adc_iPrEx0;
+	extern volatile int16_t		adc_iPrEx1;
+
+	extern volatile int16_t		adc_ibat;
+	extern volatile int16_t		adc_iRef;
+
+	extern xCalibPointEx_t	x_prDiffData;
+	extern volatile int16_t	adc_diffPr;
+	extern volatile int16_t	adc_bridgeTemp;	
+    extern volatile int32_t	rtDiffPressure;
+	extern volatile int32_t	rtVolume;
+    extern volatile int32_t	rtHight;
+	extern volatile int32_t	rtWeight;
+	extern volatile uint8_t    rtLevel;
+	extern volatile int32_t    rtPressure;
+    extern volatile int32_t    rtTemperatureEx;
+	//fk 
+    extern uint32_t data_sys_cal_v1(sysDataDef_t* stp);
+    extern uint32_t data_sys_cal_v2(sysDataDef_t* stp);
+	extern void calib_data_put_piont_tab(xCalibTab_t* ptab,xCalibPoint_t* pp,uint8_t row,uint8_t col);
+
+
+    //apl
+	extern uint8_t cal_diff_press(void);
+	extern uint8_t cal_diff_hight_level(void);
+	extern  void cal_pt100_temperature_in(void);
+
+	extern uint8_t cal_press(void);
+	extern  void cal_pt100_temperature_ex(void);
+	
+	extern void cal_additional_pressute(uint8_t index);
+
+	extern void data_init_all(void);
 #ifdef __cplusplus
-	}
+}
 #endif
 
 #endif

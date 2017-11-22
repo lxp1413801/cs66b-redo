@@ -62,7 +62,7 @@ extern "C"{
 		uint8_t (*iic_send_byte)(uint8_t);
 		uint8_t (*iic_waite_ack)(void);
 		uint8_t (*iic_received_byte_if_ack)(uint8_t ack);
-	}st_iicDeviceObj;
+	}st_iicDeviceObj,iicDeviceObj_t;
 
 #ifdef __cplusplus
 }

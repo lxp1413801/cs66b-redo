@@ -6,23 +6,19 @@
             <file>file:/D:/lxp/cs66b-redo/src/app/sample.c</file>
         </group>
         <group name="cs600_test">
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/soc/flash.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/os/os_portable/portmacro.h</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/os/os_kernel/event_groups.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/api/sysdata.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/api/sysdata.h</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/driver/key.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/soc/flash.h</file>
+            <file>file:/F:/2017/cs66-b/cs66b.X/src/os/os_portable/memmang/heap_1.c</file>
+            <file>file:/F:/2017/cs66-b/cs66b.X/src/os/os_kernel/timers.c</file>
+            <file>file:/F:/2017/cs66-b/cs66b.X/src/os/os_configs/FreeRTOSConfig.h</file>
+            <file>file:/F:/2017/cs66-b/cs66b.X/src/os/os_kernel/croutine.c</file>
+            <file>file:/F:/2017/cs66-b/cs66b.X/src/os/os_kernel/queue.c</file>
+            <file>file:/F:/2017/cs66-b/cs66b.X/src/os/os_kernel/include/list.h</file>
+            <file>file:/F:/2017/cs66-b/cs66b.X/src/os/os_kernel/include/timers.h</file>
             <file>file:/F:/2017/cs66-b/cs66b.X/src/app/main.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/os/os_portable/port.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/driver/ads1148_hal.c</file>
+            <file>file:/F:/2017/cs66-b/cs66b.X/src/os/os_kernel/list.c</file>
             <file>file:/F:/2017/cs66-b/cs66b.X/src/app/sample.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/app/main.h</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/app/event.h</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/api/ui.c</file>
+            <file>file:/F:/2017/cs66-b/cs66b.X/src/api/key_menu.c</file>
             <file>file:/F:/2017/cs66-b/cs66b.X/src/os/os_kernel/tasks.c</file>
             <file>file:/F:/2017/cs66-b/cs66b.X/src/app/event.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/os/os_kernel/include/event_groups.h</file>
         </group>
     </open-files>
 </project-private>

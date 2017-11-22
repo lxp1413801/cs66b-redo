@@ -9,6 +9,8 @@
 
 	#include "sysdata.h"
 	#include "ui.h"
+	#include "key_menu.h"
+	
 
 #ifdef __cplusplus
 	}

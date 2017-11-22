@@ -46,7 +46,8 @@ src/api/../includes/../api/api.h  \
  src/api/../includes/../api/../../mcc_generated_files/mcc.h  \
  src/api/../includes/../api/sysdata.h  \
 src/api/../includes/../api/ui.h  \
- src/api/../includes/../app/app.h  \
+ src/api/../includes/../api/key_menu.h  \
+src/api/../includes/../app/app.h  \
  src/api/../includes/../app/../../mcc_generated_files/mcc.h  \
  src/api/../includes/../app/main.h  \
 src/api/../includes/../app/event.h  \

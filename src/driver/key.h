@@ -36,6 +36,12 @@
 	// #define KEY_SET_PINS_CNIe    	CN5IEbits.CN68IE  	
 	#define CNIE IEC1bits.CNIE
 	
+	#define KEY_VALUE_DOWN 	(0x01<<0x0)
+	#define KEY_VALUE_UP 	(0x01<<0x01)
+	#define KEY_VALUE_SET	(0x01<<0x02)
+	#define KEY_VALUE_NONE	(0x0)
+	#define KEY_VALUE_MASK	(KEY_VALUE_UP | KEY_VALUE_DOWN | KEY_VALUE_SET)
+	/*
 	typedef union{
 		uint8_t b;
 		struct{
@@ -45,8 +51,10 @@
 			uint8_t:5;
 		}bits;
 	}st_keyDef,keyDef_t;
-	extern keyDef_t keyValue;
+	*/
+	extern volatile uint8_t keyValue;
 	extern void key_init(void);
+    extern uint8_t  get_key_value(void);
 #ifdef __cplusplus
 	}
 #endif

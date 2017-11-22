@@ -21,7 +21,8 @@ void send_event_group(EventGroupHandle_t eventGroup,EventBits_t bits)
 void send_thread_main_event(uint16_t bits)
 {
     if(threadMainEvent!=NULL){
-    xEventGroupSetBits(threadMainEvent,(EventBits_t)bits);
+    //xEventGroupSetBits(threadMainEvent,(EventBits_t)bits);
+        xEventGroupSetBitsFromISR(threadMainEvent,(EventBits_t)bits,NULL);
     }
 
 }

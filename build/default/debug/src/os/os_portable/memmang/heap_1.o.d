@@ -1,5 +1,5 @@
-build/default/debug/src/os/os_portable/memmang/heap_2.o:  \
- src/os/os_portable/memmang/heap_2.c  \
+build/default/debug/src/os/os_portable/memmang/heap_1.o:  \
+ src/os/os_portable/memmang/heap_1.c  \
 src/os/os_kernel/include/FreeRTOS.h  \
  src/os/os_configs/FreeRTOSConfig.h  \
 src/os/os_kernel/include/projdefs.h  \

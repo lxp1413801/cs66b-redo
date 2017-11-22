@@ -1,19 +1,19 @@
 #include "drivers.h"
 #include"../global/globle.h"
 #include "../app/event.h"
-keyDef_t keyValue={0x00};
+//keyDef_t keyValue={0x00};
 //keyDef_t preKeyValue={0xff};
 //keyDef_t KeyValue={0xff};
-
+volatile uint8_t keyValue=0;
 uint8_t  get_key_value(void)
 {
-	keyDef_t tmp;
-	tmp.b=0x00;
-	if(get_port_value(KEY_UP_PORT,KEY_UP_PINS))tmp.bits.keyUp=1;
-	if(get_port_value(KEY_DOWN_PORT,KEY_DOWN_PINS))tmp.bits.keyDown=1;
-	if(get_port_value(KEY_SET_PORT,KEY_SET_PINS))tmp.bits.keySet=1;
-    tmp.b= ~ tmp.b;
-	return tmp.b;
+	uint8_t tmp;
+	tmp=0x00;
+	if(!get_port_value(KEY_UP_PORT,KEY_UP_PINS))tmp |= KEY_VALUE_UP;
+	if(!get_port_value(KEY_DOWN_PORT,KEY_DOWN_PINS))tmp |= KEY_VALUE_DOWN;
+	if(!get_port_value(KEY_SET_PORT,KEY_SET_PINS))tmp |= KEY_VALUE_SET;
+
+	return tmp;
 }
 
 void key_init(void)
@@ -45,7 +45,7 @@ void __attribute__ ( ( interrupt, no_auto_psv ) ) _CNInterrupt ()
 {
 	CNIF=0;
 	__nop();
-	keyValue.b=get_key_value();
+	//keyValue=get_key_value();
     send_thread_main_event(flg_KEY_DOWN);
 	__nop();
 	__nop();

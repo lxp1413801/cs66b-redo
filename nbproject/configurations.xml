@@ -26,8 +26,9 @@
       </logicalFolder>
       <logicalFolder name="src" displayName="src" projectFiles="true">
         <logicalFolder name="api" displayName="api" projectFiles="true">
-          <itemPath>src/api/sysdata.c</itemPath>
           <itemPath>src/api/ui.c</itemPath>
+          <itemPath>src/api/key_menu.c</itemPath>
+          <itemPath>src/api/sysdata.c</itemPath>
         </logicalFolder>
         <logicalFolder name="app" displayName="app" projectFiles="true">
           <itemPath>src/app/main.c</itemPath>
@@ -69,7 +70,7 @@
           </logicalFolder>
           <logicalFolder name="os_portable" displayName="os_portable" projectFiles="true">
             <logicalFolder name="memmang" displayName="memmang" projectFiles="true">
-              <itemPath>src/os/os_portable/memmang/heap_2.c</itemPath>
+              <itemPath>src/os/os_portable/memmang/heap_1.c</itemPath>
             </logicalFolder>
             <itemPath>src/os/os_portable/port.c</itemPath>
             <itemPath>src/os/os_portable/portasm_PIC24.S</itemPath>

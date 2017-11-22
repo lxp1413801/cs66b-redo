@@ -1,5 +1,5 @@
-build/default/production/src/api/sysdata.o:  \
-src/api/sysdata.c  \
+build/default/production/src/api/key_menu.o:  \
+src/api/key_menu.c  \
  src/api/../includes/includes.h  \
  src/api/../includes/../../mcc_generated_files/mcc.h  \
  src/api/../includes/../../mcc_generated_files/pin_manager.h  \
