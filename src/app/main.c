@@ -6,9 +6,9 @@ void m_system_init(void)
     PIN_MANAGER_Initialize();
     INTERRUPT_Initialize();
     OSCILLATOR_Initialize();
-    //TMR2_Initialize();
+    TMR2_Initialize();
     RTCC_Initialize();
-    //TMR1_Initialize();    
+    TMR1_Initialize();    
 }
 void thread_main_pre(void)
 {
@@ -80,7 +80,7 @@ int main(void)
 
 	//thread_main_create();
 	//vTaskStartScheduler();
-
+    thread_main_pre();
     while (1){
 		if(event & flg_KEY_DOWN){
 			//event &= ~flg_KEY_DOWN;

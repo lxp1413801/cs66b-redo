@@ -128,11 +128,11 @@ section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200               0x5f4           0x8ee  (2286)
 .const                       0x7f4               0x7c6           0xba9  (2985)
-.text                        0xfba              0x5be4          0x89d6  (35286)
-.dinit                      0x6b9e                0x62            0x93  (147)
-.text                       0x6c00               0x12a           0x1bf  (447)
+.text                        0xfba              0x5bea          0x89df  (35295)
+.dinit                      0x6ba4                0x62            0x93  (147)
+.text                       0x6c06               0x12a           0x1bf  (447)
 
-                 Total program memory used (bytes):         0xa0bf  (41151) 31%
+                 Total program memory used (bytes):         0xa0c8  (41160) 31%
 
 
 Ivt Memory  [Origin = 0x4, Length = 0xfc]
@@ -712,39 +712,39 @@ External Symbols in Program Memory (by address):
                   0x006a70                  _kz_vadd_off
                   0x006a8c                  _back_night_on
                   0x006aa8                  _back_night_off
-                  0x006ac6                  _PIN_MANAGER_Initialize
-                  0x006b34                  _m_system_init
-                  0x006b42                  _thread_main_pre
-                  0x006b60                  _event_proess
-                  0x006b72                  _main
-                  0x006c00                  _get_key_value
-                  0x006c2c                  _key_init
-                  0x006c5c                  _delay_us
-                  0x006c84                  _delay_ms
-                  0x006ca6                  _SYSTEM_Initialize
-                  0x006cb8                  _OSCILLATOR_Initialize
-                  0x006cd4                  _INTERRUPT_Initialize
-                  0x006cf8                  _flash_unlock_pm
-                  0x006d12                  _send_thread_main_event_key_down
+                  0x006ac6                  _m_system_init
+                  0x006ad8                  _thread_main_pre
+                  0x006af6                  _event_proess
+                  0x006b08                  _main
+                  0x006b36                  _PIN_MANAGER_Initialize
+                  0x006c06                  _get_key_value
+                  0x006c32                  _key_init
+                  0x006c62                  _delay_us
+                  0x006c8a                  _delay_ms
+                  0x006cac                  _SYSTEM_Initialize
+                  0x006cbe                  _OSCILLATOR_Initialize
+                  0x006cda                  _INTERRUPT_Initialize
+                  0x006cfe                  _flash_unlock_pm
+                  0x006d18                  _send_thread_main_event_key_down
 
 External Symbols in Program Memory (by name):
 
                   0x0054b0                  _HEX8
                   0x000fa4                  _HexTable
-                  0x006cd4                  _INTERRUPT_Initialize
+                  0x006cda                  _INTERRUPT_Initialize
                   0x000dfa                  _LCDDigitalIndexTable
                   0x000e25                  _LCDDigitalTable
                   0x000e8e                  _LCDDigitalTableEx
                   0x000e4f                  _LCDDigitalTableIndexEx
-                  0x006cb8                  _OSCILLATOR_Initialize
-                  0x006ac6                  _PIN_MANAGER_Initialize
+                  0x006cbe                  _OSCILLATOR_Initialize
+                  0x006b36                  _PIN_MANAGER_Initialize
                   0x006352                  _RTCC_BCDTimeGet
                   0x0063ec                  _RTCC_BCDTimeSet
                   0x0061cc                  _RTCC_Initialize
                   0x00621c                  _RTCC_TimeGet
                   0x006206                  _RTCC_TimeReset
                   0x0062ce                  _RTCC_TimeSet
-                  0x006ca6                  _SYSTEM_Initialize
+                  0x006cac                  _SYSTEM_Initialize
                   0x0069b8                  _TMR1_CallBack
                   0x006960                  _TMR1_Counter16BitGet
                   0x00694e                  _TMR1_Counter16BitSet
@@ -959,11 +959,11 @@ External Symbols in Program Memory (by name):
                   0x0035ec                  _data_sys_init
                   0x003658                  _data_sys_save
                   0x000b1c                  _defultSystemData
-                  0x006c84                  _delay_ms
-                  0x006c5c                  _delay_us
-                  0x006b60                  _event_proess
-                  0x006cf8                  _flash_unlock_pm
-                  0x006c00                  _get_key_value
+                  0x006c8a                  _delay_ms
+                  0x006c62                  _delay_us
+                  0x006af6                  _event_proess
+                  0x006cfe                  _flash_unlock_pm
+                  0x006c06                  _get_key_value
                   0x0007f4                  _hKcy
                   0x000988                  _hKel
                   0x006116                  _iic_received_byte
@@ -975,7 +975,7 @@ External Symbols in Program Memory (by name):
                   0x005fb6                  _iic_waite_ack
                   0x0023da                  _key_adj_value_fixed
                   0x002440                  _key_adj_value_float
-                  0x006c2c                  _key_init
+                  0x006c32                  _key_init
                   0x0034aa                  _key_process
                   0x00292c                  _key_process_down
                   0x0033ee                  _key_process_set
@@ -1072,8 +1072,8 @@ External Symbols in Program Memory (by name):
                   0x00534c                  _m_str_cmp_len
                   0x005540                  _m_str_h2b
                   0x00546e                  _m_str_head_hide
-                  0x006b34                  _m_system_init
-                  0x006b72                  _main
+                  0x006ac6                  _m_system_init
+                  0x006b08                  _main
                   0x0058b6                  _samlpe_chip0_ch_diff_pr_bridge
                   0x005928                  _samlpe_chip0_ch_diff_pr_ref0
                   0x0058f6                  _samlpe_chip0_ch_diff_pr_signal
@@ -1096,8 +1096,8 @@ External Symbols in Program Memory (by name):
                   0x005a5a                  _sample_in_soc_solar
                   0x005a6c                  _sample_post_calc
                   0x005a72                  _sample_process
-                  0x006d12                  _send_thread_main_event_key_down
-                  0x006b42                  _thread_main_pre
+                  0x006d18                  _send_thread_main_event_key_down
+                  0x006ad8                  _thread_main_pre
                   0x006a3a                  _ticker_10ms_per_get
                   0x006a44                  _ticker_10ms_per_set
                   0x0069e2                  _ticker_ms_delay
@@ -1365,7 +1365,7 @@ __CONFIG1
  .debug_abbrev    0x0019a6        0x129 build/default/production/src/soc/flash.o
  .debug_abbrev    0x001acf         0x14 build/default/production/src/soc/m_asm.o
 
-.debug_line       0x000000       0x2473
+.debug_line       0x000000       0x2476
  *(.debug_line)
  .debug_line      0x000000        0x182 build/default/production/mcc_generated_files/rtcc.o
  .debug_line      0x000182        0x11d build/default/production/mcc_generated_files/pin_manager.o
@@ -1376,23 +1376,23 @@ __CONFIG1
  .debug_line      0x0006ff        0x309 build/default/production/src/api/ui.o
  .debug_line      0x000a08        0x461 build/default/production/src/api/key_menu.o
  .debug_line      0x000e69        0x24e build/default/production/src/api/sysdata.o
- .debug_line      0x0010b7         0xcf build/default/production/src/app/main.o
- .debug_line      0x001186         0xb4 build/default/production/src/app/event.o
- .debug_line      0x00123a        0x197 build/default/production/src/app/sample.o
- .debug_line      0x0013d1         0xa6 build/default/production/src/depend/crc16.o
- .debug_line      0x001477        0x138 build/default/production/src/depend/m_string.o
- .debug_line      0x0015af        0x398 build/default/production/src/driver/lcd.o
- .debug_line      0x001947         0xf6 build/default/production/src/driver/gpio.o
- .debug_line      0x001a3d        0x19d build/default/production/src/driver/ads1148.o
- .debug_line      0x001bda        0x1b3 build/default/production/src/driver/ads1148_hal.o
- .debug_line      0x001d8d         0xec build/default/production/src/driver/ex_eeprom.o
- .debug_line      0x001e79        0x159 build/default/production/src/driver/i2c.o
- .debug_line      0x001fd2        0x119 build/default/production/src/driver/key.o
- .debug_line      0x0020eb         0x80 build/default/production/src/global/globle.o
- .debug_line      0x00216b         0x9c build/default/production/src/soc/delay.o
- .debug_line      0x002207         0xf5 build/default/production/src/soc/ticker.o
- .debug_line      0x0022fc        0x131 build/default/production/src/soc/flash.o
- .debug_line      0x00242d         0x46 build/default/production/src/soc/m_asm.o
+ .debug_line      0x0010b7         0xd2 build/default/production/src/app/main.o
+ .debug_line      0x001189         0xb4 build/default/production/src/app/event.o
+ .debug_line      0x00123d        0x197 build/default/production/src/app/sample.o
+ .debug_line      0x0013d4         0xa6 build/default/production/src/depend/crc16.o
+ .debug_line      0x00147a        0x138 build/default/production/src/depend/m_string.o
+ .debug_line      0x0015b2        0x398 build/default/production/src/driver/lcd.o
+ .debug_line      0x00194a         0xf6 build/default/production/src/driver/gpio.o
+ .debug_line      0x001a40        0x19d build/default/production/src/driver/ads1148.o
+ .debug_line      0x001bdd        0x1b3 build/default/production/src/driver/ads1148_hal.o
+ .debug_line      0x001d90         0xec build/default/production/src/driver/ex_eeprom.o
+ .debug_line      0x001e7c        0x159 build/default/production/src/driver/i2c.o
+ .debug_line      0x001fd5        0x119 build/default/production/src/driver/key.o
+ .debug_line      0x0020ee         0x80 build/default/production/src/global/globle.o
+ .debug_line      0x00216e         0x9c build/default/production/src/soc/delay.o
+ .debug_line      0x00220a         0xf5 build/default/production/src/soc/ticker.o
+ .debug_line      0x0022ff        0x131 build/default/production/src/soc/flash.o
+ .debug_line      0x002430         0x46 build/default/production/src/soc/m_asm.o
 
 .debug_frame      0x000000       0x2a5c
  *(.debug_frame)
@@ -3119,7 +3119,7 @@ __c30_signature
                     0x8fa4                  _HexTable
  .const             0x8fb6          0x4 build/default/production/src/app/main.o
 
-.text             0x000fba       0x5be4
+.text             0x000fba       0x5bea
  .text            0x000fba       0x136c build/default/production/src/driver/lcd.o
                   0x000fba                  _lcd_set_com_seg
                   0x00103a                  _lcd_disp_level_bar
@@ -3480,30 +3480,30 @@ __c30_signature
                   0x006a70                  _kz_vadd_off
                   0x006a8c                  _back_night_on
                   0x006aa8                  _back_night_off
- .text            0x006ac6         0x6e build/default/production/mcc_generated_files/pin_manager.o
-                  0x006ac6                  _PIN_MANAGER_Initialize
- .text            0x006b34         0x6a build/default/production/src/app/main.o
-                  0x006b34                  _m_system_init
-                  0x006b42                  _thread_main_pre
-                  0x006b60                  _event_proess
-                  0x006b72                  _main
+ .text            0x006ac6         0x70 build/default/production/src/app/main.o
+                  0x006ac6                  _m_system_init
+                  0x006ad8                  _thread_main_pre
+                  0x006af6                  _event_proess
+                  0x006b08                  _main
+ .text            0x006b36         0x6e build/default/production/mcc_generated_files/pin_manager.o
+                  0x006b36                  _PIN_MANAGER_Initialize
 
-.dinit            0x006b9e         0x62
- .dinit           0x006b9e         0x62 data_init
+.dinit            0x006ba4         0x62
+ .dinit           0x006ba4         0x62 data_init
 
-.text             0x006c00        0x12a
- .text            0x006c00         0x5c build/default/production/src/driver/key.o
-                  0x006c00                  _get_key_value
-                  0x006c2c                  _key_init
- .text            0x006c5c         0x4a build/default/production/src/soc/delay.o
-                  0x006c5c                  _delay_us
-                  0x006c84                  _delay_ms
- .text            0x006ca6         0x2e build/default/production/mcc_generated_files/mcc.o
-                  0x006ca6                  _SYSTEM_Initialize
-                  0x006cb8                  _OSCILLATOR_Initialize
- .text            0x006cd4         0x24 build/default/production/mcc_generated_files/interrupt_manager.o
-                  0x006cd4                  _INTERRUPT_Initialize
- .text            0x006cf8         0x1a build/default/production/src/soc/m_asm.o
-                  0x006cf8                  _flash_unlock_pm
- .text            0x006d12         0x18 build/default/production/src/app/event.o
-                  0x006d12                  _send_thread_main_event_key_down
+.text             0x006c06        0x12a
+ .text            0x006c06         0x5c build/default/production/src/driver/key.o
+                  0x006c06                  _get_key_value
+                  0x006c32                  _key_init
+ .text            0x006c62         0x4a build/default/production/src/soc/delay.o
+                  0x006c62                  _delay_us
+                  0x006c8a                  _delay_ms
+ .text            0x006cac         0x2e build/default/production/mcc_generated_files/mcc.o
+                  0x006cac                  _SYSTEM_Initialize
+                  0x006cbe                  _OSCILLATOR_Initialize
+ .text            0x006cda         0x24 build/default/production/mcc_generated_files/interrupt_manager.o
+                  0x006cda                  _INTERRUPT_Initialize
+ .text            0x006cfe         0x1a build/default/production/src/soc/m_asm.o
+                  0x006cfe                  _flash_unlock_pm
+ .text            0x006d18         0x18 build/default/production/src/app/event.o
+                  0x006d18                  _send_thread_main_event_key_down
