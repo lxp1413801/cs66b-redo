@@ -684,6 +684,7 @@ uint8_t __sys_data_save_write_flash(void)
     stp->V1=data_sys_cal_v1(stp);
     stp->V2=data_sys_cal_v2(stp);
     crc_append(buf,sizeof(sysDataDef_t)-2);
+    m_flash_erase(SYSTEM_DATA_ADDR,sizeof(sysDataDef_t));
     m_flash_write(SYSTEM_DATA_ADDR,buf,sizeof(sysDataDef_t));
     m_flash_read(SYSTEM_DATA_ADDR,buf,sizeof(sysDataDef_t));
     ret=crc_verify(buf,sizeof(sysDataDef_t));
@@ -1086,6 +1087,7 @@ void key_process(void)
 	ui_disp_menu();
 	//sys_ticker_start();
 	key_waite_release(LONG_PRESS_TIME,&key);
+    keyValue=KEY_VALUE_NONE;
 }
 
 //file end

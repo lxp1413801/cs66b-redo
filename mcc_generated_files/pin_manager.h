@@ -18,8 +18,8 @@
         Product Revision  :  MPLAB(c) Code Configurator - 4.26
         Device            :  PIC24FJ128GA310
     The generated drivers are tested against the following:
-        Compiler          :  XC16 1.32
-        MPLAB             :  MPLAB X 3.61
+        Compiler          :  XC16 1.31
+        MPLAB             :  MPLAB X 3.60
 
     Copyright (c) 2013 - 2015 released Microchip Technology Inc.  All rights reserved.
 

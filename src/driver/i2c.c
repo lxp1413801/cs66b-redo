@@ -110,7 +110,7 @@ uint8_t iic_received_byte(void)
         __nop_delay();
 		iic_scl_hight();
         __nop_delay();
-		if(iic_sda_get()){
+		if(iic_sda_get()!=0){
 			ret|=1;
 		}
 	}

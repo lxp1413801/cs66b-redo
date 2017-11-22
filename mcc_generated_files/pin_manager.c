@@ -18,8 +18,8 @@
         Product Revision  :  MPLAB(c) Code Configurator - 4.26
         Device            :  PIC24FJ128GA310
     The generated drivers are tested against the following:
-        Compiler          :  XC16 1.32
-        MPLAB             :  MPLAB X 3.61
+        Compiler          :  XC16 1.31
+        MPLAB             :  MPLAB X 3.60
 
     Copyright (c) 2013 - 2015 released Microchip Technology Inc.  All rights reserved.
 
@@ -72,7 +72,7 @@ void PIN_MANAGER_Initialize(void)
      ***************************************************************************/
     TRISA = 0xC6FF;
     TRISB = 0xFFFF;
-    TRISC = 0x901E;
+    TRISC = 0x101E;
     TRISD = 0xFFFF;
     TRISE = 0x03FF;
     TRISF = 0x31FF;
@@ -114,6 +114,7 @@ void PIN_MANAGER_Initialize(void)
     ANSD = 0x0CC0;
     ANSE = 0x02F0;
     ANSG = 0x03C0;
+
 
 }
 

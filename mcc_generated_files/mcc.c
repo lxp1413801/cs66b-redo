@@ -13,11 +13,11 @@
   @Description:
     This header file provides implementations for driver APIs for all modules selected in the GUI.
     Generation Information :
-        Product Revision  :  PIC24 / dsPIC33 / PIC32MM MCUs - pic24-dspic-pic32mm : v1.45
+        Product Revision  :  PIC24 / dsPIC33 / PIC32MM MCUs - pic24-dspic-pic32mm : v1.35
         Device            :  PIC24FJ128GA310
     The generated drivers are tested against the following:
-        Compiler          :  XC16 1.32
-        MPLAB             :  MPLAB X 3.61
+        Compiler          :  XC16 1.31
+        MPLAB             :  MPLAB X 3.60
 */
 
 /*
@@ -65,17 +65,17 @@
 #pragma config POSCMD = HS    // Primary Oscillator Select->HS Oscillator Enabled
 #pragma config BOREN1 = EN    // BOR Override bit->BOR Enabled [When BOREN=1]
 #pragma config IOL1WAY = ON    // IOLOCK One-Way Set Enable bit->Once set, the IOLOCK bit cannot be cleared
-#pragma config OSCIOFCN = OFF    // OSCO Pin Configuration->OSCO/CLKO/RC15 functions as CLKO (FOSC/2)
-#pragma config FCKSM = CSECME    // Clock Switching and Fail-Safe Clock Monitor Configuration bits->Clock switching is enabled, Fail-Safe Clock Monitor is enabled
+#pragma config OSCIOFCN = ON    // OSCO Pin Configuration->OSCO/CLKO/RC15 functions as port I/O (RC15)
+#pragma config FCKSM = CSDCMD    // Clock Switching and Fail-Safe Clock Monitor Configuration bits->Clock switching and Fail-Safe Clock Monitor are disabled
 #pragma config FNOSC = PRI    // Initial Oscillator Select->Primary Oscillator (XT, HS, EC)
 #pragma config ALTVREF = DLT_AV_DLT_CV    // Alternate VREF/CVREF Pins Selection bit->Voltage reference input, ADC =RA9/RA10 Comparator =RA9,RA10
 #pragma config IESO = ON    // Internal External Switchover->Enabled
 
 // CONFIG1
-#pragma config WDTPS = PS8    // Watchdog Timer Postscaler Select->1:8
+#pragma config WDTPS = PS1024    // Watchdog Timer Postscaler Select->1:1024
 #pragma config FWPSA = PR32    // WDT Prescaler Ratio Select->1:32
 #pragma config FWDTEN = WDT_DIS    // Watchdog Timer Enable->WDT disabled in hardware; SWDTEN bit disabled
-#pragma config WINDIS = ON    // Windowed WDT Disable->Windowed Watchdog Timer
+#pragma config WINDIS = OFF    // Windowed WDT Disable->Standard Watchdog Timer
 #pragma config ICS = PGx3    // Emulator Pin Placement Select bits->Emulator functions are shared with PGEC3/PGED3
 #pragma config LPCFG = OFF    // Low power regulator control->Disabled
 #pragma config GWRP = OFF    // General Segment Write Protect->Disabled
@@ -87,23 +87,23 @@
 void SYSTEM_Initialize(void)
 {
     PIN_MANAGER_Initialize();
-    INTERRUPT_Initialize();
     OSCILLATOR_Initialize();
+    INTERRUPT_Initialize();
     TMR2_Initialize();
-    RTCC_Initialize();
     TMR1_Initialize();
+    RTCC_Initialize();
 }
 
 void OSCILLATOR_Initialize(void)
 {
     // CF no clock failure; NOSC PRI; SOSCEN enabled; POSCEN disabled; CLKLOCK unlocked; OSWEN Switch is Complete; IOLOCK not-active; 
     __builtin_write_OSCCONL((uint8_t) (0x0202 & 0x00FF));
-    // RCDIV FRC/2; DOZE 1:8; DOZEN disabled; ROI disabled; 
-    CLKDIV = 0x3100;
+    // RCDIV FRC/1; DOZE 1:1; DOZEN disabled; ROI disabled; 
+    CLKDIV = 0x0000;
     // TUN Center frequency; 
     OSCTUN = 0x0000;
-    // ROEN disabled; ROSEL disabled; RODIV Base clock value; ROSSLP disabled; 
-    REFOCON = 0x0000;
+    // ROEN disabled; ROSEL disabled; RODIV Base clock value/16384; ROSSLP disabled; 
+    REFOCON = 0x0E00;
 }
 
 /**

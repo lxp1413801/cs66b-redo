@@ -11,6 +11,7 @@
         <itemPath>mcc_generated_files/mcc.h</itemPath>
         <itemPath>mcc_generated_files/tmr2.h</itemPath>
         <itemPath>mcc_generated_files/tmr1.h</itemPath>
+        <itemPath>mcc_generated_files/traps.h</itemPath>
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="SourceFiles" displayName="源文件" projectFiles="true">
@@ -23,6 +24,7 @@
         <itemPath>mcc_generated_files/mcc.c</itemPath>
         <itemPath>mcc_generated_files/tmr2.c</itemPath>
         <itemPath>mcc_generated_files/tmr1.c</itemPath>
+        <itemPath>mcc_generated_files/traps.c</itemPath>
       </logicalFolder>
       <logicalFolder name="src" displayName="src" projectFiles="true">
         <logicalFolder name="api" displayName="api" projectFiles="true">
@@ -74,6 +76,7 @@
     <Elem>src</Elem>
     <Elem>os_portable</Elem>
     <Elem>os_kernel</Elem>
+    <Elem>mcc_generated_files</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -85,7 +88,7 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>PICkit3PlatformTool</platformTool>
         <languageToolchain>XC16</languageToolchain>
-        <languageToolchainVersion>1.33</languageToolchainVersion>
+        <languageToolchainVersion>1.30</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <compileType>
@@ -261,6 +264,7 @@
         <property key="RTCC" value="true"/>
         <property key="SPI 1" value="true"/>
         <property key="SPI 2" value="true"/>
+        <property key="SecureSegment.SegmentProgramming" value="FullChipProgramming"/>
         <property key="TIMER1" value="true"/>
         <property key="TIMER2" value="true"/>
         <property key="TIMER3" value="true"/>
@@ -306,9 +310,8 @@
         <property key="programoptions.testmodeentrymethod" value="VDDFirst"/>
         <property key="programoptions.usehighvoltageonmclr" value="false"/>
         <property key="programoptions.uselvpprogramming" value="false"/>
-        <property key="voltagevalue" value="3.5"/>
+        <property key="voltagevalue" value="3.25"/>
         <property key="冻结所有其他外设" value="true"/>
-        <property key="安全段。分部编程" value="FullChipProgramming"/>
       </PICkit3PlatformTool>
       <Simulator>
         <property key="codecoverage.enabled" value="Disable"/>

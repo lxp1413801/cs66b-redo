@@ -1,18 +1,18 @@
 /**
-  System Interrupts Generated Driver File 
+  System Traps Generated Driver File 
 
   @Company:
     Microchip Technology Inc.
 
   @File Name:
-    interrupt_manager.h
+    traps.h
 
   @Summary:
-    This is the generated driver implementation file for setting up the
-    interrupts using PIC24 / dsPIC33 / PIC32MM MCUs
+    This is the generated driver implementation file for handling traps
+    using PIC24 / dsPIC33 / PIC32MM MCUs
 
   @Description:
-    This source file provides implementations for PIC24 / dsPIC33 / PIC32MM MCUs interrupts.
+    This source file provides implementations for PIC24 / dsPIC33 / PIC32MM MCUs traps.
     Generation Information : 
         Product Revision  :  PIC24 / dsPIC33 / PIC32MM MCUs - pic24-dspic-pic32mm : v1.35
         Device            :  PIC24FJ128GA310
@@ -42,24 +42,45 @@
     TERMS.
 */
 
-/**
-    Section: Includes
-*/
-#include <xc.h>
+#ifndef _TRAPS_H
+#define _TRAPS_H
+
+#include <stdint.h>
 
 /**
-    void INTERRUPT_Initialize (void)
-*/
-void INTERRUPT_Initialize (void)
+ * Error codes
+ */
+typedef enum 
 {
-    //    RTCI: RTCC - Real-Time Clock and Calendar
-    //    Priority: 1
-        IPC15bits.RTCIP = 1;
-    //    TI: T2 - Timer2
-    //    Priority: 1
-        IPC1bits.T2IP = 1;
-    //    TI: T1 - Timer1
-    //    Priority: 1
-        IPC0bits.T1IP = 1;
+    /* ----- Traps ----- */
+    TRAPS_OSC_FAIL = 0, /** Oscillator Fail Trap vector */
+    TRAPS_STACK_ERR = 1, /** Stack Error Trap Vector */
+    TRAPS_ADDRESS_ERR = 2, /** Address Error Trap Vector */
+    TRAPS_MATH_ERR = 3, /** Math Error Trap Vector */
+} TRAPS_ERROR_CODE;
 
-}
+/**
+  @Summary
+    Default handler for the traps
+
+  @Description
+    This routine will be called whenever a trap happens. It stores the trap
+    error code and waits forever.
+    This routine has a weak attribute and can be over written.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    None.
+
+*/
+void __attribute__((naked, noreturn, weak)) TRAPS_halt_on_error(uint16_t code);
+
+#endif

@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project>
-  <executable name="dist/default/production/cs66b-redo.production.elf">
+  <executable name="dist/default/production/cs66b.X.production.elf">
     <memory name="data">
       <units>bytes</units>
       <length>8192</length>
-      <used>1666</used>
-      <free>6526</free>
+      <used>1700</used>
+      <free>6492</free>
     </memory>
     <memory name="program">
       <units>bytes</units>
       <length>131316</length>
-      <used>41160</used>
-      <free>90156</free>
+      <used>41148</used>
+      <free>90168</free>
     </memory>
   </executable>
 </project>

@@ -14,11 +14,11 @@
   @Description:
     This header file provides APIs for driver for RTCC.
     Generation Information :
-        Product Revision  :  PIC24 / dsPIC33 / PIC32MM MCUs - pic24-dspic-pic32mm : v1.45
+        Product Revision  :  PIC24 / dsPIC33 / PIC32MM MCUs - pic24-dspic-pic32mm : v1.35
         Device            :  PIC24FJ128GA310
     The generated drivers are tested against the following:
-        Compiler          :  XC16 1.32
-        MPLAB 	          :  MPLAB X 3.61
+        Compiler          :  XC16 1.31
+        MPLAB 	          :  MPLAB X 3.60
 */
 
 /*
@@ -81,8 +81,17 @@ void RTCC_Initialize(void)
        RTCVAL = 0x52;    // MINUTES/SECONDS
    }
 
-   // RTCOUT Alarm Pulse; PWSPRE disabled; RTCLK SOSC; PWCPRE disabled; PWCEN disabled; PWCPOL disabled; 
-   RTCPWC = 0x0000;
+   // set Alarm time 2017-11-05 14-00-52
+   ALCFGRPTbits.ALRMEN = 0;
+   ALCFGRPTbits.ALRMPTR = 2;
+   ALRMVAL = 0x1105;
+   ALRMVAL = 0x14;
+   ALRMVAL = 0x52;
+
+   // ALRMPTR MIN_SEC; AMASK Every Half Second; ARPT 0; CHIME enabled; ALRMEN enabled; 
+   ALCFGRPT = 0xC000;
+   // RTCOUT Alarm Pulse; PWSPRE disabled; RTCLK LPRC; PWCPRE disabled; PWCEN disabled; PWCPOL disabled; 
+   RTCPWC = 0x0400;
 
            
    // Enable RTCC, clear RTCWREN
@@ -260,12 +269,13 @@ static uint8_t ConvertBCDToHex(uint8_t bcdvalue)
     This is the interrupt service routine for the RTCC peripheral. Add in code if 
     required in the ISR. 
 */
+#if 0
 void __attribute__ ( ( interrupt, no_auto_psv ) ) _ISR _RTCCInterrupt( void )
 {
     /* TODO : Add interrupt handling code */
     IFS3bits.RTCIF = false;
 }
-
+#endif
 
 /**
  End of File

@@ -232,8 +232,8 @@ void calib_data_set_default(xCalibTab_t *ctab,uint8_t rowCount)
     for(i=0;i<rowCount;i++){
         ctab->calibRow[i].pCount=CALIB_P_POINT_NUM;
         for(j=0;j<CALIB_P_POINT_NUM;j++){
-            ctab->calibRow[i].calibPoint[j].sigAdcValue=j*6000+i*500;
-            ctab->calibRow[i].calibPoint[j].value=j*6000;
+            ctab->calibRow[i].calibPoint[j].sigAdcValue=j*3000+i*500;
+            ctab->calibRow[i].calibPoint[j].value=j*3000;
             ctab->calibRow[i].calibPoint[j].tAdcValue=i*1000;
         }
     }
@@ -420,6 +420,8 @@ void data_init_all(void)
 
     calib_data_obj_init(&diffPrCalibDataObj,3);
     calib_data_obj_init(&prPrCalibDataObj,1);
+    __nop();
+    __nop();
 }
 
 //高度折算容积，水平放置

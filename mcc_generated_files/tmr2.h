@@ -13,11 +13,11 @@
   @Description
     This header file provides APIs for driver for TMR2. 
     Generation Information : 
-        Product Revision  :  PIC24 / dsPIC33 / PIC32MM MCUs - pic24-dspic-pic32mm : v1.45
+        Product Revision  :  PIC24 / dsPIC33 / PIC32MM MCUs - pic24-dspic-pic32mm : v1.35
         Device            :  PIC24FJ128GA310
     The generated drivers are tested against the following:
-        Compiler          :  XC16 1.32
-        MPLAB 	          :  MPLAB X 3.61
+        Compiler          :  XC16 1.31
+        MPLAB 	          :  MPLAB X 3.60
 */
 
 /*

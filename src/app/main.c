@@ -75,20 +75,29 @@ int main(void)
     uint8_t str[4]={0x11,0x22,0x33,0x44};
     uint8_t i=0,j=0;
     // initialize the device
-    //SYSTEM_Initialize();
-    m_system_init();
+    SYSTEM_Initialize();
+    //m_system_init();
 
 	//thread_main_create();
 	//vTaskStartScheduler();
     thread_main_pre();
+    
+    ads1148_init_all_obj();
+	ads1148_init_device();   
+    
     while (1){
 		if(event & flg_KEY_DOWN){
 			//event &= ~flg_KEY_DOWN;
 			key_process();
 		}
-		if(event | flg_TICKER_10MS_PER){
+		if(event & flg_TICKER_10MS_PER){
 			event &= ~flg_TICKER_10MS_PER;
 			sample_process();			
+		}
+		if(event &  flg_RTC_SECOND){
+			event &=  ~flg_RTC_SECOND;
+			ui_disp_menu();
+			if(lcdTwinkle>0)lcdTwinkle--;
 		}
     }
     return -1;

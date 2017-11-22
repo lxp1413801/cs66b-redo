@@ -14,11 +14,11 @@
   @Description
     This source file provides APIs for driver for TMR2. 
     Generation Information : 
-        Product Revision  :  PIC24 / dsPIC33 / PIC32MM MCUs - pic24-dspic-pic32mm : v1.45
+        Product Revision  :  PIC24 / dsPIC33 / PIC32MM MCUs - pic24-dspic-pic32mm : v1.35
         Device            :  PIC24FJ128GA310
     The generated drivers are tested against the following:
-        Compiler          :  XC16 1.32
-        MPLAB 	          :  MPLAB X 3.61
+        Compiler          :  XC16 1.31
+        MPLAB 	          :  MPLAB X 3.60
 */
 
 /*
@@ -87,8 +87,8 @@ void TMR2_Initialize (void)
 {
     //TMR2 0; 
     TMR2 = 0x0000;
-    //Period = 0.01 s; Frequency = 5529600 Hz; PR2 864; 
-    PR2 = 0x0360*2;
+    //Period = 0.02 s; Frequency = 5529600 Hz; PR2 1728; 
+    PR2 = 0x06C0;
     //TCKPS 1:64; T32 16 Bit; TON enabled; TSIDL disabled; TCS FOSC/2; TGATE disabled; 
     T2CON = 0x8020;
 

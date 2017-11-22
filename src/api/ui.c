@@ -777,7 +777,7 @@ void ui_disp_menu_work_mode_adj(void)
     lcd_show_string(buf);
     lcd_disp_refresh(); 
 }
-inline void ui_disp_menu(void)
+void ui_disp_menu(void)
 {
 	switch(menu){
 		#if LCD_TEST_EX_EN==1

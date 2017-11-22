@@ -3,27 +3,15 @@ src/api/key_menu.c  \
  src/api/../includes/includes.h  \
  src/api/../includes/../../mcc_generated_files/mcc.h  \
  src/api/../includes/../../mcc_generated_files/pin_manager.h  \
+ src/api/../includes/../../mcc_generated_files/tmr1.h  \
+ src/api/../includes/../../mcc_generated_files/tmr2.h  \
  src/api/../includes/../../mcc_generated_files/rtcc.h  \
  src/api/../includes/../../mcc_generated_files/interrupt_manager.h  \
- src/api/../includes/../../mcc_generated_files/tmr2.h  \
- src/api/../includes/../../mcc_generated_files/tmr1.h  \
+ src/api/../includes/../../mcc_generated_files/traps.h  \
  src/api/../includes/../configs/configs.h  \
  src/api/../includes/../configs/../../mcc_generated_files/mcc.h  \
  src/api/../includes/../global/globle.h  \
  src/api/../includes/../global/../../mcc_generated_files/mcc.h  \
- src/api/../includes/../os/os_configs/FreeRTOSConfig.h  \
- src/api/../includes/../os/os_kernel/include/FreeRTOS.h  \
- src/os/os_configs/FreeRTOSConfig.h  \
- src/api/../includes/../os/os_kernel/include/projdefs.h  \
- src/api/../includes/../os/os_kernel/include/portable.h  \
- src/api/../includes/../os/os_kernel/include/deprecated_definitions.h  \
- src/os/os_portable/portmacro.h  \
- src/api/../includes/../os/os_kernel/include/mpu_wrappers.h  \
- src/os/os_kernel/include/event_groups.h  \
- src/os/os_kernel/include/timers.h  \
-src/os/os_kernel/include/task.h  \
- src/os/os_kernel/include/list.h  \
- src/api/../includes/../os/os_kernel/include/task.h  \
  src/api/../includes/../soc/soc.h  \
  src/api/../includes/../soc/../../mcc_generated_files/mcc.h  \
  src/api/../includes/../soc/delay.h  \
@@ -45,9 +33,10 @@ src/api/../includes/../driver/lcd.h  \
 src/api/../includes/../api/api.h  \
  src/api/../includes/../api/../../mcc_generated_files/mcc.h  \
  src/api/../includes/../api/sysdata.h  \
-src/api/../includes/../api/ui.h  \
- src/api/../includes/../api/key_menu.h  \
-src/api/../includes/../app/app.h  \
+ src/api/../includes/../api/../driver/drivers.h  \
+ src/api/../includes/../api/ui.h  \
+src/api/../includes/../api/key_menu.h  \
+ src/api/../includes/../app/app.h  \
  src/api/../includes/../app/../../mcc_generated_files/mcc.h  \
  src/api/../includes/../app/main.h  \
 src/api/../includes/../app/event.h  \
