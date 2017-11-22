@@ -1,6 +1,6 @@
 #include "../includes/includes.h"
-EventGroupHandle_t threadMainEvent;
-
+//EventGroupHandle_t threadMainEvent;
+#define main_delay_ms(ms) ticker_ms_delay(ms)
 void m_system_init(void)
 {
     PIN_MANAGER_Initialize();
@@ -17,12 +17,14 @@ void thread_main_pre(void)
     
     lcd_init();
     ui_disp_all_on();
-    osDelay(1000);
+    main_delay_ms(1000);
     ui_disp_all_off();
-    osDelay(1000);
-    
-    
+    main_delay_ms(1000);
+
+	ui_disp_start_cs600(4);
+	data_init_all();    
 }
+/*
 void thread_main( void * pvParameters )
 {
     //configASSERT( ( ( uint32_t ) pvParameters ) == 1 );
@@ -45,9 +47,9 @@ void thread_main( void * pvParameters )
 }
 void thread_main_create(void)
 {
-    BaseType_t xReturned;
-    TaskHandle_t xHandle = NULL;
- threadMainEvent = xEventGroupCreate();
+	BaseType_t xReturned;
+	TaskHandle_t xHandle = NULL;
+	threadMainEvent = xEventGroupCreate();
 
     xReturned = xTaskCreate(thread_main, "NAME", configMINIMAL_STACK_SIZE*4, 	NULL, 	tskIDLE_PRIORITY, 	&xHandle );
     
@@ -59,7 +61,7 @@ void thread_main_create(void)
         }
     }
 }
-
+*/
 void event_proess(void)
 {
 	if(event | flg_TICKER_10MS_PER){
@@ -76,16 +78,22 @@ int main(void)
     //SYSTEM_Initialize();
     m_system_init();
 
-     thread_main_create();
-      vTaskStartScheduler();
+	//thread_main_create();
+	//vTaskStartScheduler();
 
     while (1){
-        __nop();
-         __nop();
+		if(event & flg_KEY_DOWN){
+			//event &= ~flg_KEY_DOWN;
+			key_process();
+		}
+		if(event | flg_TICKER_10MS_PER){
+			event &= ~flg_TICKER_10MS_PER;
+			sample_process();			
+		}
     }
     return -1;
 }
-
+/*
 void vApplicationStackOverflowHook( TaskHandle_t xTask, char *pcTaskName )
 {
     
@@ -94,7 +102,7 @@ void vApplicationIdleHook( void )
 {
     
 }
-
+*/
 /**
  End of File
 */

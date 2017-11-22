@@ -11,7 +11,10 @@ xCalibTab_t calibTab1={0};
 xCalibTab_t calibTab2={0};
 xCalibTab_t calibTab3={0};
 
-xCalibPointEx_t	x_prDiffData;
+calibDataObj_t diffPrCalibDataObj;
+calibDataObj_t prPrCalibDataObj;
+
+__xDataStruct_t	x_prDiffData;
 
 volatile int16_t	adc_diffPr;
 volatile int16_t	adc_bridgeTemp;	
@@ -219,24 +222,6 @@ void calib_data_put_piont_tab(xCalibTab_t* ptab,xCalibPoint_t* pp,uint8_t row,ui
 
 }
 
-// 差压标定数据初始化
-// at24c02_init(&at24c02Ch0,0xaa);//压力
-// at24c02_init(&at24c02Ch1,0xac);//差压
-void calib_data_set_default_diff_pr(void)
-{
-    uint8_t i,j;
-	calibTab0.rowCount=3;
-    for(i=0;i<3;i++){
-        calibTab0.calibRow[i].pCount=CALIB_P_POINT_NUM;
-        for(j=0;j<CALIB_P_POINT_NUM;j++){
-            calibTab0.calibRow[i].calibPoint[j].sigAdcValue=j*6000+i*500;
-            calibTab0.calibRow[i].calibPoint[j].value=j*6000;
-            calibTab0.calibRow[i].calibPoint[j].tAdcValue=i*1000;
-        }
-    }
-    //crc_append((uint8_t*)(&diff_prCalibTabDef),sizeof(diff_prCalibTabDef)-2);
-}
-
 void calib_data_set_default(xCalibTab_t *ctab,uint8_t rowCount)
 {
     uint8_t i,j;
@@ -254,73 +239,34 @@ void calib_data_set_default(xCalibTab_t *ctab,uint8_t rowCount)
     }
     //crc_append((uint8_t*)(&diff_prCalibTabDef),sizeof(diff_prCalibTabDef)-2);
 }
-void calib_data_set_default_pr(void)
-{
-    uint8_t i,j;
-	calibTab1.rowCount=1;
-    for(i=0;i<3;i++){
-        calibTab1.calibRow[i].pCount=CALIB_P_POINT_NUM;
-        for(j=0;j<CALIB_P_POINT_NUM;j++){
-            calibTab1.calibRow[i].calibPoint[j].sigAdcValue=j*6000+i*500;
-            calibTab1.calibRow[i].calibPoint[j].value=j*6000;
-            calibTab1.calibRow[i].calibPoint[j].tAdcValue=0;
-        }
-    }
-    //crc_append((uint8_t*)(&prCalibTabDef),sizeof(prCalibTabDef)-2);
-}
 /*
-uint8_t  calib_data_init_diff_pr(void)
-{
-    
-	uint8_t ret=0;
-	uint16_t t16;
-	uint8_t* buf=(uint8_t*)(&calibTab0);
-	iicDeviceObj_t* eprObj;
-	eprObj= &at24c02Obj1;
-	at24c02_init(eprObj,0xaa);
-	t16=sizeof(calibTab0);
-	at24c02_read_n_byte(eprObj,0,buf,t16);
-	ret=crc_verify(buf,t16);
-	if(!ret){
-		calib_data_set_default_diff_pr();
-		crc_append(buf,t16-2);
-		at24c02_write_n_byte(eprObj,0,buf,t16);
-		at24c02_read_n_byte(eprObj,0,buf,t16);
-		ret=crc_verify(buf,t16);		
-        if(!ret){
-            calib_data_set_default_diff_pr();
-            crc_append(buf,t16-2);
-           }
-	}
-	return ret;
-}
-*/
-uint8_t  calib_data_init_diff_pr(void)
-{
-    
-	uint8_t ret=0;
-	uint16_t t16;
-	uint8_t* buf=(uint8_t*)(&calibTab0);
-	iicDeviceObj_t* eprObj;
-	eprObj= &at24c02Obj1;
-	at24c02_init(eprObj,0xaa);
-	t16=sizeof(calibTab0);
-	at24c02_read_n_byte(eprObj,0,buf,t16);
-	ret=crc_verify(buf,t16);
-	if(!ret){
-		calib_data_set_default_diff_pr();
-		crc_append(buf,t16-2);
-		at24c02_write_n_byte(eprObj,0,buf,t16);
-		at24c02_read_n_byte(eprObj,0,buf,t16);
-		ret=crc_verify(buf,t16);		
-        if(!ret){
-            calib_data_set_default_diff_pr();
-            crc_append(buf,t16-2);
-           }
-	}
-	return ret;
-}
 
+uint8_t  calib_data_init_diff_pr(void)
+{
+	uint8_t ret=0;
+	uint16_t t16;
+	uint8_t* buf=(uint8_t*)(&calibTab0);
+	iicDeviceObj_t* eprObj;
+	eprObj= &at24c02Obj0;
+	at24c02_init(eprObj,0xa8);
+	t16=sizeof(calibTab0);
+	at24c02_read_n_byte(eprObj,0,buf,t16);
+	ret=crc_verify(buf,t16);
+	if(!ret){
+		//calib_data_set_default_diff_pr();
+		calib_data_set_default(&calibTab1,3);
+		crc_append(buf,t16-2);
+		at24c02_write_n_byte(eprObj,0,buf,t16);
+		at24c02_read_n_byte(eprObj,0,buf,t16);
+		ret=crc_verify(buf,t16);		
+        if(!ret){
+            //calib_data_set_default_diff_pr();
+			calib_data_set_default(&calibTab1,3);
+            crc_append(buf,t16-2);
+           }
+	}
+	return ret;
+}
 //压力标定数据初始化
 uint8_t  calib_data_init_pr(void)
 {
@@ -330,59 +276,37 @@ uint8_t  calib_data_init_pr(void)
 	iicDeviceObj_t* eprObj; 
 	//p_prEepromObj=&at24c02Ch0;
     eprObj=&at24c02Obj1;
-	at24c02_init(eprObj,0xa8);
+	at24c02_init(eprObj,0xaa);
 	t16=sizeof(xCalibTab_t);
 	at24c02_read_n_byte(eprObj,0,buf,t16);
 	ret=crc_verify(buf,t16);
 	if(!ret){
-		calib_data_set_default_pr();
+		//calib_data_set_default_pr();
+		calib_data_set_default(&calibTab1,1);
 		crc_append(buf,t16-2);
 		at24c02_write_n_byte(eprObj,0,buf,t16);
 		at24c02_read_n_byte(eprObj,0,buf,t16);
 		ret=crc_verify(buf,t16);
         if(!ret){
-            calib_data_set_default_pr();
+            //calib_data_set_default_pr();
+			calib_data_set_default(&calibTab1,1);
             crc_append(buf,t16-2);
+			//todo
         }
 	}
 	return ret;	
 }
-
+*/
 //一阶插值p-vin 压力--电压
 //输入xin:	[pvalue(未知),pAdcvalue(已知),tAdcValue(实际温度)];
 //返回xin:	[pvalue(已知),pAdcvalue(已知),tAdcValue(实际温度)];并且返回的pvalue无实际意义;
 //返回xout:	[pvalue(已知),pAdcvalue(已知),tAdcValue(图表中选定的温度)];
 //无温度补偿的情况，直接用xin返回计算结果;
-/*
-uint8_t m_interp1_cal_p_v(xCalibRow_t* tabrow,st_prData* xin,st_prData* xout)
+//signal adc value to phy.value,e.t. pressure;
+uint8_t m_interp1_cal_p_s(xCalibRow_t* tabrow,__xDataStruct_t* xin,__xDataStruct_t* xout)
 {
 	uint8_t i;
-	int32_t x,y;
-	for(i=0;i< (tabrow->pCount) - 1 ;i++){
-		if(tabrow->prCalibPoint[i].pAdcValue < tabrow->prCalibPoint[i+1].pAdcValue){
-			if(xin->pAdcValue <= tabrow->prCalibPoint[i+1].pAdcValue)break;
-		}else{
-			if(xin->pAdcValue >= tabrow->prCalibPoint[i+1].pAdcValue)break;
-		}		
-	}
-    xin->pValue=tabrow->prCalibPoint[i].pValue;
-    y = tabrow->prCalibPoint[i+1].pValue - tabrow->prCalibPoint[i].pValue ;
-    x = tabrow->prCalibPoint[i+1].pAdcValue - tabrow->prCalibPoint[i].pAdcValue;
-    if(x != 0){
-        xin->pValue = xin->pValue + (y/x)*(xin->pAdcValue -  tabrow->prCalibPoint[i].pAdcValue);
-    }
-	if(xout){
-		xout->pValue =   xin->pValue;
-		xout->pAdcValue = xin->pAdcValue;
-		xout->tAdcValue = tabrow->prCalibPoint[0].tAdcValue;
-	}
-    return i;
-}
-*/
-uint8_t m_interp1_cal_p_v(xCalibRow_t* tabrow,xCalibPointEx_t* xin,xCalibPointEx_t* xout)
-{
-	uint8_t i;
-	int32_t x,y,pr;
+	int32_t x,y,phv;
 	int16_t t16;
 	t16=xin->sigAdcValue;
 	for(i=0;i< (tabrow->pCount) - 2 ;i++){
@@ -390,108 +314,63 @@ uint8_t m_interp1_cal_p_v(xCalibRow_t* tabrow,xCalibPointEx_t* xin,xCalibPointEx
 		if(tabrow->calibPoint[i].sigAdcValue < tabrow->calibPoint[i+1].sigAdcValue){
 			if(t16 <= tabrow->calibPoint[i+1].sigAdcValue)break;
 		}else{
-			if(t16 >= tabrow->calibPoint[i+1].sigAdcValue)break;
+			if(t16 >= tabrow->calibPoint[i].sigAdcValue)break;
 		}
 	}
-	pr=tabrow->calibPoint[i].value;
-    //xin->pValue=tabrow->prCalibPoint[i].pValue;
-    y = tabrow->calibPoint[i+1].sigAdcValue - tabrow->calibPoint[i].sigAdcValue ;
+	
+    y = (int32_t)(tabrow->calibPoint[i+1].value - tabrow->calibPoint[i].value);
     x = (int32_t)(tabrow->calibPoint[i+1].sigAdcValue - tabrow->calibPoint[i].sigAdcValue);
+	phv=tabrow->calibPoint[i].value;
     if(x != 0){
-        //pr = pr + (y/x)*(int32_t)(t16 -  tabrow->prCalibPoint[i].pAdcValue);
-        pr = pr + y*((int32_t)(t16 -  tabrow->calibPoint[i].sigAdcValue))/x;
+        phv = phv + y*((int32_t)(t16 -  tabrow->calibPoint[i].sigAdcValue))/x;
     }
-	xin->value=pr;
+	xin->value=phv;
 	if(xout){
-		xout->value =   pr;
+		xout->value =   phv;
 		xout->sigAdcValue = xin->sigAdcValue;
-		//xout->tAdcValue = tabrow->prCalibPoint[0].tAdcValue;
-        t16= tabrow->calibPoint[i+1].tAdcValue-tabrow->calibPoint[i].tAdcValue;
-        y=(int32_t)t16;
-        t16=tabrow->calibPoint[i+1].sigAdcValue-tabrow->calibPoint[i].sigAdcValue;
-       x=(int32_t)t16;
-        if(y!=0){
-           //y=(y/x)*(int32_t)(xin->pAdcValue - tabrow->prCalibPoint[i].pAdcValue);
-            t16=(xin->sigAdcValue - tabrow->calibPoint[i].sigAdcValue);
-            y=y*(int32_t)t16;
-            y=y/x;
-            y+=(int32_t)tabrow->calibPoint[i].tAdcValue;
-           xout->tAdcValue=(int16_t)(y);
-        }else{
-            xout->tAdcValue = tabrow->calibPoint[0].tAdcValue;
+		
+		t16=xin->sigAdcValue;
+		y=(int32_t)(tabrow->calibPoint[i+1].tAdcValue-tabrow->calibPoint[i].tAdcValue);
+		x=(int32_t)(tabrow->calibPoint[i+1].sigAdcValue-tabrow->calibPoint[i].sigAdcValue);
+		
+		phv=tabrow->calibPoint[i].tAdcValue;
+        if(x!=0){
+			phv=phv+(int32_t)(t16-tabrow->calibPoint[i].sigAdcValue)*y/x;
+
         }
+		xout->tAdcValue = (int16_t)phv;
 	}
     return i;
 }
-//一阶线性插值p-t 压力温度
-//输入tmpx[]:在温度曲线簇上与x=(pAdcValue)相交的一组点，表示温度压力关系;
-//输入xin:	[pvalue(未知),pAdcvalue(已知),tAdcValue(实际温度)];
-/*
-uint8_t m_interp1_cal_p_t(st_prData* tmpx,st_prData* xin,uint8_t tmpxLen)
-{
-	uint8_t i;
-	int16_t t16;
-	int32_t x,y,pr;
-	t16=xin->tAdcValue;
-    for(i=0;i<tmpxLen-2;i++){
-        if(tmpx[i].tAdcValue < tmpx[i+1].tAdcValue){
-            if(t16 <= tmpx[i+1].tAdcValue)break;
-        }else{
-            if(t16  >= tmpx[i+1].tAdcValue)break;
-        }
-    }
-	pr=tmpx[i].pValue;
-    y=(tmpx[i+1].pValue-tmpx[i].pValue);
-    x=(int32_t)(tmpx[i+1].tAdcValue-tmpx[i].tAdcValue);
-    if(x!=0){
-        //pr = pr + (y/x)*(int32_t)(xin->tAdcValue - tmpx[i].tAdcValue);
-        pr = pr + y*((int32_t)(t16 - tmpx[i].tAdcValue))/x;
-    }
-	xin->pValue=pr;
-    return i;
-}
-*/
+
 //tmpx
-uint8_t m_interp1_cal_p_t(xCalibPointEx_t* ptmpx,xCalibPointEx_t* xin,uint8_t tmpxLen)
+uint8_t m_interp1_cal_p_t(__xDataStruct_t* ptmpx,__xDataStruct_t* xin,uint8_t tmpxLen)
 {
 	uint8_t i;
 	int16_t t16;
-	int32_t x,y,pr;
+	int32_t x,y,phv;
 	t16=xin->tAdcValue;
     for(i=0;i<tmpxLen-2;i++){
         if(ptmpx[i].tAdcValue < ptmpx[i+1].tAdcValue){
             if(t16 <= ptmpx[i+1].tAdcValue)break;
         }else{
-            if(t16  >= ptmpx[i+1].tAdcValue)break;
+            if(t16  >= ptmpx[i].tAdcValue)break;
         }
     }
-	pr=ptmpx[i].value;
-    y=(ptmpx[i+1].value-ptmpx[i].value);
+	phv=ptmpx[i].value;
+	
+    y=(int32_t)(ptmpx[i+1].value-ptmpx[i].value);
     x=(int32_t)(ptmpx[i+1].tAdcValue-ptmpx[i].tAdcValue);
     if(x!=0){
-
-        pr = pr + y*((int32_t)(t16 - ptmpx[i].tAdcValue))/x;
+        phv = phv + ((int32_t)(t16 - ptmpx[i].tAdcValue))*y/x;
     }
-	xin->value=pr;
+	xin->value=phv;
     return i;
 }
+
 float m_interp1_float_fast(float* tab,float in,int16_t len)
 {
-	/*
-	uint16_t i;
-	float f,x,y;
-	for(i=0;i<len-1;i++){
-		if(tab[i]<tab[i+1]){
-			if(in<=tab[i+1])break;
-		}else{
-			if(in>=tab[i+1])break;
-		}
-	}
-	f=tab[i];
-	x=0.01f;
-	y=tab[i+1]-tab[i];
-	f=f+(in-0.01*i)*(y/x);
-	*/
+
 	uint16_t i;
 	float f,x,y;	
 	f=in*100;
@@ -504,14 +383,43 @@ float m_interp1_float_fast(float* tab,float in,int16_t len)
 	return f;
 }
 
-
+uint8_t  calib_data_obj_init(calibDataObj_t* obj,uint8_t rowCount)
+{
+	uint8_t ret=0;
+	uint16_t t16;
+	uint8_t* buf=(uint8_t*)(obj->calibTab);
+    t16=sizeof(xCalibTab_t);
+    at24c02_read_n_byte(obj->eep24c02,0,buf,t16);
+	ret=crc_verify(buf,t16);
+	if(!ret){
+		calib_data_set_default(obj->calibTab,rowCount);
+		crc_append(buf,t16-2);
+		at24c02_write_n_byte(obj->eep24c02,0,buf,t16);
+		at24c02_read_n_byte(obj->eep24c02,0,buf,t16);
+		ret=crc_verify(buf,t16);		
+        if(!ret){
+			calib_data_set_default(obj->calibTab,rowCount);
+            crc_append(buf,t16-2);
+           }
+	}
+	return ret;    
+}
 //api
 //api
 void data_init_all(void)
 {
 	data_sys_init();
-	//calib_data_init_diff_pr();
-	//calib_data_init_pr();
+	//初始化eeprom对象
+	at24c02_init_all_chip();
+	//初始化标定数据对象
+	diffPrCalibDataObj.calibTab=&calibTab0;
+    diffPrCalibDataObj.eep24c02=&at24c02Obj0;
+	
+    prPrCalibDataObj.calibTab=&calibTab1;
+    prPrCalibDataObj.eep24c02=&at24c02Obj0;
+
+    calib_data_obj_init(&diffPrCalibDataObj,3);
+    calib_data_obj_init(&prPrCalibDataObj,1);
 }
 
 //高度折算容积，水平放置
@@ -538,6 +446,7 @@ int32_t cal_diff_hight_to_vol_h(int32_t h)
     v1=v1+v2;
 	return (int32_t)v1;
 }
+
 //计算高度百分比,刻度条
 uint8_t cal_diff_hight_level(void)
 {
@@ -569,6 +478,7 @@ uint8_t cal_diff_hight_level(void)
 	rtLevel=(uint8_t)f1;
     return rtLevel;
 }
+
 //高度折算容积，竖直放置
 int32_t cal_diff_hight_to_vol_v(int32_t h)
 {
@@ -601,6 +511,7 @@ int32_t cal_diff_hight_to_vol_v(int32_t h)
         return (int32_t)(v1+v2); 
     }
 }
+
 //压力转高度
 //折算为，高度，P=ρgh<-->h=p/ρg;单位为P(KPa),ρ(N/m3),(g=9.8)
 int32_t cal_diff_p_to_h(int32_t p)
@@ -614,6 +525,7 @@ int32_t cal_diff_p_to_h(int32_t p)
 	rtHight=(int32_t)f1;	
 	return rtHight;
 }
+
 int32_t cal_diff_vol_to_t(int32_t v)
 {
 	float f1,f2;
@@ -623,13 +535,13 @@ int32_t cal_diff_vol_to_t(int32_t v)
 	rtWeight=(int32_t)f1;
 	return rtWeight;
 }
+
 //计算差压
 //计算结果直接用xin返回
-xCalibPointEx_t tmpx[3];
+__xDataStruct_t tmpx[3];
 uint8_t cal_diff_press()
 {
-	xCalibPointEx_t* xin= &x_prDiffData;
-	//table data used globle 
+	__xDataStruct_t* xin= &x_prDiffData;
 	m_mem_set((uint8_t*)tmpx,0,sizeof(tmpx));
 	uint8_t i=0,j=0;
 	xCalibRow_t* tabrow;
@@ -637,12 +549,12 @@ uint8_t cal_diff_press()
     for(i=0;i<calibTab0.rowCount;i++){
         tabrow = &(calibTab0.calibRow[i]);
 		if(tabrow->pCount<2)continue;
-        m_interp1_cal_p_v(tabrow,xin,&tmpx[j++]);
+        m_interp1_cal_p_s(tabrow,xin,&tmpx[j++]);
     }
+	//温补
     m_interp1_cal_p_t(&tmpx[0],xin,j);
-	//
+
 	rtDiffPressure=xin->value;
-	//rtDiffPressure=tmpx[0].pValue;
 	cal_diff_p_to_h(rtDiffPressure);
     rtLevel=cal_diff_hight_level();
     if(stSysData.pos==HOTIZONTAL){
@@ -650,35 +562,25 @@ uint8_t cal_diff_press()
     }else{
 		rtVolume=cal_diff_hight_to_vol_v(rtHight);
 	}
-	//
+
 	cal_diff_vol_to_t(rtVolume);
 	return i;
 }
 
-//计算压力
-//计算结果直接用xin返回
-// uint8_t cal_press(st_prData* xin)
-// {
-	// uint8_t ret;
-	// xCalibRow_t* tabrow;
-	// tabrow= &prCalibTabDef.prCalibRow[0];
-	// ret=m_interp1_cal_p_v(tabrow,xin,NULL);
-	
-	// return ret;
-// }
 uint8_t cal_press(void)
 {
 	uint8_t ret;
-	xCalibPointEx_t  xin={0};
+	__xDataStruct_t  xin={0};
 	xin.value=0;
     xin.sigAdcValue=adc_pressure;
     xin.tAdcValue=0;
 	xCalibRow_t* tabrow;
 	tabrow= &calibTab1.calibRow[0];
-	ret=m_interp1_cal_p_v(tabrow,&xin,NULL);
+	ret=m_interp1_cal_p_s(tabrow,&xin,NULL);
 	rtPressure=xin.value;
 	return ret;
 }
+
 // -----------------------------------------------------
 // 计算温度
 // a=3.90802e-3;b=-5.8e-7;c=-4.2735e-12;
@@ -711,6 +613,7 @@ void cal_pt100_temperature_in(void)
 	*/
 	rtTemperatureIn= 0;
 }
+
 /*
 int32_t __cal_x_inter1_2(st_exCalibDef* pl,int32_t adc)
 {
@@ -730,6 +633,7 @@ int32_t __cal_x_inter1_2(st_exCalibDef* pl,int32_t adc)
 	rtTemperatureEx= (int32_t)y;
 }
 */
+
 void cal_pt100_temperature_ex(void)
 {
     float y,x;

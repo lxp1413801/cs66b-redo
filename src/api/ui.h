@@ -37,7 +37,8 @@ extern "C"{
 	
 	// extern int32_t __int32_2_parAdj_format(int32_t x);
 	// extern int32_t __parAdj_format_2_int32(int32_t x);
-	
+	extern void ui_disp_all_on(void);
+    extern void ui_disp_all_off(void);
     extern void ui_disp_rtc_mm_ss(void);
 	extern void ui_disp_start_cs600(uint8_t dly);
 	

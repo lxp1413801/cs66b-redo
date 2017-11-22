@@ -11,19 +11,6 @@ src/soc/ticker.c  \
  src/soc/../includes/../configs/../../mcc_generated_files/mcc.h  \
  src/soc/../includes/../global/globle.h  \
  src/soc/../includes/../global/../../mcc_generated_files/mcc.h  \
- src/soc/../includes/../os/os_configs/FreeRTOSConfig.h  \
- src/soc/../includes/../os/os_kernel/include/FreeRTOS.h  \
- src/os/os_configs/FreeRTOSConfig.h  \
- src/soc/../includes/../os/os_kernel/include/projdefs.h  \
- src/soc/../includes/../os/os_kernel/include/portable.h  \
- src/soc/../includes/../os/os_kernel/include/deprecated_definitions.h  \
- src/os/os_portable/portmacro.h  \
- src/soc/../includes/../os/os_kernel/include/mpu_wrappers.h  \
- src/os/os_kernel/include/event_groups.h  \
- src/os/os_kernel/include/timers.h  \
-src/os/os_kernel/include/task.h  \
- src/os/os_kernel/include/list.h  \
- src/soc/../includes/../os/os_kernel/include/task.h  \
  src/soc/../includes/../soc/soc.h  \
  src/soc/../includes/../soc/../../mcc_generated_files/mcc.h  \
  src/soc/../includes/../soc/delay.h  \
@@ -45,9 +32,10 @@ src/soc/../includes/../driver/lcd.h  \
 src/soc/../includes/../api/api.h  \
  src/soc/../includes/../api/../../mcc_generated_files/mcc.h  \
  src/soc/../includes/../api/sysdata.h  \
-src/soc/../includes/../api/ui.h  \
- src/soc/../includes/../api/key_menu.h  \
-src/soc/../includes/../app/app.h  \
+ src/soc/../includes/../api/../driver/drivers.h  \
+ src/soc/../includes/../api/ui.h  \
+src/soc/../includes/../api/key_menu.h  \
+ src/soc/../includes/../app/app.h  \
  src/soc/../includes/../app/../../mcc_generated_files/mcc.h  \
  src/soc/../includes/../app/main.h  \
 src/soc/../includes/../app/event.h  \

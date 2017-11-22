@@ -1,6 +1,8 @@
 #include "../includes/includes.h"
+
+#define sample_delay_ms(ms) delay_ms(ms)
 volatile uint8_t sampleIndex=0x00;
-int16_t samlpeBuf[32];
+int16_t samlpeBuf[SAMPLE_ADC_BUF_LEN];
 
 volatile int16_t rtAdcValueDPrBridge;
 volatile int16_t rtAdcValueDPrSignal;
@@ -98,8 +100,8 @@ void samlpe_chip0_ch_diff_pr_signal(void)
 	ads1148_set_imag_idac(&ads1148Chip0,ADS1148_IMAG_500uA);
 	ads1148_set_ani_pga(&ads1148Chip0,ADS1148_PGA_64);
     ads1148_get_all_register(&ads1148Chip0);
-	samlpe_read_adc(&ads1148Chip0,samlpeBuf,24);
-    rtAdcValueDPrSignal=samlpe_get_adc_average_value(samlpeBuf,24);
+	samlpe_read_adc(&ads1148Chip0,samlpeBuf,SAMPLE_ADC_BUF_LEN);
+    rtAdcValueDPrSignal=samlpe_get_adc_average_value(samlpeBuf,SAMPLE_ADC_BUF_LEN);
 	__nop();
 	__nop();
 }
@@ -153,8 +155,8 @@ void samlpe_chip0_ch_pr_signal(void)
 	ads1148_set_imag_idac(&ads1148Chip0,ADS1148_IMAG_500uA);
 	ads1148_set_ani_pga(&ads1148Chip0,ADS1148_PGA_64);
     ads1148_get_all_register(&ads1148Chip0);
-	samlpe_read_adc(&ads1148Chip0,samlpeBuf,24);
-    rtAdcValuePrSignal=samlpe_get_adc_average_value(samlpeBuf,24);
+	samlpe_read_adc(&ads1148Chip0,samlpeBuf,SAMPLE_ADC_BUF_LEN);
+    rtAdcValuePrSignal=samlpe_get_adc_average_value(samlpeBuf,SAMPLE_ADC_BUF_LEN);
 	__nop();
 	__nop();
 }
@@ -249,6 +251,7 @@ void sample_post_calc(void)
 
 void sample_process(void)
 {
+    
 	switch(sampleIndex){
 		case 0x00:samlpe_chip0_ch_diff_pr_bridge();		break;
 		case 0x01:samlpe_chip0_ch_diff_pr_signal();		break;
@@ -278,7 +281,7 @@ void sample_process(void)
 	sampleIndex++;
     if(sampleIndex>0x16)sampleIndex=0;
 }
-
+/*
 void samlpe_chip0_channle_gain_calib(void)
 {
 	uint32_t tm;
@@ -304,8 +307,8 @@ void samlpe_chip0_channle_gain_calib(void)
 	__nop();
 	__nop();
 }
-
-
+*/
+/*
 void thread_sample( void * pvParameters )
 {
     ads1148_init_all_obj();
@@ -313,11 +316,12 @@ void thread_sample( void * pvParameters )
 
 	while(1){
         sample_process();
-        osDelay(10);
+        sample_delay_ms(10);
         __nop();
         __nop();
 	}
 }
+
 void thread_sample_create(void)
 {
     BaseType_t xReturned;
@@ -332,5 +336,5 @@ void thread_sample_create(void)
 		1, 
 		&xHandle );	
 }
-
+*/
 

@@ -8,6 +8,7 @@
     #include <stdint.h>
 
 	extern volatile uint16_t event;
+	extern volatile uint8_t keyEventCount;
 	//extern EventGroupHandle_t eventGroup;
    
     //extern void send_event_group_isr(EventGroupHandle_t eventGroup,EventBits_t bits);
@@ -19,7 +20,7 @@
 
     #define flg_ALL_BITS (flg_RTC_SECOND | flg_TICKER_10MS_PER | flg_KEY_DOWN)
     
-	
+	extern void send_thread_main_event_key_down(void);
 
 #ifdef __cplusplus
 	}

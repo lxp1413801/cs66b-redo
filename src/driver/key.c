@@ -5,6 +5,7 @@
 //keyDef_t preKeyValue={0xff};
 //keyDef_t KeyValue={0xff};
 volatile uint8_t keyValue=0;
+volatile uint8_t tmpKeyValue;
 uint8_t  get_key_value(void)
 {
 	uint8_t tmp;
@@ -45,8 +46,11 @@ void __attribute__ ( ( interrupt, no_auto_psv ) ) _CNInterrupt ()
 {
 	CNIF=0;
 	__nop();
-	//keyValue=get_key_value();
-    send_thread_main_event(flg_KEY_DOWN);
+	tmpKeyValue=get_key_value();
+	if(tmpKeyValue!= 0 && keyValue==0){
+		keyValue=tmpKeyValue;
+	}
+    send_thread_main_event_key_down();
 	__nop();
 	__nop();
 }

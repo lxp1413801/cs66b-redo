@@ -48,7 +48,8 @@ extern "C"{
 		int32_t	value;
 		int16_t	sigAdcValue;
 		int16_t tAdcValue;		
-	}xCalibPointEx_t;
+	}__xDataStruct_t;
+	
 	typedef struct{
 		int16_t	value;
 		uint16_t adcValue;
@@ -112,21 +113,22 @@ extern "C"{
 	//定义修正表格�?
 	//这段算法好像很恶�?
 	#define CALIB_P_POINT_NUM 6
+	
 	typedef struct{
-		int16_t	value;
+		int32_t	value;
 		int16_t	sigAdcValue;
 		int16_t tAdcValue;		
 	}xCalibPoint_t;
-	
+
 	typedef struct{
 		uint8_t pCount;	//有效点个�?
-		uint8_t reverse;
+		uint8_t reverse[3];
 		xCalibPoint_t calibPoint[CALIB_P_POINT_NUM];
 	}xCalibRow_t;
 	
 	typedef struct{
 		uint8_t rowCount;	//有效的行�?组数,
-		uint8_t reverse;
+		uint8_t reverse[3];
 		xCalibRow_t calibRow[3];
 		uint16_t crc;		
 	}xCalibTab_t;	
@@ -138,7 +140,14 @@ extern "C"{
 	extern xCalibTab_t calibTab3;
 	//extern xCalibTab_t ;
 	//
-
+    #include "../driver/drivers.h"
+	typedef struct{
+		xCalibTab_t* calibTab;
+		iicDeviceObj_t* eep24c02;
+	}calibDataObj_t;
+	
+	extern calibDataObj_t diffPrCalibDataObj,prPrCalibDataObj;
+	
 	extern volatile int16_t 	adc_inPt100;
 	
 	extern volatile int16_t		adc_pressure;
@@ -150,7 +159,7 @@ extern "C"{
 	extern volatile int16_t		adc_ibat;
 	extern volatile int16_t		adc_iRef;
 
-	extern xCalibPointEx_t	x_prDiffData;
+	extern __xDataStruct_t	x_prDiffData;
 	extern volatile int16_t	adc_diffPr;
 	extern volatile int16_t	adc_bridgeTemp;	
     extern volatile int32_t	rtDiffPressure;
@@ -177,6 +186,7 @@ extern "C"{
 	extern void cal_additional_pressute(uint8_t index);
 
 	extern void data_init_all(void);
+	
 #ifdef __cplusplus
 }
 #endif

@@ -32,16 +32,18 @@ uint16_t __exp_10(uint8_t n)
 
 uint16_t key_waite_release(uint16_t timeout,uint8_t* key)
 {
-    uint16_t tm=0;
+    uint32_t tm=0;
 	uint8_t t8;
-	while(tm<timeout){
+    ticker_ms_set(0);
+    tm=ticker_ms_get();
+	while(tm<(uint32_t)timeout){
 		t8=get_key_value();
 		if(t8==KEY_VALUE_NONE)break;
-		osDelay(10);
-        tm+=10;
+        delay_ms(1);
+        tm=ticker_ms_get();
 	}
 	*key=t8;
-	return tm;
+	return (uint16_t)tm;
 }
 //shift
 void key_shift_loc(uint8_t* loc,uint8_t min,uint8_t max)
@@ -1017,6 +1019,7 @@ void key_process_set_long(void)
 		default:break;
 	}
 }
+
 //============================================================================
 void key_process_set(void)
 {
@@ -1048,8 +1051,12 @@ void key_process(void)
 {
 	uint16_t tm;
 	uint8_t key;
-    keyValue=get_key_value();
-    if(keyValue==KEY_VALUE_NONE)return;
+	
+	if(keyEventCount)keyEventCount--;
+	if(keyEventCount==0)event &= ~flg_KEY_DOWN;
+    key=get_key_value();
+    if(keyValue==KEY_VALUE_NONE && key== KEY_VALUE_NONE)return;
+	//玛德，这里可能有问题！
 	tm=key_waite_release(LONG_PRESS_TIME,&key);
 	if(tm>=LONG_PRESS_TIME){
 		//长按

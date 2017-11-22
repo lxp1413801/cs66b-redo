@@ -1,12 +1,14 @@
 #include "../includes/includes.h"
 #include <stdbool.h>
 #define __STR_cs66 (uint8_t*)("cs66")
-//#define fi_twinkle() (RTCCFGbits.HALFSEC)
-#define fi_twinkle() 1
+#define fi_twinkle() (RCFGCALbits.HALFSEC)
+//#define fi_twinkle() 1
 #define LCD_LINE_0		0
 #define LCD_LINE_1		1
 //uint8_t tmpBuffer[16];
 //extern st_RtcDef glRtc;
+
+#define ui_delay_ms(ms) ticker_ms_delay(ms)
 uint8_t lcdTwinkle=0;
 
 void __x_arrange_str(uint8_t *str,uint8_t len)
@@ -160,7 +162,7 @@ void ui_disp_start_cs600(uint8_t dly)
 		lcd_show_string_l1(buf);
         //lcd_disp_level(60);
 		lcd_disp_refresh();
-		osDelay(1000);
+		ui_delay_ms(1000);
 		t8--;
 	}
 }

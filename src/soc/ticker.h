@@ -17,6 +17,7 @@ extern "C"{
     extern uint32_t ticker_10ms_per_get(void);
     extern void ticker_10ms_per_set(uint32_t tick);
     
+    extern void ticker_ms_delay(uint16_t ms);
     
 #ifdef __cplusplus
 }

@@ -6,7 +6,7 @@
 #endif
 	#include "../../mcc_generated_files/mcc.h"
     #include <stdint.h>
-    extern EventGroupHandle_t threadMainEvent;
+    //extern EventGroupHandle_t threadMainEvent;
 
 #ifdef __cplusplus
 	}
