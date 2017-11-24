@@ -159,7 +159,7 @@ extern "C"{
 	extern volatile int16_t		adc_ibat;
 	extern volatile int16_t		adc_iRef;
 
-	extern __xDataStruct_t	x_prDiffData;
+	//extern __xDataStruct_t	x_prDiffData;
 	extern volatile int16_t	adc_diffPr;
 	extern volatile int16_t	adc_bridgeTemp;	
     extern volatile int32_t	rtDiffPressure;
@@ -169,6 +169,10 @@ extern "C"{
 	extern volatile uint8_t    rtLevel;
 	extern volatile int32_t    rtPressure;
     extern volatile int32_t    rtTemperatureEx;
+	
+	//
+	extern __xDataStruct_t	x_prDiffData;
+	extern __xDataStruct_t	x_prData;
 	//fk 
     extern uint32_t data_sys_cal_v1(sysDataDef_t* stp);
     extern uint32_t data_sys_cal_v2(sysDataDef_t* stp);
@@ -176,6 +180,7 @@ extern "C"{
 
 
     //apl
+	extern int32_t calculate_and_compensate(xCalibTab_t* cTab,__xDataStruct_t* xin);
 	extern uint8_t cal_diff_press(void);
 	extern uint8_t cal_diff_hight_level(void);
 	extern  void cal_pt100_temperature_in(void);

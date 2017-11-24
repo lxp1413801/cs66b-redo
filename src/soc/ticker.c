@@ -34,6 +34,7 @@ void ticker_ms_delay(uint16_t ms)
 //
 void TMR2_CallBack(void)
 {
+    TMR2_Stop();
     tickerMsPer10Ms++;
     event |=  flg_TICKER_10MS_PER;
 }
@@ -52,6 +53,7 @@ void ticker_10ms_per_set(uint32_t tick)
 void __attribute__ ( ( interrupt, no_auto_psv ) ) _ISR _RTCCInterrupt( void )
 {
     /* TODO : Add interrupt handling code */
+    
     IFS3bits.RTCIF = false;
     event |=  flg_RTC_SECOND;
 }

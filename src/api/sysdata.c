@@ -15,6 +15,7 @@ calibDataObj_t diffPrCalibDataObj;
 calibDataObj_t prPrCalibDataObj;
 
 __xDataStruct_t	x_prDiffData;
+__xDataStruct_t	x_prData;
 
 volatile int16_t	adc_diffPr;
 volatile int16_t	adc_bridgeTemp;	
@@ -306,10 +307,13 @@ uint8_t  calib_data_init_pr(void)
 uint8_t m_interp1_cal_p_s(xCalibRow_t* tabrow,__xDataStruct_t* xin,__xDataStruct_t* xout)
 {
 	uint8_t i;
-	int32_t x,y,phv;
+	//int32_t x,y,phv;
 	int16_t t16;
-	t16=xin->sigAdcValue;
-	for(i=0;i< (tabrow->pCount) - 2 ;i++){
+    float x,y,phv,f;
+    if(tabrow->pCount<2)return 0;
+    
+	t16=(float)(xin->sigAdcValue);
+	for(i=0;i< (tabrow->pCount) - 1 ;i++){
 		//waht !!!!
 		if(tabrow->calibPoint[i].sigAdcValue < tabrow->calibPoint[i+1].sigAdcValue){
 			if(t16 <= tabrow->calibPoint[i+1].sigAdcValue)break;
@@ -317,25 +321,26 @@ uint8_t m_interp1_cal_p_s(xCalibRow_t* tabrow,__xDataStruct_t* xin,__xDataStruct
 			if(t16 >= tabrow->calibPoint[i].sigAdcValue)break;
 		}
 	}
-	
-    y = (int32_t)(tabrow->calibPoint[i+1].value - tabrow->calibPoint[i].value);
-    x = (int32_t)(tabrow->calibPoint[i+1].sigAdcValue - tabrow->calibPoint[i].sigAdcValue);
+	if(i==(tabrow->pCount) - 1)i=(tabrow->pCount) - 2;
+    
+    y = (float)(tabrow->calibPoint[i+1].value - tabrow->calibPoint[i].value);
+    x = (float)(tabrow->calibPoint[i+1].sigAdcValue - tabrow->calibPoint[i].sigAdcValue);
 	phv=tabrow->calibPoint[i].value;
     if(x != 0){
-        phv = phv + y*((int32_t)(t16 -  tabrow->calibPoint[i].sigAdcValue))/x;
+        phv = phv + y*((float)(t16 -  tabrow->calibPoint[i].sigAdcValue))/x;
     }
-	xin->value=phv;
+	xin->value=(int32_t)phv;
 	if(xout){
-		xout->value =   phv;
+		xout->value =   (int32_t)phv;
 		xout->sigAdcValue = xin->sigAdcValue;
 		
 		t16=xin->sigAdcValue;
-		y=(int32_t)(tabrow->calibPoint[i+1].tAdcValue-tabrow->calibPoint[i].tAdcValue);
-		x=(int32_t)(tabrow->calibPoint[i+1].sigAdcValue-tabrow->calibPoint[i].sigAdcValue);
+		y=(float)(tabrow->calibPoint[i+1].tAdcValue-tabrow->calibPoint[i].tAdcValue);
+		x=(float)(tabrow->calibPoint[i+1].sigAdcValue-tabrow->calibPoint[i].sigAdcValue);
 		
 		phv=tabrow->calibPoint[i].tAdcValue;
         if(x!=0){
-			phv=phv+(int32_t)(t16-tabrow->calibPoint[i].sigAdcValue)*y/x;
+			phv=phv+(float)(t16-tabrow->calibPoint[i].sigAdcValue)*y/x;
 
         }
 		xout->tAdcValue = (int16_t)phv;
@@ -348,23 +353,30 @@ uint8_t m_interp1_cal_p_t(__xDataStruct_t* ptmpx,__xDataStruct_t* xin,uint8_t tm
 {
 	uint8_t i;
 	int16_t t16;
-	int32_t x,y,phv;
+	float x,y,phv;
 	t16=xin->tAdcValue;
-    for(i=0;i<tmpxLen-2;i++){
+	if(tmpxLen<2){
+		//xin->value=
+		return 0;
+	}
+    for(i=0;i<tmpxLen-1;i++){
         if(ptmpx[i].tAdcValue < ptmpx[i+1].tAdcValue){
             if(t16 <= ptmpx[i+1].tAdcValue)break;
         }else{
             if(t16  >= ptmpx[i].tAdcValue)break;
         }
     }
-	phv=ptmpx[i].value;
+    
+    if(i==tmpxLen-1)i=tmpxLen-2;
+    
+	phv=(float)(ptmpx[i].value);
 	
-    y=(int32_t)(ptmpx[i+1].value-ptmpx[i].value);
-    x=(int32_t)(ptmpx[i+1].tAdcValue-ptmpx[i].tAdcValue);
+    y=(float)(ptmpx[i+1].value-ptmpx[i].value);
+    x=(float)(ptmpx[i+1].tAdcValue-ptmpx[i].tAdcValue);
     if(x!=0){
-        phv = phv + ((int32_t)(t16 - ptmpx[i].tAdcValue))*y/x;
+        phv = phv + ((float)(t16 - ptmpx[i].tAdcValue))*y/x;
     }
-	xin->value=phv;
+	xin->value=(int32_t)phv;
     return i;
 }
 
@@ -416,7 +428,7 @@ void data_init_all(void)
     diffPrCalibDataObj.eep24c02=&at24c02Obj0;
 	
     prPrCalibDataObj.calibTab=&calibTab1;
-    prPrCalibDataObj.eep24c02=&at24c02Obj0;
+    prPrCalibDataObj.eep24c02=&at24c02Obj1;
 
     calib_data_obj_init(&diffPrCalibDataObj,3);
     calib_data_obj_init(&prPrCalibDataObj,1);
@@ -567,6 +579,21 @@ uint8_t cal_diff_press()
 
 	cal_diff_vol_to_t(rtVolume);
 	return i;
+}
+
+int32_t calculate_and_compensate(xCalibTab_t* cTab,__xDataStruct_t* xin)
+{
+	uint8_t i=0,j=0;
+	xCalibRow_t* tabrow;
+	m_mem_set((uint8_t*)tmpx,0,sizeof(tmpx));
+    for(i=0;i<cTab->rowCount;i++){
+        tabrow = &(cTab->calibRow[i]);
+		if(tabrow->pCount<2)continue;
+        m_interp1_cal_p_s(tabrow,xin,&tmpx[j++]);
+    }	
+	//温补
+	m_interp1_cal_p_t(&tmpx[0],xin,j);
+	return xin->value;
 }
 
 uint8_t cal_press(void)

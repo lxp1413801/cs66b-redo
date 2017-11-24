@@ -3,11 +3,11 @@ src/api/ui.c  \
  src/api/../includes/includes.h  \
  src/api/../includes/../../mcc_generated_files/mcc.h  \
  src/api/../includes/../../mcc_generated_files/pin_manager.h  \
+ src/api/../includes/../../mcc_generated_files/tmr1.h  \
+ src/api/../includes/../../mcc_generated_files/tmr2.h  \
+ src/api/../includes/../../mcc_generated_files/rtcc.h  \
  src/api/../includes/../../mcc_generated_files/interrupt_manager.h  \
  src/api/../includes/../../mcc_generated_files/traps.h  \
- src/api/../includes/../../mcc_generated_files/tmr1.h  \
- src/api/../includes/../../mcc_generated_files/rtcc.h  \
- src/api/../includes/../../mcc_generated_files/tmr2.h  \
  src/api/../includes/../configs/configs.h  \
  src/api/../includes/../configs/../../mcc_generated_files/mcc.h  \
  src/api/../includes/../global/globle.h  \

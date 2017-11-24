@@ -88,7 +88,7 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>PICkit3PlatformTool</platformTool>
         <languageToolchain>XC16</languageToolchain>
-        <languageToolchainVersion>1.30</languageToolchainVersion>
+        <languageToolchainVersion>1.32</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <compileType>
@@ -212,7 +212,7 @@
         <property key="oXC16ld-nostdlib" value="false"/>
         <property key="oXC16ld-stackguard" value="16"/>
         <property key="preprocessor-macros" value=""/>
-        <property key="remove-unused-sections" value="true"/>
+        <property key="remove-unused-sections" value="false"/>
         <property key="report-memory-usage" value="true"/>
         <property key="secure-eeprom" value="no_eeprom"/>
         <property key="secure-flash" value="no_flash"/>
@@ -264,7 +264,6 @@
         <property key="RTCC" value="true"/>
         <property key="SPI 1" value="true"/>
         <property key="SPI 2" value="true"/>
-        <property key="SecureSegment.SegmentProgramming" value="FullChipProgramming"/>
         <property key="TIMER1" value="true"/>
         <property key="TIMER2" value="true"/>
         <property key="TIMER3" value="true"/>
@@ -277,7 +276,6 @@
         <property key="UART 2" value="true"/>
         <property key="UART 3" value="true"/>
         <property key="UART 4" value="true"/>
-        <property key="firmware.download.all" value="false"/>
         <property key="hwtoolclock.frcindebug" value="false"/>
         <property key="memories.aux" value="false"/>
         <property key="memories.bootflash" value="true"/>
@@ -310,8 +308,9 @@
         <property key="programoptions.testmodeentrymethod" value="VDDFirst"/>
         <property key="programoptions.usehighvoltageonmclr" value="false"/>
         <property key="programoptions.uselvpprogramming" value="false"/>
-        <property key="voltagevalue" value="3.25"/>
+        <property key="voltagevalue" value="3.5"/>
         <property key="冻结所有其他外设" value="true"/>
+        <property key="安全段。分部编程" value="FullChipProgramming"/>
       </PICkit3PlatformTool>
       <Simulator>
         <property key="codecoverage.enabled" value="Disable"/>

@@ -391,7 +391,7 @@
 		void (*pins_drdy_set_hight)(void);
 		void (*pins_drdy_set_low)(void);
 		*/
-		volatile uint8_t (*ads1148_write_read_via_spi)(uint8_t);	
+		volatile uint8_t (*ads1148_write_read_via_spi)(volatile uint8_t);	
 		ads1148Reg_t ads1148Regs;
 		int16_t offset;
 		int16_t  fullSacle;

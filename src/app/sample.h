@@ -7,7 +7,7 @@
 	#include "../../mcc_generated_files/mcc.h"
     #include <stdint.h>
 	#define SAMPLE_ADC_BUF_LEN 64
-	extern int16_t samlpeBuf[SAMPLE_ADC_BUF_LEN];
+	extern volatile int16_t samlpeBuf[SAMPLE_ADC_BUF_LEN];
 	//extern void thread_sample_void(void);
 	extern volatile int16_t rtAdcValueDPrBridge;
 	extern volatile int16_t rtAdcValueDPrSignal;

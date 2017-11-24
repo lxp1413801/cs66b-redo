@@ -2,7 +2,7 @@
 
 #define sample_delay_ms(ms) delay_ms(ms)
 volatile uint8_t sampleIndex=0x00;
-int16_t samlpeBuf[SAMPLE_ADC_BUF_LEN];
+volatile int16_t samlpeBuf[SAMPLE_ADC_BUF_LEN];
 
 volatile int16_t rtAdcValueDPrBridge;
 volatile int16_t rtAdcValueDPrSignal;
@@ -22,7 +22,7 @@ volatile int16_t rtAdcValueTemperatureEx;
 volatile int16_t rtAdcValueChip1Ref0;
 volatile int16_t rtAdcValueChip1Ref1;
 
-int16_t samlpe_get_adc_average_value(int16_t* buf,uint8_t len)
+int16_t samlpe_get_adc_average_value(volatile int16_t* buf,uint8_t len)
 {
     uint8_t maxIndex,minIndex;
     uint8_t i,j;
@@ -53,7 +53,7 @@ int16_t samlpe_get_adc_average_value(int16_t* buf,uint8_t len)
     }
     return (int16_t)ret;    
 }
-int16_t samlpe_read_adc(ads1148Obj_t* obj,int16_t* buf,uint8_t len)
+volatile int16_t samlpe_read_adc(ads1148Obj_t* obj,volatile int16_t* buf,uint8_t len)
 {
 	
 	uint8_t i=0;
@@ -79,7 +79,7 @@ int16_t samlpe_read_adc(ads1148Obj_t* obj,int16_t* buf,uint8_t len)
 //ads1148Chip0
 void samlpe_chip0_ch_diff_pr_bridge(void)
 {
-	
+	ads1148_start_convert(&ads1148Chip0);
 	ads1148_set_idac12_pins(&ads1148Chip0,IDAC_OUT_IEXC1,IDAC_OUT_NC);
 	ads1148_set_imag_idac(&ads1148Chip0,ADS1148_IMAG_250uA);
     
@@ -90,35 +90,53 @@ void samlpe_chip0_ch_diff_pr_bridge(void)
     ads1148_set_ani_pga(&ads1148Chip0,ADS1148_PGA_1);
     ads1148_get_all_register(&ads1148Chip0);
 	rtAdcValueDPrBridge=samlpe_read_adc(&ads1148Chip0,NULL,8);
+    //ads1148_stop_convert(&ads1148Chip0);
 	__nop();
 	__nop();
 }
 
 void samlpe_chip0_ch_diff_pr_signal(void)
 {
+    ads1148_start_convert(&ads1148Chip0);
 	ads1148_set_channle_normal(&ads1148Chip0,AIN5P,AIN4N);
 	ads1148_set_imag_idac(&ads1148Chip0,ADS1148_IMAG_500uA);
+    ads1148_set_data_rate(&ads1148Chip0,ADS1148_SYS0_DR_640SPS);
 	ads1148_set_ani_pga(&ads1148Chip0,ADS1148_PGA_64);
     ads1148_get_all_register(&ads1148Chip0);
 	samlpe_read_adc(&ads1148Chip0,samlpeBuf,SAMPLE_ADC_BUF_LEN);
     rtAdcValueDPrSignal=samlpe_get_adc_average_value(samlpeBuf,SAMPLE_ADC_BUF_LEN);
+    //ads1148_stop_convert(&ads1148Chip0);
 	__nop();
 	__nop();
 }
 
 void samlpe_chip0_ch_diff_pr_ref0(void)
 {
+    ads1148_start_convert(&ads1148Chip0);
     ads1148_set_channle_normal(&ads1148Chip0,AIN0P,AIN6N);
 	ads1148_set_bcs(&ads1148Chip0,ADS1148_BCS_2uA0);
+    ads1148_set_data_rate(&ads1148Chip0,ADS1148_SYS0_DR_2000SPS);
 	ads1148_set_ani_pga(&ads1148Chip0,ADS1148_PGA_1);
     ads1148_get_all_register(&ads1148Chip0);
     rtAdcValueChip0Ref0=samlpe_read_adc(&ads1148Chip0,samlpeBuf,8);
+    ads1148_set_bcs(&ads1148Chip0,ADS1148_BCS_OFF);
 	__nop();
 	__nop();
     __nop();
-    ads1148_set_bcs(&ads1148Chip0,ADS1148_BCS_OFF);
+    //ads1148_stop_convert(&ads1148Chip0);
 }
-
+void sample_calc_diff_press(void)
+{
+    int32_t t32;
+	x_prDiffData.sigAdcValue=rtAdcValueDPrSignal;
+    x_prDiffData.tAdcValue=rtAdcValueDPrBridge;
+    x_prDiffData.value=0;                                           
+    t32=calculate_and_compensate(diffPrCalibDataObj.calibTab,&x_prDiffData);
+    rtDiffPressure=t32;
+	cal_diff_p_to_h(t32);
+    //rtPressure=t32;
+    //rtHight=rtAdcValueDPrSignal;
+}
 /*
 void samlpe_chip0_ch_diff_pr_ref0(void)
 {
@@ -256,7 +274,9 @@ void sample_process(void)
 		case 0x00:samlpe_chip0_ch_diff_pr_bridge();		break;
 		case 0x01:samlpe_chip0_ch_diff_pr_signal();		break;
 		case 0x02:samlpe_chip0_ch_diff_pr_ref0();		break;
-		case 0x03:break;
+        
+		case 0x03:sample_calc_diff_press();             break;
+        //case 0x03:break;
 		case 0x04:samlpe_chip0_ch_pr_bridge();			break;
 		case 0x05:samlpe_chip0_ch_pr_signal();			break;
 		case 0x06:samlpe_chip0_ch_pr_ref1();			break;
@@ -280,6 +300,7 @@ void sample_process(void)
 	}
 	sampleIndex++;
     if(sampleIndex>0x16)sampleIndex=0;
+    TMR2_Start();
 }
 /*
 void samlpe_chip0_channle_gain_calib(void)

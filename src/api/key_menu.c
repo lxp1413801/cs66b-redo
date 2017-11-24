@@ -743,7 +743,7 @@ void __set_short_diff_calib(bool gohome)
         t32=__mflot32_2_int32(m_floatAdj.t32);
         pra=calibTab0.calibRow[calibRow].calibPoint[calibCol-1].value;
         if(pra!=t32){
-            calibTab0.calibRow[calibRow].calibPoint[calibCol-1].value=(uint16_t)t32;
+            calibTab0.calibRow[calibRow].calibPoint[calibCol-1].value=t32;
             calibTab0.calibRow[calibRow].calibPoint[calibCol-1].sigAdcValue=x_prDiffData.sigAdcValue;
             calibTab0.calibRow[calibRow].calibPoint[calibCol-1].tAdcValue=x_prDiffData.tAdcValue;
             saveFlg=true;

@@ -50,7 +50,7 @@ void ads1148_hal_din_mod_in(void)
 
 uint16_t ads1148_hal_din_get(void)
 {
-	uint16_t t16;
+	volatile uint16_t t16;
 	t16=get_port_value(ADS1148_DIN_PORT,ADS1148_DIN_PIN);
 	return t16;
 }
@@ -97,7 +97,7 @@ void ads1148_hal_drdy_0_mod_in(void)
 
 uint16_t ads1148_hal_drdy_0_get(void)
 {
-	uint16_t t16;
+	volatile uint16_t t16;
 	t16=get_port_value(ADS1148_DRDY_0_PORT,ADS1148_DRDY_0_PIN);
     asm("nop");
 	return t16;
@@ -180,7 +180,7 @@ void ads1148_hal_drdy_1_mod_in(void)
 
 uint16_t ads1148_hal_drdy_1_get(void)
 {
-	uint16_t t16;
+	volatile uint16_t t16;
 	t16=get_port_value(ADS1148_DRDY_1_PORT,ADS1148_DRDY_1_PIN);
 	return t16;
 }
@@ -296,9 +296,9 @@ void ads1148_hal_port_deinit_chip1(void)
 
 */
 #if( ADS1148_SCK_IDLE_STATUE == 0)
-volatile uint8_t ads1148_hal_write_read_byte(uint8_t x)
+volatile uint8_t ads1148_hal_write_read_byte(volatile uint8_t x)
 {
-	uint8_t i,ret=0;
+	volatile uint8_t i,ret=0;
 	//ads1148_hal_sck_set_low();
 	for(i=0;i<8;i++){
 		//delay_us(1);
