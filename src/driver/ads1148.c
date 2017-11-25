@@ -308,7 +308,62 @@ void ads1148_get_all_register(ads1148Obj_t* obj)
 {
 	ads1148_read_register(obj,ADS1148_REG_ADDR_MUX0,obj->ads1148Regs.buf,14);
 }
-//
+//extered api
+void ads1148_set_mux0_ex(ads1148Obj_t* obj,uint8_t bcs,uint8_t sp,uint8_t sn)
+{
+    st_ads1148RegMUX0 mux0Temp;
+    mux0Temp.mux0=0x00;
+    mux0Temp.bits.bcs=bcs;
+    mux0Temp.bits.mux_sp=sp;
+    mux0Temp.bits.mux_sn=sn;
+	obj->ads1148Regs.regs.regMUX0.mux0=mux0Temp.mux0;
+}
+
+void ads1148_set_vbias_ex(ads1148Obj_t* obj,uint8_t bias)
+{
+    obj->ads1148Regs.regs.regVBIAS.vbias=bias;
+}
+void ads1148_set_mux1_ex(ads1148Obj_t* obj,uint8_t vrefcon,uint8_t refselt,uint8_t muxcal)
+{
+    ads1148RegMUX1_t mux1Temp;
+    mux1Temp.mux1=0;
+    //mux1Temp.bits.clkstat=clkstat;
+    mux1Temp.bits.vrefcon=vrefcon;
+    mux1Temp.bits.refselt=refselt;
+    mux1Temp.bits.muxcal=muxcal;
+    obj->ads1148Regs.regs.regMUX1.mux1=mux1Temp.mux1;
+}
+void ads1148_set_sys0_ex(ads1148Obj_t* obj,uint8_t pga,uint8_t dr)
+{
+    ads1148RegSYS0_t sys0Temp;
+    sys0Temp.sys0=0;
+    sys0Temp.bits.pga=pga;
+    sys0Temp.bits.dr=dr;
+    obj->ads1148Regs.regs.regSYS0.sys0=sys0Temp.sys0;
+}
+void ads1148_set_idac0_ex(ads1148Obj_t* obj,uint8_t drdyMode,uint8_t imag)
+{
+    ads1148RegIDAC0_t idac0Temp;
+    idac0Temp.idac0=0;
+    idac0Temp.bits.drdyMode=drdyMode;
+    idac0Temp.bits.imag=imag;
+    obj->ads1148Regs.regs.regIDAC0.idac0=idac0Temp.idac0;
+    
+}
+
+void ads1148_set_idac1_ex(ads1148Obj_t* obj,uint8_t i1dir,uint8_t i2dir)
+{
+    ads1148RegIDAC1_t idac1Temp;
+    idac1Temp.idac1=0;
+    idac1Temp.bits.i1dir=i1dir;
+    idac1Temp.bits.i2dir=i2dir;
+    obj->ads1148Regs.regs.regIDAC1.idac1=idac1Temp.idac1;
+}
+void ads1148_set_config_ex(ads1148Obj_t* obj)
+{
+    ads1148_write_register(obj,ADS1148_REG_ADDR_MUX0,obj->ads1148Regs.buf,4);
+    ads1148_write_register(obj,ADS1148_REG_ADDR_IDAC0,obj->ads1148Regs.buf+ADS1148_REG_ADDR_IDAC0,2);
+}
 void ads1148_init_obj_0(void)
 {
 	ads1148Chip0.chipNm=0;

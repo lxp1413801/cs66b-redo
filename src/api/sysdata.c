@@ -163,10 +163,12 @@ uint32_t data_sys_cal_v1(sysDataDef_t* stp)
 
 uint32_t data_sys_cal_v2(sysDataDef_t* stp)
 {
-    float d,f;
-    d=(float)(stp->d);
-    d=d/1000;
-    f=0.2618f*d*d*d;
+    float r,f;
+    //int32_t t32;
+    //t32=stp->d;
+    r=(float)(stp->d);
+    r=r/1000/2;
+    f=r*r*r*0.2618;
     f*=1000;
     return (uint32_t)f;
 }

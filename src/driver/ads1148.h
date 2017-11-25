@@ -426,7 +426,16 @@
     extern void ads1148_set_ready(ads1148Obj_t* obj);
     extern uint8_t ads1148_send_cmd(ads1148Obj_t* obj,uint8_t cmd);
 	
+	//
+	extern void ads1148_set_mux0_ex(ads1148Obj_t* obj,uint8_t bcs,uint8_t sp,uint8_t sn);
+	extern void ads1148_set_vbias_ex(ads1148Obj_t* obj,uint8_t bias);
+	extern void ads1148_set_mux1_ex(ads1148Obj_t* obj,uint8_t vrefcon,uint8_t refselt,uint8_t muxcal);
+	extern void ads1148_set_sys0_ex(ads1148Obj_t* obj,uint8_t pga,uint8_t dr);
+	extern void ads1148_set_idac0_ex(ads1148Obj_t* obj,uint8_t drdyMode,uint8_t imag);
+	extern void ads1148_set_idac1_ex(ads1148Obj_t* obj,uint8_t i1dir,uint8_t i2dir);
 	
+	extern void ads1148_set_config_ex(ads1148Obj_t* obj);
+
 #ifdef __cplusplus
 	}
 #endif

@@ -80,9 +80,7 @@ volatile int16_t samlpe_read_adc(ads1148Obj_t* obj,volatile int16_t* buf,uint8_t
 
 void samlpe_chip0_ch_diff_pr_bridge(void)
 {
-	//ads1148_start_convert(&ads1148Chip0);
-    //ads1148_set_ready(&ads1148Chip0);
-	
+	/*
     ads1148_set_vref(&ads1148Chip0,ADS1148_REFSELT_INREF);
 	ads1148_set_muxcal(&ads1148Chip0,ADS1148_MUXCAL_NORMAL); 
 	
@@ -94,6 +92,16 @@ void samlpe_chip0_ch_diff_pr_bridge(void)
     ads1148_set_ani_pga(&ads1148Chip0,ADS1148_PGA_1);
 	
 	ads1148_set_channle_normal(&ads1148Chip0,AIN1P,AIN0N);
+	*/
+	ads1148_set_mux0_ex(&ads1148Chip0,ADS1148_BCS_OFF,AIN1P,AIN0N);
+	ads1148_set_vbias_ex(&ads1148Chip0,0);
+	ads1148_set_mux1_ex(&ads1148Chip0,ADS1148_VREFCON_INREF_ON,ADS1148_REFSELT_INREF,ADS1148_MUXCAL_NORMAL);
+	ads1148_set_sys0_ex(&ads1148Chip0,ADS1148_PGA_1,ADS1148_SYS0_DR_2000SPS);
+	
+	ads1148_set_idac0_ex(&ads1148Chip0,ADS1148_DRDY_VIA_DRDY,ADS1148_IMAG_250uA);
+	ads1148_set_idac1_ex(&ads1148Chip0,IDAC_OUT_IEXC1,IDAC_OUT_NC);
+	
+	ads1148_set_config_ex(&ads1148Chip0);
 	
     //ads1148_get_all_register(&ads1148Chip0);
 	rtAdcValueDPrBridge=samlpe_read_adc(&ads1148Chip0,NULL,8);
@@ -108,7 +116,7 @@ void samlpe_chip0_ch_diff_pr_signal(void)
 	//ads1148_start_convert(&ads1148Chip0);
 	//ads1148_set_ready(&ads1148Chip0);
 	
-    
+    /*
     ads1148_set_vref(&ads1148Chip0,ADS1148_REFSELT_INREF);
 	ads1148_set_muxcal(&ads1148Chip0,ADS1148_MUXCAL_NORMAL); 
     
@@ -119,6 +127,17 @@ void samlpe_chip0_ch_diff_pr_signal(void)
 	ads1148_set_channle_normal(&ads1148Chip0,AIN5P,AIN4N);
 	
     ads1148_get_all_register(&ads1148Chip0);
+	*/
+	ads1148_set_mux0_ex(&ads1148Chip0,ADS1148_BCS_OFF,AIN5P,AIN4N);
+	ads1148_set_vbias_ex(&ads1148Chip0,0);
+	ads1148_set_mux1_ex(&ads1148Chip0,ADS1148_VREFCON_INREF_ON,ADS1148_REFSELT_INREF,ADS1148_MUXCAL_NORMAL);
+	
+	ads1148_set_sys0_ex(&ads1148Chip0,ADS1148_PGA_64,ADS1148_SYS0_DR_640SPS);
+	
+	ads1148_set_idac0_ex(&ads1148Chip0,ADS1148_DRDY_VIA_DRDY,ADS1148_IMAG_500uA);
+	ads1148_set_idac1_ex(&ads1148Chip0,IDAC_OUT_IEXC1,IDAC_OUT_NC);
+	
+	ads1148_set_config_ex(&ads1148Chip0);	
 	
 	samlpe_read_adc(&ads1148Chip0,samlpeBuf,SAMPLE_ADC_BUF_LEN);
     rtAdcValueDPrSignal=samlpe_get_adc_average_value(samlpeBuf,SAMPLE_ADC_BUF_LEN);
@@ -133,13 +152,24 @@ void samlpe_chip0_ch_diff_pr_ref0(void)
 	//ads1148_start_convert(&ads1148Chip0);
 	//ads1148_set_ready(&ads1148Chip0);
     
-	
+	/*
 	ads1148_set_bcs(&ads1148Chip0,ADS1148_BCS_2uA0);
     ads1148_set_data_rate(&ads1148Chip0,ADS1148_SYS0_DR_2000SPS);
 	ads1148_set_ani_pga(&ads1148Chip0,ADS1148_PGA_1);
     //ads1148_get_all_register(&ads1148Chip0);
 	
 	ads1148_set_channle_normal(&ads1148Chip0,AIN0P,AIN6N);
+	*/	
+	ads1148_set_mux0_ex(&ads1148Chip0,ADS1148_BCS_2uA0,AIN0P,AIN6N);
+	ads1148_set_vbias_ex(&ads1148Chip0,0+0);
+	ads1148_set_mux1_ex(&ads1148Chip0,ADS1148_VREFCON_INREF_ON,ADS1148_REFSELT_INREF,ADS1148_MUXCAL_NORMAL);
+	
+	ads1148_set_sys0_ex(&ads1148Chip0,ADS1148_PGA_1,ADS1148_SYS0_DR_2000SPS);
+	
+	ads1148_set_idac0_ex(&ads1148Chip0,ADS1148_DRDY_VIA_DRDY,ADS1148_IMAG_500uA);
+	ads1148_set_idac1_ex(&ads1148Chip0,IDAC_OUT_IEXC1,IDAC_OUT_NC);
+	
+	ads1148_set_config_ex(&ads1148Chip0);	
 	
     rtAdcValueChip0Ref0=samlpe_read_adc(&ads1148Chip0,samlpeBuf,8);
     ads1148_set_bcs(&ads1148Chip0,ADS1148_BCS_OFF);
@@ -181,6 +211,7 @@ void samlpe_chip0_ch_diff_pr_ref0(void)
 
 void samlpe_chip0_ch_pr_bridge(void)
 {
+	/*
 	ads1148_set_idac12_pins(&ads1148Chip0,IDAC_OUT_NC,IDAC_OUT_IEXC2);
 	ads1148_set_imag_idac(&ads1148Chip0,ADS1148_IMAG_250uA);
     ads1148_set_data_rate(&ads1148Chip0,ADS1148_SYS0_DR_2000SPS);
@@ -188,6 +219,18 @@ void samlpe_chip0_ch_pr_bridge(void)
     ads1148_set_channle_normal(&ads1148Chip0,AIN7P,AIN6N);
     ads1148_set_ani_pga(&ads1148Chip0,ADS1148_PGA_1);
     ads1148_get_all_register(&ads1148Chip0);
+	*/
+	ads1148_set_mux0_ex(&ads1148Chip0,ADS1148_BCS_OFF,AIN7P,AIN6N);
+	ads1148_set_vbias_ex(&ads1148Chip0,0);
+	ads1148_set_mux1_ex(&ads1148Chip0,ADS1148_VREFCON_INREF_ON,ADS1148_REFSELT_INREF,ADS1148_MUXCAL_NORMAL);
+	
+	ads1148_set_sys0_ex(&ads1148Chip0,ADS1148_PGA_1,ADS1148_SYS0_DR_2000SPS);
+	
+	ads1148_set_idac0_ex(&ads1148Chip0,ADS1148_DRDY_VIA_DRDY,ADS1148_IMAG_250uA);
+	ads1148_set_idac1_ex(&ads1148Chip0,IDAC_OUT_NC,IDAC_OUT_IEXC2);
+	
+	ads1148_set_config_ex(&ads1148Chip0);	
+	
 	rtAdcValuePrBridge=samlpe_read_adc(&ads1148Chip0,NULL,8);
 	__nop();
 	__nop();
@@ -195,10 +238,23 @@ void samlpe_chip0_ch_pr_bridge(void)
 
 void samlpe_chip0_ch_pr_signal(void)
 {
+	/*
 	ads1148_set_channle_normal(&ads1148Chip0,AIN3P,AIN2N);
 	ads1148_set_imag_idac(&ads1148Chip0,ADS1148_IMAG_500uA);
 	ads1148_set_ani_pga(&ads1148Chip0,ADS1148_PGA_64);
     ads1148_get_all_register(&ads1148Chip0);
+	*/
+	ads1148_set_mux0_ex(&ads1148Chip0,ADS1148_BCS_OFF,AIN3P,AIN2N);
+	ads1148_set_vbias_ex(&ads1148Chip0,0);
+	ads1148_set_mux1_ex(&ads1148Chip0,ADS1148_VREFCON_INREF_ON,ADS1148_REFSELT_INREF,ADS1148_MUXCAL_NORMAL);
+	
+	ads1148_set_sys0_ex(&ads1148Chip0,ADS1148_PGA_64,ADS1148_SYS0_DR_640SPS);
+	
+	ads1148_set_idac0_ex(&ads1148Chip0,ADS1148_DRDY_VIA_DRDY,ADS1148_IMAG_500uA);
+	ads1148_set_idac1_ex(&ads1148Chip0,IDAC_OUT_NC,IDAC_OUT_IEXC2);	
+	
+	ads1148_set_config_ex(&ads1148Chip0);	
+	
 	samlpe_read_adc(&ads1148Chip0,samlpeBuf,SAMPLE_ADC_BUF_LEN);
     rtAdcValuePrSignal=samlpe_get_adc_average_value(samlpeBuf,SAMPLE_ADC_BUF_LEN);
 	__nop();
@@ -207,24 +263,49 @@ void samlpe_chip0_ch_pr_signal(void)
 
 void samlpe_chip0_ch_pr_ref1(void)
 {
+	/*
     ads1148_set_muxcal(&ads1148Chip0,ADS1148_MUXCAL_REF1_MONITOR);
 	//ads1148_set_bcs(&ads1148Chip0,ADS1148_BCS_2uA0);
 	ads1148_set_ani_pga(&ads1148Chip0,ADS1148_PGA_1);
     //ads1148_get_all_register(&ads1148Chip0);
+	*/
+	ads1148_set_mux0_ex(&ads1148Chip0,ADS1148_BCS_2uA0,AIN1P,AIN0N);
+	ads1148_set_vbias_ex(&ads1148Chip0,0);
+	ads1148_set_mux1_ex(&ads1148Chip0,ADS1148_VREFCON_INREF_ON,ADS1148_REFSELT_INREF,ADS1148_MUXCAL_REF1_MONITOR);
+	
+	ads1148_set_sys0_ex(&ads1148Chip0,ADS1148_PGA_1,ADS1148_SYS0_DR_2000SPS);
+	
+	ads1148_set_idac0_ex(&ads1148Chip0,ADS1148_DRDY_VIA_DRDY,ADS1148_IMAG_500uA);
+	ads1148_set_idac1_ex(&ads1148Chip0,IDAC_OUT_NC,IDAC_OUT_IEXC2);
+	
+	ads1148_set_config_ex(&ads1148Chip0);		
     rtAdcValueChip0Ref1=samlpe_read_adc(&ads1148Chip0,samlpeBuf,8);
 	__nop();
 	__nop();
     __nop();
-	ads1148_set_muxcal(&ads1148Chip0,ADS1148_MUXCAL_NORMAL);
+	//ads1148_set_muxcal(&ads1148Chip0,ADS1148_MUXCAL_NORMAL);
     //ads1148_set_bcs(&ads1148Chip0,ADS1148_BCS_OFF);
 }
 
 void samlpe_chip0_ch_temperature_in(void)
 {
+	/*
     ads1148_set_channle_normal(&ads1148Chip0,AIN6P,AIN0N);
 	ads1148_set_bcs(&ads1148Chip0,ADS1148_BCS_2uA0);
 	ads1148_set_ani_pga(&ads1148Chip0,ADS1148_PGA_1);
     ads1148_get_all_register(&ads1148Chip0);
+	*/
+	ads1148_set_mux0_ex(&ads1148Chip0,ADS1148_BCS_2uA0,AIN6P,AIN0N);
+	ads1148_set_vbias_ex(&ads1148Chip0,0);
+	ads1148_set_mux1_ex(&ads1148Chip0,ADS1148_VREFCON_INREF_ON,ADS1148_REFSELT_INREF,ADS1148_MUXCAL_NORMAL);
+	
+	ads1148_set_sys0_ex(&ads1148Chip0,ADS1148_PGA_1,ADS1148_SYS0_DR_2000SPS);
+	
+	ads1148_set_idac0_ex(&ads1148Chip0,ADS1148_DRDY_VIA_DRDY,ADS1148_IMAG_500uA);
+	ads1148_set_idac1_ex(&ads1148Chip0,IDAC_OUT_NC,IDAC_OUT_IEXC2);
+	
+	ads1148_set_config_ex(&ads1148Chip0);	
+	
     rtAdcValueTemperatureIn=samlpe_read_adc(&ads1148Chip0,samlpeBuf,8);
 	__nop();
 	__nop();
