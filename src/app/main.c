@@ -21,7 +21,7 @@ void thread_main_pre(void)
     ui_disp_all_off();
     main_delay_ms(1000);
 
-	ui_disp_start_cs600(4);
+	//ui_disp_start_cs600(4);
 	data_init_all();    
 }
 /*

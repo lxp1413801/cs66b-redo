@@ -3,7 +3,11 @@
 #include "../soc/delay.h"
 #include "../global/globle.h"
 //rd10
-#define __some_nop() __nop();__nop();__nop();__nop();__nop();__nop();
+#define __some_nop() do{ \
+	__nop();__nop();__nop();__nop();__nop();__nop(); \
+	__nop();__nop();__nop();__nop();__nop();__nop(); \
+}while(0);
+	
 void ads1148_hal_sck_mod_out(void)
 {
     set_port_mode_dig(ADS1148_SCK_PORT,ADS1148_SCK_PIN);
@@ -125,6 +129,7 @@ void ads1148_hal_cs_0_set_hight(void)
 void ads1148_hal_cs_0_set_low(void)
 {
 	set_port_value_hight(ADS1148_CS_1_PORT,ADS1148_CS_1_PIN);
+	//delay_us(10);
 	set_port_value_low(ADS1148_CS_0_PORT,ADS1148_CS_0_PIN);
 }
 
@@ -200,6 +205,7 @@ void ads1148_hal_cs_1_set_hight(void)
 void ads1148_hal_cs_1_set_low(void)
 {
 	set_port_value_hight(ADS1148_CS_0_PORT,ADS1148_CS_0_PIN);
+	//delay_us(10);
 	set_port_value_low(ADS1148_CS_1_PORT,ADS1148_CS_1_PIN);
 }
 
@@ -303,13 +309,15 @@ volatile uint8_t ads1148_hal_write_read_byte(volatile uint8_t x)
 	for(i=0;i<8;i++){
 		//delay_us(1);
         __some_nop();
+        __some_nop();
 		ret<<=1;
 		ads1148_hal_sck_set_hight();
 		if(ads1148_hal_din_get()){
 			ret|=1;
 		}
 		//delay_us(1);
-        __some_nop();
+        //__some_nop();
+		__some_nop();
 		if(x&0x80){
 			ads1148_hal_dout_set_hight();
 		}else{
@@ -317,6 +325,7 @@ volatile uint8_t ads1148_hal_write_read_byte(volatile uint8_t x)
 		}
 		x<<=1;
         __some_nop();
+		//__some_nop();
 		ads1148_hal_sck_set_low();
 	}
 	ads1148_hal_sck_set_low();

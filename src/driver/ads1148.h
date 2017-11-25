@@ -422,6 +422,9 @@
 	extern void ads1148_set_muxcal(ads1148Obj_t* obj,uint8_t muxcal);
 	extern void ads1148_get_all_register(ads1148Obj_t* obj);
 	extern void ads1148_set_bcs(ads1148Obj_t* obj,uint8_t bcs);
+    extern void ads1148_set_vref(ads1148Obj_t* obj,uint8_t vref);
+    extern void ads1148_set_ready(ads1148Obj_t* obj);
+    extern uint8_t ads1148_send_cmd(ads1148Obj_t* obj,uint8_t cmd);
 	
 	
 #ifdef __cplusplus

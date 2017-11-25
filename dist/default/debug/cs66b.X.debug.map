@@ -42,13 +42,13 @@ Command:
   build/default/debug/src/soc/ticker.o \
   build/default/debug/src/soc/flash.o \
   build/default/debug/src/soc/m_asm.o \
-  -TC:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\tmp0000ca8c.00 \
-  -TC:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\tmp0000ca8c.01 \
-  -TC:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\tmp0000ca8c.02 \
-  -TC:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\tmp0000ca8c.03 \
-  -TC:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\tmp0000ca8c.04 \
-  -TC:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\tmp0000ca8c.05 \
-  -TC:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\tmp0000ca8c.06 \
+  -TC:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\tmp00025274.00 \
+  -TC:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\tmp00025274.01 \
+  -TC:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\tmp00025274.02 \
+  -TC:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\tmp00025274.03 \
+  -TC:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\tmp00025274.04 \
+  -TC:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\tmp00025274.05 \
+  -TC:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\tmp00025274.06 \
   --local-stack \
   --defsym=__MPLAB_BUILD=1 \
   --defsym=__MPLAB_DEBUG=1 \
@@ -138,11 +138,11 @@ section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200               0x620           0x930  (2352)
 .const                       0x820               0x7d2           0xbbb  (3003)
-.text                        0xff2              0x5bbe          0x899d  (35229)
-.dinit                      0x6bb0                0x76            0xb1  (177)
-.text                       0x6c26               0x20e           0x315  (789)
+.text                        0xff2              0x5e6c          0x8da2  (36258)
+.dinit                      0x6e5e                0x76            0xb1  (177)
+.text                       0x6ed4               0x20e           0x315  (789)
 
-                 Total program memory used (bytes):         0xa24e  (41550) 31%
+                 Total program memory used (bytes):         0xa653  (42579) 32%
 
 
 Ivt Memory  [Origin = 0x4, Length = 0xfc]
@@ -591,219 +591,220 @@ External Symbols in Program Memory (by address):
                   0x004cb4                  _ui_disp_menu
                   0x004d6a                  _ads1148_send_cmd
                   0x004d9a                  _ads1148_read_data
-                  0x004e00                  _ads1148_write_register
-                  0x004e72                  _ads1148_read_register
-                  0x004eea                  _ads1148_slef_calibration
-                  0x004f14                  _ads1148_set_channle_normal
-                  0x004f5e                  _ads1148_set_bcs
-                  0x004f92                  _ads1148_set_vbias
-                  0x004faa                  _ads1148_set_vref
-                  0x005000                  _ads1148_set_muxcal
-                  0x005038                  _ads1148_set_data_rate
-                  0x005066                  _ads1148_set_ani_pga
-                  0x005098                  _ads1148_set_imag_idac
-                  0x0050c6                  _ads1148_set_drdy_mode
-                  0x0050f6                  _ads1148_set_idac1_pins
-                  0x005124                  _ads1148_set_idac2_pins
-                  0x005152                  _ads1148_set_idac12_pins
-                  0x005192                  _ads1148_get_all_register
-                  0x0051a8                  _ads1148_init_obj_0
-                  0x0051e4                  _ads1148_init_obj_1
-                  0x005220                  _ads1148_set_sync
-                  0x005256                  _ads1148_init_chip_regs
-                  0x0052c2                  _ads1148_init_all_obj
-                  0x0052cc                  _ads1148_init_device
-                  0x0052da                  _ads1148_start_convert
-                  0x0052e8                  _ads1148_stop_convert
-                  0x0052f6                  _ads1148_waite_convert
-                  0x005322                  _ads1148_test
-                  0x005372                  _m_mem_set
-                  0x00539c                  _m_mem_cpy_len
-                  0x0053c6                  _m_mem_cpy
-                  0x0053f0                  _m_str_cmp
-                  0x005430                  _m_str_cmp_len
-                  0x005476                  _m_math_pow
-                  0x0054ce                  _m_int_2_str
-                  0x005552                  _m_str_head_hide
-                  0x005594                  _HEX8
-                  0x0055c8                  _m_str_b2h
-                  0x005624                  _m_str_h2b
-                  0x00572e                  _m_int8_2_hex
-                  0x005764                  _m_int16_2_str_4
-                  0x00580e                  _samlpe_get_adc_average_value
-                  0x005910                  _samlpe_read_adc
-                  0x00599a                  _samlpe_chip0_ch_diff_pr_bridge
-                  0x0059de                  _samlpe_chip0_ch_diff_pr_signal
-                  0x005a1a                  _samlpe_chip0_ch_diff_pr_ref0
-                  0x005a58                  _sample_calc_diff_press
-                  0x005a82                  _samlpe_chip0_ch_pr_bridge
-                  0x005ac2                  _samlpe_chip0_ch_pr_signal
-                  0x005af4                  _samlpe_chip0_ch_pr_ref1
-                  0x005b1c                  _samlpe_chip0_ch_temperature_in
-                  0x005b50                  _samlpe_chip1_ch_expr0_bridge
-                  0x005b56                  _samlpe_chip1_ch_expr0_signal
-                  0x005b5c                  _samlpe_chip1_ch_ex0_temperature
-                  0x005b62                  _samlpe_chip1_ch_expr0_ref0
-                  0x005b68                  _samlpe_chip1_ch_expr1_bridge
-                  0x005b6e                  _samlpe_chip1_ch_expr1_signal
-                  0x005b74                  _samlpe_chip1_ch_ex1_temperature
-                  0x005b7a                  _samlpe_chip1_ch_expr1_ref1
-                  0x005b80                  _sample_in_soc_solar
-                  0x005b86                  _samlpe_in_soc_battery
-                  0x005b8c                  _samlpe_in_soc_ref
-                  0x005b92                  _sample_post_calc
-                  0x005b98                  _sample_process
-                  0x005c40                  _ads1148_hal_sck_mod_out
-                  0x005c58                  _ads1148_hal_sck_set_hight
-                  0x005c64                  _ads1148_hal_sck_set_low
-                  0x005c70                  _ads1148_hal_sck_mod_in
-                  0x005c82                  _ads1148_hal_din_mod_in
-                  0x005c94                  _ads1148_hal_din_get
-                  0x005ca4                  _ads1148_hal_dout_mod_out
-                  0x005cbc                  _ads1148_hal_dout_set_hight
-                  0x005cc8                  _ads1148_hal_dout_set_low
-                  0x005cd4                  _ads1148_hal_dout_mod_in
-                  0x005ce6                  _ads1148_hal_drdy_0_mod_in
-                  0x005cfc                  _ads1148_hal_drdy_0_get
-                  0x005d0e                  _ads1148_hal_cs_0_mod_out
-                  0x005d26                  _ads1148_hal_cs_0_mod_in
-                  0x005d38                  _ads1148_hal_cs_0_set_hight
-                  0x005d44                  _ads1148_hal_cs_0_set_low
-                  0x005d56                  _ads1148_hal_start_0_mod_out
-                  0x005d6e                  _ads1148_hal_start_0_set_hight
-                  0x005d7a                  _ads1148_hal_start_0_set_low
-                  0x005d86                  _ads1148_hal_start_0_mod_in
-                  0x005d98                  _ads1148_hal_drdy_1_mod_in
-                  0x005daa                  _ads1148_hal_drdy_1_get
-                  0x005db8                  _ads1148_hal_cs_1_mod_out
-                  0x005dd0                  _ads1148_hal_cs_1_set_hight
-                  0x005ddc                  _ads1148_hal_cs_1_set_low
-                  0x005dee                  _ads1148_hal_cs_1_mod_in
-                  0x005e00                  _ads1148_hal_start_1_mod_out
-                  0x005e18                  _ads1148_hal_start_1_set_hight
-                  0x005e24                  _ads1148_hal_start_1_set_low
-                  0x005e30                  _ads1148_hal_start_1_mod_in
-                  0x005e42                  _ads1148_hal_port_mode_dig_all
-                  0x005e80                  _ads1148_hal_port_init_chip0
-                  0x005e92                  _ads1148_hal_port_deinit_chip0
-                  0x005ea4                  _ads1148_hal_port_init_chip1
-                  0x005eb6                  _ads1148_hal_port_deinit_chip1
-                  0x005ec8                  _ads1148_hal_write_read_byte
-                  0x005f36                  _ads1148_hal_pwr_off
-                  0x005f4e                  _ads1148_hal_pwr_on
-                  0x005f66                  _iic_start
-                  0x005fa8                  _iic_stop
-                  0x005fe4                  _iic_send_ack
-                  0x00607a                  _iic_waite_ack
-                  0x006116                  _iic_send_byte
-                  0x0061c2                  _iic_received_byte
-                  0x006258                  _iic_received_byte_if_ack
-                  0x00626e                  _RTCC_Initialize
-                  0x0062c6                  _RTCC_TimeReset
-                  0x0062dc                  _RTCC_TimeGet
-                  0x00638e                  _RTCC_TimeSet
-                  0x006412                  _RTCC_BCDTimeGet
-                  0x0064ac                  _RTCC_BCDTimeSet
-                  0x006550                  _at24c02_set_slave_addr
-                  0x00656a                  _at24c02_init
-                  0x006598                  _at24c02_init_all_chip
-                  0x0065b6                  _at24c02_read_byte
-                  0x0065fc                  _at24c02_read_n_byte
-                  0x006668                  _at24c02_write_byte
-                  0x00669a                  _at24c02_write_n_byte
-                  0x00670c                  _m_flash_unlock_write
-                  0x006740                  _m_flash_read
-                  0x0067c0                  _m_flash_erase
-                  0x0067ea                  _m_flash_write
-                  0x00687e                  _crc_sum
-                  0x0068de                  _crc_verify
-                  0x00690e                  _crc_append
-                  0x00693c                  _TMR2_Initialize
-                  0x006956                  _TMR2_Period16BitSet
-                  0x006968                  _TMR2_Period16BitGet
-                  0x006970                  _TMR2_Counter16BitSet
-                  0x006982                  _TMR2_Counter16BitGet
-                  0x006990                  _TMR2_Start
-                  0x0069a0                  _TMR2_Stop
-                  0x0069aa                  _TMR2_GetElapsedThenClear
-                  0x0069c2                  _TMR2_SoftwareCounterGet
-                  0x0069ce                  _TMR2_SoftwareCounterClear
-                  0x0069da                  _TMR1_Initialize
-                  0x0069f4                  _TMR1_Period16BitSet
-                  0x006a06                  _TMR1_Period16BitGet
-                  0x006a0e                  _TMR1_Counter16BitSet
-                  0x006a20                  _TMR1_Counter16BitGet
-                  0x006a2e                  _TMR1_Start
-                  0x006a3e                  _TMR1_Stop
-                  0x006a48                  _TMR1_GetElapsedThenClear
-                  0x006a60                  _TMR1_SoftwareCounterGet
-                  0x006a6c                  _TMR1_SoftwareCounterClear
-                  0x006a78                  _m_system_init
-                  0x006a8a                  _thread_main_pre
-                  0x006aa8                  _event_proess
-                  0x006ab8                  _main
-                  0x006b14                  _TMR1_CallBack
-                  0x006b26                  _ticker_ms_set
-                  0x006b34                  _ticker_ms_get
-                  0x006b3e                  _ticker_ms_delay
-                  0x006b7e                  _TMR2_CallBack
-                  0x006b98                  _ticker_10ms_per_get
-                  0x006ba2                  _ticker_10ms_per_set
-                  0x006c26                  _PIN_MANAGER_Initialize
-                  0x006c94                  _kz_vadd_on
-                  0x006cac                  _kz_vadd_off
-                  0x006cc4                  _back_night_on
-                  0x006cdc                  _back_night_off
-                  0x006cf4                  _get_key_value
-                  0x006d20                  _key_init
-                  0x006d4e                  _delay_us
-                  0x006d76                  _delay_ms
-                  0x006d98                  _SYSTEM_Initialize
-                  0x006daa                  _OSCILLATOR_Initialize
-                  0x006dc6                  _INTERRUPT_Initialize
-                  0x006dea                  _flash_unlock_pm
-                  0x006e1c                  _send_thread_main_event_key_down
+                  0x004dfc                  _ads1148_write_register
+                  0x004e6e                  _ads1148_read_register
+                  0x004ee6                  _ads1148_slef_calibration
+                  0x004f10                  _ads1148_set_channle_normal
+                  0x004f82                  _ads1148_set_bcs
+                  0x004fde                  _ads1148_set_vbias
+                  0x004ff6                  _ads1148_set_vref
+                  0x00507a                  _ads1148_set_muxcal
+                  0x0050e0                  _ads1148_set_data_rate
+                  0x00513c                  _ads1148_set_ani_pga
+                  0x00519c                  _ads1148_set_imag_idac
+                  0x0051f8                  _ads1148_set_drdy_mode
+                  0x005256                  _ads1148_set_idac1_pins
+                  0x0052b2                  _ads1148_set_idac2_pins
+                  0x00530e                  _ads1148_set_idac12_pins
+                  0x00537c                  _ads1148_get_all_register
+                  0x005392                  _ads1148_init_obj_0
+                  0x0053ce                  _ads1148_init_obj_1
+                  0x00540a                  _ads1148_set_sync
+                  0x005440                  _ads1148_set_ready
+                  0x005488                  _ads1148_init_chip_regs
+                  0x0054f4                  _ads1148_init_all_obj
+                  0x0054fe                  _ads1148_init_device
+                  0x00550c                  _ads1148_start_convert
+                  0x00551a                  _ads1148_stop_convert
+                  0x005528                  _ads1148_waite_convert
+                  0x005584                  _ads1148_test
+                  0x0055d4                  _m_mem_set
+                  0x0055fe                  _m_mem_cpy_len
+                  0x005628                  _m_mem_cpy
+                  0x005652                  _m_str_cmp
+                  0x005692                  _m_str_cmp_len
+                  0x0056d8                  _m_math_pow
+                  0x005730                  _m_int_2_str
+                  0x0057b4                  _m_str_head_hide
+                  0x0057f6                  _HEX8
+                  0x00582a                  _m_str_b2h
+                  0x005886                  _m_str_h2b
+                  0x005990                  _m_int8_2_hex
+                  0x0059c6                  _m_int16_2_str_4
+                  0x005a70                  _samlpe_get_adc_average_value
+                  0x005b72                  _samlpe_read_adc
+                  0x005c0e                  _samlpe_chip0_ch_diff_pr_bridge
+                  0x005c50                  _samlpe_chip0_ch_diff_pr_signal
+                  0x005c94                  _samlpe_chip0_ch_diff_pr_ref0
+                  0x005cca                  _sample_calc_diff_press
+                  0x005cf8                  _samlpe_chip0_ch_pr_bridge
+                  0x005d38                  _samlpe_chip0_ch_pr_signal
+                  0x005d6a                  _samlpe_chip0_ch_pr_ref1
+                  0x005d92                  _samlpe_chip0_ch_temperature_in
+                  0x005dc6                  _samlpe_chip1_ch_expr0_bridge
+                  0x005dcc                  _samlpe_chip1_ch_expr0_signal
+                  0x005dd2                  _samlpe_chip1_ch_ex0_temperature
+                  0x005dd8                  _samlpe_chip1_ch_expr0_ref0
+                  0x005dde                  _samlpe_chip1_ch_expr1_bridge
+                  0x005de4                  _samlpe_chip1_ch_expr1_signal
+                  0x005dea                  _samlpe_chip1_ch_ex1_temperature
+                  0x005df0                  _samlpe_chip1_ch_expr1_ref1
+                  0x005df6                  _sample_in_soc_solar
+                  0x005dfc                  _samlpe_in_soc_battery
+                  0x005e02                  _samlpe_in_soc_ref
+                  0x005e08                  _sample_post_calc
+                  0x005e0e                  _sample_process
+                  0x005eb6                  _ads1148_hal_sck_mod_out
+                  0x005ece                  _ads1148_hal_sck_set_hight
+                  0x005eda                  _ads1148_hal_sck_set_low
+                  0x005ee6                  _ads1148_hal_sck_mod_in
+                  0x005ef8                  _ads1148_hal_din_mod_in
+                  0x005f0a                  _ads1148_hal_din_get
+                  0x005f1a                  _ads1148_hal_dout_mod_out
+                  0x005f32                  _ads1148_hal_dout_set_hight
+                  0x005f3e                  _ads1148_hal_dout_set_low
+                  0x005f4a                  _ads1148_hal_dout_mod_in
+                  0x005f5c                  _ads1148_hal_drdy_0_mod_in
+                  0x005f72                  _ads1148_hal_drdy_0_get
+                  0x005f84                  _ads1148_hal_cs_0_mod_out
+                  0x005f9c                  _ads1148_hal_cs_0_mod_in
+                  0x005fae                  _ads1148_hal_cs_0_set_hight
+                  0x005fba                  _ads1148_hal_cs_0_set_low
+                  0x005fcc                  _ads1148_hal_start_0_mod_out
+                  0x005fe4                  _ads1148_hal_start_0_set_hight
+                  0x005ff0                  _ads1148_hal_start_0_set_low
+                  0x005ffc                  _ads1148_hal_start_0_mod_in
+                  0x00600e                  _ads1148_hal_drdy_1_mod_in
+                  0x006020                  _ads1148_hal_drdy_1_get
+                  0x00602e                  _ads1148_hal_cs_1_mod_out
+                  0x006046                  _ads1148_hal_cs_1_set_hight
+                  0x006052                  _ads1148_hal_cs_1_set_low
+                  0x006064                  _ads1148_hal_cs_1_mod_in
+                  0x006076                  _ads1148_hal_start_1_mod_out
+                  0x00608e                  _ads1148_hal_start_1_set_hight
+                  0x00609a                  _ads1148_hal_start_1_set_low
+                  0x0060a6                  _ads1148_hal_start_1_mod_in
+                  0x0060b8                  _ads1148_hal_port_mode_dig_all
+                  0x0060f6                  _ads1148_hal_port_init_chip0
+                  0x006108                  _ads1148_hal_port_deinit_chip0
+                  0x00611a                  _ads1148_hal_port_init_chip1
+                  0x00612c                  _ads1148_hal_port_deinit_chip1
+                  0x00613e                  _ads1148_hal_write_read_byte
+                  0x0061e8                  _ads1148_hal_pwr_off
+                  0x006200                  _ads1148_hal_pwr_on
+                  0x006218                  _iic_start
+                  0x00625a                  _iic_stop
+                  0x006296                  _iic_send_ack
+                  0x00632c                  _iic_waite_ack
+                  0x0063c8                  _iic_send_byte
+                  0x006474                  _iic_received_byte
+                  0x00650a                  _iic_received_byte_if_ack
+                  0x006520                  _RTCC_Initialize
+                  0x006578                  _RTCC_TimeReset
+                  0x00658e                  _RTCC_TimeGet
+                  0x006640                  _RTCC_TimeSet
+                  0x0066c4                  _RTCC_BCDTimeGet
+                  0x00675e                  _RTCC_BCDTimeSet
+                  0x006802                  _at24c02_set_slave_addr
+                  0x00681c                  _at24c02_init
+                  0x00684a                  _at24c02_init_all_chip
+                  0x006868                  _at24c02_read_byte
+                  0x0068ae                  _at24c02_read_n_byte
+                  0x00691a                  _at24c02_write_byte
+                  0x00694c                  _at24c02_write_n_byte
+                  0x0069be                  _m_flash_unlock_write
+                  0x0069f2                  _m_flash_read
+                  0x006a72                  _m_flash_erase
+                  0x006a9c                  _m_flash_write
+                  0x006b30                  _crc_sum
+                  0x006b90                  _crc_verify
+                  0x006bc0                  _crc_append
+                  0x006bee                  _TMR2_Initialize
+                  0x006c08                  _TMR2_Period16BitSet
+                  0x006c1a                  _TMR2_Period16BitGet
+                  0x006c22                  _TMR2_Counter16BitSet
+                  0x006c34                  _TMR2_Counter16BitGet
+                  0x006c42                  _TMR2_Start
+                  0x006c52                  _TMR2_Stop
+                  0x006c5c                  _TMR2_GetElapsedThenClear
+                  0x006c74                  _TMR2_SoftwareCounterGet
+                  0x006c80                  _TMR2_SoftwareCounterClear
+                  0x006c8c                  _TMR1_Initialize
+                  0x006ca6                  _TMR1_Period16BitSet
+                  0x006cb8                  _TMR1_Period16BitGet
+                  0x006cc0                  _TMR1_Counter16BitSet
+                  0x006cd2                  _TMR1_Counter16BitGet
+                  0x006ce0                  _TMR1_Start
+                  0x006cf0                  _TMR1_Stop
+                  0x006cfa                  _TMR1_GetElapsedThenClear
+                  0x006d12                  _TMR1_SoftwareCounterGet
+                  0x006d1e                  _TMR1_SoftwareCounterClear
+                  0x006d2a                  _TMR1_CallBack
+                  0x006d3c                  _ticker_ms_set
+                  0x006d4a                  _ticker_ms_get
+                  0x006d54                  _ticker_ms_delay
+                  0x006d94                  _TMR2_CallBack
+                  0x006dae                  _ticker_10ms_per_get
+                  0x006db8                  _ticker_10ms_per_set
+                  0x006dc6                  _m_system_init
+                  0x006dd8                  _thread_main_pre
+                  0x006df2                  _event_proess
+                  0x006e02                  _main
+                  0x006ed4                  _PIN_MANAGER_Initialize
+                  0x006f42                  _kz_vadd_on
+                  0x006f5a                  _kz_vadd_off
+                  0x006f72                  _back_night_on
+                  0x006f8a                  _back_night_off
+                  0x006fa2                  _get_key_value
+                  0x006fce                  _key_init
+                  0x006ffc                  _delay_us
+                  0x007024                  _delay_ms
+                  0x007046                  _SYSTEM_Initialize
+                  0x007058                  _OSCILLATOR_Initialize
+                  0x007074                  _INTERRUPT_Initialize
+                  0x007098                  _flash_unlock_pm
+                  0x0070ca                  _send_thread_main_event_key_down
 
 External Symbols in Program Memory (by name):
 
-                  0x005594                  _HEX8
+                  0x0057f6                  _HEX8
                   0x000fd0                  _HexTable
-                  0x006dc6                  _INTERRUPT_Initialize
+                  0x007074                  _INTERRUPT_Initialize
                   0x000e26                  _LCDDigitalIndexTable
                   0x000e51                  _LCDDigitalTable
                   0x000eba                  _LCDDigitalTableEx
                   0x000e7b                  _LCDDigitalTableIndexEx
-                  0x006daa                  _OSCILLATOR_Initialize
-                  0x006c26                  _PIN_MANAGER_Initialize
-                  0x006412                  _RTCC_BCDTimeGet
-                  0x0064ac                  _RTCC_BCDTimeSet
-                  0x00626e                  _RTCC_Initialize
-                  0x0062dc                  _RTCC_TimeGet
-                  0x0062c6                  _RTCC_TimeReset
-                  0x00638e                  _RTCC_TimeSet
-                  0x006d98                  _SYSTEM_Initialize
-                  0x006b14                  _TMR1_CallBack
-                  0x006a20                  _TMR1_Counter16BitGet
-                  0x006a0e                  _TMR1_Counter16BitSet
-                  0x006a48                  _TMR1_GetElapsedThenClear
-                  0x0069da                  _TMR1_Initialize
-                  0x006a06                  _TMR1_Period16BitGet
-                  0x0069f4                  _TMR1_Period16BitSet
-                  0x006a6c                  _TMR1_SoftwareCounterClear
-                  0x006a60                  _TMR1_SoftwareCounterGet
-                  0x006a2e                  _TMR1_Start
-                  0x006a3e                  _TMR1_Stop
-                  0x006b7e                  _TMR2_CallBack
-                  0x006982                  _TMR2_Counter16BitGet
-                  0x006970                  _TMR2_Counter16BitSet
-                  0x0069aa                  _TMR2_GetElapsedThenClear
-                  0x00693c                  _TMR2_Initialize
-                  0x006968                  _TMR2_Period16BitGet
-                  0x006956                  _TMR2_Period16BitSet
-                  0x0069ce                  _TMR2_SoftwareCounterClear
-                  0x0069c2                  _TMR2_SoftwareCounterGet
-                  0x006990                  _TMR2_Start
-                  0x0069a0                  _TMR2_Stop
+                  0x007058                  _OSCILLATOR_Initialize
+                  0x006ed4                  _PIN_MANAGER_Initialize
+                  0x0066c4                  _RTCC_BCDTimeGet
+                  0x00675e                  _RTCC_BCDTimeSet
+                  0x006520                  _RTCC_Initialize
+                  0x00658e                  _RTCC_TimeGet
+                  0x006578                  _RTCC_TimeReset
+                  0x006640                  _RTCC_TimeSet
+                  0x007046                  _SYSTEM_Initialize
+                  0x006d2a                  _TMR1_CallBack
+                  0x006cd2                  _TMR1_Counter16BitGet
+                  0x006cc0                  _TMR1_Counter16BitSet
+                  0x006cfa                  _TMR1_GetElapsedThenClear
+                  0x006c8c                  _TMR1_Initialize
+                  0x006cb8                  _TMR1_Period16BitGet
+                  0x006ca6                  _TMR1_Period16BitSet
+                  0x006d1e                  _TMR1_SoftwareCounterClear
+                  0x006d12                  _TMR1_SoftwareCounterGet
+                  0x006ce0                  _TMR1_Start
+                  0x006cf0                  _TMR1_Stop
+                  0x006d94                  _TMR2_CallBack
+                  0x006c34                  _TMR2_Counter16BitGet
+                  0x006c22                  _TMR2_Counter16BitSet
+                  0x006c5c                  _TMR2_GetElapsedThenClear
+                  0x006bee                  _TMR2_Initialize
+                  0x006c1a                  _TMR2_Period16BitGet
+                  0x006c08                  _TMR2_Period16BitSet
+                  0x006c80                  _TMR2_SoftwareCounterClear
+                  0x006c74                  _TMR2_SoftwareCounterGet
+                  0x006c42                  _TMR2_Start
+                  0x006c52                  _TMR2_Stop
                   0x0003ce                  __AddressError
                   0x0003de                  __CNInterrupt
                   0x000428                  __DefaultInterrupt
@@ -900,83 +901,84 @@ External Symbols in Program Memory (by name):
                   0x00023c                  __psv_init
                   0x000200                  __resetPRI
                   0x000fe2                  _ads1148DefaultBuf
-                  0x005192                  _ads1148_get_all_register
-                  0x005d26                  _ads1148_hal_cs_0_mod_in
-                  0x005d0e                  _ads1148_hal_cs_0_mod_out
-                  0x005d38                  _ads1148_hal_cs_0_set_hight
-                  0x005d44                  _ads1148_hal_cs_0_set_low
-                  0x005dee                  _ads1148_hal_cs_1_mod_in
-                  0x005db8                  _ads1148_hal_cs_1_mod_out
-                  0x005dd0                  _ads1148_hal_cs_1_set_hight
-                  0x005ddc                  _ads1148_hal_cs_1_set_low
-                  0x005c94                  _ads1148_hal_din_get
-                  0x005c82                  _ads1148_hal_din_mod_in
-                  0x005cd4                  _ads1148_hal_dout_mod_in
-                  0x005ca4                  _ads1148_hal_dout_mod_out
-                  0x005cbc                  _ads1148_hal_dout_set_hight
-                  0x005cc8                  _ads1148_hal_dout_set_low
-                  0x005cfc                  _ads1148_hal_drdy_0_get
-                  0x005ce6                  _ads1148_hal_drdy_0_mod_in
-                  0x005daa                  _ads1148_hal_drdy_1_get
-                  0x005d98                  _ads1148_hal_drdy_1_mod_in
-                  0x005e92                  _ads1148_hal_port_deinit_chip0
-                  0x005eb6                  _ads1148_hal_port_deinit_chip1
-                  0x005e80                  _ads1148_hal_port_init_chip0
-                  0x005ea4                  _ads1148_hal_port_init_chip1
-                  0x005e42                  _ads1148_hal_port_mode_dig_all
-                  0x005f36                  _ads1148_hal_pwr_off
-                  0x005f4e                  _ads1148_hal_pwr_on
-                  0x005c70                  _ads1148_hal_sck_mod_in
-                  0x005c40                  _ads1148_hal_sck_mod_out
-                  0x005c58                  _ads1148_hal_sck_set_hight
-                  0x005c64                  _ads1148_hal_sck_set_low
-                  0x005d86                  _ads1148_hal_start_0_mod_in
-                  0x005d56                  _ads1148_hal_start_0_mod_out
-                  0x005d6e                  _ads1148_hal_start_0_set_hight
-                  0x005d7a                  _ads1148_hal_start_0_set_low
-                  0x005e30                  _ads1148_hal_start_1_mod_in
-                  0x005e00                  _ads1148_hal_start_1_mod_out
-                  0x005e18                  _ads1148_hal_start_1_set_hight
-                  0x005e24                  _ads1148_hal_start_1_set_low
-                  0x005ec8                  _ads1148_hal_write_read_byte
-                  0x0052c2                  _ads1148_init_all_obj
-                  0x005256                  _ads1148_init_chip_regs
-                  0x0052cc                  _ads1148_init_device
-                  0x0051a8                  _ads1148_init_obj_0
-                  0x0051e4                  _ads1148_init_obj_1
+                  0x00537c                  _ads1148_get_all_register
+                  0x005f9c                  _ads1148_hal_cs_0_mod_in
+                  0x005f84                  _ads1148_hal_cs_0_mod_out
+                  0x005fae                  _ads1148_hal_cs_0_set_hight
+                  0x005fba                  _ads1148_hal_cs_0_set_low
+                  0x006064                  _ads1148_hal_cs_1_mod_in
+                  0x00602e                  _ads1148_hal_cs_1_mod_out
+                  0x006046                  _ads1148_hal_cs_1_set_hight
+                  0x006052                  _ads1148_hal_cs_1_set_low
+                  0x005f0a                  _ads1148_hal_din_get
+                  0x005ef8                  _ads1148_hal_din_mod_in
+                  0x005f4a                  _ads1148_hal_dout_mod_in
+                  0x005f1a                  _ads1148_hal_dout_mod_out
+                  0x005f32                  _ads1148_hal_dout_set_hight
+                  0x005f3e                  _ads1148_hal_dout_set_low
+                  0x005f72                  _ads1148_hal_drdy_0_get
+                  0x005f5c                  _ads1148_hal_drdy_0_mod_in
+                  0x006020                  _ads1148_hal_drdy_1_get
+                  0x00600e                  _ads1148_hal_drdy_1_mod_in
+                  0x006108                  _ads1148_hal_port_deinit_chip0
+                  0x00612c                  _ads1148_hal_port_deinit_chip1
+                  0x0060f6                  _ads1148_hal_port_init_chip0
+                  0x00611a                  _ads1148_hal_port_init_chip1
+                  0x0060b8                  _ads1148_hal_port_mode_dig_all
+                  0x0061e8                  _ads1148_hal_pwr_off
+                  0x006200                  _ads1148_hal_pwr_on
+                  0x005ee6                  _ads1148_hal_sck_mod_in
+                  0x005eb6                  _ads1148_hal_sck_mod_out
+                  0x005ece                  _ads1148_hal_sck_set_hight
+                  0x005eda                  _ads1148_hal_sck_set_low
+                  0x005ffc                  _ads1148_hal_start_0_mod_in
+                  0x005fcc                  _ads1148_hal_start_0_mod_out
+                  0x005fe4                  _ads1148_hal_start_0_set_hight
+                  0x005ff0                  _ads1148_hal_start_0_set_low
+                  0x0060a6                  _ads1148_hal_start_1_mod_in
+                  0x006076                  _ads1148_hal_start_1_mod_out
+                  0x00608e                  _ads1148_hal_start_1_set_hight
+                  0x00609a                  _ads1148_hal_start_1_set_low
+                  0x00613e                  _ads1148_hal_write_read_byte
+                  0x0054f4                  _ads1148_init_all_obj
+                  0x005488                  _ads1148_init_chip_regs
+                  0x0054fe                  _ads1148_init_device
+                  0x005392                  _ads1148_init_obj_0
+                  0x0053ce                  _ads1148_init_obj_1
                   0x004d9a                  _ads1148_read_data
-                  0x004e72                  _ads1148_read_register
+                  0x004e6e                  _ads1148_read_register
                   0x004d6a                  _ads1148_send_cmd
-                  0x005066                  _ads1148_set_ani_pga
-                  0x004f5e                  _ads1148_set_bcs
-                  0x004f14                  _ads1148_set_channle_normal
-                  0x005038                  _ads1148_set_data_rate
-                  0x0050c6                  _ads1148_set_drdy_mode
-                  0x005152                  _ads1148_set_idac12_pins
-                  0x0050f6                  _ads1148_set_idac1_pins
-                  0x005124                  _ads1148_set_idac2_pins
-                  0x005098                  _ads1148_set_imag_idac
-                  0x005000                  _ads1148_set_muxcal
-                  0x005220                  _ads1148_set_sync
-                  0x004f92                  _ads1148_set_vbias
-                  0x004faa                  _ads1148_set_vref
-                  0x004eea                  _ads1148_slef_calibration
-                  0x0052da                  _ads1148_start_convert
-                  0x0052e8                  _ads1148_stop_convert
-                  0x005322                  _ads1148_test
-                  0x0052f6                  _ads1148_waite_convert
-                  0x004e00                  _ads1148_write_register
-                  0x00656a                  _at24c02_init
-                  0x006598                  _at24c02_init_all_chip
-                  0x0065b6                  _at24c02_read_byte
-                  0x0065fc                  _at24c02_read_n_byte
-                  0x006550                  _at24c02_set_slave_addr
-                  0x006668                  _at24c02_write_byte
-                  0x00669a                  _at24c02_write_n_byte
+                  0x00513c                  _ads1148_set_ani_pga
+                  0x004f82                  _ads1148_set_bcs
+                  0x004f10                  _ads1148_set_channle_normal
+                  0x0050e0                  _ads1148_set_data_rate
+                  0x0051f8                  _ads1148_set_drdy_mode
+                  0x00530e                  _ads1148_set_idac12_pins
+                  0x005256                  _ads1148_set_idac1_pins
+                  0x0052b2                  _ads1148_set_idac2_pins
+                  0x00519c                  _ads1148_set_imag_idac
+                  0x00507a                  _ads1148_set_muxcal
+                  0x005440                  _ads1148_set_ready
+                  0x00540a                  _ads1148_set_sync
+                  0x004fde                  _ads1148_set_vbias
+                  0x004ff6                  _ads1148_set_vref
+                  0x004ee6                  _ads1148_slef_calibration
+                  0x00550c                  _ads1148_start_convert
+                  0x00551a                  _ads1148_stop_convert
+                  0x005584                  _ads1148_test
+                  0x005528                  _ads1148_waite_convert
+                  0x004dfc                  _ads1148_write_register
+                  0x00681c                  _at24c02_init
+                  0x00684a                  _at24c02_init_all_chip
+                  0x006868                  _at24c02_read_byte
+                  0x0068ae                  _at24c02_read_n_byte
+                  0x006802                  _at24c02_set_slave_addr
+                  0x00691a                  _at24c02_write_byte
+                  0x00694c                  _at24c02_write_n_byte
                   0x000c26                  _auchCRCHi
                   0x000d26                  _auchCRCLo
-                  0x006cdc                  _back_night_off
-                  0x006cc4                  _back_night_on
+                  0x006f8a                  _back_night_off
+                  0x006f72                  _back_night_on
                   0x0041a0                  _cal_additional_pressute
                   0x0041b4                  _cal_battery_voltage
                   0x003cec                  _cal_diff_hight_level
@@ -993,32 +995,32 @@ External Symbols in Program Memory (by name):
                   0x003b8a                  _calib_data_obj_init
                   0x0036ee                  _calib_data_put_piont_tab
                   0x00374c                  _calib_data_set_default
-                  0x00690e                  _crc_append
-                  0x00687e                  _crc_sum
-                  0x0068de                  _crc_verify
+                  0x006bc0                  _crc_append
+                  0x006b30                  _crc_sum
+                  0x006b90                  _crc_verify
                   0x003c08                  _data_init_all
                   0x003580                  _data_sys_cal_v1
                   0x0035e6                  _data_sys_cal_v2
                   0x00362a                  _data_sys_init
                   0x003696                  _data_sys_save
                   0x000b48                  _defultSystemData
-                  0x006d76                  _delay_ms
-                  0x006d4e                  _delay_us
-                  0x006aa8                  _event_proess
-                  0x006dea                  _flash_unlock_pm
-                  0x006cf4                  _get_key_value
+                  0x007024                  _delay_ms
+                  0x006ffc                  _delay_us
+                  0x006df2                  _event_proess
+                  0x007098                  _flash_unlock_pm
+                  0x006fa2                  _get_key_value
                   0x000820                  _hKcy
                   0x0009b4                  _hKel
-                  0x0061c2                  _iic_received_byte
-                  0x006258                  _iic_received_byte_if_ack
-                  0x005fe4                  _iic_send_ack
-                  0x006116                  _iic_send_byte
-                  0x005f66                  _iic_start
-                  0x005fa8                  _iic_stop
-                  0x00607a                  _iic_waite_ack
+                  0x006474                  _iic_received_byte
+                  0x00650a                  _iic_received_byte_if_ack
+                  0x006296                  _iic_send_ack
+                  0x0063c8                  _iic_send_byte
+                  0x006218                  _iic_start
+                  0x00625a                  _iic_stop
+                  0x00632c                  _iic_waite_ack
                   0x002410                  _key_adj_value_fixed
                   0x002476                  _key_adj_value_float
-                  0x006d20                  _key_init
+                  0x006fce                  _key_init
                   0x0034e8                  _key_process
                   0x002962                  _key_process_down
                   0x00342c                  _key_process_set
@@ -1027,8 +1029,8 @@ External Symbols in Program Memory (by name):
                   0x002bd4                  _key_process_up
                   0x0023d0                  _key_shift_loc
                   0x002390                  _key_waite_release
-                  0x006cac                  _kz_vadd_off
-                  0x006c94                  _kz_vadd_on
+                  0x006f5a                  _kz_vadd_off
+                  0x006f42                  _kz_vadd_on
                   0x00233c                  _lcd_bl_init
                   0x002336                  _lcd_bl_off
                   0x002330                  _lcd_bl_on
@@ -1096,57 +1098,57 @@ External Symbols in Program Memory (by name):
                   0x00217c                  _lcd_show_string_l0
                   0x0021aa                  _lcd_show_string_l1
                   0x0020f0                  _lcd_show_string_sm
-                  0x0067c0                  _m_flash_erase
-                  0x006740                  _m_flash_read
-                  0x00670c                  _m_flash_unlock_write
-                  0x0067ea                  _m_flash_write
-                  0x005764                  _m_int16_2_str_4
-                  0x00572e                  _m_int8_2_hex
-                  0x0054ce                  _m_int_2_str
+                  0x006a72                  _m_flash_erase
+                  0x0069f2                  _m_flash_read
+                  0x0069be                  _m_flash_unlock_write
+                  0x006a9c                  _m_flash_write
+                  0x0059c6                  _m_int16_2_str_4
+                  0x005990                  _m_int8_2_hex
+                  0x005730                  _m_int_2_str
                   0x00381a                  _m_interp1_cal_p_s
                   0x0039f4                  _m_interp1_cal_p_t
                   0x003b08                  _m_interp1_float_fast
-                  0x005476                  _m_math_pow
-                  0x0053c6                  _m_mem_cpy
-                  0x00539c                  _m_mem_cpy_len
-                  0x005372                  _m_mem_set
-                  0x0055c8                  _m_str_b2h
-                  0x0053f0                  _m_str_cmp
-                  0x005430                  _m_str_cmp_len
-                  0x005624                  _m_str_h2b
-                  0x005552                  _m_str_head_hide
-                  0x006a78                  _m_system_init
-                  0x006ab8                  _main
-                  0x00599a                  _samlpe_chip0_ch_diff_pr_bridge
-                  0x005a1a                  _samlpe_chip0_ch_diff_pr_ref0
-                  0x0059de                  _samlpe_chip0_ch_diff_pr_signal
-                  0x005a82                  _samlpe_chip0_ch_pr_bridge
-                  0x005af4                  _samlpe_chip0_ch_pr_ref1
-                  0x005ac2                  _samlpe_chip0_ch_pr_signal
-                  0x005b1c                  _samlpe_chip0_ch_temperature_in
-                  0x005b5c                  _samlpe_chip1_ch_ex0_temperature
-                  0x005b74                  _samlpe_chip1_ch_ex1_temperature
-                  0x005b50                  _samlpe_chip1_ch_expr0_bridge
-                  0x005b62                  _samlpe_chip1_ch_expr0_ref0
-                  0x005b56                  _samlpe_chip1_ch_expr0_signal
-                  0x005b68                  _samlpe_chip1_ch_expr1_bridge
-                  0x005b7a                  _samlpe_chip1_ch_expr1_ref1
-                  0x005b6e                  _samlpe_chip1_ch_expr1_signal
-                  0x00580e                  _samlpe_get_adc_average_value
-                  0x005b86                  _samlpe_in_soc_battery
-                  0x005b8c                  _samlpe_in_soc_ref
-                  0x005910                  _samlpe_read_adc
-                  0x005a58                  _sample_calc_diff_press
-                  0x005b80                  _sample_in_soc_solar
-                  0x005b92                  _sample_post_calc
-                  0x005b98                  _sample_process
-                  0x006e1c                  _send_thread_main_event_key_down
-                  0x006a8a                  _thread_main_pre
-                  0x006b98                  _ticker_10ms_per_get
-                  0x006ba2                  _ticker_10ms_per_set
-                  0x006b3e                  _ticker_ms_delay
-                  0x006b34                  _ticker_ms_get
-                  0x006b26                  _ticker_ms_set
+                  0x0056d8                  _m_math_pow
+                  0x005628                  _m_mem_cpy
+                  0x0055fe                  _m_mem_cpy_len
+                  0x0055d4                  _m_mem_set
+                  0x00582a                  _m_str_b2h
+                  0x005652                  _m_str_cmp
+                  0x005692                  _m_str_cmp_len
+                  0x005886                  _m_str_h2b
+                  0x0057b4                  _m_str_head_hide
+                  0x006dc6                  _m_system_init
+                  0x006e02                  _main
+                  0x005c0e                  _samlpe_chip0_ch_diff_pr_bridge
+                  0x005c94                  _samlpe_chip0_ch_diff_pr_ref0
+                  0x005c50                  _samlpe_chip0_ch_diff_pr_signal
+                  0x005cf8                  _samlpe_chip0_ch_pr_bridge
+                  0x005d6a                  _samlpe_chip0_ch_pr_ref1
+                  0x005d38                  _samlpe_chip0_ch_pr_signal
+                  0x005d92                  _samlpe_chip0_ch_temperature_in
+                  0x005dd2                  _samlpe_chip1_ch_ex0_temperature
+                  0x005dea                  _samlpe_chip1_ch_ex1_temperature
+                  0x005dc6                  _samlpe_chip1_ch_expr0_bridge
+                  0x005dd8                  _samlpe_chip1_ch_expr0_ref0
+                  0x005dcc                  _samlpe_chip1_ch_expr0_signal
+                  0x005dde                  _samlpe_chip1_ch_expr1_bridge
+                  0x005df0                  _samlpe_chip1_ch_expr1_ref1
+                  0x005de4                  _samlpe_chip1_ch_expr1_signal
+                  0x005a70                  _samlpe_get_adc_average_value
+                  0x005dfc                  _samlpe_in_soc_battery
+                  0x005e02                  _samlpe_in_soc_ref
+                  0x005b72                  _samlpe_read_adc
+                  0x005cca                  _sample_calc_diff_press
+                  0x005df6                  _sample_in_soc_solar
+                  0x005e08                  _sample_post_calc
+                  0x005e0e                  _sample_process
+                  0x0070ca                  _send_thread_main_event_key_down
+                  0x006dd8                  _thread_main_pre
+                  0x006dae                  _ticker_10ms_per_get
+                  0x006db8                  _ticker_10ms_per_set
+                  0x006d54                  _ticker_ms_delay
+                  0x006d4a                  _ticker_ms_get
+                  0x006d3c                  _ticker_ms_set
                   0x004584                  _ui_disp_adj_xfixed_pt
                   0x0045e2                  _ui_disp_adj_xfixed_pt_dp
                   0x004428                  _ui_disp_adj_xfloat_pt
@@ -1394,7 +1396,7 @@ __CONFIG1
 .comment
  *(.comment)
 
-.debug_info       0x000000       0xe5fa
+.debug_info       0x000000       0xe788
  *(.debug_info)
  .debug_info      0x000000        0xa0e build/default/debug/mcc_generated_files/rtcc.o
  .debug_info      0x000a0e        0x57a build/default/debug/mcc_generated_files/pin_manager.o
@@ -1408,24 +1410,24 @@ __CONFIG1
  .debug_info      0x005915       0x166f build/default/debug/src/api/sysdata.o
  .debug_info      0x006f84        0x229 build/default/debug/src/app/main.o
  .debug_info      0x0071ad        0x1bd build/default/debug/src/app/event.o
- .debug_info      0x00736a       0x1278 build/default/debug/src/app/sample.o
- .debug_info      0x0085e2        0x2c9 build/default/debug/src/depend/crc16.o
- .debug_info      0x0088ab        0x569 build/default/debug/src/depend/m_string.o
- .debug_info      0x008e14       0x1b6e build/default/debug/src/driver/lcd.o
- .debug_info      0x00a982        0x249 build/default/debug/src/driver/gpio.o
- .debug_info      0x00abcb       0x117e build/default/debug/src/driver/ads1148.o
- .debug_info      0x00bd49        0x939 build/default/debug/src/driver/ads1148_hal.o
- .debug_info      0x00c682        0x52b build/default/debug/src/driver/ex_eeprom.o
- .debug_info      0x00cbad        0x329 build/default/debug/src/driver/i2c.o
- .debug_info      0x00ced6        0xbd2 build/default/debug/src/driver/key.o
- .debug_info      0x00daa8        0x16e build/default/debug/src/global/globle.o
- .debug_info      0x00dc16        0x17a build/default/debug/src/soc/delay.o
- .debug_info      0x00dd90        0x3d8 build/default/debug/src/soc/ticker.o
- .debug_info      0x00e168        0x41e build/default/debug/src/soc/flash.o
- .debug_info      0x00e586         0x74 build/default/debug/src/soc/m_asm.o
+ .debug_info      0x00736a       0x127e build/default/debug/src/app/sample.o
+ .debug_info      0x0085e8        0x2c9 build/default/debug/src/depend/crc16.o
+ .debug_info      0x0088b1        0x569 build/default/debug/src/depend/m_string.o
+ .debug_info      0x008e1a       0x1b6e build/default/debug/src/driver/lcd.o
+ .debug_info      0x00a988        0x249 build/default/debug/src/driver/gpio.o
+ .debug_info      0x00abd1       0x1305 build/default/debug/src/driver/ads1148.o
+ .debug_info      0x00bed6        0x93a build/default/debug/src/driver/ads1148_hal.o
+ .debug_info      0x00c810        0x52b build/default/debug/src/driver/ex_eeprom.o
+ .debug_info      0x00cd3b        0x329 build/default/debug/src/driver/i2c.o
+ .debug_info      0x00d064        0xbd2 build/default/debug/src/driver/key.o
+ .debug_info      0x00dc36        0x16e build/default/debug/src/global/globle.o
+ .debug_info      0x00dda4        0x17a build/default/debug/src/soc/delay.o
+ .debug_info      0x00df1e        0x3d8 build/default/debug/src/soc/ticker.o
+ .debug_info      0x00e2f6        0x41e build/default/debug/src/soc/flash.o
+ .debug_info      0x00e714         0x74 build/default/debug/src/soc/m_asm.o
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev     0x000000       0x1c83
+.debug_abbrev     0x000000       0x1c7d
  *(.debug_abbrev)
  .debug_abbrev    0x000000        0x193 build/default/debug/mcc_generated_files/rtcc.o
  .debug_abbrev    0x000193         0x5d build/default/debug/mcc_generated_files/pin_manager.o
@@ -1444,18 +1446,18 @@ __CONFIG1
  .debug_abbrev    0x0010b2         0xe4 build/default/debug/src/depend/m_string.o
  .debug_abbrev    0x001196        0x1f0 build/default/debug/src/driver/lcd.o
  .debug_abbrev    0x001386         0x4c build/default/debug/src/driver/gpio.o
- .debug_abbrev    0x0013d2        0x223 build/default/debug/src/driver/ads1148.o
- .debug_abbrev    0x0015f5         0xcd build/default/debug/src/driver/ads1148_hal.o
- .debug_abbrev    0x0016c2        0x120 build/default/debug/src/driver/ex_eeprom.o
- .debug_abbrev    0x0017e2         0xa7 build/default/debug/src/driver/i2c.o
- .debug_abbrev    0x001889         0xf8 build/default/debug/src/driver/key.o
- .debug_abbrev    0x001981         0x44 build/default/debug/src/global/globle.o
- .debug_abbrev    0x0019c5         0x67 build/default/debug/src/soc/delay.o
- .debug_abbrev    0x001a2c        0x11a build/default/debug/src/soc/ticker.o
- .debug_abbrev    0x001b46        0x129 build/default/debug/src/soc/flash.o
- .debug_abbrev    0x001c6f         0x14 build/default/debug/src/soc/m_asm.o
+ .debug_abbrev    0x0013d2        0x21d build/default/debug/src/driver/ads1148.o
+ .debug_abbrev    0x0015ef         0xcd build/default/debug/src/driver/ads1148_hal.o
+ .debug_abbrev    0x0016bc        0x120 build/default/debug/src/driver/ex_eeprom.o
+ .debug_abbrev    0x0017dc         0xa7 build/default/debug/src/driver/i2c.o
+ .debug_abbrev    0x001883         0xf8 build/default/debug/src/driver/key.o
+ .debug_abbrev    0x00197b         0x44 build/default/debug/src/global/globle.o
+ .debug_abbrev    0x0019bf         0x67 build/default/debug/src/soc/delay.o
+ .debug_abbrev    0x001a26        0x11a build/default/debug/src/soc/ticker.o
+ .debug_abbrev    0x001b40        0x129 build/default/debug/src/soc/flash.o
+ .debug_abbrev    0x001c69         0x14 build/default/debug/src/soc/m_asm.o
 
-.debug_line       0x000000       0x2674
+.debug_line       0x000000       0x26cf
  *(.debug_line)
  .debug_line      0x000000        0x182 build/default/debug/mcc_generated_files/rtcc.o
  .debug_line      0x000182         0xd4 build/default/debug/mcc_generated_files/pin_manager.o
@@ -1467,25 +1469,25 @@ __CONFIG1
  .debug_line      0x0007bc        0x315 build/default/debug/src/api/ui.o
  .debug_line      0x000ad1        0x469 build/default/debug/src/api/key_menu.o
  .debug_line      0x000f3a        0x26c build/default/debug/src/api/sysdata.o
- .debug_line      0x0011a6        0x107 build/default/debug/src/app/main.o
- .debug_line      0x0012ad         0xba build/default/debug/src/app/event.o
- .debug_line      0x001367        0x1dd build/default/debug/src/app/sample.o
+ .debug_line      0x0011a6        0x106 build/default/debug/src/app/main.o
+ .debug_line      0x0012ac         0xba build/default/debug/src/app/event.o
+ .debug_line      0x001366        0x1de build/default/debug/src/app/sample.o
  .debug_line      0x001544         0xac build/default/debug/src/depend/crc16.o
  .debug_line      0x0015f0        0x13e build/default/debug/src/depend/m_string.o
  .debug_line      0x00172e        0x3a4 build/default/debug/src/driver/lcd.o
  .debug_line      0x001ad2         0xad build/default/debug/src/driver/gpio.o
- .debug_line      0x001b7f        0x1a3 build/default/debug/src/driver/ads1148.o
- .debug_line      0x001d22        0x1bf build/default/debug/src/driver/ads1148_hal.o
- .debug_line      0x001ee1         0xf2 build/default/debug/src/driver/ex_eeprom.o
- .debug_line      0x001fd3        0x165 build/default/debug/src/driver/i2c.o
- .debug_line      0x002138        0x125 build/default/debug/src/driver/key.o
- .debug_line      0x00225d         0x86 build/default/debug/src/global/globle.o
- .debug_line      0x0022e3         0xa2 build/default/debug/src/soc/delay.o
- .debug_line      0x002385        0x16c build/default/debug/src/soc/ticker.o
- .debug_line      0x0024f1        0x13d build/default/debug/src/soc/flash.o
- .debug_line      0x00262e         0x46 build/default/debug/src/soc/m_asm.o
+ .debug_line      0x001b7f        0x1f7 build/default/debug/src/driver/ads1148.o
+ .debug_line      0x001d76        0x1c6 build/default/debug/src/driver/ads1148_hal.o
+ .debug_line      0x001f3c         0xf2 build/default/debug/src/driver/ex_eeprom.o
+ .debug_line      0x00202e        0x165 build/default/debug/src/driver/i2c.o
+ .debug_line      0x002193        0x125 build/default/debug/src/driver/key.o
+ .debug_line      0x0022b8         0x86 build/default/debug/src/global/globle.o
+ .debug_line      0x00233e         0xa2 build/default/debug/src/soc/delay.o
+ .debug_line      0x0023e0        0x16c build/default/debug/src/soc/ticker.o
+ .debug_line      0x00254c        0x13d build/default/debug/src/soc/flash.o
+ .debug_line      0x002689         0x46 build/default/debug/src/soc/m_asm.o
 
-.debug_frame      0x000000       0x2b1c
+.debug_frame      0x000000       0x2b38
  *(.debug_frame)
  .debug_frame     0x000000        0x116 build/default/debug/mcc_generated_files/rtcc.o
  .debug_frame     0x000116         0x30 build/default/debug/mcc_generated_files/pin_manager.o
@@ -1504,14 +1506,14 @@ __CONFIG1
  .debug_frame     0x001648        0x180 build/default/debug/src/depend/m_string.o
  .debug_frame     0x0017c8        0x768 build/default/debug/src/driver/lcd.o
  .debug_frame     0x001f30         0x84 build/default/debug/src/driver/gpio.o
- .debug_frame     0x001fb4        0x324 build/default/debug/src/driver/ads1148.o
- .debug_frame     0x0022d8        0x43c build/default/debug/src/driver/ads1148_hal.o
- .debug_frame     0x002714         0xd8 build/default/debug/src/driver/ex_eeprom.o
- .debug_frame     0x0027ec         0xd8 build/default/debug/src/driver/i2c.o
- .debug_frame     0x0028c4         0x8c build/default/debug/src/driver/key.o
- .debug_frame     0x002950         0x4c build/default/debug/src/soc/delay.o
- .debug_frame     0x00299c         0xfc build/default/debug/src/soc/ticker.o
- .debug_frame     0x002a98         0x84 build/default/debug/src/soc/flash.o
+ .debug_frame     0x001fb4        0x340 build/default/debug/src/driver/ads1148.o
+ .debug_frame     0x0022f4        0x43c build/default/debug/src/driver/ads1148_hal.o
+ .debug_frame     0x002730         0xd8 build/default/debug/src/driver/ex_eeprom.o
+ .debug_frame     0x002808         0xd8 build/default/debug/src/driver/i2c.o
+ .debug_frame     0x0028e0         0x8c build/default/debug/src/driver/key.o
+ .debug_frame     0x00296c         0x4c build/default/debug/src/soc/delay.o
+ .debug_frame     0x0029b8         0xfc build/default/debug/src/soc/ticker.o
+ .debug_frame     0x002ab4         0x84 build/default/debug/src/soc/flash.o
 
 .debug_str        0x000000        0x797
  *(.debug_str)
@@ -1542,7 +1544,7 @@ __CONFIG1
  *(.debug_macinfo)
 
 .debug_pubnames
-                  0x000000       0x2a09
+                  0x000000       0x2a1f
  *(.debug_pubnames)
  .debug_pubnames
                   0x000000         0x83 build/default/debug/mcc_generated_files/rtcc.o
@@ -1579,23 +1581,23 @@ __CONFIG1
  .debug_pubnames
                   0x001e78         0x56 build/default/debug/src/driver/gpio.o
  .debug_pubnames
-                  0x001ece        0x2fe build/default/debug/src/driver/ads1148.o
+                  0x001ece        0x314 build/default/debug/src/driver/ads1148.o
  .debug_pubnames
-                  0x0021cc        0x47e build/default/debug/src/driver/ads1148_hal.o
+                  0x0021e2        0x47e build/default/debug/src/driver/ads1148_hal.o
  .debug_pubnames
-                  0x00264a         0xf6 build/default/debug/src/driver/ex_eeprom.o
+                  0x002660         0xf6 build/default/debug/src/driver/ex_eeprom.o
  .debug_pubnames
-                  0x002740         0x95 build/default/debug/src/driver/i2c.o
+                  0x002756         0x95 build/default/debug/src/driver/i2c.o
  .debug_pubnames
-                  0x0027d5         0x5f build/default/debug/src/driver/key.o
+                  0x0027eb         0x5f build/default/debug/src/driver/key.o
  .debug_pubnames
-                  0x002834         0x39 build/default/debug/src/global/globle.o
+                  0x00284a         0x39 build/default/debug/src/global/globle.o
  .debug_pubnames
-                  0x00286d         0x2c build/default/debug/src/soc/delay.o
+                  0x002883         0x2c build/default/debug/src/soc/delay.o
  .debug_pubnames
-                  0x002899         0xe0 build/default/debug/src/soc/ticker.o
+                  0x0028af         0xe0 build/default/debug/src/soc/ticker.o
  .debug_pubnames
-                  0x002979         0x90 build/default/debug/src/soc/flash.o
+                  0x00298f         0x90 build/default/debug/src/soc/flash.o
 
 .debug_ranges
  *(.debug_ranges)
@@ -3255,7 +3257,7 @@ __c30_signature
                     0x8fe2                  _ads1148DefaultBuf
  .const             0x8fee          0x4 build/default/debug/src/app/main.o
 
-.text             0x000ff2       0x5bbe
+.text             0x000ff2       0x5e6c
  .text            0x000ff2       0x136a build/default/debug/src/driver/lcd.o
                   0x000ff2                  _lcd_set_com_seg
                   0x001072                  _lcd_disp_level_bar
@@ -3445,205 +3447,206 @@ __c30_signature
                   0x004c68                  _ui_disp_menu_bar_full_adj
                   0x004c86                  _ui_disp_menu_work_mode_adj
                   0x004cb4                  _ui_disp_menu
- .text            0x004d6a        0x608 build/default/debug/src/driver/ads1148.o
+ .text            0x004d6a        0x86a build/default/debug/src/driver/ads1148.o
                   0x004d6a                  _ads1148_send_cmd
                   0x004d9a                  _ads1148_read_data
-                  0x004e00                  _ads1148_write_register
-                  0x004e72                  _ads1148_read_register
-                  0x004eea                  _ads1148_slef_calibration
-                  0x004f14                  _ads1148_set_channle_normal
-                  0x004f5e                  _ads1148_set_bcs
-                  0x004f92                  _ads1148_set_vbias
-                  0x004faa                  _ads1148_set_vref
-                  0x005000                  _ads1148_set_muxcal
-                  0x005038                  _ads1148_set_data_rate
-                  0x005066                  _ads1148_set_ani_pga
-                  0x005098                  _ads1148_set_imag_idac
-                  0x0050c6                  _ads1148_set_drdy_mode
-                  0x0050f6                  _ads1148_set_idac1_pins
-                  0x005124                  _ads1148_set_idac2_pins
-                  0x005152                  _ads1148_set_idac12_pins
-                  0x005192                  _ads1148_get_all_register
-                  0x0051a8                  _ads1148_init_obj_0
-                  0x0051e4                  _ads1148_init_obj_1
-                  0x005220                  _ads1148_set_sync
-                  0x005256                  _ads1148_init_chip_regs
-                  0x0052c2                  _ads1148_init_all_obj
-                  0x0052cc                  _ads1148_init_device
-                  0x0052da                  _ads1148_start_convert
-                  0x0052e8                  _ads1148_stop_convert
-                  0x0052f6                  _ads1148_waite_convert
-                  0x005322                  _ads1148_test
- .text            0x005372        0x49c build/default/debug/src/depend/m_string.o
-                  0x005372                  _m_mem_set
-                  0x00539c                  _m_mem_cpy_len
-                  0x0053c6                  _m_mem_cpy
-                  0x0053f0                  _m_str_cmp
-                  0x005430                  _m_str_cmp_len
-                  0x005476                  _m_math_pow
-                  0x0054ce                  _m_int_2_str
-                  0x005552                  _m_str_head_hide
-                  0x005594                  _HEX8
-                  0x0055c8                  _m_str_b2h
-                  0x005624                  _m_str_h2b
-                  0x00572e                  _m_int8_2_hex
-                  0x005764                  _m_int16_2_str_4
- .text            0x00580e        0x432 build/default/debug/src/app/sample.o
-                  0x00580e                  _samlpe_get_adc_average_value
-                  0x005910                  _samlpe_read_adc
-                  0x00599a                  _samlpe_chip0_ch_diff_pr_bridge
-                  0x0059de                  _samlpe_chip0_ch_diff_pr_signal
-                  0x005a1a                  _samlpe_chip0_ch_diff_pr_ref0
-                  0x005a58                  _sample_calc_diff_press
-                  0x005a82                  _samlpe_chip0_ch_pr_bridge
-                  0x005ac2                  _samlpe_chip0_ch_pr_signal
-                  0x005af4                  _samlpe_chip0_ch_pr_ref1
-                  0x005b1c                  _samlpe_chip0_ch_temperature_in
-                  0x005b50                  _samlpe_chip1_ch_expr0_bridge
-                  0x005b56                  _samlpe_chip1_ch_expr0_signal
-                  0x005b5c                  _samlpe_chip1_ch_ex0_temperature
-                  0x005b62                  _samlpe_chip1_ch_expr0_ref0
-                  0x005b68                  _samlpe_chip1_ch_expr1_bridge
-                  0x005b6e                  _samlpe_chip1_ch_expr1_signal
-                  0x005b74                  _samlpe_chip1_ch_ex1_temperature
-                  0x005b7a                  _samlpe_chip1_ch_expr1_ref1
-                  0x005b80                  _sample_in_soc_solar
-                  0x005b86                  _samlpe_in_soc_battery
-                  0x005b8c                  _samlpe_in_soc_ref
-                  0x005b92                  _sample_post_calc
-                  0x005b98                  _sample_process
- .text            0x005c40        0x326 build/default/debug/src/driver/ads1148_hal.o
-                  0x005c40                  _ads1148_hal_sck_mod_out
-                  0x005c58                  _ads1148_hal_sck_set_hight
-                  0x005c64                  _ads1148_hal_sck_set_low
-                  0x005c70                  _ads1148_hal_sck_mod_in
-                  0x005c82                  _ads1148_hal_din_mod_in
-                  0x005c94                  _ads1148_hal_din_get
-                  0x005ca4                  _ads1148_hal_dout_mod_out
-                  0x005cbc                  _ads1148_hal_dout_set_hight
-                  0x005cc8                  _ads1148_hal_dout_set_low
-                  0x005cd4                  _ads1148_hal_dout_mod_in
-                  0x005ce6                  _ads1148_hal_drdy_0_mod_in
-                  0x005cfc                  _ads1148_hal_drdy_0_get
-                  0x005d0e                  _ads1148_hal_cs_0_mod_out
-                  0x005d26                  _ads1148_hal_cs_0_mod_in
-                  0x005d38                  _ads1148_hal_cs_0_set_hight
-                  0x005d44                  _ads1148_hal_cs_0_set_low
-                  0x005d56                  _ads1148_hal_start_0_mod_out
-                  0x005d6e                  _ads1148_hal_start_0_set_hight
-                  0x005d7a                  _ads1148_hal_start_0_set_low
-                  0x005d86                  _ads1148_hal_start_0_mod_in
-                  0x005d98                  _ads1148_hal_drdy_1_mod_in
-                  0x005daa                  _ads1148_hal_drdy_1_get
-                  0x005db8                  _ads1148_hal_cs_1_mod_out
-                  0x005dd0                  _ads1148_hal_cs_1_set_hight
-                  0x005ddc                  _ads1148_hal_cs_1_set_low
-                  0x005dee                  _ads1148_hal_cs_1_mod_in
-                  0x005e00                  _ads1148_hal_start_1_mod_out
-                  0x005e18                  _ads1148_hal_start_1_set_hight
-                  0x005e24                  _ads1148_hal_start_1_set_low
-                  0x005e30                  _ads1148_hal_start_1_mod_in
-                  0x005e42                  _ads1148_hal_port_mode_dig_all
-                  0x005e80                  _ads1148_hal_port_init_chip0
-                  0x005e92                  _ads1148_hal_port_deinit_chip0
-                  0x005ea4                  _ads1148_hal_port_init_chip1
-                  0x005eb6                  _ads1148_hal_port_deinit_chip1
-                  0x005ec8                  _ads1148_hal_write_read_byte
-                  0x005f36                  _ads1148_hal_pwr_off
-                  0x005f4e                  _ads1148_hal_pwr_on
- .text            0x005f66        0x308 build/default/debug/src/driver/i2c.o
-                  0x005f66                  _iic_start
-                  0x005fa8                  _iic_stop
-                  0x005fe4                  _iic_send_ack
-                  0x00607a                  _iic_waite_ack
-                  0x006116                  _iic_send_byte
-                  0x0061c2                  _iic_received_byte
-                  0x006258                  _iic_received_byte_if_ack
- .text            0x00626e        0x2e2 build/default/debug/mcc_generated_files/rtcc.o
-                  0x00626e                  _RTCC_Initialize
-                  0x0062c6                  _RTCC_TimeReset
-                  0x0062dc                  _RTCC_TimeGet
-                  0x00638e                  _RTCC_TimeSet
-                  0x006412                  _RTCC_BCDTimeGet
-                  0x0064ac                  _RTCC_BCDTimeSet
- .text            0x006550        0x1bc build/default/debug/src/driver/ex_eeprom.o
-                  0x006550                  _at24c02_set_slave_addr
-                  0x00656a                  _at24c02_init
-                  0x006598                  _at24c02_init_all_chip
-                  0x0065b6                  _at24c02_read_byte
-                  0x0065fc                  _at24c02_read_n_byte
-                  0x006668                  _at24c02_write_byte
-                  0x00669a                  _at24c02_write_n_byte
- .text            0x00670c        0x172 build/default/debug/src/soc/flash.o
-                  0x00670c                  _m_flash_unlock_write
-                  0x006740                  _m_flash_read
-                  0x0067c0                  _m_flash_erase
-                  0x0067ea                  _m_flash_write
- .text            0x00687e         0xbe build/default/debug/src/depend/crc16.o
-                  0x00687e                  _crc_sum
-                  0x0068de                  _crc_verify
-                  0x00690e                  _crc_append
- .text            0x00693c         0x9e build/default/debug/mcc_generated_files/tmr2.o
-                  0x00693c                  _TMR2_Initialize
-                  0x006956                  _TMR2_Period16BitSet
-                  0x006968                  _TMR2_Period16BitGet
-                  0x006970                  _TMR2_Counter16BitSet
-                  0x006982                  _TMR2_Counter16BitGet
-                  0x006990                  _TMR2_Start
-                  0x0069a0                  _TMR2_Stop
-                  0x0069aa                  _TMR2_GetElapsedThenClear
-                  0x0069c2                  _TMR2_SoftwareCounterGet
-                  0x0069ce                  _TMR2_SoftwareCounterClear
- .text            0x0069da         0x9e build/default/debug/mcc_generated_files/tmr1.o
-                  0x0069da                  _TMR1_Initialize
-                  0x0069f4                  _TMR1_Period16BitSet
-                  0x006a06                  _TMR1_Period16BitGet
-                  0x006a0e                  _TMR1_Counter16BitSet
-                  0x006a20                  _TMR1_Counter16BitGet
-                  0x006a2e                  _TMR1_Start
-                  0x006a3e                  _TMR1_Stop
-                  0x006a48                  _TMR1_GetElapsedThenClear
-                  0x006a60                  _TMR1_SoftwareCounterGet
-                  0x006a6c                  _TMR1_SoftwareCounterClear
- .text            0x006a78         0x9c build/default/debug/src/app/main.o
-                  0x006a78                  _m_system_init
-                  0x006a8a                  _thread_main_pre
-                  0x006aa8                  _event_proess
-                  0x006ab8                  _main
- .text            0x006b14         0x9c build/default/debug/src/soc/ticker.o
-                  0x006b14                  _TMR1_CallBack
-                  0x006b26                  _ticker_ms_set
-                  0x006b34                  _ticker_ms_get
-                  0x006b3e                  _ticker_ms_delay
-                  0x006b7e                  _TMR2_CallBack
-                  0x006b98                  _ticker_10ms_per_get
-                  0x006ba2                  _ticker_10ms_per_set
+                  0x004dfc                  _ads1148_write_register
+                  0x004e6e                  _ads1148_read_register
+                  0x004ee6                  _ads1148_slef_calibration
+                  0x004f10                  _ads1148_set_channle_normal
+                  0x004f82                  _ads1148_set_bcs
+                  0x004fde                  _ads1148_set_vbias
+                  0x004ff6                  _ads1148_set_vref
+                  0x00507a                  _ads1148_set_muxcal
+                  0x0050e0                  _ads1148_set_data_rate
+                  0x00513c                  _ads1148_set_ani_pga
+                  0x00519c                  _ads1148_set_imag_idac
+                  0x0051f8                  _ads1148_set_drdy_mode
+                  0x005256                  _ads1148_set_idac1_pins
+                  0x0052b2                  _ads1148_set_idac2_pins
+                  0x00530e                  _ads1148_set_idac12_pins
+                  0x00537c                  _ads1148_get_all_register
+                  0x005392                  _ads1148_init_obj_0
+                  0x0053ce                  _ads1148_init_obj_1
+                  0x00540a                  _ads1148_set_sync
+                  0x005440                  _ads1148_set_ready
+                  0x005488                  _ads1148_init_chip_regs
+                  0x0054f4                  _ads1148_init_all_obj
+                  0x0054fe                  _ads1148_init_device
+                  0x00550c                  _ads1148_start_convert
+                  0x00551a                  _ads1148_stop_convert
+                  0x005528                  _ads1148_waite_convert
+                  0x005584                  _ads1148_test
+ .text            0x0055d4        0x49c build/default/debug/src/depend/m_string.o
+                  0x0055d4                  _m_mem_set
+                  0x0055fe                  _m_mem_cpy_len
+                  0x005628                  _m_mem_cpy
+                  0x005652                  _m_str_cmp
+                  0x005692                  _m_str_cmp_len
+                  0x0056d8                  _m_math_pow
+                  0x005730                  _m_int_2_str
+                  0x0057b4                  _m_str_head_hide
+                  0x0057f6                  _HEX8
+                  0x00582a                  _m_str_b2h
+                  0x005886                  _m_str_h2b
+                  0x005990                  _m_int8_2_hex
+                  0x0059c6                  _m_int16_2_str_4
+ .text            0x005a70        0x446 build/default/debug/src/app/sample.o
+                  0x005a70                  _samlpe_get_adc_average_value
+                  0x005b72                  _samlpe_read_adc
+                  0x005c0e                  _samlpe_chip0_ch_diff_pr_bridge
+                  0x005c50                  _samlpe_chip0_ch_diff_pr_signal
+                  0x005c94                  _samlpe_chip0_ch_diff_pr_ref0
+                  0x005cca                  _sample_calc_diff_press
+                  0x005cf8                  _samlpe_chip0_ch_pr_bridge
+                  0x005d38                  _samlpe_chip0_ch_pr_signal
+                  0x005d6a                  _samlpe_chip0_ch_pr_ref1
+                  0x005d92                  _samlpe_chip0_ch_temperature_in
+                  0x005dc6                  _samlpe_chip1_ch_expr0_bridge
+                  0x005dcc                  _samlpe_chip1_ch_expr0_signal
+                  0x005dd2                  _samlpe_chip1_ch_ex0_temperature
+                  0x005dd8                  _samlpe_chip1_ch_expr0_ref0
+                  0x005dde                  _samlpe_chip1_ch_expr1_bridge
+                  0x005de4                  _samlpe_chip1_ch_expr1_signal
+                  0x005dea                  _samlpe_chip1_ch_ex1_temperature
+                  0x005df0                  _samlpe_chip1_ch_expr1_ref1
+                  0x005df6                  _sample_in_soc_solar
+                  0x005dfc                  _samlpe_in_soc_battery
+                  0x005e02                  _samlpe_in_soc_ref
+                  0x005e08                  _sample_post_calc
+                  0x005e0e                  _sample_process
+ .text            0x005eb6        0x362 build/default/debug/src/driver/ads1148_hal.o
+                  0x005eb6                  _ads1148_hal_sck_mod_out
+                  0x005ece                  _ads1148_hal_sck_set_hight
+                  0x005eda                  _ads1148_hal_sck_set_low
+                  0x005ee6                  _ads1148_hal_sck_mod_in
+                  0x005ef8                  _ads1148_hal_din_mod_in
+                  0x005f0a                  _ads1148_hal_din_get
+                  0x005f1a                  _ads1148_hal_dout_mod_out
+                  0x005f32                  _ads1148_hal_dout_set_hight
+                  0x005f3e                  _ads1148_hal_dout_set_low
+                  0x005f4a                  _ads1148_hal_dout_mod_in
+                  0x005f5c                  _ads1148_hal_drdy_0_mod_in
+                  0x005f72                  _ads1148_hal_drdy_0_get
+                  0x005f84                  _ads1148_hal_cs_0_mod_out
+                  0x005f9c                  _ads1148_hal_cs_0_mod_in
+                  0x005fae                  _ads1148_hal_cs_0_set_hight
+                  0x005fba                  _ads1148_hal_cs_0_set_low
+                  0x005fcc                  _ads1148_hal_start_0_mod_out
+                  0x005fe4                  _ads1148_hal_start_0_set_hight
+                  0x005ff0                  _ads1148_hal_start_0_set_low
+                  0x005ffc                  _ads1148_hal_start_0_mod_in
+                  0x00600e                  _ads1148_hal_drdy_1_mod_in
+                  0x006020                  _ads1148_hal_drdy_1_get
+                  0x00602e                  _ads1148_hal_cs_1_mod_out
+                  0x006046                  _ads1148_hal_cs_1_set_hight
+                  0x006052                  _ads1148_hal_cs_1_set_low
+                  0x006064                  _ads1148_hal_cs_1_mod_in
+                  0x006076                  _ads1148_hal_start_1_mod_out
+                  0x00608e                  _ads1148_hal_start_1_set_hight
+                  0x00609a                  _ads1148_hal_start_1_set_low
+                  0x0060a6                  _ads1148_hal_start_1_mod_in
+                  0x0060b8                  _ads1148_hal_port_mode_dig_all
+                  0x0060f6                  _ads1148_hal_port_init_chip0
+                  0x006108                  _ads1148_hal_port_deinit_chip0
+                  0x00611a                  _ads1148_hal_port_init_chip1
+                  0x00612c                  _ads1148_hal_port_deinit_chip1
+                  0x00613e                  _ads1148_hal_write_read_byte
+                  0x0061e8                  _ads1148_hal_pwr_off
+                  0x006200                  _ads1148_hal_pwr_on
+ .text            0x006218        0x308 build/default/debug/src/driver/i2c.o
+                  0x006218                  _iic_start
+                  0x00625a                  _iic_stop
+                  0x006296                  _iic_send_ack
+                  0x00632c                  _iic_waite_ack
+                  0x0063c8                  _iic_send_byte
+                  0x006474                  _iic_received_byte
+                  0x00650a                  _iic_received_byte_if_ack
+ .text            0x006520        0x2e2 build/default/debug/mcc_generated_files/rtcc.o
+                  0x006520                  _RTCC_Initialize
+                  0x006578                  _RTCC_TimeReset
+                  0x00658e                  _RTCC_TimeGet
+                  0x006640                  _RTCC_TimeSet
+                  0x0066c4                  _RTCC_BCDTimeGet
+                  0x00675e                  _RTCC_BCDTimeSet
+ .text            0x006802        0x1bc build/default/debug/src/driver/ex_eeprom.o
+                  0x006802                  _at24c02_set_slave_addr
+                  0x00681c                  _at24c02_init
+                  0x00684a                  _at24c02_init_all_chip
+                  0x006868                  _at24c02_read_byte
+                  0x0068ae                  _at24c02_read_n_byte
+                  0x00691a                  _at24c02_write_byte
+                  0x00694c                  _at24c02_write_n_byte
+ .text            0x0069be        0x172 build/default/debug/src/soc/flash.o
+                  0x0069be                  _m_flash_unlock_write
+                  0x0069f2                  _m_flash_read
+                  0x006a72                  _m_flash_erase
+                  0x006a9c                  _m_flash_write
+ .text            0x006b30         0xbe build/default/debug/src/depend/crc16.o
+                  0x006b30                  _crc_sum
+                  0x006b90                  _crc_verify
+                  0x006bc0                  _crc_append
+ .text            0x006bee         0x9e build/default/debug/mcc_generated_files/tmr2.o
+                  0x006bee                  _TMR2_Initialize
+                  0x006c08                  _TMR2_Period16BitSet
+                  0x006c1a                  _TMR2_Period16BitGet
+                  0x006c22                  _TMR2_Counter16BitSet
+                  0x006c34                  _TMR2_Counter16BitGet
+                  0x006c42                  _TMR2_Start
+                  0x006c52                  _TMR2_Stop
+                  0x006c5c                  _TMR2_GetElapsedThenClear
+                  0x006c74                  _TMR2_SoftwareCounterGet
+                  0x006c80                  _TMR2_SoftwareCounterClear
+ .text            0x006c8c         0x9e build/default/debug/mcc_generated_files/tmr1.o
+                  0x006c8c                  _TMR1_Initialize
+                  0x006ca6                  _TMR1_Period16BitSet
+                  0x006cb8                  _TMR1_Period16BitGet
+                  0x006cc0                  _TMR1_Counter16BitSet
+                  0x006cd2                  _TMR1_Counter16BitGet
+                  0x006ce0                  _TMR1_Start
+                  0x006cf0                  _TMR1_Stop
+                  0x006cfa                  _TMR1_GetElapsedThenClear
+                  0x006d12                  _TMR1_SoftwareCounterGet
+                  0x006d1e                  _TMR1_SoftwareCounterClear
+ .text            0x006d2a         0x9c build/default/debug/src/soc/ticker.o
+                  0x006d2a                  _TMR1_CallBack
+                  0x006d3c                  _ticker_ms_set
+                  0x006d4a                  _ticker_ms_get
+                  0x006d54                  _ticker_ms_delay
+                  0x006d94                  _TMR2_CallBack
+                  0x006dae                  _ticker_10ms_per_get
+                  0x006db8                  _ticker_10ms_per_set
+ .text            0x006dc6         0x98 build/default/debug/src/app/main.o
+                  0x006dc6                  _m_system_init
+                  0x006dd8                  _thread_main_pre
+                  0x006df2                  _event_proess
+                  0x006e02                  _main
 
-.dinit            0x006bb0         0x76
- .dinit           0x006bb0         0x76 data_init
+.dinit            0x006e5e         0x76
+ .dinit           0x006e5e         0x76 data_init
 
-.text             0x006c26        0x20e
- .text            0x006c26         0x6e build/default/debug/mcc_generated_files/pin_manager.o
-                  0x006c26                  _PIN_MANAGER_Initialize
- .text            0x006c94         0x60 build/default/debug/src/driver/gpio.o
-                  0x006c94                  _kz_vadd_on
-                  0x006cac                  _kz_vadd_off
-                  0x006cc4                  _back_night_on
-                  0x006cdc                  _back_night_off
- .text            0x006cf4         0x5a build/default/debug/src/driver/key.o
-                  0x006cf4                  _get_key_value
-                  0x006d20                  _key_init
- .text            0x006d4e         0x4a build/default/debug/src/soc/delay.o
-                  0x006d4e                  _delay_us
-                  0x006d76                  _delay_ms
- .text            0x006d98         0x2e build/default/debug/mcc_generated_files/mcc.o
-                  0x006d98                  _SYSTEM_Initialize
-                  0x006daa                  _OSCILLATOR_Initialize
- .text            0x006dc6         0x24 build/default/debug/mcc_generated_files/interrupt_manager.o
-                  0x006dc6                  _INTERRUPT_Initialize
- .text            0x006dea         0x1a build/default/debug/src/soc/m_asm.o
-                  0x006dea                  _flash_unlock_pm
- .text            0x006e04         0x18 build/default/debug/mcc_generated_files/traps.o
-                  0x006e04                  _TRAPS_halt_on_error
- .text            0x006e1c         0x18 build/default/debug/src/app/event.o
-                  0x006e1c                  _send_thread_main_event_key_down
+.text             0x006ed4        0x20e
+ .text            0x006ed4         0x6e build/default/debug/mcc_generated_files/pin_manager.o
+                  0x006ed4                  _PIN_MANAGER_Initialize
+ .text            0x006f42         0x60 build/default/debug/src/driver/gpio.o
+                  0x006f42                  _kz_vadd_on
+                  0x006f5a                  _kz_vadd_off
+                  0x006f72                  _back_night_on
+                  0x006f8a                  _back_night_off
+ .text            0x006fa2         0x5a build/default/debug/src/driver/key.o
+                  0x006fa2                  _get_key_value
+                  0x006fce                  _key_init
+ .text            0x006ffc         0x4a build/default/debug/src/soc/delay.o
+                  0x006ffc                  _delay_us
+                  0x007024                  _delay_ms
+ .text            0x007046         0x2e build/default/debug/mcc_generated_files/mcc.o
+                  0x007046                  _SYSTEM_Initialize
+                  0x007058                  _OSCILLATOR_Initialize
+ .text            0x007074         0x24 build/default/debug/mcc_generated_files/interrupt_manager.o
+                  0x007074                  _INTERRUPT_Initialize
+ .text            0x007098         0x1a build/default/debug/src/soc/m_asm.o
+                  0x007098                  _flash_unlock_pm
+ .text            0x0070b2         0x18 build/default/debug/mcc_generated_files/traps.o
+                  0x0070b2                  _TRAPS_halt_on_error
+ .text            0x0070ca         0x18 build/default/debug/src/app/event.o
+                  0x0070ca                  _send_thread_main_event_key_down

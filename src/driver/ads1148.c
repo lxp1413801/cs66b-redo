@@ -7,7 +7,7 @@
 // #include "../../os_configs/FreeRTOSConfig.h"
 // #include "../../os_kernel/include/FreeRTOS.h"
 // #include "../../os_kernel/include/task.h"  
-#include "../global/globle.h"
+#include "../global/globle.h" 
 
 ads1148Obj_t ads1148Chip0,ads1148Chip1;
 
@@ -20,11 +20,12 @@ uint8_t ads1148_send_cmd(ads1148Obj_t* obj,uint8_t cmd)
 	#else
 	obj->pins_sck_set_hight();
 	#endif
+//delay_us(10);
 	obj->pins_cs_set_low();
     ret=obj->ads1148_write_read_via_spi(cmd);
 	delay_us(10);
 	obj->pins_cs_set_hight();
-	delay_us(2);
+	delay_us(10);
     return ret;
 }
 
@@ -37,7 +38,7 @@ volatile uint16_t ads1148_read_data(ads1148Obj_t* obj)
 	#else
 	obj->pins_sck_set_hight();
 	#endif
-    delay_us(10);
+//    delay_us(10);
 	obj->pins_cs_set_low();
 	obj->ads1148_write_read_via_spi(ADS1148_CMD_RDATA);
     delay_us(5);
@@ -49,7 +50,7 @@ volatile uint16_t ads1148_read_data(ads1148Obj_t* obj)
 	t16 |= t8;
     delay_us(10);
 	obj->pins_cs_set_hight();
-	delay_us(2);
+	delay_us(10);
 	return t16;
 }
 
@@ -63,6 +64,7 @@ void ads1148_write_register(ads1148Obj_t* obj,uint8_t offsetaddr,uint8_t *buf,ui
 	#else
 	obj->pins_sck_set_hight();
 	#endif
+//delay_us(10);
 	obj->pins_cs_set_low();
 	cmd=ADS1148_CMD_WREG;
 	cmd |= (offsetaddr & 0x0f);
@@ -74,7 +76,7 @@ void ads1148_write_register(ads1148Obj_t* obj,uint8_t offsetaddr,uint8_t *buf,ui
 	}
     delay_us(10);
 	obj->pins_cs_set_hight();
-	delay_us(2);
+	delay_us(10);
 }
 
 void ads1148_read_register(ads1148Obj_t* obj,uint8_t offsetaddr,uint8_t *buf,uint8_t num)
@@ -88,6 +90,7 @@ void ads1148_read_register(ads1148Obj_t* obj,uint8_t offsetaddr,uint8_t *buf,uin
 	#else
 	obj->pins_sck_set_hight();
 	#endif
+//delay_us(10);
 	obj->pins_cs_set_low();
 	cmd=ADS1148_CMD_RREG;
 	cmd |= (offsetaddr & 0x0f);
@@ -100,7 +103,7 @@ void ads1148_read_register(ads1148Obj_t* obj,uint8_t offsetaddr,uint8_t *buf,uin
 	//obj->pins_sck_set_hight();
 	delay_us(10);
 	obj->pins_cs_set_hight();
-	delay_us(2);
+	delay_us(10);
 }
 //api
 void ads1148_slef_calibration(ads1148Obj_t* obj)
@@ -110,34 +113,48 @@ void ads1148_slef_calibration(ads1148Obj_t* obj)
 	#else
 	obj->pins_sck_set_hight();
 	#endif
+//delay_us(10);
 	obj->pins_cs_set_low();
 	obj->ads1148_write_read_via_spi(ADS1148_CMD_SYSOCAL);
 	delay_ms(300);//bug
 	obj->pins_cs_set_hight();
-	delay_us(2);
+	delay_us(10);
 }
 
 void ads1148_set_channle_normal(ads1148Obj_t* obj,uint8_t chp,uint8_t chn)
 {
+    uint8_t tmp,i;
 	st_ads1148RegMUX0 mux0Temp;
 
 	//mux0Temp.mux0=obj->ads1148Regs.regs.regMUX0.mux0;
 	ads1148_read_register(obj,ADS1148_REG_ADDR_MUX0,(uint8_t*)&mux0Temp,1);
     mux0Temp.bits.mux_sp=chp;
     mux0Temp.bits.mux_sn=chn;
-    obj->ads1148Regs.regs.regMUX0.mux0=mux0Temp.mux0;
-    ads1148_write_register(obj,ADS1148_REG_ADDR_MUX0,(uint8_t*)&mux0Temp,1);
+    //obj->ads1148Regs.regs.regMUX0.mux0=mux0Temp.mux0;
+    i=5;
+    do{
+        ads1148_write_register(obj,ADS1148_REG_ADDR_MUX0,(uint8_t*)&mux0Temp,1);
+        ads1148_read_register(obj,ADS1148_REG_ADDR_MUX0,(uint8_t*)&tmp,1);
+        if(tmp==mux0Temp.mux0)break;
+    }while(i--);
+    
 
 }
 void ads1148_set_bcs(ads1148Obj_t* obj,uint8_t bcs)
 {
+    uint8_t tmp,i;
 	st_ads1148RegMUX0 mux0Temp;
 	//mux0Temp.mux0=obj->ads1148Regs.regs.regMUX0.mux0;
 	ads1148_read_register(obj,ADS1148_REG_ADDR_MUX0,(uint8_t*)&mux0Temp,1);
     mux0Temp.bits.bcs=bcs;
 
-    obj->ads1148Regs.regs.regMUX0.mux0=mux0Temp.mux0;
-    ads1148_write_register(obj,ADS1148_REG_ADDR_MUX0,(uint8_t*)&mux0Temp,1);
+    //obj->ads1148Regs.regs.regMUX0.mux0=mux0Temp.mux0;
+    i=5;
+    do{
+        ads1148_write_register(obj,ADS1148_REG_ADDR_MUX0,(uint8_t*)&mux0Temp,1);
+        ads1148_read_register(obj,ADS1148_REG_ADDR_MUX0,(uint8_t*)&tmp,1);
+        if(tmp==mux0Temp.mux0)break;
+    }while(i--);
 }
 
 void ads1148_set_vbias(ads1148Obj_t* obj,uint8_t vbias)
@@ -150,6 +167,7 @@ void ads1148_set_vbias(ads1148Obj_t* obj,uint8_t vbias)
 
 void ads1148_set_vref(ads1148Obj_t* obj,uint8_t vref)
 {
+    uint8_t tmp,i;
 	ads1148RegMUX1_t mux1Temp;
 	ads1148_read_register(obj,ADS1148_REG_ADDR_MUX1,(uint8_t*)&mux1Temp,1);
 	if(vref>ADS1148_REFSELT_INREF_CON_REF0)vref=ADS1148_REFSELT_INREF_CON_REF0;
@@ -159,73 +177,131 @@ void ads1148_set_vref(ads1148Obj_t* obj,uint8_t vref)
         mux1Temp.bits.vrefcon=ADS1148_VREFCON_INREF_ON;
     }
 	mux1Temp.bits.refselt=vref;
-    ads1148_write_register(obj,ADS1148_REG_ADDR_MUX1,(uint8_t*)&mux1Temp,1);
+    i=5;
+    do{
+        ads1148_write_register(obj,ADS1148_REG_ADDR_MUX1,(uint8_t*)&mux1Temp,1);
+        ads1148_read_register(obj,ADS1148_REG_ADDR_MUX1,(uint8_t*)&tmp,1);
+        if(tmp==mux1Temp.mux1)break;
+    }while(i--);
 }
 
 void ads1148_set_muxcal(ads1148Obj_t* obj,uint8_t muxcal)
 {
+    
+    uint8_t tmp,i;
 	ads1148RegMUX1_t mux1Temp;
 	ads1148_read_register(obj,ADS1148_REG_ADDR_MUX1,(uint8_t*)&mux1Temp,1);
 	if(muxcal>ADS1148_MUXCAL_DVDD_DVSS_DIV_4)muxcal=ADS1148_MUXCAL_DVDD_DVSS_DIV_4;
 	mux1Temp.bits.muxcal=muxcal;
-    ads1148_write_register(obj,ADS1148_REG_ADDR_MUX1,(uint8_t*)&mux1Temp,1);
+    i=5;
+    do{
+        ads1148_write_register(obj,ADS1148_REG_ADDR_MUX1,(uint8_t*)&mux1Temp,1);
+        
+        ads1148_read_register(obj,ADS1148_REG_ADDR_MUX1,(uint8_t*)&tmp,1);
+        if(tmp== mux1Temp.mux1)break;
+        //i++;
+    }while(i--);
 }
 
 void ads1148_set_data_rate(ads1148Obj_t* obj,uint8_t dr)
 {
+    uint8_t tmp,i;
     ads1148RegSYS0_t sys0Temp;
 	ads1148_read_register(obj,ADS1148_REG_ADDR_SYS0,(uint8_t*)&sys0Temp,1);
 	sys0Temp.bits.dr=dr;
-    ads1148_write_register(obj,ADS1148_REG_ADDR_SYS0,(uint8_t*)&sys0Temp,1);
+    i=5;
+    do{
+        ads1148_write_register(obj,ADS1148_REG_ADDR_SYS0,(uint8_t*)&sys0Temp,1);
+        ads1148_read_register(obj,ADS1148_REG_ADDR_SYS0,(uint8_t*)&tmp,1);
+        if(tmp==sys0Temp.sys0)break;
+    }while(i--);
 }
 
 void ads1148_set_ani_pga(ads1148Obj_t* obj,uint8_t pga)
 {
+    uint8_t tmp,i;
     ads1148RegSYS0_t sys0Temp;
 	ads1148_read_register(obj,ADS1148_REG_ADDR_SYS0,(uint8_t*)&sys0Temp,1);
 	sys0Temp.bits.pga=pga;
-    ads1148_write_register(obj,ADS1148_REG_ADDR_SYS0,(uint8_t*)&sys0Temp,1);
+    
+    i=5;
+    do{
+        ads1148_write_register(obj,ADS1148_REG_ADDR_SYS0,(uint8_t*)&sys0Temp,1);
+        ads1148_read_register(obj,ADS1148_REG_ADDR_SYS0,(uint8_t*)&tmp,1);
+        if(tmp==sys0Temp.sys0)break;
+    }while(i--);
 }
 
 void ads1148_set_imag_idac(ads1148Obj_t* obj,uint8_t imag)
 {
+    uint8_t i,tmp;
     ads1148RegIDAC0_t idac0Temp;
 	ads1148_read_register(obj,ADS1148_REG_ADDR_IDAC0,(uint8_t*)&idac0Temp,1);
 	idac0Temp.bits.imag=imag;
-    ads1148_write_register(obj,ADS1148_REG_ADDR_IDAC0,(uint8_t*)&idac0Temp,1);
+    
+    i=5;
+    do{
+        ads1148_write_register(obj,ADS1148_REG_ADDR_IDAC0,(uint8_t*)&idac0Temp,1);
+        ads1148_read_register(obj,ADS1148_REG_ADDR_IDAC0,(uint8_t*)&tmp,1);
+        if(tmp==idac0Temp.idac0)break;
+    }while(i--);
 }
 
 void ads1148_set_drdy_mode(ads1148Obj_t* obj,uint8_t mode)
 {
+    uint8_t i,tmp;
     ads1148RegIDAC0_t idac0Temp;
 	ads1148_read_register(obj,ADS1148_REG_ADDR_IDAC0,(uint8_t*)&idac0Temp,1);
 	idac0Temp.bits.drdyMode=mode;
-    ads1148_write_register(obj,ADS1148_REG_ADDR_IDAC0,(uint8_t*)&idac0Temp,1);
+    i=5;
+    do{
+        ads1148_write_register(obj,ADS1148_REG_ADDR_IDAC0,(uint8_t*)&idac0Temp,1);
+        ads1148_read_register(obj,ADS1148_REG_ADDR_IDAC0,(uint8_t*)&tmp,1);
+        if(tmp==idac0Temp.idac0)break;
+    }while(i--);
 }
 
 void ads1148_set_idac1_pins(ads1148Obj_t* obj,uint8_t i1dir)
 {
+    uint8_t i,tmp;
     ads1148RegIDAC1_t idac1Temp;
 	ads1148_read_register(obj,ADS1148_REG_ADDR_IDAC1,(uint8_t*)&idac1Temp,1);
 	idac1Temp.bits.i1dir=i1dir;
-    ads1148_write_register(obj,ADS1148_REG_ADDR_IDAC1,(uint8_t*)&idac1Temp,1);
+    i=5;
+    do{
+        ads1148_write_register(obj,ADS1148_REG_ADDR_IDAC1,(uint8_t*)&idac1Temp,1);
+        ads1148_read_register(obj,ADS1148_REG_ADDR_IDAC1,(uint8_t*)&tmp,1);
+        if(tmp==idac1Temp.idac1)break;
+    }while(i--);
 }
 
 void ads1148_set_idac2_pins(ads1148Obj_t* obj,uint8_t i2dir)
 {
+    uint8_t i,tmp;
     ads1148RegIDAC1_t idac1Temp;
 	ads1148_read_register(obj,ADS1148_REG_ADDR_IDAC1,(uint8_t*)&idac1Temp,1);
 	idac1Temp.bits.i2dir=i2dir;
-    ads1148_write_register(obj,ADS1148_REG_ADDR_IDAC1,(uint8_t*)&idac1Temp,1);
+    i=5;
+    do{
+        ads1148_write_register(obj,ADS1148_REG_ADDR_IDAC1,(uint8_t*)&idac1Temp,1);
+        ads1148_read_register(obj,ADS1148_REG_ADDR_IDAC1,(uint8_t*)&tmp,1);
+        if(tmp==idac1Temp.idac1)break;
+    }while(i--);
 }
 
 void ads1148_set_idac12_pins(ads1148Obj_t* obj,uint8_t i1dir,uint8_t i2dir)
 {
+    uint8_t i,tmp;
     ads1148RegIDAC1_t idac1Temp;
 	ads1148_read_register(obj,ADS1148_REG_ADDR_IDAC1,(uint8_t*)&idac1Temp,1);
 	idac1Temp.bits.i2dir=i2dir;
     idac1Temp.bits.i1dir=i1dir;
-    ads1148_write_register(obj,ADS1148_REG_ADDR_IDAC1,(uint8_t*)&idac1Temp,1);
+    i=5;
+    do{
+        ads1148_write_register(obj,ADS1148_REG_ADDR_IDAC1,(uint8_t*)&idac1Temp,1);
+        ads1148_read_register(obj,ADS1148_REG_ADDR_IDAC1,(uint8_t*)&tmp,1);
+        if(tmp==idac1Temp.idac1)break;
+    }while(i--);
 }
 
 void ads1148_get_all_register(ads1148Obj_t* obj)
@@ -286,6 +362,7 @@ void ads1148_set_sync(ads1148Obj_t* obj)
 	#else
 	obj->pins_sck_set_hight();
 	#endif
+//delay_us(10);
 	obj->pins_cs_set_low();
     //ret=obj->ads1148_write_read_via_spi(ADS1148_CMD_RESET);
     //delay_ms(1);
@@ -294,7 +371,26 @@ void ads1148_set_sync(ads1148Obj_t* obj)
     ret=obj->ads1148_write_read_via_spi(ADS1148_CMD_SYNC);
 	delay_ms(1);
 	obj->pins_cs_set_hight();
-	delay_us(2);
+	delay_us(10);
+}
+void ads1148_set_ready(ads1148Obj_t* obj)
+{
+    uint8_t ret;
+	#if ADS1148_SCK_IDLE_STATUE==0
+    obj->pins_sck_set_low();
+	#else
+	obj->pins_sck_set_hight();
+	#endif
+//delay_us(10);
+	obj->pins_cs_set_low();
+    ret=obj->ads1148_write_read_via_spi(ADS1148_CMD_RESET);
+    delay_ms(1);
+    ret=obj->ads1148_write_read_via_spi(ADS1148_CMD_SYNC);
+    delay_us(10);
+    ret=obj->ads1148_write_read_via_spi(ADS1148_CMD_SYNC);
+	delay_us(10);
+	obj->pins_cs_set_hight();
+	delay_us(10);
 }
 const uint8_t ads1148DefaultBuf[]={1,0,0,0,0,0,0,0,0,0x40,0x90,0xff};
 
@@ -304,8 +400,8 @@ void ads1148_init_chip_regs(ads1148Obj_t* obj)
     //float f;
 	obj->pins_init();
 	ads1148_send_cmd(obj,ADS1148_CMD_RESET);
-    delay_ms(10);
-	//delay_ms(1);
+    //delay_ms(10);
+	delay_ms(1);
 	//ads1148_set_bcs(obj,ADS1148_BCS_2uA0);
 	ads1148_set_vref(obj,ADS1148_REFSELT_INREF);
 	//ads1148_set_data_rate(obj,ADS1148_SYS0_DR_2000SPS);
@@ -320,7 +416,7 @@ void ads1148_init_chip_regs(ads1148Obj_t* obj)
     t16=ads1148_read_data(obj);
 	obj->fullSacle=t16;
 	
-	ads1148_set_muxcal(obj,ADS1148_MUXCAL_OFFSET_CALIB);
+	ads1148_set_muxcal(obj,ADS1148_VREFCON_INREF_ON);
 	ads1148_waite_convert(obj);
 	ads1148_waite_convert(obj);
     t16=ads1148_read_data(obj);
@@ -355,17 +451,31 @@ void ads1148_stop_convert(ads1148Obj_t* obj)
 }
 void ads1148_waite_convert(ads1148Obj_t* obj)
 {
+    uint16_t tm=0;
     while(!(obj->pins_drdy_get())){
 		asm("nop");
+        asm("nop");
+        //asm("nop");
+        //asm("nop");
+        tm++;
+        if(tm>300)return;
     }
+    tm=0;
     while(obj->pins_drdy_get())
     {
         asm("nop");
+        asm("nop");
+        tm++;
+        if(tm>300)return;
     };
     asm("nop");
     asm("nop");
     asm("nop");
     asm("nop");
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    asm("nop");    
 }
 void ads1148_test(void)
 {
