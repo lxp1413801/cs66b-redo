@@ -41,9 +41,12 @@ extern "C"{
 	//密码验证界面
 	#define MENU_PASSWORD						0x10
 	#define	sub_MENU_PASSWORD					0x00
+	
 	//设置密度	psd=36
 	#define MENU_SET_DENSITY					0x20
 	#define	sub_MENU_SET_DENSITY				0x00
+	#define sub_MENU_SET_SEL_MATTER				0x00
+	#define sub_MENU_SET_DENSITY_CUSTOM			0x01
 	//设置尺寸 psd=66
 	#define MENU_SET_POSE_SIZE					0x30
 	#define sub_MENU_SET_POSE					0x00

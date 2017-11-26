@@ -65,12 +65,18 @@ extern "C"{
 	}st_ilpScaleDef;
 	//定点数固定放�?000�?
 	typedef struct{
+		uint8_t name[6];
+		uint16_t density;
+		
+	}matterDsc_t;
+	
+	typedef struct{
 		uint32_t 	id;
 		em_posture	pos;							//立式或者卧�?
 		uint8_t		maxValueForlevelBar;			//状态条显示满时对应的高度�?
 													//(95%或�?00%)
-		uint16_t	density;						//密度
-		
+		uint16_t	matterIndex;					//密度
+		matterDsc_t matterTab[6];
 		int32_t		h;								//�?
 		uint32_t	d;								//直径
 		

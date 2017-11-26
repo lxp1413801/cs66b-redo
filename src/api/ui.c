@@ -292,7 +292,26 @@ void ui_disp_adj_xfloat_pt(uint8_t* str,st_float32_m* xpf,uint8_t loc)
 	lcd_disp_refresh();  
 	*/	
 }
-
+void ui_disp_adj_xfixed_static(uint8_t* str,uint16_t x,uint8_t loc)
+{
+    uint8_t buf[10];
+	ui_disp_clear_num_dp();
+	if(x>9999)x=9999;
+	m_mem_cpy(buf,str);
+	m_int16_2_str_4(buf+4,x);
+	
+	__x_arrange_str(buf,8);
+	/*
+	if(loc>3)loc=3;
+	loc=3-loc;
+	if(!fi_lcd_twinkle_lock()){
+		if(!fi_twinkle())buf[4+loc]=' ';
+	}
+	*/
+	lcd_show_dp(4,true);
+	lcd_show_string(buf); 
+	lcd_disp_refresh();
+}
 void ui_disp_adj_xfixed_pt(uint8_t* str,uint16_t x,uint8_t loc)
 {
     uint8_t buf[10];
@@ -509,11 +528,51 @@ void ui_disp_menu_home(void)
 		// default:break;
 	// }
 }
+void ui_disp_menu_density_sel_matter(void)
+{
+    uint16_t t16;
+	uint8_t str[5]={"    "};
+    lcd_clear_all();
+    if(adjValue<5){
+       // str[3]='1'+(uint8_t)(*((uint16_t*)(&adjValue)));
+        str[3]='1'+(uint8_t)adjValue;
+        
+        t16=stSysData.matterTab[adjValue].density;
+        ui_disp_adj_xfixed_static(str,t16,adjLocation);
+    }else  if(adjValue==5){
+        str[3]='p';
+        //lcd_clear_all();
+        t16=stSysData.matterTab[adjValue].density;
+        ui_disp_adj_xfixed_static(str,t16,adjLocation);  
+        //ui_disp_adj_xfloat_pt((uint8_t*)"   p",&m_floatAdj,adjLocation);
+    }
+    lcd_show_string_ex((uint8_t*)(stSysData.matterTab[adjValue].name));
+	lcd_disp_refresh(); 
+}
+
+void ui_disp_menu_density_sel_custom(void)
+{
+	//uint8_t str[5]={0};
+	//str[3]='1'+(uint8_t)(*((uint16_t*)(&adjValue)));
+	lcd_clear_all();
+	//ui_disp_adj_xfixed_static(str,&m_floatAdj,adjLocation);
+    //ui_disp_adj_xfloat_pt((uint8_t*)"   p",&m_floatAdj,adjLocation);
+	ui_disp_adj_xfixed_pt_dp((uint8_t*)"   p",adjValue,adjLocation,0);
+	lcd_disp_refresh(); 
+}
+
 void ui_disp_menu_density_adj(void)
 {
+	/*
 	lcd_clear_all();
 	lcd_disp_logo(true);
-	ui_disp_adj_xfloat_pt((uint8_t*)"   p",&m_floatAdj,adjLocation);		
+	ui_disp_adj_xfloat_pt((uint8_t*)"   p",&m_floatAdj,adjLocation);
+	*/
+	switch(subMenu){
+		case sub_MENU_SET_SEL_MATTER:ui_disp_menu_density_sel_matter();break;
+		case sub_MENU_SET_DENSITY_CUSTOM:ui_disp_menu_density_sel_custom();break;
+		
+	}
 }
 
 void ui_disp_menu_pos_adj(void)

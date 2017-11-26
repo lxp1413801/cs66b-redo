@@ -6,6 +6,8 @@
 
 #define LONG_PRESS_TIME		2000
 
+bool paramChangedFlag=false;
+
 volatile uint16_t passWord=0x00;
 volatile uint8_t menu=MENU_HOME;
 volatile uint8_t subMenu=0;
@@ -114,14 +116,21 @@ void __enter_menu_password(void)
 
 void __enter_menu_set_density(void)
 {
+	uint16_t t16;
 	int32_t t32;
 	menu=MENU_SET_DENSITY;
 	subMenu=sub_MENU_SET_DENSITY;
 	//sysDataDef_t* fps=(sysDataDef_t*)SYSTEM_DATA_ADDR;
-	sysDataDef_t* fps= &stSysData;
-	t32=fps->density;
-	t32=__int32_2_mflot32(t32);
-	m_floatAdj.t32=t32;
+	//sysDataDef_t* fps= &stSysData;
+	if(t16>5)t16=5;
+
+	t16=stSysData.matterIndex;
+	adjValue=0x00ul;
+	*((uint16_t*)(&adjValue))=(uint16_t)(t16);
+	
+	//t32=stSysData.matterTab[t16].density;
+	//t32=__int32_2_mflot32(t32);
+	//m_floatAdj.t32=t32;
 	adjLocation=0;
 }
 //
@@ -390,7 +399,12 @@ void __down_pose_size(void)
 	default:break;
 	}
 }
-
+void __down_density(void)
+{
+	if(subMenu==sub_MENU_SET_DENSITY_CUSTOM){
+		key_shift_loc((uint8_t*)(&adjLocation),0,3);
+	}
+}
 void __down_dpr_calib(void)
 {
 	if(calibCol){
@@ -443,7 +457,7 @@ void key_process_down(void)
 		case MENU_HOME:__down_home_adj();break;
 		#endif
 		case MENU_PASSWORD:key_shift_loc((uint8_t*)(&adjLocation),0,3);break;
-		case MENU_SET_DENSITY:key_shift_loc((uint8_t*)(&adjLocation),0,4);break;
+		case MENU_SET_DENSITY:__down_density();break;
 		case MENU_SET_POSE_SIZE:__down_pose_size();break;
 		case MENU_SET_BASE_ZERO:key_shift_loc((uint8_t*)(&adjLocation),0,5);break;
 		case MENU_DIFF_CALIB:__down_dpr_calib();break;
@@ -481,9 +495,29 @@ void __up_psw_adj(void)
 	key_adj_value_fixed((uint16_t*)(&passWord),adjLocation);
 }
 
+void __up_density_adj_sel_matter(void)
+{
+	uint32_t t32;
+	uint16_t *p16;
+	//*p16=(uint16_t*)(&adjValue);
+	//(*p16)++;
+	//if(*p16>5)*p16=0;
+	adjValue++;
+    if(adjValue>5)adjValue=0;
+	t32=stSysData.matterTab[*p16].density;
+	t32=__int32_2_mflot32(t32);
+	m_floatAdj.t32=t32;	
+	adjLocation=0;
+}
 void __up_density_adj(void)
 {
-	key_adj_value_float(&m_floatAdj,adjLocation);
+	//key_adj_value_float(&m_floatAdj,adjLocation);
+	
+	switch(subMenu){
+		case sub_MENU_SET_SEL_MATTER:__up_density_adj_sel_matter();break;
+		case sub_MENU_SET_DENSITY_CUSTOM:key_adj_value_fixed(&adjValue,adjLocation);break;
+		default:break;
+	}
 }
 
 void __up_pose_size_adj(void)
@@ -692,6 +726,19 @@ uint8_t __sys_data_save_write_flash(void)
 }
 
 //============================================================================
+void __set_short_density(void)
+{
+	int32_t t32;
+	if(subMenu==sub_MENU_SET_SEL_MATTER){
+		if(adjValue==0x05){
+			adjValue=stSysData.matterTab[5].density;
+			adjLocation=0;
+			subMenu=sub_MENU_SET_DENSITY_CUSTOM;
+		}
+	}else{
+		
+	}
+}
 void __set_short_pose_size(bool gohome)
 {
 	uint8_t* p;
@@ -951,10 +998,24 @@ void __set_short_epr_ilp_scale(bool gohome)
 void __set_long_density(void)
 {
 	int32_t t32;
+    /*
     t32=__mflot32_2_int32(m_floatAdj.t32);	
 	stSysData.density=t32;    
     __sys_data_save_write_flash();
     __exit_menu_to_home_unsave();
+     */
+	 
+	if(subMenu==sub_MENU_SET_SEL_MATTER){
+		//if(adjValue <0x05){
+		stSysData.matterIndex=adjValue;
+		__sys_data_save_write_flash();
+		__exit_menu_to_home_unsave();		
+	}else{
+		stSysData.matterTab[5].density=adjValue;
+		stSysData.matterIndex=5;
+		__sys_data_save_write_flash();
+		__exit_menu_to_home_unsave();			
+	}
 }
 
 void __set_long_base_zero(void)
@@ -1027,7 +1088,7 @@ void key_process_set(void)
 	switch(menu){
 		case MENU_HOME:             	__enter_menu_password();	break;
 		case MENU_PASSWORD:				break;
-		case MENU_SET_DENSITY:			break;
+		case MENU_SET_DENSITY:			__set_short_density();		break;
 		case MENU_SET_POSE_SIZE:		__set_short_pose_size(unGoHome);	break;
 		case MENU_SET_BASE_ZERO:		break;
 		case MENU_DIFF_CALIB:			__set_short_diff_calib(unGoHome);	break;

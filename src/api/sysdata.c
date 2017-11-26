@@ -114,8 +114,8 @@ const sysDataDef_t defultSystemData={
 		0,//em_posture	pos;							//立式或者卧式
 		95,//uint8_t		maxValueForlevelBar;			//状态条显示满时对应的高度值,
 													//(95%或者100%)
-		1000,//uint16_t	density;						//密度
-		
+		0,//uint16_t	density;						//密度
+		{{"LO2",1140},{"LN2",810},{"LAR",1402},{"CO2",1020},{"LNG",460},{"CON",1000}},
 		15000,//int32_t		h;								//高
 		3000,//uint32_t	d;								//直径
 		
@@ -149,6 +149,13 @@ const sysDataDef_t defultSystemData={
 		//
 		0,//uint16_t	crc;
 };
+uint16_t data_sys_get_density(void)
+{
+    uint16_t t16,density;
+    t16=stSysData.matterIndex;
+    density=stSysData.matterTab[t16].density;
+    return density;
+}
 uint32_t data_sys_cal_v1(sysDataDef_t* stp)
 {
     float r,h,f;
@@ -532,10 +539,12 @@ int32_t cal_diff_hight_to_vol_v(int32_t h)
 //折算为，高度，P=ρgh<-->h=p/ρg;单位为P(KPa),ρ(N/m3),(g=9.8)
 int32_t cal_diff_p_to_h(int32_t p)
 {
+    uint16_t density;
 	float f1,f2;
 	//t32=xin->pValue;
 	f1=(float)(p);
-	f2=(float)(stSysData.density);
+    density=data_sys_get_density();
+	f2=(float)(density);
     f1=f1/(f2*9.8f);
     f1*=1000;
 	rtHight=(int32_t)f1;	
@@ -544,9 +553,11 @@ int32_t cal_diff_p_to_h(int32_t p)
 
 int32_t cal_diff_vol_to_t(int32_t v)
 {
+    uint16_t density;
 	float f1,f2;
 	f1=(float)(v);
-	f2=(float)(stSysData.density);
+    density=data_sys_get_density();
+	f2=(float)(density);
 	f1=f1*f2/1000;
 	rtWeight=(int32_t)f1;
 	return rtWeight;
