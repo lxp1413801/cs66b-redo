@@ -24,7 +24,47 @@ volatile int16_t rtAdcValueTemperatureEx1A;
 volatile int16_t rtAdcValueTemperatureEx1B;
 //volatile int16_t rtAdcValueChip1Ref0;
 //volatile int16_t rtAdcValueChip1Ref1;
+int16_t abs_diff(uint16_t a,uint16_t b)
+{
+	if(a>b){
+		return(a-b);
+	}else{
+		return (b-a);
+	}
+}
+int16_t samlpe_get_adc_average_value_ex(volatile int16_t* buf,uint8_t len)
+{
+    uint8_t maxIndex[2];
+    uint8_t i,j;
+    int32_t t32,ret;
+    int16_t max[2];
+	int16_t absdiff;
+    for(j=0;j<8;j++){
+        
 
+		t32=0;
+		for(i=0;i<len;i++){
+			t32+=buf[i];
+		}
+		t32/=i;
+		
+		ret=t32;
+		max[0]=0;max[1]=1;
+		maxIndex[0]=0;maxIndex[1]=0;		
+		for(i=0;i<len;i++){
+			absdiff=abs_diff((uint16_t)t32,buf[i]);
+			if(absdiff>max[1]){
+				max[0]=max[1];maxIndex[0]=maxIndex[1];
+				max[1]=absdiff;maxIndex[1]=i;
+			}else if(absdiff>max[0]){
+				max[0]=absdiff;maxIndex[0]=i;
+			}
+		}
+		buf[maxIndex[0]]=(uint16_t)ret;
+		buf[maxIndex[1]]=(uint16_t)ret;
+    }
+    return (int16_t)ret;    
+}
 int16_t samlpe_get_adc_average_value(volatile int16_t* buf,uint8_t len)
 {
     uint8_t maxIndex,minIndex;
