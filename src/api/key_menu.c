@@ -14,6 +14,7 @@ volatile uint8_t subMenu=0;
 //volatile uint8_t keyValue=KEY_VALUE_NONE;
 volatile uint8_t adjLocation=0;
 volatile int32_t adjValue=0x00;
+volatile int32_t tmpAdjValue=0x00;
 //add lxp
 st_float32_m m_floatAdj={0};
 volatile uint8_t* pAdjValue;
@@ -222,6 +223,7 @@ void __enter_menu_calib_press_diff(uint8_t row,uint8_t col)
         t32=__int32_2_mflot32(t32);
         m_floatAdj.t32=t32;        
     }
+	paramChangedFlag=false;
 	adjLocation=0;
 }
 
@@ -555,7 +557,9 @@ void __up_diff_calib_adj(void)
 		*(uint8_t*)(&adjValue)=t8;
 	}else{
 		key_adj_value_float(&m_floatAdj,adjLocation);
+		paramChangedFlag=true;
 	}
+	
 }
 
 void __up_pr_calib_adj(void)
@@ -731,11 +735,12 @@ void __set_short_density(void)
 {
 	int32_t t32;
 	if(subMenu==sub_MENU_SET_SEL_MATTER){
-		if(adjValue==0x05){
-			adjValue=stSysData.matterTab[5].density;
+		//if(adjValue==0x05){
+			tmpAdjValue=adjValue;
+			adjValue=stSysData.matterTab[tmpAdjValue].density;
 			adjLocation=0;
 			subMenu=sub_MENU_SET_DENSITY_CUSTOM;
-		}
+		//}
 	}else{
 		
 	}
@@ -790,7 +795,7 @@ void __set_short_diff_calib(bool gohome)
     }else{
         t32=__mflot32_2_int32(m_floatAdj.t32);
         pra=calibTab0.calibRow[calibRow].calibPoint[calibCol-1].value;
-        if(pra!=t32){
+        if(pra!=t32 || paramChangedFlag){
             calibTab0.calibRow[calibRow].calibPoint[calibCol-1].value=t32;
             calibTab0.calibRow[calibRow].calibPoint[calibCol-1].sigAdcValue=x_prDiffData.sigAdcValue;
             calibTab0.calibRow[calibRow].calibPoint[calibCol-1].tAdcValue=x_prDiffData.tAdcValue;
@@ -806,6 +811,7 @@ void __set_short_diff_calib(bool gohome)
         if(!m_str_cmp_len((uint8_t*)&calibTab0,globleBuffer,t16)){
             __nop();
         }
+		 paramChangedFlag=0;
     }
 	if(gohome){__exit_menu_to_home_unsave(); return;}
 	calibCol++;
@@ -1012,8 +1018,8 @@ void __set_long_density(void)
 		__sys_data_save_write_flash();
 		__exit_menu_to_home_unsave();		
 	}else{
-		stSysData.matterTab[5].density=adjValue;
-		stSysData.matterIndex=5;
+		stSysData.matterTab[tmpAdjValue].density=adjValue;
+		stSysData.matterIndex=(uint16_t)tmpAdjValue;
 		__sys_data_save_write_flash();
 		__exit_menu_to_home_unsave();			
 	}

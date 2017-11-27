@@ -152,7 +152,10 @@ extern "C"{
 		iicDeviceObj_t* eep24c02;
 	}calibDataObj_t;
 	
-	extern calibDataObj_t diffPrCalibDataObj,prPrCalibDataObj;
+	extern calibDataObj_t diffPrCalibDataObj;
+	extern calibDataObj_t prPrCalibDataObj;
+	extern calibDataObj_t ex0PrCalibDataObj;
+	extern calibDataObj_t ex1PrCalibDataObj;	
 	
 	extern volatile int16_t 	adc_inPt100;
 	
@@ -174,17 +177,23 @@ extern "C"{
 	extern volatile int32_t	rtWeight;
 	extern volatile uint8_t    rtLevel;
 	extern volatile int32_t    rtPressure;
-    extern volatile int32_t    rtTemperatureEx;
-	
+    //extern volatile int32_t    rtTemperatureEx;
+	extern volatile int32_t    rtTemperatureIn;
+    
+    extern volatile int32_t    rtTemperatureEx0;
+    extern volatile int32_t    rtTemperatureEx1;	
+
+	extern volatile int32_t	rtEx0Pressure;
+	extern volatile int32_t	rtEx1Pressure;	
 	//
 	extern __xDataStruct_t	x_prDiffData;
 	extern __xDataStruct_t	x_prData;
+	extern __xDataStruct_t	x_ex0prData;
+	extern __xDataStruct_t	x_ex1prData;	
 	//fk 
     extern uint32_t data_sys_cal_v1(sysDataDef_t* stp);
     extern uint32_t data_sys_cal_v2(sysDataDef_t* stp);
 	extern void calib_data_put_piont_tab(xCalibTab_t* ptab,xCalibPoint_t* pp,uint8_t row,uint8_t col);
-
-
     //apl
 	extern int32_t calculate_and_compensate(xCalibTab_t* cTab,__xDataStruct_t* xin);
 	extern uint8_t cal_diff_press(void);
@@ -197,6 +206,8 @@ extern "C"{
 	extern void cal_additional_pressute(uint8_t index);
 
 	extern void data_init_all(void);
+	
+	extern float calc_res_2_temp(float r);
 	
 #ifdef __cplusplus
 }

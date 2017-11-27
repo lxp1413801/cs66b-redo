@@ -13,9 +13,13 @@ xCalibTab_t calibTab3={0};
 
 calibDataObj_t diffPrCalibDataObj;
 calibDataObj_t prPrCalibDataObj;
+calibDataObj_t ex0PrCalibDataObj;
+calibDataObj_t ex1PrCalibDataObj;
 
 __xDataStruct_t	x_prDiffData;
 __xDataStruct_t	x_prData;
+__xDataStruct_t	x_ex0prData;
+__xDataStruct_t	x_ex1prData;
 
 volatile int16_t	adc_diffPr;
 volatile int16_t	adc_bridgeTemp;	
@@ -37,9 +41,13 @@ volatile int32_t	rtVolume;
 volatile uint8_t    rtLevel;
 volatile int32_t    rtTemperatureIn=0;
 volatile int32_t    rtPressure=0;
-volatile int32_t    rtTemperatureEx=0;
 
-volatile int32_t	rtExPressure[2];
+volatile int32_t    rtTemperatureEx0=0;
+volatile int32_t    rtTemperatureEx1=0;
+
+//volatile int32_t	rtExPressure[2];
+volatile int32_t	rtEx0Pressure;
+volatile int32_t	rtEx1Pressure;
 //
 
 volatile st_deviceOpMode dwm=TEST_MODE;
@@ -115,7 +123,7 @@ const sysDataDef_t defultSystemData={
 		95,//uint8_t		maxValueForlevelBar;			//状态条显示满时对应的高度值,
 													//(95%或者100%)
 		5,//uint16_t	density;						//密度
-		{{"LO2",1140},{"LN2",810},{"LAR",1402},{"CO2",1020},{"LNG",460},{"CON",1000}},
+		{{"LO2",1140},{"LN2",810},{"LAR",1402},{"CO2",1020},{"LNG",460},{"Oth",1000}},
 		15000,//int32_t		h;								//高
 		3000,//uint32_t	d;								//直径
 		
@@ -149,6 +157,7 @@ const sysDataDef_t defultSystemData={
 		//
 		0,//uint16_t	crc;
 };
+
 uint16_t data_sys_get_density(void)
 {
     uint16_t t16,density;
@@ -156,6 +165,7 @@ uint16_t data_sys_get_density(void)
     density=stSysData.matterTab[t16].density;
     return density;
 }
+
 uint32_t data_sys_cal_v1(sysDataDef_t* stp)
 {
     float r,h,f;
@@ -249,64 +259,7 @@ void calib_data_set_default(xCalibTab_t *ctab,uint8_t rowCount)
     }
     //crc_append((uint8_t*)(&diff_prCalibTabDef),sizeof(diff_prCalibTabDef)-2);
 }
-/*
 
-uint8_t  calib_data_init_diff_pr(void)
-{
-	uint8_t ret=0;
-	uint16_t t16;
-	uint8_t* buf=(uint8_t*)(&calibTab0);
-	iicDeviceObj_t* eprObj;
-	eprObj= &at24c02Obj0;
-	at24c02_init(eprObj,0xa8);
-	t16=sizeof(calibTab0);
-	at24c02_read_n_byte(eprObj,0,buf,t16);
-	ret=crc_verify(buf,t16);
-	if(!ret){
-		//calib_data_set_default_diff_pr();
-		calib_data_set_default(&calibTab1,3);
-		crc_append(buf,t16-2);
-		at24c02_write_n_byte(eprObj,0,buf,t16);
-		at24c02_read_n_byte(eprObj,0,buf,t16);
-		ret=crc_verify(buf,t16);		
-        if(!ret){
-            //calib_data_set_default_diff_pr();
-			calib_data_set_default(&calibTab1,3);
-            crc_append(buf,t16-2);
-           }
-	}
-	return ret;
-}
-//压力标定数据初始化
-uint8_t  calib_data_init_pr(void)
-{
-	uint8_t ret=0;
-	uint16_t t16;
-	uint8_t* buf=(uint8_t*)(&calibTab1);
-	iicDeviceObj_t* eprObj; 
-	//p_prEepromObj=&at24c02Ch0;
-    eprObj=&at24c02Obj1;
-	at24c02_init(eprObj,0xaa);
-	t16=sizeof(xCalibTab_t);
-	at24c02_read_n_byte(eprObj,0,buf,t16);
-	ret=crc_verify(buf,t16);
-	if(!ret){
-		//calib_data_set_default_pr();
-		calib_data_set_default(&calibTab1,1);
-		crc_append(buf,t16-2);
-		at24c02_write_n_byte(eprObj,0,buf,t16);
-		at24c02_read_n_byte(eprObj,0,buf,t16);
-		ret=crc_verify(buf,t16);
-        if(!ret){
-            //calib_data_set_default_pr();
-			calib_data_set_default(&calibTab1,1);
-            crc_append(buf,t16-2);
-			//todo
-        }
-	}
-	return ret;	
-}
-*/
 //一阶插值p-vin 压力--电压
 //输入xin:	[pvalue(未知),pAdcvalue(已知),tAdcValue(实际温度)];
 //返回xin:	[pvalue(已知),pAdcvalue(已知),tAdcValue(实际温度)];并且返回的pvalue无实际意义;
@@ -438,9 +391,19 @@ void data_init_all(void)
 	
     prPrCalibDataObj.calibTab=&calibTab1;
     prPrCalibDataObj.eep24c02=&at24c02Obj1;
+	
+	ex0PrCalibDataObj.calibTab=&calibTab2;
+	ex0PrCalibDataObj.eep24c02=&at24c02Obj2;
 
+	ex1PrCalibDataObj.calibTab=&calibTab3;
+	ex1PrCalibDataObj.eep24c02=&at24c02Obj3;
+	
     calib_data_obj_init(&diffPrCalibDataObj,3);
     calib_data_obj_init(&prPrCalibDataObj,1);
+	
+	calib_data_obj_init(&ex0PrCalibDataObj,1);
+	calib_data_obj_init(&ex1PrCalibDataObj,1);
+	
     __nop();
     __nop();
 }
@@ -566,33 +529,7 @@ int32_t cal_diff_vol_to_t(int32_t v)
 //计算差压
 //计算结果直接用xin返回
 __xDataStruct_t tmpx[3];
-uint8_t cal_diff_press()
-{
-	__xDataStruct_t* xin= &x_prDiffData;
-	m_mem_set((uint8_t*)tmpx,0,sizeof(tmpx));
-	uint8_t i=0,j=0;
-	xCalibRow_t* tabrow;
-    j=0;
-    for(i=0;i<calibTab0.rowCount;i++){
-        tabrow = &(calibTab0.calibRow[i]);
-		if(tabrow->pCount<2)continue;
-        m_interp1_cal_p_s(tabrow,xin,&tmpx[j++]);
-    }
-	//温补
-    m_interp1_cal_p_t(&tmpx[0],xin,j);
 
-	rtDiffPressure=xin->value;
-	cal_diff_p_to_h(rtDiffPressure);
-    rtLevel=cal_diff_hight_level();
-    if(stSysData.pos==HOTIZONTAL){
-        rtVolume=cal_diff_hight_to_vol_h(rtHight);
-    }else{
-		rtVolume=cal_diff_hight_to_vol_v(rtHight);
-	}
-
-	cal_diff_vol_to_t(rtVolume);
-	return i;
-}
 
 int32_t calculate_and_compensate(xCalibTab_t* cTab,__xDataStruct_t* xin)
 {
@@ -609,19 +546,6 @@ int32_t calculate_and_compensate(xCalibTab_t* cTab,__xDataStruct_t* xin)
 	return xin->value;
 }
 
-uint8_t cal_press(void)
-{
-	uint8_t ret;
-	__xDataStruct_t  xin={0};
-	xin.value=0;
-    xin.sigAdcValue=adc_pressure;
-    xin.tAdcValue=0;
-	xCalibRow_t* tabrow;
-	tabrow= &calibTab1.calibRow[0];
-	ret=m_interp1_cal_p_s(tabrow,&xin,NULL);
-	rtPressure=xin.value;
-	return ret;
-}
 
 // -----------------------------------------------------
 // 计算温度
@@ -631,107 +555,24 @@ uint8_t cal_press(void)
 // t0=ax-b;
 // t1=t0+c*t0^2;
 // -----------------------------------------------------
-#define __kT (1.484e-4f)
-void cal_pt100_temperature_in(void)
+
+
+float calc_res_2_temp(float r)
 {
-	/*
-    float f1,f2;
-    f1=(float)(adc_inPt100);
-
-    f2=(float)(fpSysData->TempZero);
-    f1=f1-f2;    
-	
-    f2=(float)(fpSysData->TempLine);
-    f2/=1000;
-    f1=f1*f2;
-
-    f1/=1000;
-    f2=__kT;
-    f2=f2*f1*f1;
-    f1=f1+f2;
-    
-    f1=f1*1000;
-    rtTemperatureIn= (int32_t)f1;
-	*/
-	rtTemperatureIn= 0;
+	float x;
+	x=(r-100)/3.9083e-1;
+	//y= (-5.775e-5 * x * x) + (3.9083e-1 * x) + 100 - r;
+	//http://blog.csdn.net/xiaowei_cqu/article/details/8585703/
+    x= x - ((-5.775e-5 * x * x ) + (3.9083e-1 * x) + 100 - r)/(2* -5.775e-5 * x +  3.9083e-1);
+    return x;
 }
 
-/*
-int32_t __cal_x_inter1_2(st_exCalibDef* pl,int32_t adc)
-{
-    float y,x;
-    //sysDataDef_t* stp=&stSysData;
-    y=(float)(pl->exTempCalib[1].value-pl->exTempCalib[0].value);
-    x=(float)(pl->exTempCalib[1].adcValue-pl->exTempCalib[0].adcValue);
-    if(x!=0){
-        y=y/x;
-        x=(float)adc-(float)stp->exTempCalib[0].adcValue;
-        y=y*x;
-        y=y+(float)(stp->exTempCalib[0].value);
-    }else{
-        y=(float)(stp->exTempCalib[0].value);
-    }
-    if(y>300000)y=300000;
-	rtTemperatureEx= (int32_t)y;
-}
-*/
 
-void cal_pt100_temperature_ex(void)
-{
-    float y,x;
-    sysDataDef_t* stp=&stSysData;
-    y=(float)(stp->exTempCalib[1].value-stp->exTempCalib[0].value);
-    x=(float)(stp->exTempCalib[1].adcValue-stp->exTempCalib[0].adcValue);
-    if(x!=0){
-        y=y/x;
-        x=(float)adc_exPt100-(float)stp->exTempCalib[0].adcValue;
-        y=y*x;
-        y=y+(float)(stp->exTempCalib[0].value);
-    }else{
-        y=(float)(stp->exTempCalib[0].value);
-    }
-    if(y>300000)y=300000;
-	rtTemperatureEx= (int32_t)y;
-}
-
-void cal_additional_pressute(uint8_t index)
-{
-	/*
-    if(index>1)return;
-	float f1,f2;
-	f1=(float)adc_iPrEx[index];
-    f2=(float)(fpSysData->ex_pressZero[index]);
-    f1=f1-f2;   
-    
-    f2=(float)(fpSysData->ex_pressLine[index]);
-    f2/=1000;
-    
-    f1=f1*f2;
-    rtExPressure[index]=(int32_t)f1;
-	*/
-	rtExPressure[index]=0;
-}
 
 
 void cal_battery_voltage(void)
 {
 	
-}
-
-uint32_t cal_pt100_temperature(int16_t x,uint32_t l,uint32_t b)
-{
-	int32_t t32,ret;
-	t32=(int32_t)l*x-b;
-	//三个小数位
-	if(t32>200000)t32=200000;
-	if(t32<-200000)t32=-200000;
-	ret=t32;
-	t32/=10;
-	t32=t32*t32/10000;
-	t32*=1484;
-	t32/=10000;
-	ret=ret+t32;
-	return ret;
 }
 
 

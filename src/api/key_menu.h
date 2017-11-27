@@ -121,6 +121,7 @@ extern "C"{
 	extern volatile uint16_t passWord;
 	extern volatile uint8_t adjLocation;
     extern volatile int32_t adjValue;
+	extern  volatile int32_t tmpAdjValue;
 	extern  st_float32_m m_floatAdj;
 	//
 	extern volatile uint8_t  calibRow;

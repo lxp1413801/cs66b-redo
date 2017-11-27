@@ -80,8 +80,8 @@ int main(void)
 
 	//thread_main_create();
 	//vTaskStartScheduler();
+
     thread_main_pre();
-    
     ads1148_init_all_obj();
 	ads1148_init_device();   
     
