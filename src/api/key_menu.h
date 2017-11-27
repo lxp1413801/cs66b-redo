@@ -113,7 +113,7 @@ extern "C"{
 			uint8_t downLineMenu:4;
 		}stru;
 	}st_homeSubMenu;
-    extern volatile bool blackEn;
+
 	//variable
 	extern volatile uint8_t menu;
     extern volatile uint8_t subMenu;

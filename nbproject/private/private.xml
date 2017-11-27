@@ -18,15 +18,18 @@
             <file>file:/F:/2017/cs66-b/cs66b.X/src/app/sample.h</file>
         </group>
         <group name="cs600_test">
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/soc/delay.c</file>
             <file>file:/F:/2017/cs66-b/cs66b.X/src/driver/ads1148.c</file>
+            <file>file:/F:/2017/cs66-b/cs66b.X/src/soc/delay.c</file>
             <file>file:/F:/2017/cs66-b/cs66b.X/src/api/sysdata.c</file>
             <file>file:/F:/2017/cs66-b/cs66b.X/src/app/main.c</file>
+            <file>file:/F:/2017/cs66-b/cs66b.X/src/driver/gpio.h</file>
             <file>file:/F:/2017/cs66-b/cs66b.X/src/driver/ads1148_hal.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/driver/ads1148.h</file>
             <file>file:/F:/2017/cs66-b/cs66b.X/src/app/sample.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/soc/ticker.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/driver/ads1148_hal.h</file>
+            <file>file:/F:/2017/cs66-b/cs66b.X/src/driver/gpio.c</file>
+            <file>file:/F:/2017/cs66-b/cs66b.X/src/depend/m_string.c</file>
+            <file>file:/F:/2017/cs66-b/cs66b.X/src/api/key_menu.c</file>
+            <file>file:/F:/2017/cs66-b/cs66b.X/src/driver/lcd.c</file>
+            <file>file:/F:/2017/cs66-b/cs66b.X/src/api/key_menu.h</file>
         </group>
     </open-files>
 </project-private>

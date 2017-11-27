@@ -10,6 +10,9 @@
 	extern void kz_vadd_off(void);
 	extern void back_night_on(void);
 	extern void back_night_off(void);
+	
+	extern volatile bool lcdBlackNightOn;
+	extern volatile bool kzAvddOn;
 #ifdef __cplusplus
 	}
 #endif

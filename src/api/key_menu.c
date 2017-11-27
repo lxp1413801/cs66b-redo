@@ -20,7 +20,7 @@ volatile uint8_t* pAdjValue;
 //
 volatile uint8_t  calibRow=0x00;
 volatile uint8_t  calibCol=0x00;
-volatile bool blackEn=false;
+
 uint16_t __exp_10(uint8_t n)
 {
 	switch(n){
@@ -564,7 +564,8 @@ void __up_pr_calib_adj(void)
 	if(calibCol==0){
 		t8=*(uint8_t*)(&adjValue);
 		t8++;
-		if(t8>=6)t8=2;
+		if(t8>=6)t8=0;
+		if(t8==1)t8=2;
 		*(uint8_t*)(&adjValue)=t8;
 	}else{	
 		key_adj_value_float(&m_floatAdj,adjLocation);
@@ -835,8 +836,8 @@ void __set_short_pr_calib(bool gohome)
         pra=calibTab1.calibRow[calibRow].calibPoint[calibCol-1].value;
         if(pra!=t32){
             calibTab1.calibRow[calibRow].calibPoint[calibCol-1].value=t32;
-            calibTab1.calibRow[calibRow].calibPoint[calibCol-1].sigAdcValue=adc_pressure;
-            calibTab1.calibRow[calibRow].calibPoint[calibCol-1].tAdcValue=0;
+            calibTab1.calibRow[calibRow].calibPoint[calibCol-1].sigAdcValue=x_prData.sigAdcValue;
+            calibTab1.calibRow[calibRow].calibPoint[calibCol-1].tAdcValue=x_prData.tAdcValue;
             saveFlg=true;
         }
     }
@@ -850,10 +851,10 @@ void __set_short_pr_calib(bool gohome)
 	calibCol++;
 	if(calibCol>calibTab1.calibRow[calibRow].pCount){
         calibCol=0;
-        //calibRow++;
-        //if(calibRow>2)calibRow=0;
+        calibRow++;
+        if(calibRow>2)calibRow=0;
     }
-    __enter_menu_calib_press(0,calibCol);
+    __enter_menu_calib_press(calibRow,calibCol);
 	
 }
 
@@ -1126,11 +1127,11 @@ void key_process(void)
 			key_process_set_long();
 		}else if(key == (KEY_VALUE_SET+KEY_VALUE_UP)){
 			key_process_set_up_long();
-		}else if(key == KEY_VALUE_DOWN + KEY_VALUE_UP){
+		}else if(key == KEY_VALUE_DOWN + KEY_VALUE_SET){
            // blackEn= (!blackEn);
-            if(blackEn)lcd_bl_off();
+            if(lcdBlackNightOn)back_night_off();
             else 
-                lcd_bl_on();
+                back_night_on();
         }
 	}else{
 		//短按

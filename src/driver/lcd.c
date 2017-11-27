@@ -814,13 +814,14 @@ void lcd_config(void)
     LCDCONbits.WERR=0;
     LCDCONbits.LMUX=7;
     
-    LCDREGbits.CPEN=1;
+    LCDREGbits.CPEN=0;
     LCDREGbits.BIAS=5;
     LCDREGbits.CKSEL=2;
     LCDREGbits.MODE13=1;
     
     LCDPSbits.BIASMD=0;
-    LCDPSbits.LP=3;
+    LCDPSbits.LP=1;
+	//LCDPSbits.WFT=1;
     
     LCDREFbits.LCDIRE=1;
     LCDREFbits.LCDCST=3;
@@ -850,31 +851,8 @@ void lcd_config(void)
 
 	//lcd_on();
 }
-void lcd_bl_on(void)
-{
-    /*
-    set_portg_mode_out(PIN4);
-    RTCCFGbits.RTCOE=1;
-    set_portg_value_hight(PIN4);
-    blackEn=true;
-     * */
-}
 
-void lcd_bl_off(void)
-{
-    /*
-    set_portg_mode_in(PIN4);
-     RTCCFGbits.RTCOE=0;
-    // set_portg_value_hight(PIN4);
-     blackEn=false;
-     * */
-}
 
-void lcd_bl_init(void)
-{
-	set_portg_mode_out(PIN4);
-	set_portg_value_hight(PIN4);
-}
 void lcd_init(void)
 {
 	lcd_config();
@@ -882,14 +860,6 @@ void lcd_init(void)
 	lcd_on();
     kz_vadd_on();
     back_night_on();
-	//lcd_bl_on();
-	/*
-    if(blackEn){
-        lcd_bl_on();
-    }
-    else{
-        lcd_bl_off();
-    }
-	*/
+
 }
 //file end

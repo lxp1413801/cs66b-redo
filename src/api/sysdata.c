@@ -114,7 +114,7 @@ const sysDataDef_t defultSystemData={
 		0,//em_posture	pos;							//立式或者卧式
 		95,//uint8_t		maxValueForlevelBar;			//状态条显示满时对应的高度值,
 													//(95%或者100%)
-		0,//uint16_t	density;						//密度
+		5,//uint16_t	density;						//密度
 		{{"LO2",1140},{"LN2",810},{"LAR",1402},{"CO2",1020},{"LNG",460},{"CON",1000}},
 		15000,//int32_t		h;								//高
 		3000,//uint32_t	d;								//直径
@@ -335,7 +335,7 @@ uint8_t m_interp1_cal_p_s(xCalibRow_t* tabrow,__xDataStruct_t* xin,__xDataStruct
     y = (float)(tabrow->calibPoint[i+1].value - tabrow->calibPoint[i].value);
     x = (float)(tabrow->calibPoint[i+1].sigAdcValue - tabrow->calibPoint[i].sigAdcValue);
 	phv=tabrow->calibPoint[i].value;
-    if(x != 0){
+    if(x >= 1.0f){
         phv = phv + y*((float)(t16 -  tabrow->calibPoint[i].sigAdcValue))/x;
     }
 	xin->value=(int32_t)phv;
@@ -382,7 +382,7 @@ uint8_t m_interp1_cal_p_t(__xDataStruct_t* ptmpx,__xDataStruct_t* xin,uint8_t tm
 	
     y=(float)(ptmpx[i+1].value-ptmpx[i].value);
     x=(float)(ptmpx[i+1].tAdcValue-ptmpx[i].tAdcValue);
-    if(x!=0){
+    if(x>=1.0f){
         phv = phv + ((float)(t16 - ptmpx[i].tAdcValue))*y/x;
     }
 	xin->value=(int32_t)phv;

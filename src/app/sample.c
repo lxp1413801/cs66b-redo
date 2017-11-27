@@ -132,7 +132,7 @@ void samlpe_chip0_ch_diff_pr_signal(void)
 	ads1148_set_vbias_ex(&ads1148Chip0,0);
 	ads1148_set_mux1_ex(&ads1148Chip0,ADS1148_VREFCON_INREF_ON,ADS1148_REFSELT_INREF,ADS1148_MUXCAL_NORMAL);
 	
-	ads1148_set_sys0_ex(&ads1148Chip0,ADS1148_PGA_64,ADS1148_SYS0_DR_640SPS);
+	ads1148_set_sys0_ex(&ads1148Chip0,ADS1148_PGA_32,ADS1148_SYS0_DR_640SPS);
 	
 	ads1148_set_idac0_ex(&ads1148Chip0,ADS1148_DRDY_VIA_DRDY,ADS1148_IMAG_500uA);
 	ads1148_set_idac1_ex(&ads1148Chip0,IDAC_OUT_IEXC1,IDAC_OUT_NC);
@@ -312,7 +312,20 @@ void samlpe_chip0_ch_temperature_in(void)
     __nop();
     ads1148_set_bcs(&ads1148Chip0,ADS1148_BCS_OFF);	
 }
-
+void sample_calc_press(void)
+{
+    int32_t t32;
+	x_prData.sigAdcValue=rtAdcValuePrSignal;
+    x_prData.tAdcValue=rtAdcValuePrBridge;
+    x_prData.value=0;                                           
+    t32=calculate_and_compensate(prPrCalibDataObj.calibTab,&x_prData);
+    rtPressure=t32;
+	//cal_diff_p_to_h(t32);
+    __nop();
+    __nop();
+    //rtPressure=t32;
+    //rtHight=rtAdcValueDPrSignal;
+}
 
 void samlpe_chip1_ch_expr0_bridge(void)
 {
@@ -387,8 +400,9 @@ void sample_process(void)
 		case 0x04:samlpe_chip0_ch_pr_bridge();			break;
 		case 0x05:samlpe_chip0_ch_pr_signal();			break;
 		case 0x06:samlpe_chip0_ch_pr_ref1();			break;
-		case 0x07:samlpe_chip0_ch_temperature_in();	break;
-		case 0x08:break;
+		case 0x07:samlpe_chip0_ch_temperature_in();		break;
+		//case 0x08:break;
+		case 0x08:sample_calc_press();					break;
 		case 0x09:samlpe_chip1_ch_expr0_bridge();		break;
 		case 0x0a:samlpe_chip1_ch_expr0_signal();		break;
 		case 0x0b:samlpe_chip1_ch_ex0_temperature();	break;

@@ -635,7 +635,7 @@ void ui_disp_menu_calib_diff_adj(void)
 	uint8_t buf[10];
 	lcd_clear_all();
 	lcd_disp_logo(true);
-	buf[0]=' ';
+	buf[0]='c';
 	if(calibRow==0)buf[1]='d';
 	else if(calibRow==1)buf[1]='c';
 	else if(calibRow==2)buf[1]='G';
@@ -656,7 +656,34 @@ void ui_disp_menu_calib_diff_adj(void)
 		lcd_disp_refresh(); 		
 	}
 }
-
+void ui_disp_menu_calib_pr_adj(void)
+{
+	uint8_t t8;
+	uint8_t buf[10];
+	lcd_clear_all();
+	lcd_disp_logo(true);
+	buf[0]='y';
+	if(calibRow==0)buf[1]='d';
+	else if(calibRow==1)buf[1]='c';
+	else if(calibRow==2)buf[1]='G';
+	
+	t8=calibCol;
+	buf[3]='0'+t8%10;
+	t8/=10;
+	buf[2]='0'+t8%10;
+	buf[4]='\0';	
+	if(calibCol){
+		ui_disp_adj_xfloat_pt(buf,&m_floatAdj,adjLocation);	
+	}else{
+		m_mem_cpy(buf+4,(uint8_t*)"    ");
+		t8=*((uint8_t*)(&adjValue));
+		buf[7]='0'+ t8;;
+		buf[8]='\0';
+		lcd_show_string(buf);
+		lcd_disp_refresh(); 		
+	}
+}
+/*
 void ui_disp_menu_calib_pr_adj(void)
 {
 	uint8_t t8;
@@ -684,6 +711,7 @@ void ui_disp_menu_calib_pr_adj(void)
 		lcd_disp_refresh(); 		
 	}	
 }
+*/
 
 void ui_disp_menu_poly_c_adj(void)
 {

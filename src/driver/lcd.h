@@ -22,8 +22,8 @@ extern "C"{
 	extern void lcd_disp_all(uint16_t x);
 	extern void lcd_init(void);
 	
-	extern void lcd_bl_on(void);
-	extern void lcd_bl_off(void);
+	// extern void lcd_bl_on(void);
+	// extern void lcd_bl_off(void);
 	
 	extern void lcd_disp_refresh(void);
 	extern void lcd_show_string_l0(uint8_t* str);
