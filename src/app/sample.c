@@ -249,6 +249,8 @@ void sample_calc_diff_press(void)
         rtVolume=cal_diff_hight_to_vol_v(rtHight);
     }
 	rtWeight=cal_diff_vol_to_t(rtVolume);
+	//
+	rtLevel=cal_diff_hight_level();
 }
 /*
 void samlpe_chip0_ch_diff_pr_ref0(void)

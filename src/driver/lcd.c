@@ -131,7 +131,7 @@ void lcd_disp_level_bar(uint8_t bar,uint8_t show)
 void lcd_disp_level(uint8_t level)
 {
 	uint8_t i;
-	if(level>=99)level=99;
+	if(level>=100)level=100;
 	level/=2;
 	for(i=0;i<level;i++){
 		lcd_disp_level_bar(i,1);
@@ -825,7 +825,7 @@ void lcd_config(void)
     LCDREGbits.MODE13=1;
     
     LCDPSbits.BIASMD=0;
-    LCDPSbits.LP=1;
+    LCDPSbits.LP=4;
 	//LCDPSbits.WFT=1;
     
     LCDREFbits.LCDIRE=1;
@@ -836,7 +836,7 @@ void lcd_config(void)
     
     LCDREFbits.LRLAP=3;
     LCDREFbits.LRLBP=3;
-    LCDREFbits.LRLAT=0;
+    LCDREFbits.LRLAT=7;
     
     
 
