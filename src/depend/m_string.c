@@ -270,4 +270,13 @@ void m_int16_2_str_4(uint8_t* buf,int16_t x)
 	x/=10;	
 	buf[0]=HexTable[x%10];
 }
+void m_int16_2_str_3(uint8_t* buf,int16_t x)
+{
+    if(x>999)x=999;
+	buf[2]=HexTable[x%10];
+	x/=10;
+	buf[1]=HexTable[x%10];
+	x/=10;
+	buf[0]=HexTable[x%10];
+}
 //file end

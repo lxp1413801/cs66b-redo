@@ -1,6 +1,9 @@
 #include "../includes/includes.h"
 //EventGroupHandle_t threadMainEvent;
 #define main_delay_ms(ms) ticker_ms_delay(ms)
+
+volatile uint8_t blShowTime=60;
+
 void m_system_init(void)
 {
     PIN_MANAGER_Initialize();
@@ -10,6 +13,7 @@ void m_system_init(void)
     RTCC_Initialize();
     TMR1_Initialize();    
 }
+
 void thread_main_pre(void)
 {
     kz_vadd_on();
@@ -17,6 +21,9 @@ void thread_main_pre(void)
     
     lcd_init();
     ui_disp_all_on();
+    //while(1);
+    __nop();
+    __nop();
     main_delay_ms(1000);
     ui_disp_all_off();
     main_delay_ms(1000);
@@ -72,8 +79,8 @@ void event_proess(void)
 
 int main(void)
 {
-    uint8_t str[4]={0x11,0x22,0x33,0x44};
-    uint8_t i=0,j=0;
+    //uint8_t str[4]={0x11,0x22,0x33,0x44};
+    //uint8_t i=0,j=0;
     // initialize the device
     SYSTEM_Initialize();
     //m_system_init();
@@ -84,7 +91,8 @@ int main(void)
     thread_main_pre();
     ads1148_init_all_obj();
 	ads1148_init_device();   
-    
+    blShowTime=stSysData.lcdShowTm;
+	blShowTime*=2;
     while (1){
 		if(event & flg_KEY_DOWN){
 			//event &= ~flg_KEY_DOWN;
@@ -98,6 +106,10 @@ int main(void)
 			event &=  ~flg_RTC_SECOND;
 			ui_disp_menu();
 			if(lcdTwinkle>0)lcdTwinkle--;
+			if(blShowTime>0)blShowTime--;
+			if(blShowTime==0){
+				back_night_off();
+			}
 		}
     }
     return -1;

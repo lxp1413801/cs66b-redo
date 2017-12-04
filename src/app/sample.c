@@ -50,7 +50,7 @@ int16_t samlpe_get_adc_average_value_ex(volatile int16_t* buf,uint8_t len)
 		
 		ret=t32;
 		max[0]=0;max[1]=1;
-		maxIndex[0]=0;maxIndex[1]=0;		
+		maxIndex[0]=0;maxIndex[1]=1;		
 		for(i=0;i<len;i++){
 			absdiff=abs_diff((uint16_t)t32,buf[i]);
 			if(absdiff>max[1]){
@@ -65,6 +65,7 @@ int16_t samlpe_get_adc_average_value_ex(volatile int16_t* buf,uint8_t len)
     }
     return (int16_t)ret;    
 }
+/*
 int16_t samlpe_get_adc_average_value(volatile int16_t* buf,uint8_t len)
 {
     uint8_t maxIndex,minIndex;
@@ -96,6 +97,8 @@ int16_t samlpe_get_adc_average_value(volatile int16_t* buf,uint8_t len)
     }
     return (int16_t)ret;    
 }
+*/
+
 volatile int16_t samlpe_read_adc(ads1148Obj_t* obj,volatile int16_t* buf,uint8_t len)
 {
 	
@@ -103,7 +106,7 @@ volatile int16_t samlpe_read_adc(ads1148Obj_t* obj,volatile int16_t* buf,uint8_t
 	volatile int16_t t16;
 	volatile int32_t	t32=0;
     ads1148_start_convert(obj);
-	for(i=0;i<2;i++){
+	for(i=0;i<4;i++){
 		ads1148_waite_convert(obj);
 		__nop();
 	}
@@ -139,7 +142,7 @@ void samlpe_chip0_ch_diff_pr_bridge(void)
 	ads1148_set_mux0_ex(&ads1148Chip0,ADS1148_BCS_OFF,AIN1P,AIN0N);
 	ads1148_set_vbias_ex(&ads1148Chip0,0);
 	ads1148_set_mux1_ex(&ads1148Chip0,ADS1148_VREFCON_INREF_ON,ADS1148_REFSELT_INREF,ADS1148_MUXCAL_NORMAL);
-	ads1148_set_sys0_ex(&ads1148Chip0,ADS1148_PGA_1,ADS1148_SYS0_DR_2000SPS);
+	ads1148_set_sys0_ex(&ads1148Chip0,ADS1148_PGA_1,ADS1148_SYS0_DR_640SPS);
 	
 	ads1148_set_idac0_ex(&ads1148Chip0,ADS1148_DRDY_VIA_DRDY,ADS1148_IMAG_250uA);
 	ads1148_set_idac1_ex(&ads1148Chip0,IDAC_OUT_IEXC1,IDAC_OUT_NC);
@@ -183,8 +186,10 @@ void samlpe_chip0_ch_diff_pr_signal(void)
 	ads1148_set_config_ex(&ads1148Chip0);	
 	
 	samlpe_read_adc(&ads1148Chip0,samlpeBuf,SAMPLE_ADC_BUF_LEN);
-    rtAdcValueDPrSignal=samlpe_get_adc_average_value(samlpeBuf,SAMPLE_ADC_BUF_LEN);
-    //ads1148_stop_convert(&ads1148Chip0);
+    
+	//rtAdcValueDPrSignal=samlpe_get_adc_average_value(samlpeBuf,SAMPLE_ADC_BUF_LEN);
+    rtAdcValueDPrSignal=samlpe_get_adc_average_value_ex(samlpeBuf,SAMPLE_ADC_BUF_LEN);
+	//ads1148_stop_convert(&ads1148Chip0);
 	//ads1148_send_cmd(&ads1148Chip0,ADS1148_CMD_SLEEP);
 	__nop();
 	__nop();
@@ -207,15 +212,17 @@ void samlpe_chip0_ch_diff_pr_ref0(void)
 	ads1148_set_vbias_ex(&ads1148Chip0,0+0);
 	ads1148_set_mux1_ex(&ads1148Chip0,ADS1148_VREFCON_INREF_ON,ADS1148_REFSELT_INREF,ADS1148_MUXCAL_NORMAL);
 	
-	ads1148_set_sys0_ex(&ads1148Chip0,ADS1148_PGA_1,ADS1148_SYS0_DR_2000SPS);
+	ads1148_set_sys0_ex(&ads1148Chip0,ADS1148_PGA_1,ADS1148_SYS0_DR_640SPS);
 	
 	ads1148_set_idac0_ex(&ads1148Chip0,ADS1148_DRDY_VIA_DRDY,ADS1148_IMAG_500uA);
 	ads1148_set_idac1_ex(&ads1148Chip0,IDAC_OUT_IEXC1,IDAC_OUT_NC);
 	
 	ads1148_set_config_ex(&ads1148Chip0);	
 	
-    rtAdcValueChip0Ref0=samlpe_read_adc(&ads1148Chip0,samlpeBuf,8);
+	rtAdcValueChip0Ref0=samlpe_read_adc(&ads1148Chip0,samlpeBuf,8);
+    //rtAdcValueChip0Ref0=samlpe_get_adc_average_value_ex(samlpeBuf,32);
     ads1148_set_bcs(&ads1148Chip0,ADS1148_BCS_OFF);
+	
 	//ads1148_send_cmd(&ads1148Chip0,ADS1148_CMD_SLEEP);
 	__nop();
 	__nop();
@@ -235,6 +242,13 @@ void sample_calc_diff_press(void)
     __nop();
     //rtPressure=t32;
     //rtHight=rtAdcValueDPrSignal;
+	if(stSysData.pos==HOTIZONTAL){
+        t32=cal_diff_hight_to_vol_h(rtHight);
+        rtVolume=t32;
+    }else{
+        rtVolume=cal_diff_hight_to_vol_v(rtHight);
+    }
+	rtWeight=cal_diff_vol_to_t(rtVolume);
 }
 /*
 void samlpe_chip0_ch_diff_pr_ref0(void)
@@ -267,7 +281,7 @@ void samlpe_chip0_ch_pr_bridge(void)
 	ads1148_set_vbias_ex(&ads1148Chip0,0);
 	ads1148_set_mux1_ex(&ads1148Chip0,ADS1148_VREFCON_INREF_ON,ADS1148_REFSELT_INREF,ADS1148_MUXCAL_NORMAL);
 	
-	ads1148_set_sys0_ex(&ads1148Chip0,ADS1148_PGA_1,ADS1148_SYS0_DR_2000SPS);
+	ads1148_set_sys0_ex(&ads1148Chip0,ADS1148_PGA_1,ADS1148_SYS0_DR_640SPS);
 	
 	ads1148_set_idac0_ex(&ads1148Chip0,ADS1148_DRDY_VIA_DRDY,ADS1148_IMAG_250uA);
 	ads1148_set_idac1_ex(&ads1148Chip0,IDAC_OUT_NC,IDAC_OUT_IEXC2);
@@ -299,7 +313,8 @@ void samlpe_chip0_ch_pr_signal(void)
 	ads1148_set_config_ex(&ads1148Chip0);	
 	
 	samlpe_read_adc(&ads1148Chip0,samlpeBuf,SAMPLE_ADC_BUF_LEN);
-    rtAdcValuePrSignal=samlpe_get_adc_average_value(samlpeBuf,SAMPLE_ADC_BUF_LEN);
+    //rtAdcValuePrSignal=samlpe_get_adc_average_value(samlpeBuf,SAMPLE_ADC_BUF_LEN);
+	rtAdcValuePrSignal=samlpe_get_adc_average_value_ex(samlpeBuf,SAMPLE_ADC_BUF_LEN);
 	__nop();
 	__nop();
 }
@@ -337,7 +352,7 @@ void samlpe_chip0_ch_temperature_in(void)
 	ads1148_set_vbias_ex(&ads1148Chip0,0);
 	ads1148_set_mux1_ex(&ads1148Chip0,ADS1148_VREFCON_INREF_ON,ADS1148_REFSELT_INREF,ADS1148_MUXCAL_NORMAL);
 	
-	ads1148_set_sys0_ex(&ads1148Chip0,ADS1148_PGA_1,ADS1148_SYS0_DR_2000SPS);
+	ads1148_set_sys0_ex(&ads1148Chip0,ADS1148_PGA_1,ADS1148_SYS0_DR_640SPS);
 	
 	ads1148_set_idac0_ex(&ads1148Chip0,ADS1148_DRDY_VIA_DRDY,ADS1148_IMAG_500uA);
 	//ads1148_set_idac1_ex(&ads1148Chip0,IDAC_OUT_NC,IDAC_OUT_IEXC2);
@@ -346,7 +361,8 @@ void samlpe_chip0_ch_temperature_in(void)
 	
 	ads1148_set_config_ex(&ads1148Chip0);	
 	
-    rtAdcValueTemperatureIn=samlpe_read_adc(&ads1148Chip0,samlpeBuf,8);
+	rtAdcValueTemperatureIn=samlpe_read_adc(&ads1148Chip0,samlpeBuf,8);
+    //rtAdcValueTemperatureIn=samlpe_get_adc_average_value_ex(samlpeBuf,32);
 	__nop();
 	__nop();
     __nop();
@@ -370,12 +386,15 @@ void sample_calc_press(void)
 void sample_calc_temperature_in(void)
 {
 	float x,y;
-	x=(float)rtAdcValueChip0Ref0;
+	//x=(float)rtAdcValueChip0Ref0;
+	x=800.0;
 	y=(float)rtAdcValueTemperatureIn;
 	y=(y/x-1.0)*100;
 	//转换为温度
-    x=calc_res_2_temp(y);	
+    x=calc_res_2_temp(y);
+    x=x*100;
 	rtTemperatureIn=(int32_t)x;
+	//rtTemperatureIn=cal_smoothing_filter(rtTemperatureInBuf,(int32_t)x,4);
 	__nop();
 	__nop();
 }
@@ -399,7 +418,7 @@ void samlpe_chip1_ch_expr0_signal(void)
 	ads1148_set_config_ex(&ads1148Chip1);	
 	
 	samlpe_read_adc(&ads1148Chip1,samlpeBuf,SAMPLE_ADC_BUF_LEN);
-	rtAdcValuePrEx0Signal=samlpe_get_adc_average_value(samlpeBuf,SAMPLE_ADC_BUF_LEN);
+	rtAdcValuePrEx0Signal=samlpe_get_adc_average_value_ex(samlpeBuf,SAMPLE_ADC_BUF_LEN);
 	__nop();
 	__nop();	
 }
@@ -489,7 +508,7 @@ void samlpe_chip1_ch_expr1_signal(void)
 	ads1148_set_config_ex(&ads1148Chip1);	
 	
 	samlpe_read_adc(&ads1148Chip1,samlpeBuf,SAMPLE_ADC_BUF_LEN);
-	rtAdcValuePrEx1Signal=samlpe_get_adc_average_value(samlpeBuf,SAMPLE_ADC_BUF_LEN);
+	rtAdcValuePrEx1Signal=samlpe_get_adc_average_value_ex(samlpeBuf,SAMPLE_ADC_BUF_LEN);
 	__nop();
 	__nop();		
 }

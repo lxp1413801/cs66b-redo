@@ -53,6 +53,8 @@ extern "C"{
 	
 	extern void lcd_show_string_sm(uint8_t* str);
 	extern void lcd_show_string_ex(uint8_t* str);
+    extern void lcd_show_dp_sm(uint8_t loc,bool show);
+    extern void lcd_disp_dp_loc_sign_sm(bool sig);
 #ifdef __cplusplus
 }
 #endif

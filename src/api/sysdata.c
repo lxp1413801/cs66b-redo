@@ -32,6 +32,7 @@ volatile int16_t	adc_iPrEx1;
 volatile int16_t	adc_ibat;
 volatile int16_t	adc_iRef;
 
+volatile int32_t    rtTemperatureInBuf[4]={0,0,0,0};
 volatile int32_t    rtDiffPrBuf[4];
 volatile int32_t	rtDiffPressure;
 volatile int32_t	rtHight;
@@ -69,6 +70,7 @@ for x=0:0.01:1.0;
     end
 end
 */
+
 const float hKcy[]={
 	0.0000,0.0017,0.0048,0.0087,0.0134,0.0187,0.0245,0.0308,0.0375,0.0446,
 	0.0520,0.0598,0.0680,0.0764,0.0851,0.0941,0.1033,0.1127,0.1224,0.1323,
@@ -101,6 +103,7 @@ for x=0:0.01:1.0;
     end
 end  
 */
+
 const float hKel[]={
 	0.0000,0.0003,0.0012,0.0026,0.0047,0.0073,0.0104,0.0140,0.0182,0.0228,
 	0.0280,0.0336,0.0397,0.0463,0.0533,0.0607,0.0686,0.0769,0.0855,0.0946,
@@ -152,9 +155,13 @@ const sysDataDef_t defultSystemData={
 		{1000,2000},//st_ilpScaleDef	exPrilpScale0;				//外部压力4-20毫安范围
 		{1000,2000},//st_ilpScaleDef	exPrIpScale0;
 		{1000,2000},//st_ilpScaleDef	exPrIpScale1;		
-		//st_ilpScaleDef	
+		//st_ilpScaleDef
+	
 		950,//uint16_t	barScale;
+		0,//uint8_t 	exPrTempShowEn;
+		60,//uint8_t		lcdShowTm;		        
 		//
+		60,//sleepTimes
 		0,//uint16_t	crc;
 };
 
@@ -259,7 +266,19 @@ void calib_data_set_default(xCalibTab_t *ctab,uint8_t rowCount)
     }
     //crc_append((uint8_t*)(&diff_prCalibTabDef),sizeof(diff_prCalibTabDef)-2);
 }
-
+int32_t  cal_smoothing_filter(int32_t* buf,int32_t in,uint8_t len)
+{
+	uint8_t i;
+	int32_t ret=0;
+	for(i=0;i<len-1;i++){
+		buf[i]=buf[i+1];
+		ret+=buf[i];
+	}
+	buf[i]=in;
+	ret+=buf[i];
+	return (ret/len);
+	
+}
 //一阶插值p-vin 压力--电压
 //输入xin:	[pvalue(未知),pAdcvalue(已知),tAdcValue(实际温度)];
 //返回xin:	[pvalue(已知),pAdcvalue(已知),tAdcValue(实际温度)];并且返回的pvalue无实际意义;
@@ -271,7 +290,7 @@ uint8_t m_interp1_cal_p_s(xCalibRow_t* tabrow,__xDataStruct_t* xin,__xDataStruct
 	uint8_t i;
 	//int32_t x,y,phv;
 	int16_t t16;
-    float x,y,phv,f;
+    float x,y,phv;
     if(tabrow->pCount<2)return 0;
     
 	t16=(float)(xin->sigAdcValue);
@@ -378,6 +397,7 @@ uint8_t  calib_data_obj_init(calibDataObj_t* obj,uint8_t rowCount)
 	}
 	return ret;    
 }
+
 //api
 //api
 void data_init_all(void)
@@ -411,6 +431,7 @@ void data_init_all(void)
 //高度折算容积，水平放置
 int32_t cal_diff_hight_to_vol_h(int32_t h)
 {
+    int32_t t32;
 	float v1,v2;
 	float f1,f2;
     f1=(float)h;
@@ -430,7 +451,8 @@ int32_t cal_diff_hight_to_vol_h(int32_t h)
     v2=v2*f1;
     
     v1=v1+v2;
-	return (int32_t)v1;
+    t32=(int32_t)v1;
+	return t32;
 }
 
 //计算高度百分比,刻度条
@@ -530,7 +552,6 @@ int32_t cal_diff_vol_to_t(int32_t v)
 //计算结果直接用xin返回
 __xDataStruct_t tmpx[3];
 
-
 int32_t calculate_and_compensate(xCalibTab_t* cTab,__xDataStruct_t* xin)
 {
 	uint8_t i=0,j=0;
@@ -545,7 +566,6 @@ int32_t calculate_and_compensate(xCalibTab_t* cTab,__xDataStruct_t* xin)
 	m_interp1_cal_p_t(&tmpx[0],xin,j);
 	return xin->value;
 }
-
 
 // -----------------------------------------------------
 // 计算温度
@@ -567,13 +587,9 @@ float calc_res_2_temp(float r)
     return x;
 }
 
-
-
-
 void cal_battery_voltage(void)
 {
 	
 }
-
 
 //file end

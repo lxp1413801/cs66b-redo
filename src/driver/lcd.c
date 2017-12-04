@@ -424,18 +424,18 @@ void lcd_disp_unit_1st_m3(bool show)
 	lcd_set_com_seg(1,49,0);
 	if(show){
 		lcd_set_com_seg(1,34,1);
-		lcd_set_com_seg(1,34,1);
+		lcd_set_com_seg(1,35,1);
 	}else{
-		lcd_set_com_seg(1,35,0);
+		lcd_set_com_seg(1,34,0);
 		lcd_set_com_seg(1,35,0);
 	}
 }
 
 void lcd_disp_unit_temperature(bool show)
 {
-	lcd_set_com_seg(2,49,0);
-	lcd_set_com_seg(2,35,0);
-	lcd_set_com_seg(3,35,0);
+	//lcd_set_com_seg(2,49,0);
+	//lcd_set_com_seg(2,35,0);
+	//lcd_set_com_seg(3,35,0);
 	if(show){
 		lcd_set_com_seg(4,35,1);
 	}else{
@@ -808,14 +808,19 @@ void lcd_disp_all(uint16_t x)
 
 void lcd_config(void)
 {
-    LCDCONbits.CS=0x00;
+    LCDCONbits.CS=0;
     LCDCONbits.LCDSIDL=0;
     LCDCONbits.SLPEN=0;
     LCDCONbits.WERR=0;
     LCDCONbits.LMUX=7;
     
-    LCDREGbits.CPEN=0;
-    LCDREGbits.BIAS=5;
+    LCDREGbits.CPEN=1;
+	// set_port_mode_an(portg,PIN7 | PIN8);
+	// set_port_mode_in(portg,PIN7 | PIN8);
+	
+	// set_port_mode_an(porte,PIN7 | PIN6 | PIN5);
+	// set_port_mode_in(porte,PIN7 | PIN6 | PIN5);
+    LCDREGbits.BIAS=7;
     LCDREGbits.CKSEL=2;
     LCDREGbits.MODE13=1;
     
@@ -824,7 +829,7 @@ void lcd_config(void)
 	//LCDPSbits.WFT=1;
     
     LCDREFbits.LCDIRE=1;
-    LCDREFbits.LCDCST=3;
+    LCDREFbits.LCDCST=4;
     LCDREFbits.VLCD1PE=0;
     LCDREFbits.VLCD2PE=0;
     LCDREFbits.VLCD3PE=0;

@@ -49,11 +49,11 @@ void ticker_10ms_per_set(uint32_t tick)
     tickerMsPer10Ms=tick;
 }
 
-
 void __attribute__ ( ( interrupt, no_auto_psv ) ) _ISR _RTCCInterrupt( void )
 {
     /* TODO : Add interrupt handling code */
     
     IFS3bits.RTCIF = false;
     event |=  flg_RTC_SECOND;
+	globleHalfSec++;
 }

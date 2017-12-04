@@ -12,6 +12,7 @@ extern "C"{
 	extern uint32_t  tickerMs;
 	extern uint32_t  tickerSec;    
     extern uint32_t ticker_ms_get(void);
+    extern void ticker_ms_set(uint32_t tick);
     
     extern uint32_t  tickerMsPer10Ms;
     extern uint32_t ticker_10ms_per_get(void);

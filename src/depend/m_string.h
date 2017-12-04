@@ -37,6 +37,7 @@
     void m_int8_2_hex(uint8_t* str,uint8_t b);
 	//20170910
 	extern void m_int16_2_str_4(uint8_t* buf,int16_t x);
+	extern void m_int16_2_str_3(uint8_t* buf,int16_t x);
 	
 	#ifdef __cplusplus
 	}

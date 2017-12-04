@@ -70,6 +70,12 @@ extern "C"{
 		
 	}matterDsc_t;
 	
+	typedef enum{
+		LCD_BL_ON_10s=10,
+		LCD_BL_ON_30s=30,
+		LCD_BL_ON_60s=60
+	}em_lcdBlOnTime;
+	
 	typedef struct{
 		uint32_t 	id;
 		em_posture	pos;							//立式或者卧�?
@@ -106,7 +112,11 @@ extern "C"{
 		st_ilpScaleDef	exPrIpScaleCh0;
 		st_ilpScaleDef	exPrIpScaleCh1;
 		//st_ilpScaleDef	
+
 		uint16_t	barScale;
+		uint8_t 	exPrTempShowEn;
+		uint8_t		lcdShowTm;	
+		uint16_t	sleepTimes;				//休眠周期s
 		//
 		uint16_t	crc;
 	}sysDataDef_t;
@@ -157,6 +167,7 @@ extern "C"{
 	extern calibDataObj_t ex0PrCalibDataObj;
 	extern calibDataObj_t ex1PrCalibDataObj;	
 	
+	extern volatile int32_t    rtTemperatureInBuf[4];
 	extern volatile int16_t 	adc_inPt100;
 	
 	extern volatile int16_t		adc_pressure;
@@ -193,11 +204,22 @@ extern "C"{
 	//fk 
     extern uint32_t data_sys_cal_v1(sysDataDef_t* stp);
     extern uint32_t data_sys_cal_v2(sysDataDef_t* stp);
+    
+
+    
 	extern void calib_data_put_piont_tab(xCalibTab_t* ptab,xCalibPoint_t* pp,uint8_t row,uint8_t col);
     //apl
 	extern int32_t calculate_and_compensate(xCalibTab_t* cTab,__xDataStruct_t* xin);
+    
 	extern uint8_t cal_diff_press(void);
-	extern uint8_t cal_diff_hight_level(void);
+    extern int32_t cal_diff_p_to_h(int32_t p);
+	
+    extern int32_t cal_diff_vol_to_t(int32_t v);
+    
+    extern int32_t cal_diff_hight_to_vol_h(int32_t h);
+    extern int32_t cal_diff_hight_to_vol_v(int32_t h);    
+    
+    extern uint8_t cal_diff_hight_level(void);
 	extern  void cal_pt100_temperature_in(void);
 
 	extern uint8_t cal_press(void);
@@ -208,6 +230,8 @@ extern "C"{
 	extern void data_init_all(void);
 	
 	extern float calc_res_2_temp(float r);
+	
+	extern  int32_t  cal_smoothing_filter(int32_t* buf,int32_t in,uint8_t len);
 	
 #ifdef __cplusplus
 }

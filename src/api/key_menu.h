@@ -11,6 +11,9 @@ extern "C"{
 	#define PSW_SET_DENSITY						36	
 	#define PSW_SET_POSE_SIZE					66
 	
+	#define PSW_SET_EX_PR_TEMP_SHOW				38
+	#define PSW_SET_BL_ON_TM					39
+	
 	#define PSW_SET_BASE_ZERO					56
 	//calibration
 	#define PSW_CALIB_DIFF_PRESSURE				168
@@ -20,7 +23,9 @@ extern "C"{
 	#define PSW_SET_WARN_TYPE					6
 	#define PSW_SET_WARN_VALUE					16
 	//外压零点和线性
-	#define PSW_SET_EPR_ZERO_LINE               138
+	//#define PSW_SET_EPR_ZERO_LINE               138
+	#define PSW_CALIB_PRESSURE_EX0					161
+	#define PSW_CALIB_PRESSURE_EX1					162
 	//外部温度修正
 	#define PSW_SET_ETMEP_ZERO_LINE				136	
 	//差压二次修正
@@ -81,14 +86,19 @@ extern "C"{
 	#define sub_MENU_SET_WARN_VALUE_6			0x06
 	#define sub_MENU_SET_WARN_VALUE_7			0x07
 	//外部压力零点和线性,psd=138
-	#define MENU_SET_EPR_ZERO_LINE              0xa0
+	//#define MENU_SET_EPR_ZERO_LINE              0xa0
+	#define MENU_PRESSURE_CALIB_EX0				0xa0
+	#define MENU_PRESSURE_CALIB_EX1				0xa1
+	/*
 	//#define MENU_SET_EX_D_PR_ZERO				0xa0
 	#define sub_MENU_SET_EPR_CH0_P0				0x00
 	#define sub_MENU_SET_EPR_CH0_P1				0x01
 	#define sub_MENU_SET_EPR_CH1_P0				0x02
 	#define sub_MENU_SET_EPR_CH1_P1				0x03
+	*/
+	
 	//外部温度修正PSW_SET_ETMEP_ZERO_LINE	=136
-	#define MENU_SET_ETMEP_ZERO_LINE			0xa1
+	#define MENU_SET_ETMEP_ZERO_LINE			0xa2
 	#define sub_MENU_SET_P0						0x00
 	#define sub_MENU_SET_P1						0x01
 	//外部压输出范围,psd=139
@@ -105,7 +115,12 @@ extern "C"{
 	//显示方式,显示即时值还是平均值
 	#define MENU_SET_WORK_MODE					0xf0
 	#define sub_MENU_SET_WORK_MODE				0x00
-	
+	//是否循环显示外部温度和压力
+	#define MENU_SET_EX_PR_TEMP_SHOW			0xf1
+	#define sub_MENU_SET_EX_PR_TEMP_SHOW		0x00
+	//背光打开时间
+	#define	MENU_PSW_SET_BL_ON_TM				0xf2
+	#define sub_MENU_PSW_SET_BL_ON_TM			0x00
 	typedef union{
 		uint8_t t8;
 		struct{
