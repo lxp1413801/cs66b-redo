@@ -13,6 +13,7 @@ void at24c02_set_slave_addr(st_iicDeviceObj* obj,uint8_t slv)
 
 void at24c02_init(st_iicDeviceObj* obj, uint8_t slv)
 {
+    obj->deviceVddOn=kz_vadd_on;
     obj->slaveAddr=slv;
 	obj->iic_start=iic_start;
 	obj->iic_stop=iic_stop;
@@ -45,6 +46,7 @@ void at24c02_read_n_byte(st_iicDeviceObj* obj,uint8_t addr,uint8_t* buf,uint16_t
 {
 	//device must enable 
 	uint16_t i;
+    obj->deviceVddOn();
 	obj->iic_start();
 	obj->iic_send_byte(obj->slaveAddr);
 	obj->iic_send_byte(addr);
@@ -87,6 +89,7 @@ extern uint8_t globleBuffer[];
 void at24c02_write_n_byte(st_iicDeviceObj* obj,uint8_t addr,uint8_t* buf,uint16_t len)
 {
 	uint16_t i;
+    obj->deviceVddOn();
 	uint8_t tmpBuf[256];
 	at24c02_read_n_byte(obj,addr,tmpBuf,len);
 	

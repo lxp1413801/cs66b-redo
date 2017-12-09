@@ -814,12 +814,7 @@ void lcd_config(void)
     LCDCONbits.WERR=0;
     LCDCONbits.LMUX=7;
     
-    LCDREGbits.CPEN=1;
-	// set_port_mode_an(portg,PIN7 | PIN8);
-	// set_port_mode_in(portg,PIN7 | PIN8);
-	
-	// set_port_mode_an(porte,PIN7 | PIN6 | PIN5);
-	// set_port_mode_in(porte,PIN7 | PIN6 | PIN5);
+    LCDREGbits.CPEN=0;
     LCDREGbits.BIAS=7;
     LCDREGbits.CKSEL=2;
     LCDREGbits.MODE13=1;

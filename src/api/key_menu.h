@@ -36,6 +36,10 @@ extern "C"{
 	//高度条满刻度对应的值95%还是100%
 	#define PSW_SET_BAR_LEVEL_SCALE				188
 	#define PSW_SET_WORK_MODE					18
+	//add 
+	#define PSW_SET_WAKEUP_PERIOD				688
+	#define PSW_SET_RF_SEND_PERIOD				689
+	
 	
 	//==============================================================
 	//定义菜单,主界面
@@ -101,6 +105,18 @@ extern "C"{
 	#define MENU_SET_ETMEP_ZERO_LINE			0xa2
 	#define sub_MENU_SET_P0						0x00
 	#define sub_MENU_SET_P1						0x01
+	//2017.12.07 add
+	//休眠唤醒周期
+	#define MENU_SET_WAKEUP_PERIOD				0xa3
+	#define sub_MENU_SET_WAKEUP_PERIOD			0x00
+	//射频发射周期
+	#define MENU_SET_RF_SEND_PERIOD				0xa4
+	#define sub_MENU_SET_RF_SEND_PERIOD			0x00
+	//4-20mA输出范围（差压、压力）
+	#define MENU_SET_DPR_ILOOP_SCALE			0xa5
+	#define	sub_MENU_DPR_ILP_CH0_Lo				0x00
+	
+	//add end
 	//外部压输出范围,psd=139
 	#define MENU_SET_EPR_ILOOP_SCALE			0xb0
 	//#define MENU_SET_EX_D_PR_ILOOP_L			0xb0

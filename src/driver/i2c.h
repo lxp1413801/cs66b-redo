@@ -57,6 +57,7 @@ extern "C"{
 
 	typedef struct{
 		uint8_t slaveAddr;
+        void (*deviceVddOn)(void);
 		void (*iic_start)(void);
 		void (*iic_stop)(void);
 		uint8_t (*iic_send_byte)(uint8_t);

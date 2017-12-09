@@ -56,6 +56,7 @@
 	extern uint16_t ads1148_hal_drdy_0_get(void);
     //extern void ads1148_hal_port_deinit_chip0(void);
 	extern void ads1148_hal_port_init_chip0(void);
+    extern void ads1148_hal_port_deinit_chip0(void);
 	//chip1
 	extern void ads1148_hal_cs_1_set_hight(void);
 	extern void ads1148_hal_cs_1_set_low(void);
@@ -65,6 +66,7 @@
 	
 	extern uint16_t ads1148_hal_drdy_1_get(void);
 	extern void ads1148_hal_port_init_chip1(void);
+    extern void ads1148_hal_port_deinit_chip1(void);
     //
     extern volatile uint8_t ads1148_hal_write_read_byte(volatile uint8_t x);
 	//

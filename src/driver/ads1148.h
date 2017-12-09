@@ -435,6 +435,8 @@
 	extern void ads1148_set_idac1_ex(ads1148Obj_t* obj,uint8_t i1dir,uint8_t i2dir);
 	
 	extern void ads1148_set_config_ex(ads1148Obj_t* obj);
+    extern void ads1148_pre_sleep(void);
+    extern void ads1148_post_sleep(void);
 
 #ifdef __cplusplus
 	}

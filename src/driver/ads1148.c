@@ -384,6 +384,7 @@ void ads1148_init_obj_0(void)
     ads1148Chip0.pins_drdy_get=ads1148_hal_drdy_0_get;
     
     ads1148Chip0.pins_init=ads1148_hal_port_init_chip0;
+    ads1148Chip0.pins_deinit=ads1148_hal_port_deinit_chip0;
     ads1148Chip0.ads1148_write_read_via_spi=ads1148_hal_write_read_byte;
  
 }
@@ -407,6 +408,7 @@ void ads1148_init_obj_1(void)
     ads1148Chip1.pins_drdy_get=ads1148_hal_drdy_1_get;
     
     ads1148Chip1.pins_init=ads1148_hal_port_init_chip1;
+    ads1148Chip1.pins_deinit=ads1148_hal_port_deinit_chip1;
     ads1148Chip1.ads1148_write_read_via_spi=ads1148_hal_write_read_byte;
 }
 void ads1148_set_sync(ads1148Obj_t* obj)
@@ -496,6 +498,16 @@ void ads1148_init_device(void)
     ads1148_init_chip_regs(&ads1148Chip1);  
 }
 
+void ads1148_pre_sleep(void)
+{
+    ads1148Chip0.pins_deinit();
+    ads1148Chip1.pins_deinit();
+}
+void ads1148_post_sleep(void)
+{
+    ads1148Chip0.pins_init();
+    ads1148Chip1.pins_init();
+}
 void ads1148_start_convert(ads1148Obj_t* obj)
 {
 	obj->pins_start_set_hight();

@@ -19,6 +19,8 @@
     #define flg_KEY_DOWN        (1<<2)
 
     #define flg_ALL_BITS (flg_RTC_SECOND | flg_TICKER_10MS_PER | flg_KEY_DOWN)
+
+    extern volatile uint16_t noEventTimeOut;
     
 	extern void send_thread_main_event_key_down(void);
 

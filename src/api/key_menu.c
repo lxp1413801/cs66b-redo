@@ -436,6 +436,24 @@ void __enter_menu_set_bl_on_tm(void)
 	adjLocation=0;		
 }
 
+void __enter_menu_set_wakeup_period(void)
+{
+	menu=MENU_SET_WAKEUP_PERIOD;
+	subMenu=sub_MENU_SET_WAKEUP_PERIOD;
+	adjValue=0;
+	*((uint16_t*)(&adjValue))=stSysData.sleepPeriod;
+	adjLocation=0;	
+}
+
+void __enter_menu_set_rf_send_period(void)
+{
+	menu=MENU_SET_RF_SEND_PERIOD;
+	subMenu=sub_MENU_SET_RF_SEND_PERIOD;
+	adjValue=0;
+	*((uint16_t*)(&adjValue))=stSysData.rfSendPeriod;
+	adjLocation=0;		
+}
+
 void __exit_menu_to_home_unsave(void)
 {
 	menu=MENU_HOME;
@@ -740,6 +758,7 @@ void __up_adj_work_mode(void)
 		*p=TEST_MODE;
 	}
 }
+
 void __up_adj_ext_show_mode(void)
 {
 	uint8_t* p;
@@ -763,6 +782,48 @@ void __up_adj_bl_on_tm(void)
 		*p=10;
 	}		
 }
+
+void __up_adj_wakeup_period(void)
+{
+	uint16_t t16;
+	t16=(*(uint16_t*)(&adjValue));
+	switch(t16){
+		case 0:t16=10;break;
+		
+		case 10:t16=20;break;
+		case 20:t16=40;break;
+		case 40:t16=60;break;
+		case 60:t16=100;break;
+		
+		case 100:t16=200;break;
+		case 200:t16=400;break;
+		case 400:t16=600;break;
+		case 600:t16=1000;break;	
+		default:t16=0;break;
+	}
+	(*(uint16_t*)(&adjValue))=t16;
+}
+
+void __up_adj_rf_send_period(void)
+{
+	uint16_t t16;
+	t16=(*(uint16_t*)(&adjValue));
+	switch(t16){
+		case 1:t16=2;break;
+		case 2:t16=4;break;
+		case 4:t16=6;break;
+		case 6:t16=10;break;
+		
+		case 10:t16=20;break;
+		case 20:t16=40;break;
+		case 40:t16=60;break;
+		case 60:t16=100;break;	
+		default:t16=1;break;
+	}
+	(*(uint16_t*)(&adjValue))=t16;	
+}
+
+
 
 void key_process_up(void)
 {
@@ -789,6 +850,9 @@ void key_process_up(void)
 		//改版后增加
 		case MENU_SET_EX_PR_TEMP_SHOW:__up_adj_ext_show_mode();break;
 		case MENU_PSW_SET_BL_ON_TM:__up_adj_bl_on_tm();break;
+		//
+		case MENU_SET_WAKEUP_PERIOD:__up_adj_wakeup_period();break;
+		case MENU_SET_RF_SEND_PERIOD:__up_adj_rf_send_period();break;
 		default:break;
 	}		
 }
@@ -807,10 +871,10 @@ void key_process_set_up_long(void)
 		case PSW_SET_WARN_TYPE:			__enter_menu_warn_type(0);				break;
 		case PSW_SET_WARN_VALUE:		__enter_menu_warn_value(0);				break;
 		//case PSW_SET_EPR_ZERO_LINE:		__enter_menu_epr_calib(0);			break;
-		case PSW_CALIB_PRESSURE_EX0:	__enter_menu_ex0_pr_calib(0,0);     break;
-		case PSW_CALIB_PRESSURE_EX1:	__enter_menu_ex1_pr_calib(0,0);     break;
+		case PSW_CALIB_PRESSURE_EX0:	__enter_menu_ex0_pr_calib(0,0);     	break;
+		case PSW_CALIB_PRESSURE_EX1:	__enter_menu_ex1_pr_calib(0,0);     	break;
 		
-		case PSW_SET_ETMEP_ZERO_LINE:	__enter_menu_etemp_calib(0);		break;
+		case PSW_SET_ETMEP_ZERO_LINE:	__enter_menu_etemp_calib(0);			break;
 		case PSW_SET_EPR_ILOOP_SCALE:	__enter_menu_epr_ilp_scale(0);			break;
 		case PSW_SET_BAR_LEVEL_SCALE:	__enter_menu_bar_scale();				break;
 		case PSW_SET_WORK_MODE:			__enter_menu_work_mode();				break;
@@ -818,6 +882,9 @@ void key_process_set_up_long(void)
 		//
 		case PSW_SET_EX_PR_TEMP_SHOW:	__enter_menu_set_ext_show_mode();		break;
 		case PSW_SET_BL_ON_TM:			__enter_menu_set_bl_on_tm();			break;
+		//
+		case PSW_SET_WAKEUP_PERIOD:		__enter_menu_set_wakeup_period();		break;
+		case PSW_SET_RF_SEND_PERIOD:	__enter_menu_set_rf_send_period();		break;
 		default:break;
 		}
 	}	
@@ -1367,6 +1434,20 @@ void __set_long_bl_on_tm(void)
     __exit_menu_to_home_unsave(); 	
 }
 
+void __set_long_wake_up_period(void)
+{
+	stSysData.sleepPeriod=*(uint16_t*)(&adjValue);
+    __sys_data_save_write_flash();
+    __exit_menu_to_home_unsave();  
+}
+
+void __set_long_rf_send_period(void)
+{
+	stSysData.rfSendPeriod=*(uint16_t*)(&adjValue);
+    __sys_data_save_write_flash();
+    __exit_menu_to_home_unsave();   
+}
+
 //============================================================================
 void key_process_set_long(void)
 {
@@ -1393,6 +1474,9 @@ void key_process_set_long(void)
 		//改版增加的部分
 		case MENU_SET_EX_PR_TEMP_SHOW:	__set_long_ext_show_mode();break;
 		case MENU_PSW_SET_BL_ON_TM:		__set_long_bl_on_tm();break;
+		//
+		case MENU_SET_WAKEUP_PERIOD:	__set_long_wake_up_period();break;
+		case MENU_SET_RF_SEND_PERIOD:	__set_long_rf_send_period();break;
 		default:break;
 	}
 }

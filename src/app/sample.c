@@ -608,9 +608,8 @@ void sample_post_calc(void)
 	
 }
 
-void sample_process(void)
+uint8_t sample_process(void)
 {
-    
 	switch(sampleIndex){
 		case 0x00:samlpe_chip0_ch_diff_pr_bridge();		break;
 		case 0x01:samlpe_chip0_ch_diff_pr_signal();		break;
@@ -646,7 +645,11 @@ void sample_process(void)
 	}
 	sampleIndex++;
     if(sampleIndex>0x16)sampleIndex=0;
-    TMR2_Start();
+    
+    if(stSysData.sleepPeriod==0){
+        TMR2_Start();
+    }
+    return sampleIndex;
 }
 /*
 void samlpe_chip0_channle_gain_calib(void)

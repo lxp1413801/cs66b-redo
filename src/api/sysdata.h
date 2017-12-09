@@ -116,7 +116,8 @@ extern "C"{
 		uint16_t	barScale;
 		uint8_t 	exPrTempShowEn;
 		uint8_t		lcdShowTm;	
-		uint16_t	sleepTimes;				//休眠周期s
+		uint16_t	sleepPeriod;				//休眠周期s
+		uint16_t	rfSendPeriod;				//无线发送周期
 		//
 		uint16_t	crc;
 	}sysDataDef_t;
