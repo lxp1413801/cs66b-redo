@@ -50,6 +50,8 @@
 	
 	extern void all_bj_disable(void);
 	extern void pre_system_sleep(void);
+    
+    extern void pre_system_sleep_deinit_all_pins(void);
 	
 #ifdef __cplusplus
 	}

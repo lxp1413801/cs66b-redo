@@ -808,7 +808,7 @@ void lcd_disp_all(uint16_t x)
 
 void lcd_config(void)
 {
-    LCDCONbits.CS=0;
+    LCDCONbits.CS=1;
     LCDCONbits.LCDSIDL=0;
     LCDCONbits.SLPEN=0;
     LCDCONbits.WERR=0;
@@ -816,21 +816,21 @@ void lcd_config(void)
     
     LCDREGbits.CPEN=0;
     LCDREGbits.BIAS=7;
-    LCDREGbits.CKSEL=2;
+    LCDREGbits.CKSEL=0;
     LCDREGbits.MODE13=1;
     
     LCDPSbits.BIASMD=0;
-    LCDPSbits.LP=4;
+    LCDPSbits.LP=2;
 	//LCDPSbits.WFT=1;
     
     LCDREFbits.LCDIRE=1;
-    LCDREFbits.LCDCST=4;
+    LCDREFbits.LCDCST=0;
     LCDREFbits.VLCD1PE=0;
     LCDREFbits.VLCD2PE=0;
     LCDREFbits.VLCD3PE=0;
     
-    LCDREFbits.LRLAP=3;
-    LCDREFbits.LRLBP=3;
+    LCDREFbits.LRLAP=1;
+    LCDREFbits.LRLBP=1;
     LCDREFbits.LRLAT=7;
     
     

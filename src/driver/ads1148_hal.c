@@ -308,8 +308,6 @@ void ads1148_hal_port_init_chip1(void)
 	ads1148_hal_cs_1_mod_out();
 	ads1148_hal_start_1_mod_out();
 	ads1148_hal_drdy_1_mod_in();
-	
-
 }
 
 void ads1148_hal_port_deinit_chip1(void)

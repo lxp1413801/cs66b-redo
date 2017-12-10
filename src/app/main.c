@@ -8,71 +8,35 @@ volatile bool sampling=true;
 
 void m_system_init(void)
 {
-    PIN_MANAGER_Initialize();
-    INTERRUPT_Initialize();
-    OSCILLATOR_Initialize();
-    TMR2_Initialize();
-    RTCC_Initialize();
-    TMR1_Initialize();    
+	PIN_MANAGER_Initialize();
+	OSCILLATOR_Initialize();
+	INTERRUPT_Initialize();
+	TMR2_Initialize();
+	TMR1_Initialize();
+	RTCC_Initialize();  
 }
 
 void thread_main_pre(void)
 {
     kz_vadd_on();
     key_init();
-    
+
     lcd_init();
     ui_disp_all_on();
-    //while(1);
     __nop();
     __nop();
     main_delay_ms(1000);
-    ui_disp_all_off();
-    main_delay_ms(1000);
+    // ui_disp_all_off();
+    // main_delay_ms(1000);
 
 	//ui_disp_start_cs600(4);
+
 	data_init_all();    
 	
 	gpio_status_pins_mod_in();
 }
-/*
-void thread_main( void * pvParameters )
-{
-    //configASSERT( ( ( uint32_t ) pvParameters ) == 1 );
-    EventBits_t event;
-    thread_main_pre();
-    
-	ui_disp_start_cs600(4);
-	data_init_all();
-    thread_sample_create();
-    while(1) {
-        event=xEventGroupWaitBits(threadMainEvent,flg_ALL_BITS,pdTRUE,pdFALSE,portMAX_DELAY);
-        if(event | flg_RTC_SECOND){
-            __nop();
-            __nop();    
-        }
-        if(event | flg_KEY_DOWN){
-            key_process();
-        }
-    }
-}
-void thread_main_create(void)
-{
-	BaseType_t xReturned;
-	TaskHandle_t xHandle = NULL;
-	threadMainEvent = xEventGroupCreate();
 
-    xReturned = xTaskCreate(thread_main, "NAME", configMINIMAL_STACK_SIZE*4, 	NULL, 	tskIDLE_PRIORITY, 	&xHandle );
-    
-   
-    if(threadMainEvent== NULL){
-        while(1){
-            __nop();
-            __nop();
-        }
-    }
-}
-*/
+/*
 void event_proess(void)
 {
 	if(event | flg_TICKER_10MS_PER){
@@ -80,27 +44,30 @@ void event_proess(void)
 		sample_process();
 	}
 }
-
+*/
 int main(void)
 {
-    //uint8_t str[4]={0x11,0x22,0x33,0x44};
-    //uint8_t i=0,j=0;
-    // initialize the device
-    uint8_t t8=0;
-    SYSTEM_Initialize();
-    //m_system_init();
 
-	//thread_main_create();
-	//vTaskStartScheduler();
-	
+    uint8_t t8=0;
+    //SYSTEM_Initialize();
+ 
+    m_system_init();
     thread_main_pre();
-	
+    while(1){
+        pre_system_sleep_deinit_all_pins();
+        TMR1_Stop();
+        TMR2_Stop();
+        __nop();
+        __nop();        
+        Sleep();
+        
+    }	
     ads1148_init_all_obj();
 	ads1148_init_device(); 
-
 	
     blShowTime=stSysData.lcdShowTm;
 	blShowTime*=2;
+
     while (1){
         if(stSysData.sleepPeriod==0){
             noEventTimeOut=NO_EVENT_TIME_MAX;
@@ -118,6 +85,7 @@ int main(void)
                 do{
                     t8=sample_process();
                 }while(t8!=0);
+                ads1148_pre_sleep();
             }
             if(noEventTimeOut==0){
                 __nop();

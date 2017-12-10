@@ -40,12 +40,17 @@ extern "C"{
 		set_port_mode_dig(IIC_SCL_PORT,IIC_SCL_PIN); \
 		set_port_mode_out(IIC_SCL_PORT,IIC_SCL_PIN); \
 		}while(0);
-		
+
+	#define iic_scl_mode_in() do{ \
+		set_port_mode_dig(IIC_SCL_PORT,IIC_SCL_PIN); \
+		set_port_mode_in(IIC_SCL_PORT,IIC_SCL_PIN); \
+		}while(0);		
+
 	#define	iic_scl_hight() set_port_value_hight(IIC_SCL_PORT,IIC_SCL_PIN);
 	#define	iic_scl_low() set_port_value_low(IIC_SCL_PORT,IIC_SCL_PIN);
 
 	extern uint8_t iicSlaveAddr;
-
+    extern void iic_pins_disable(void);
 	extern void iic_start(void);
 	extern void iic_stop(void);
 	extern uint8_t iic_send_byte(uint8_t x);

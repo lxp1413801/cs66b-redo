@@ -1,6 +1,7 @@
 #include "gpio_config.h"
 #include "gpio.h"
 #include "lcd.h"
+#include "i2c.h"
 
 volatile bool lcdBlackNightOn=false;
 volatile bool kzAvddOn=false;
@@ -17,6 +18,7 @@ void kz_vadd_off(void)
 	set_portg_mode_dig(PIN9);
 	set_portg_mode_out(PIN9);
 	set_portg_value_hight(PIN9);
+	set_portg_odc_en(PIN9);
 	kzAvddOn=false;
 }
 void back_night_on(void)
@@ -73,14 +75,28 @@ void all_bj_disable(void)
 	set_port_value_low(BJ_PORT,ALL_BJ_PINS);
 }
 //
+void pre_system_sleep_deinit_all_pins(void)
+{
+    TRISA = 0xFFFF;
+    TRISB = 0xFFFF;
+    TRISC = 0xFFFF;
+    TRISD = 0xFFFF;
+    TRISE = 0xFFFF;
+    TRISF = 0xFFFF;
+    TRISG = 0xFFFF;        
+}
 void pre_system_sleep(void)
 {
+
+
+
 	gpio_status_pins_mod_in();
 	all_bj_disable();
 	check_solor_set_low();
 	back_night_off();
 	kz_vadd_off();
-    lcd_off();
+    iic_pins_disable();
+    //lcd_off();
     asm("NOP");
     asm("NOP");   
 }

@@ -6,7 +6,11 @@ __nop();__nop();__nop();__nop();__nop(); \
 __nop();__nop();__nop();__nop();__nop(); \
 }while(0);
 
-
+void iic_pins_disable(void)
+{
+    iic_sda_mode_in();
+    iic_scl_mode_in();
+}
 void iic_start(void)
 {
 	iic_scl_mode_out();
