@@ -51,6 +51,7 @@
           <itemPath>src/driver/ex_eeprom.c</itemPath>
           <itemPath>src/driver/i2c.c</itemPath>
           <itemPath>src/driver/key.c</itemPath>
+          <itemPath>src/driver/ad421.c</itemPath>
         </logicalFolder>
         <logicalFolder name="global" displayName="global" projectFiles="true">
           <itemPath>src/global/globle.c</itemPath>

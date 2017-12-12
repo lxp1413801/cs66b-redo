@@ -14,6 +14,7 @@
 	#include "i2c.h"
 	#include "ex_eeprom.h"
 	#include "key.h"
+	#include "ad421.h"
 	
 
 #ifdef __cplusplus

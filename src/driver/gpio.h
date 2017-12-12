@@ -48,9 +48,20 @@
 	extern void status_ma_mode_in(void);
 	extern void gpio_status_pins_mod_in(void);
 	
+	extern void all_bj_pins_init(void);
+	//#define all_bj_disable() all_bj_pins_init()
 	extern void all_bj_disable(void);
+	extern void bj_1_on(void);
+	extern void bj_2_on(void);
+	extern void bj_3_on(void);
+	extern void bj_4_on(void);
+
+	extern void bj_1_off(void);
+	extern void bj_2_off(void);
+	extern void bj_3_off(void);
+	extern void bj_4_off(void);
+	
 	extern void pre_system_sleep(void);
-    
     extern void pre_system_sleep_deinit_all_pins(void);
 	
 #ifdef __cplusplus

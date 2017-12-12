@@ -102,8 +102,6 @@ void event_enter_sleep(void)
 }
 int main(void)
 {
-
-    
     //SYSTEM_Initialize(); 
     m_system_init();
     pre_system_sleep_deinit_all_pins();
@@ -115,8 +113,6 @@ int main(void)
 	blShowTime*=2;
 
     while (1){
-
-		
 		if(event & flg_KEY_DOWN){
 			//event &= ~flg_KEY_DOWN;
             noEventTimeOut=NO_EVENT_TIME_MAX;

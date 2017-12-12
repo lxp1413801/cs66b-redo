@@ -27,6 +27,7 @@ src/soc/../includes/../driver/lcd.h  \
  src/soc/../includes/../driver/i2c.h  \
  src/soc/../includes/../driver/ex_eeprom.h  \
  src/soc/../includes/../driver/key.h  \
+ src/soc/../includes/../driver/ad421.h  \
  src/soc/../includes/../depend/depend.h  \
  src/soc/../includes/../depend/m_string.h  \
  src/soc/../includes/../depend/crc16.h  \

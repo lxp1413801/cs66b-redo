@@ -68,11 +68,60 @@ void check_solor_set_low(void)
 	set_port_value_low(CHECK_SOLOR_PORT,CHECK_SOLOR_PIN);
 }
 
+
+void all_bj_init(void)
+{
+	set_port_mode_dig(BJ_PORT,ALL_BJ_PINS);
+	set_port_mode_out(BJ_PORT,ALL_BJ_PINS);
+	set_port_value_low(BJ_PORT,ALL_BJ_PINS);	
+	set_port_value_hight(BJ_V_PORT,BJ_V_PIN);
+}
+
 void all_bj_disable(void)
 {
 	set_port_mode_dig(BJ_PORT,ALL_BJ_PINS);
 	set_port_mode_out(BJ_PORT,ALL_BJ_PINS);
-	set_port_value_low(BJ_PORT,ALL_BJ_PINS);
+	set_port_value_low(BJ_PORT,ALL_BJ_PINS);	
+}
+
+void bj_1_on(void)
+{
+	set_port_value_hight(BJ_1_PORT,BJ_1_PIN);
+}
+
+void bj_2_on(void)
+{
+	set_port_value_hight(BJ_2_PORT,BJ_2_PIN);
+}
+
+void bj_3_on(void)
+{
+	set_port_value_hight(BJ_3_PORT,BJ_3_PIN);
+}
+
+void bj_4_on(void)
+{
+	set_port_value_hight(BJ_4_PORT,BJ_4_PIN);
+}
+
+void bj_1_off(void)
+{
+	set_port_value_low(BJ_1_PORT,BJ_1_PIN);
+}
+
+void bj_2_off(void)
+{
+	set_port_value_low(BJ_2_PORT,BJ_2_PIN);
+}
+
+void bj_3_off(void)
+{
+	set_port_value_low(BJ_3_PORT,BJ_3_PIN);
+}
+
+void bj_4_off(void)
+{
+	set_port_value_low(BJ_4_PORT,BJ_4_PIN);
 }
 //
 void pre_system_sleep_deinit_all_pins(void)
