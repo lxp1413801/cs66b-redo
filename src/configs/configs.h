@@ -8,6 +8,10 @@
     #include <stdint.h>
 
 	#define NO_EVENT_TIME_MAX 10*2
+	
+	#ifndef ADS1148_CHIP_OTRHER_ONE_ENABLE
+		#define ADS1148_CHIP_OTRHER_ONE_ENABLE 0
+	#endif
 #ifdef __cplusplus
 	}
 #endif

@@ -758,6 +758,10 @@ void lcd_show_string(uint8_t* str)
 void lcd_disp_refresh(void)
 {
 	//m_mem_cpy_len(pLcdReg,pLCD,LCD_PIXEL_REGISTER_SIZE);
+	
+	// while(!(LCDPSbits.WA)){
+        // LCDCONbits.WERR=0;
+    // };
 	LCDDATA0=pLCD[0];
 	LCDDATA1=pLCD[1];
 	LCDDATA2=pLCD[2];
@@ -794,6 +798,8 @@ void lcd_disp_refresh(void)
 	LCDDATA29=pLCD[29];
 	LCDDATA30=pLCD[30];
 	LCDDATA31=pLCD[31];		
+	//if(LCDCONbits.WERR)LCDCONbits.WERR=0;
+	LCDCONbits.WERR=0;
 }
 
 void lcd_disp_all(uint16_t x)
@@ -820,18 +826,18 @@ void lcd_config(void)
     LCDREGbits.MODE13=1;
     
     LCDPSbits.BIASMD=0;
-    LCDPSbits.LP=2;
+    LCDPSbits.LP=4;
 	//LCDPSbits.WFT=1;
     
     LCDREFbits.LCDIRE=1;
-    LCDREFbits.LCDCST=0;
+    LCDREFbits.LCDCST=3;
     LCDREFbits.VLCD1PE=0;
     LCDREFbits.VLCD2PE=0;
     LCDREFbits.VLCD3PE=0;
     
-    LCDREFbits.LRLAP=1;
+    LCDREFbits.LRLAP=3;
     LCDREFbits.LRLBP=1;
-    LCDREFbits.LRLAT=7;
+    LCDREFbits.LRLAT=2;
     
     
 

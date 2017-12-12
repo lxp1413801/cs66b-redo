@@ -87,15 +87,12 @@ void pre_system_sleep_deinit_all_pins(void)
 }
 void pre_system_sleep(void)
 {
-
-
-
 	gpio_status_pins_mod_in();
 	all_bj_disable();
 	check_solor_set_low();
 	back_night_off();
 	kz_vadd_off();
-    iic_pins_disable();
+    iic_pins_deinit();
     //lcd_off();
     asm("NOP");
     asm("NOP");   

@@ -36,14 +36,23 @@ void ads1148_hal_sck_mod_in(void)
 	//set_port_value_hight(ADS1148_SCK_PORT,ADS1148_SCK_PIN);
 }
 
-/*
+
 void ads1148_hal_din_mod_out(void)
 {
     set_port_mode_dig(ADS1148_DIN_PORT,ADS1148_DIN_PIN);
 	set_port_mode_out(ADS1148_DIN_PORT,ADS1148_DIN_PIN);
+	//set_port_value_hight(ADS1148_DIN_PORT,ADS1148_DIN_PIN);
+}
+
+void ads1148_hal_din_set_hight(void)
+{
 	set_port_value_hight(ADS1148_DIN_PORT,ADS1148_DIN_PIN);
 }
-*/
+
+void ads1148_hal_din_set_low(void)
+{
+	set_port_value_low(ADS1148_DIN_PORT,ADS1148_DIN_PIN);
+}
 
 void ads1148_hal_din_mod_in(void)
 {
@@ -290,12 +299,23 @@ void ads1148_hal_port_deinit_chip0(void)
 	ads1148_hal_drdy_0_mod_in();
 	
 	/*
+	ads1148_hal_sck_mod_out();
+	ads1148_hal_sck_set_low();
+	
+	ads1148_hal_din_mod_out();
+	ads1148_hal_din_set_low();
+	
+	ads1148_hal_dout_mod_out();
+	ads1148_hal_dout_set_low();
+	
+	ads1148_hal_cs_0_mod_out();
 	ads1148_hal_cs_0_set_hight();
 	
+	ads1148_hal_start_0_mod_out();
 	ads1148_hal_start_0_set_low();
 	
 	ads1148_hal_drdy_0_mod_out();
-	ads1148_hal_drdy_0_set_low();	
+	ads1148_hal_drdy_0_set_low();
 	*/
 }
 
@@ -319,14 +339,19 @@ void ads1148_hal_port_deinit_chip1(void)
 	ads1148_hal_cs_1_mod_in();
 	ads1148_hal_start_1_mod_in();
 	ads1148_hal_drdy_1_mod_in();	
+	
+
 	/*
+	ads1148_hal_cs_1_mod_out();
 	ads1148_hal_cs_1_set_hight();
 	
+	ads1148_hal_start_1_mod_out();
 	ads1148_hal_start_1_set_low();
 	
 	ads1148_hal_drdy_1_mod_out();
 	ads1148_hal_drdy_1_set_low();	
 	*/
+
 }
 /*
 

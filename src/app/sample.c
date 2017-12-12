@@ -624,7 +624,7 @@ uint8_t sample_process(void)
 		case 0x07:sample_calc_press();					break;
 
         case 0x08:sample_calc_temperature_in();         break; 
-		
+#if ADS1148_CHIP_OTRHER_ONE_ENABLE==1
 		case 0x09:samlpe_chip1_ch_expr0_signal();		break;
 		case 0x0a:sample_calc_press_ex0();				break;
 		case 0x0b:samlpe_chip1_ch_ex0_temperature_A();	break;
@@ -640,12 +640,15 @@ uint8_t sample_process(void)
 		case 0x13:samlpe_in_soc_battery();				break;
 		case 0x14:sample_in_soc_solar();				break;
 		case 0x15:samlpe_in_soc_ref();					break;
-		case 0x16:break;
+#endif
 		default:	break;
 	}
 	sampleIndex++;
-    if(sampleIndex>0x16)sampleIndex=0;
-    
+#if ADS1148_CHIP_OTRHER_ONE_ENABLE==1
+    if(sampleIndex>0x15)sampleIndex=0;
+#else
+    if(sampleIndex>0x08)sampleIndex=0;
+#endif
     if(stSysData.sleepPeriod==0){
         TMR2_Start();
     }
