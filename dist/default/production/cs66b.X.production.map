@@ -37,12 +37,12 @@ Command:
   build/default/production/src/driver/ex_eeprom.o \
   build/default/production/src/driver/i2c.o \
   build/default/production/src/driver/key.o \
+  build/default/production/src/driver/ad421.o \
   build/default/production/src/global/globle.o \
   build/default/production/src/soc/delay.o \
   build/default/production/src/soc/ticker.o \
   build/default/production/src/soc/flash.o \
   build/default/production/src/soc/m_asm.o \
-  build/default/production/src/driver/ad421.o \
   --local-stack \
   --defsym=__MPLAB_BUILD=1 \
   -Tp24FJ128GA310.gld.00 \
@@ -1401,12 +1401,12 @@ LOAD build/default/production/src/driver/ads1148_hal.o
 LOAD build/default/production/src/driver/ex_eeprom.o
 LOAD build/default/production/src/driver/i2c.o
 LOAD build/default/production/src/driver/key.o
+LOAD build/default/production/src/driver/ad421.o
 LOAD build/default/production/src/global/globle.o
 LOAD build/default/production/src/soc/delay.o
 LOAD build/default/production/src/soc/ticker.o
 LOAD build/default/production/src/soc/flash.o
 LOAD build/default/production/src/soc/m_asm.o
-LOAD build/default/production/src/driver/ad421.o
                     0x0001                  __MPLAB_BUILD = 0x1
 LOAD pPIC24Fxxx
 LOAD c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\libfx-elf.a
@@ -1566,12 +1566,12 @@ __CONFIG1
  .debug_info      0x00ec97        0x541 build/default/production/src/driver/ex_eeprom.o
  .debug_info      0x00f1d8        0x365 build/default/production/src/driver/i2c.o
  .debug_info      0x00f53d        0xbd2 build/default/production/src/driver/key.o
- .debug_info      0x01010f        0x18a build/default/production/src/global/globle.o
- .debug_info      0x010299        0x17a build/default/production/src/soc/delay.o
- .debug_info      0x010413        0x3f7 build/default/production/src/soc/ticker.o
- .debug_info      0x01080a        0x41e build/default/production/src/soc/flash.o
- .debug_info      0x010c28         0x74 build/default/production/src/soc/m_asm.o
- .debug_info      0x010c9c        0x467 build/default/production/src/driver/ad421.o
+ .debug_info      0x01010f        0x467 build/default/production/src/driver/ad421.o
+ .debug_info      0x010576        0x18a build/default/production/src/global/globle.o
+ .debug_info      0x010700        0x17a build/default/production/src/soc/delay.o
+ .debug_info      0x01087a        0x3f7 build/default/production/src/soc/ticker.o
+ .debug_info      0x010c71        0x41e build/default/production/src/soc/flash.o
+ .debug_info      0x01108f         0x74 build/default/production/src/soc/m_asm.o
  *(.gnu.linkonce.wi.*)
 
 .debug_abbrev     0x000000       0x1edb
@@ -1598,12 +1598,12 @@ __CONFIG1
  .debug_abbrev    0x00182e        0x120 build/default/production/src/driver/ex_eeprom.o
  .debug_abbrev    0x00194e         0xa7 build/default/production/src/driver/i2c.o
  .debug_abbrev    0x0019f5         0xf8 build/default/production/src/driver/key.o
- .debug_abbrev    0x001aed         0x44 build/default/production/src/global/globle.o
- .debug_abbrev    0x001b31         0x67 build/default/production/src/soc/delay.o
- .debug_abbrev    0x001b98        0x11a build/default/production/src/soc/ticker.o
- .debug_abbrev    0x001cb2        0x129 build/default/production/src/soc/flash.o
- .debug_abbrev    0x001ddb         0x14 build/default/production/src/soc/m_asm.o
- .debug_abbrev    0x001def         0xec build/default/production/src/driver/ad421.o
+ .debug_abbrev    0x001aed         0xec build/default/production/src/driver/ad421.o
+ .debug_abbrev    0x001bd9         0x44 build/default/production/src/global/globle.o
+ .debug_abbrev    0x001c1d         0x67 build/default/production/src/soc/delay.o
+ .debug_abbrev    0x001c84        0x11a build/default/production/src/soc/ticker.o
+ .debug_abbrev    0x001d9e        0x129 build/default/production/src/soc/flash.o
+ .debug_abbrev    0x001ec7         0x14 build/default/production/src/soc/m_asm.o
 
 .debug_line       0x000000       0x2c32
  *(.debug_line)
@@ -1629,12 +1629,12 @@ __CONFIG1
  .debug_line      0x002316         0xf5 build/default/production/src/driver/ex_eeprom.o
  .debug_line      0x00240b        0x171 build/default/production/src/driver/i2c.o
  .debug_line      0x00257c        0x125 build/default/production/src/driver/key.o
- .debug_line      0x0026a1         0x86 build/default/production/src/global/globle.o
- .debug_line      0x002727         0xa2 build/default/production/src/soc/delay.o
- .debug_line      0x0027c9        0x197 build/default/production/src/soc/ticker.o
- .debug_line      0x002960        0x13d build/default/production/src/soc/flash.o
- .debug_line      0x002a9d         0x46 build/default/production/src/soc/m_asm.o
- .debug_line      0x002ae3        0x14f build/default/production/src/driver/ad421.o
+ .debug_line      0x0026a1        0x14f build/default/production/src/driver/ad421.o
+ .debug_line      0x0027f0         0x86 build/default/production/src/global/globle.o
+ .debug_line      0x002876         0xa2 build/default/production/src/soc/delay.o
+ .debug_line      0x002918        0x197 build/default/production/src/soc/ticker.o
+ .debug_line      0x002aaf        0x13d build/default/production/src/soc/flash.o
+ .debug_line      0x002bec         0x46 build/default/production/src/soc/m_asm.o
 
 .debug_frame      0x000000       0x3450
  *(.debug_frame)
@@ -1660,10 +1660,10 @@ __CONFIG1
  .debug_frame     0x002f1c         0xd8 build/default/production/src/driver/ex_eeprom.o
  .debug_frame     0x002ff4        0x110 build/default/production/src/driver/i2c.o
  .debug_frame     0x003104         0x8c build/default/production/src/driver/key.o
- .debug_frame     0x003190         0x4c build/default/production/src/soc/delay.o
- .debug_frame     0x0031dc         0xfc build/default/production/src/soc/ticker.o
- .debug_frame     0x0032d8         0x84 build/default/production/src/soc/flash.o
- .debug_frame     0x00335c         0xf4 build/default/production/src/driver/ad421.o
+ .debug_frame     0x003190         0xf4 build/default/production/src/driver/ad421.o
+ .debug_frame     0x003284         0x4c build/default/production/src/soc/delay.o
+ .debug_frame     0x0032d0         0xfc build/default/production/src/soc/ticker.o
+ .debug_frame     0x0033cc         0x84 build/default/production/src/soc/flash.o
 
 .debug_str        0x000000        0xa4a
  *(.debug_str)
@@ -1685,9 +1685,9 @@ __CONFIG1
  .debug_str       0x0008ec         0x75 build/default/production/src/driver/ads1148.o
  .debug_str       0x000961         0x30 build/default/production/src/driver/ex_eeprom.o
  .debug_str       0x000991         0x4f build/default/production/src/driver/key.o
- .debug_str       0x0009e0         0x30 build/default/production/src/soc/ticker.o
- .debug_str       0x000a10         0x1e build/default/production/src/soc/flash.o
- .debug_str       0x000a2e         0x1c build/default/production/src/driver/ad421.o
+ .debug_str       0x0009e0         0x1c build/default/production/src/driver/ad421.o
+ .debug_str       0x0009fc         0x30 build/default/production/src/soc/ticker.o
+ .debug_str       0x000a2c         0x1e build/default/production/src/soc/flash.o
 
 .debug_loc
  *(.debug_loc)
@@ -1743,15 +1743,15 @@ __CONFIG1
  .debug_pubnames
                   0x0030a1         0x5f build/default/production/src/driver/key.o
  .debug_pubnames
-                  0x003100         0x4b build/default/production/src/global/globle.o
+                  0x003100        0x106 build/default/production/src/driver/ad421.o
  .debug_pubnames
-                  0x00314b         0x2c build/default/production/src/soc/delay.o
+                  0x003206         0x4b build/default/production/src/global/globle.o
  .debug_pubnames
-                  0x003177         0xe0 build/default/production/src/soc/ticker.o
+                  0x003251         0x2c build/default/production/src/soc/delay.o
  .debug_pubnames
-                  0x003257         0x90 build/default/production/src/soc/flash.o
+                  0x00327d         0xe0 build/default/production/src/soc/ticker.o
  .debug_pubnames
-                  0x0032e7        0x106 build/default/production/src/driver/ad421.o
+                  0x00335d         0x90 build/default/production/src/soc/flash.o
 
 .debug_ranges
  *(.debug_ranges)
@@ -1803,15 +1803,15 @@ __CONFIG1
  .debug_aranges
                   0x0001f8         0x18 build/default/production/src/driver/key.o
  .debug_aranges
-                  0x000210         0x18 build/default/production/src/soc/delay.o
+                  0x000210         0x18 build/default/production/src/driver/ad421.o
  .debug_aranges
-                  0x000228         0x18 build/default/production/src/soc/ticker.o
+                  0x000228         0x18 build/default/production/src/soc/delay.o
  .debug_aranges
-                  0x000240         0x18 build/default/production/src/soc/flash.o
+                  0x000240         0x18 build/default/production/src/soc/ticker.o
  .debug_aranges
-                  0x000258         0x18 build/default/production/src/soc/m_asm.o
+                  0x000258         0x18 build/default/production/src/soc/flash.o
  .debug_aranges
-                  0x000270         0x18 build/default/production/src/driver/ad421.o
+                  0x000270         0x18 build/default/production/src/soc/m_asm.o
                     0x0000                  WREG0 = 0x0
                     0x0000                  _WREG0 = 0x0
                     0x0002                  WREG1 = 0x2
@@ -3123,15 +3123,15 @@ LOAD data_init
  .debug_pubtypes
                   0x000f22         0xd4 build/default/production/src/driver/key.o
  .debug_pubtypes
-                  0x000ff6         0x1f build/default/production/src/global/globle.o
+                  0x000ff6         0x2e build/default/production/src/driver/ad421.o
  .debug_pubtypes
-                  0x001015         0x1f build/default/production/src/soc/delay.o
+                  0x001024         0x1f build/default/production/src/global/globle.o
  .debug_pubtypes
-                  0x001034         0x49 build/default/production/src/soc/ticker.o
+                  0x001043         0x1f build/default/production/src/soc/delay.o
  .debug_pubtypes
-                  0x00107d         0x51 build/default/production/src/soc/flash.o
+                  0x001062         0x49 build/default/production/src/soc/ticker.o
  .debug_pubtypes
-                  0x0010ce         0x2e build/default/production/src/driver/ad421.o
+                  0x0010ab         0x51 build/default/production/src/soc/flash.o
 
 __c30_signature
                   0x0010fc        0x12c
@@ -3180,15 +3180,15 @@ __c30_signature
  __c30_signature
                   0x00117a          0x6 build/default/production/src/driver/key.o
  __c30_signature
-                  0x001180          0x6 build/default/production/src/global/globle.o
+                  0x001180          0x6 build/default/production/src/driver/ad421.o
  __c30_signature
-                  0x001186          0x6 build/default/production/src/soc/delay.o
+                  0x001186          0x6 build/default/production/src/global/globle.o
  __c30_signature
-                  0x00118c          0x6 build/default/production/src/soc/ticker.o
+                  0x00118c          0x6 build/default/production/src/soc/delay.o
  __c30_signature
-                  0x001192          0x6 build/default/production/src/soc/flash.o
+                  0x001192          0x6 build/default/production/src/soc/ticker.o
  __c30_signature
-                  0x001198          0x6 build/default/production/src/driver/ad421.o
+                  0x001198          0x6 build/default/production/src/soc/flash.o
  __c30_signature
                   0x00119e          0x6 c:/program files (x86)/microchip/xc16/v1.32/bin/bin/../../lib\liblega-pic30-elf.a(crt0_extended24.o)
  __c30_signature

@@ -16,6 +16,7 @@ src/driver/ads1148_hal.h  \
 src/driver/i2c.h  \
 src/driver/ex_eeprom.h  \
  src/driver/key.h  \
+src/driver/ad421.h  \
 src/driver/../global/globle.h  \
  src/driver/../global/../../mcc_generated_files/mcc.h  \
  src/driver/../app/event.h  \
