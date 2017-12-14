@@ -34,7 +34,9 @@ void thread_main_pre(void)
 
 	data_init_all();    
 	
-	gpio_status_pins_mod_in();
+	//gpio_status_pins_mod_in();
+    all_status_pins_mod_in();
+	run_status_init();
 }
 
 /*
@@ -57,7 +59,6 @@ void event_sample_real_time_mode(void)
 		kz_vadd_on();
 		sample_process();			
 	}             
-
 }
 
 void event_sample_sleep_wake_mode(void)
@@ -105,13 +106,22 @@ int main(void)
     //SYSTEM_Initialize(); 
     m_system_init();
     pre_system_sleep_deinit_all_pins();
+	#if BJ_BAORD_EN
+	all_bj_init();
+	bj_all_on();
+	#endif
     thread_main_pre();
-
+	
+	all_bj_disable();
+	
     ads1148_init_all_obj();
 	ads1148_init_device(); 
     blShowTime=stSysData.lcdShowTm;
 	blShowTime*=2;
-
+	#if I_LOOP_BOARD 
+    ad421_all_obj_init();
+    ad421_test();
+	#endif
     while (1){
 		if(event & flg_KEY_DOWN){
 			//event &= ~flg_KEY_DOWN;
@@ -121,7 +131,7 @@ int main(void)
 		}
 		if(event &  flg_RTC_SECOND){
 			event &=  ~flg_RTC_SECOND;
-			ui_disp_menu();
+
 			if(lcdTwinkle>0)lcdTwinkle--;
 			if(blShowTime>0)blShowTime--;
 			if(blShowTime==0){
@@ -130,6 +140,16 @@ int main(void)
             if(noEventTimeOut)noEventTimeOut--;
             if(noEventTimeOut<blShowTime)noEventTimeOut=blShowTime;
             if(stSysData.sleepPeriod)sleepHalfSec++;
+            
+			run_status_on();
+            if((stSysData.sleepPeriod==0 || noEventTimeOut || sampleFreashFlg)){
+                ui_disp_menu();
+                sampleFreashFlg=false;
+            }else{
+                delay_us(100);
+            }
+			run_status_off();            
+            
 		}
         
 		event_sample_real_time_mode();

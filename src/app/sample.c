@@ -1,6 +1,7 @@
 #include "../includes/includes.h"
 
 #define sample_delay_ms(ms) delay_ms(ms)
+volatile bool sampleFreashFlg=false;
 volatile uint8_t sampleIndex=0x00;
 volatile int16_t samlpeBuf[SAMPLE_ADC_BUF_LEN];
 
@@ -578,15 +579,6 @@ void sample_calc_temperature_ex1(void)
 	__nop();
 }
 
-void samlpe_chip1_ch_ex1_temperature(void)
-{
-	
-}
-
-void samlpe_chip1_ch_expr1_ref1(void)
-{
-	
-}
 
 void sample_in_soc_solar(void)
 {
@@ -599,11 +591,6 @@ void samlpe_in_soc_battery(void)
 }
 
 void samlpe_in_soc_ref(void)
-{
-	
-}
-
-void sample_post_calc(void)
 {
 	
 }
@@ -645,69 +632,20 @@ uint8_t sample_process(void)
 	}
 	sampleIndex++;
 #if ADS1148_CHIP_OTRHER_ONE_ENABLE==1
-    if(sampleIndex>0x15)sampleIndex=0;
+    if(sampleIndex>0x15){
+        sampleIndex=0;
+        sampleFreashFlg=true;
+    }
 #else
-    if(sampleIndex>0x08)sampleIndex=0;
+    if(sampleIndex>0x08){
+        sampleIndex=0;
+        sampleFreashFlg=true;
+    }
 #endif
     if(stSysData.sleepPeriod==0){
         TMR2_Start();
     }
     return sampleIndex;
 }
-/*
-void samlpe_chip0_channle_gain_calib(void)
-{
-	uint32_t tm;
-    volatile int32_t t32=0;
-    volatile int16_t t16;
-	uint8_t i;
-	tm=xTaskGetTickCount();
-	ads1148_start_convert(&ads1148Chip1);
-	delay_us(5);
-	for(i=0;i<8;i++){
-		ads1148_waite_convert(&ads1148Chip1);
-        //delay_us(5);
-        vPortEnterCritical();
-		t16=ads1148_read_data(&ads1148Chip1);
-        vPortExitCritical();
-        t32=t32+(int32_t)t16;
-        __nop();
-        __nop();        
-	}
-	t32/=i;
-	ads1148_stop_convert(&ads1148Chip1);
-	tm=xTaskGetTickCount()-tm;
-	__nop();
-	__nop();
-}
-*/
-/*
-void thread_sample( void * pvParameters )
-{
-    ads1148_init_all_obj();
-	ads1148_init_device();
 
-	while(1){
-        sample_process();
-        sample_delay_ms(10);
-        __nop();
-        __nop();
-	}
-}
-
-void thread_sample_create(void)
-{
-    BaseType_t xReturned;
-    TaskHandle_t xHandle = NULL;
-
-
-    xReturned = xTaskCreate(
-		thread_sample, 
-		"samlpe", 
-		configMINIMAL_STACK_SIZE*2, 
-		NULL, 
-		1, 
-		&xHandle );	
-}
-*/
 

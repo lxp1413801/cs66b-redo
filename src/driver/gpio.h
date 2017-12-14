@@ -45,10 +45,16 @@
 	#define STATUS_GSM_PINS	PIN7
 	#define STATUS_GSM_PORT	portg
 	
-	extern void status_ma_mode_in(void);
-	extern void gpio_status_pins_mod_in(void);
+	#define STATUS_BJ_PINS	PIN3
+	#define STATUS_BJ_PORT	portc
 	
-	extern void all_bj_pins_init(void);
+	#define STATUS_485_PINS	PIN4
+	#define STATUS_485_PORT	portc
+	
+	extern void status_ma_mode_in(void);
+	extern void all_status_pins_mod_in(void);
+	
+	extern void all_bj_init(void);
 	//#define all_bj_disable() all_bj_pins_init()
 	extern void all_bj_disable(void);
 	extern void bj_1_on(void);
@@ -60,6 +66,16 @@
 	extern void bj_2_off(void);
 	extern void bj_3_off(void);
 	extern void bj_4_off(void);
+	extern void bj_all_on(void);
+	extern void bj_all_off(void);
+	
+	#define RUN_STATUS_PINS PIN12
+	#define RUN_STATUS_PORT	portd
+	
+	extern void run_status_init(void);
+	//extern void run_status_on(void);
+	#define run_status_on() set_port_value_hight(RUN_STATUS_PORT,RUN_STATUS_PINS);
+	#define run_status_off() set_port_value_low(RUN_STATUS_PORT,RUN_STATUS_PINS);
 	
 	extern void pre_system_sleep(void);
     extern void pre_system_sleep_deinit_all_pins(void);

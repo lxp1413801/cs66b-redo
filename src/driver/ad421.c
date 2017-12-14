@@ -1,5 +1,5 @@
 #include "drivers.h"
-
+#include "../soc/soc.h"
 ad421Obj_t ad421ObjChip0;
 ad421Obj_t ad421ObjChip1;
 
@@ -67,17 +67,24 @@ void ad421_chip0_set_idac_value(uint16_t x)
 {
 	uint16_t i;
 	ad421_chip0_pins_init();
+	delay_us(50);
 	for(i=0;i<16;i++){
 		if(x&0x8000){
 			set_port_value_hight(AD421_DATA_1_PORT,AD421_DATA_1_PIN);
 		}else{
 			set_port_value_low(AD421_DATA_1_PORT,AD421_DATA_1_PIN);
 		}
+		delay_us(50);
 		set_port_value_low(AD421_CLOCK_1_PORT,AD421_CLOCK_1_PIN);
+		delay_us(50);
 		set_port_value_hight(AD421_CLOCK_1_PORT,AD421_CLOCK_1_PIN);
+		delay_us(50);
 		x<<=1;
 	}
 	set_port_value_hight(AD421_LATCH_1_PORT,AD421_LATCH_1_PIN);	
+    delay_ms(1);
+    asm("nop");
+    asm("nop");
 	ad421_chip0_pins_deinit();
 }
 
@@ -85,17 +92,24 @@ void ad421_chip1_set_idac_value(uint16_t x)
 {
 	uint16_t i;
 	ad421_chip1_pins_init();
+	delay_us(50);
 	for(i=0;i<16;i++){
 		if(x&0x8000){
 			set_port_value_hight(AD421_DATA_2_PORT,AD421_DATA_2_PIN);
 		}else{
 			set_port_value_low(AD421_DATA_2_PORT,AD421_DATA_2_PIN);
 		}
+		delay_us(50);
 		set_port_value_low(AD421_CLOCK_2_PORT,AD421_CLOCK_2_PIN);
+		delay_us(50);
 		set_port_value_hight(AD421_CLOCK_2_PORT,AD421_CLOCK_2_PIN);
+		delay_us(50);
 		x<<=1;
 	}
 	set_port_value_hight(AD421_LATCH_2_PORT,AD421_LATCH_2_PIN);	
+    delay_ms(1);
+    asm("nop");
+    asm("nop");
 	ad421_chip1_pins_deinit();
 }
 
@@ -113,12 +127,12 @@ void ad421_all_obj_init(void)
 void ad421_test(void)
 {
 	ad421ObjChip0.pins_init();
-	ad421ObjChip0.set_idac_value(0x8000);
+	ad421ObjChip0.set_idac_value(0xffff);
 	asm("NOP");
 	asm("NOP");
 	
 	ad421ObjChip1.pins_init();
-	ad421ObjChip1.set_idac_value(0x8000);	
+	ad421ObjChip1.set_idac_value(0x1000);	
 	asm("NOP");
 	asm("NOP");	
 }

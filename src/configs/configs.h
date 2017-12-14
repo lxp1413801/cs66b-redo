@@ -12,6 +12,15 @@
 	#ifndef ADS1148_CHIP_OTRHER_ONE_ENABLE
 		#define ADS1148_CHIP_OTRHER_ONE_ENABLE 0
 	#endif
+	
+	#ifndef BJ_BAORD_EN
+		#define BJ_BAORD_EN 1
+	#endif
+	
+	#ifndef I_LOOP_BOARD
+		#define I_LOOP_BOARD 1
+	#endif
+	
 #ifdef __cplusplus
 	}
 #endif

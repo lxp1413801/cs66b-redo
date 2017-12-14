@@ -27,13 +27,15 @@ void back_night_on(void)
 	set_portb_mode_dig(PIN11);
 	set_portb_mode_out(PIN11);
 	set_portb_value_hight(PIN11);
+	//
 	lcdBlackNightOn=true;
 }
 void back_night_off(void)
 {
 	set_portb_mode_dig(PIN11);
-	set_portb_mode_out(PIN11);
-	set_portb_value_low(PIN11);
+	//set_portb_mode_out(PIN11);
+	//set_portb_value_low(PIN11);
+	set_portb_mode_in(PIN11);
 	lcdBlackNightOn=false;
 }
 
@@ -43,13 +45,19 @@ void status_ma_mode_in(void)
 	set_port_mode_in(STATUS_MA_PORT,STATUS_MA_PINS);
 }
 
-void gpio_status_pins_mod_in(void)
+void all_status_pins_mod_in(void)
 {
 	set_port_mode_dig(STATUS_MA_PORT,STATUS_MA_PINS);
 	set_port_mode_in(STATUS_MA_PORT,STATUS_MA_PINS);
 	
 	set_port_mode_dig(STATUS_GSM_PORT,STATUS_GSM_PINS);
 	set_port_mode_in(STATUS_GSM_PORT,STATUS_GSM_PINS);
+	
+	set_port_mode_dig(STATUS_BJ_PORT,STATUS_BJ_PINS);
+	set_port_mode_in(STATUS_BJ_PORT,STATUS_BJ_PINS);
+
+	set_port_mode_dig(STATUS_485_PORT,STATUS_485_PINS);
+	set_port_mode_in(STATUS_485_PORT,STATUS_485_PINS);
 }
 
 //add 
@@ -123,6 +131,24 @@ void bj_4_off(void)
 {
 	set_port_value_low(BJ_4_PORT,BJ_4_PIN);
 }
+
+void bj_all_on(void)
+{
+	set_port_value_hight(BJ_V_PORT,BJ_V_PIN);
+	set_port_value_hight(BJ_PORT,ALL_BJ_PINS);
+}
+
+void bj_all_off(void)
+{
+	set_port_value_low(BJ_V_PORT,BJ_V_PIN);
+	set_port_value_low(BJ_PORT,ALL_BJ_PINS);
+}
+
+void run_status_init(void)
+{
+	set_port_mode_dig(RUN_STATUS_PORT,RUN_STATUS_PINS);
+	set_port_mode_out(RUN_STATUS_PORT,RUN_STATUS_PINS);
+}
 //
 void pre_system_sleep_deinit_all_pins(void)
 {
@@ -136,7 +162,7 @@ void pre_system_sleep_deinit_all_pins(void)
 }
 void pre_system_sleep(void)
 {
-	gpio_status_pins_mod_in();
+	all_status_pins_mod_in();
 	all_bj_disable();
 	check_solor_set_low();
 	back_night_off();

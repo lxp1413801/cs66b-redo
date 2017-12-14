@@ -760,8 +760,10 @@ void lcd_disp_refresh(void)
 	//m_mem_cpy_len(pLcdReg,pLCD,LCD_PIXEL_REGISTER_SIZE);
 	
 	// while(!(LCDPSbits.WA)){
-        // LCDCONbits.WERR=0;
-    // };
+         //LCDCONbits.WERR=0;
+    //};
+    //if(LCDCONbits.WERR)LCDCONbits.WERR=0;
+    //if(!(LCDPSbits.WA))return;
 	LCDDATA0=pLCD[0];
 	LCDDATA1=pLCD[1];
 	LCDDATA2=pLCD[2];
@@ -830,14 +832,14 @@ void lcd_config(void)
 	//LCDPSbits.WFT=1;
     
     LCDREFbits.LCDIRE=1;
-    LCDREFbits.LCDCST=3;
+    LCDREFbits.LCDCST=5;
     LCDREFbits.VLCD1PE=0;
     LCDREFbits.VLCD2PE=0;
     LCDREFbits.VLCD3PE=0;
     
     LCDREFbits.LRLAP=3;
     LCDREFbits.LRLBP=1;
-    LCDREFbits.LRLAT=2;
+    LCDREFbits.LRLAT=7;
     
     
 
