@@ -763,7 +763,7 @@ void lcd_disp_refresh(void)
          //LCDCONbits.WERR=0;
     //};
     //if(LCDCONbits.WERR)LCDCONbits.WERR=0;
-    //if(!(LCDPSbits.WA))return;
+    if(!(LCDPSbits.WA))return;
 	LCDDATA0=pLCD[0];
 	LCDDATA1=pLCD[1];
 	LCDDATA2=pLCD[2];

@@ -25,6 +25,8 @@ volatile int16_t rtAdcValueTemperatureEx1A;
 volatile int16_t rtAdcValueTemperatureEx1B;
 //volatile int16_t rtAdcValueChip1Ref0;
 //volatile int16_t rtAdcValueChip1Ref1;
+volatile int16_t rtAdcValueBat;
+volatile int16_t rtAdcValueSolor;
 int16_t abs_diff(uint16_t a,uint16_t b)
 {
 	if(a>b){
@@ -584,10 +586,38 @@ void sample_in_soc_solar(void)
 {
 
 }
+void ain_ref_config(void){
+    set_port_mode_an(AIN_REF_P_PORT,AIN_REF_P_PIN); 
+    set_port_mode_in(AIN_REF_P_PORT,AIN_REF_P_PIN); 
+    //set_port_value_hight(AIN_REF_P_PORT,AIN_REF_P_PIN); 
+}
+	
+void ain_bat_config(void) {
+    set_port_mode_an(AIN_BAT_PORT,AIN_BAT_PIN); 
+    set_port_mode_in(AIN_BAT_PORT,AIN_BAT_PIN); 
+}
 
 void samlpe_in_soc_battery(void)
 {
-	
+	uint16_t t16;
+	//ain_ref_config();
+	ain_bat_config();
+	ADC1_Initialize();
+	ADC1_ChannelSelect(ADC1_CHANNEL_BAT);
+    //ADC1_Stop();
+	ADC1_Start();
+	delay_ms(1);
+    ADC1_Stop();
+    //delay_us(10);
+	while(!ADC1_IsConversionComplete())
+    {
+        __nop();
+    }
+	//ADC1_Stop();
+	t16=ADC1_ConversionResultBufferGet((uint16_t*)samlpeBuf);
+	rtAdcValueBat=samlpe_get_adc_average_value_ex(samlpeBuf,t16);
+	__nop();
+	__nop();	
 }
 
 void samlpe_in_soc_ref(void)
@@ -627,6 +657,7 @@ uint8_t sample_process(void)
 		case 0x13:samlpe_in_soc_battery();				break;
 		case 0x14:sample_in_soc_solar();				break;
 		case 0x15:samlpe_in_soc_ref();					break;
+		
 #endif
 		default:	break;
 	}

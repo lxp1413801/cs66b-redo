@@ -149,6 +149,7 @@ uint16_t ADC1_ConversionResultGet(void)
 {
     return ADC1BUF0;
 }
+
 bool ADC1_IsConversionComplete( void )
 {
     return AD1CON1bits.DONE; //Wait for conversion to complete   

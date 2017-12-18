@@ -150,6 +150,8 @@ void run_status_init(void)
 	set_port_mode_out(RUN_STATUS_PORT,RUN_STATUS_PINS);
 }
 //
+
+
 void pre_system_sleep_deinit_all_pins(void)
 {
     TRISA = 0xFFFF;
@@ -160,6 +162,8 @@ void pre_system_sleep_deinit_all_pins(void)
     TRISF = 0xFFFF;
     TRISG = 0xFFFF;        
 }
+
+
 void pre_system_sleep(void)
 {
 	all_status_pins_mod_in();

@@ -18,6 +18,8 @@
             <file>file:/F:/2017/cs66-b/cs66b.X/src/app/sample.h</file>
         </group>
         <group name="cs600_test">
+            <file>file:/F:/2017/cs66-b/cs66b.X/src/soc/delay.c</file>
+            <file>file:/F:/2017/cs66-b/cs66b.X/src/driver/ads1148.c</file>
             <file>file:/F:/2017/cs66-b/cs66b.X/src/app/main.c</file>
             <file>file:/F:/2017/cs66-b/cs66b.X/src/driver/gpio.h</file>
             <file>file:/F:/2017/cs66-b/cs66b.X/src/driver/ad421.c</file>

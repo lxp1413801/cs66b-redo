@@ -30,6 +30,13 @@
 	//extern void thread_sample_create(void);
     extern volatile bool sampleFreashFlg;
     extern uint8_t sample_process(void);
+	
+	#define AIN_BAT_PIN 	PIN8
+	#define AIN_BAT_PORT	portg
+	
+	#define AIN_REF_P_PIN	PIN10
+	#define AIN_REF_P_PORT	porta
+	extern void samlpe_in_soc_battery(void);
 
 #ifdef __cplusplus
 	}

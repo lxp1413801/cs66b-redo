@@ -161,7 +161,7 @@ const sysDataDef_t defultSystemData={
 		0,//uint8_t 	exPrTempShowEn;
 		60,//uint8_t		lcdShowTm;		        
 		//
-		10,//sleepPeriod
+		0,//sleepPeriod
 		300,//rfSendPeriod
 		0,//uint16_t	crc;
 };

@@ -3,11 +3,14 @@ src/soc/ticker.c  \
  src/soc/../includes/includes.h  \
  src/soc/../includes/../../mcc_generated_files/mcc.h  \
  src/soc/../includes/../../mcc_generated_files/pin_manager.h  \
- src/soc/../includes/../../mcc_generated_files/tmr1.h  \
- src/soc/../includes/../../mcc_generated_files/tmr2.h  \
  src/soc/../includes/../../mcc_generated_files/rtcc.h  \
+ src/soc/../includes/../../mcc_generated_files/adc1.h  \
  src/soc/../includes/../../mcc_generated_files/interrupt_manager.h  \
  src/soc/../includes/../../mcc_generated_files/traps.h  \
+ src/soc/../includes/../../mcc_generated_files/tmr1.h  \
+ src/soc/../includes/../../mcc_generated_files/tmr2.h  \
+ src/soc/../includes/../../mcc_generated_files/uart1.h  \
+ src/soc/../includes/../../mcc_generated_files/uart2.h  \
  src/soc/../includes/../configs/configs.h  \
  src/soc/../includes/../configs/../../mcc_generated_files/mcc.h  \
  src/soc/../includes/../global/globle.h  \
