@@ -503,19 +503,23 @@ void ads1148_pre_sleep(void)
     ads1148Chip0.pins_deinit();
     ads1148Chip1.pins_deinit();
 }
+
 void ads1148_post_sleep(void)
 {
     ads1148Chip0.pins_init();
     ads1148Chip1.pins_init();
 }
+
 void ads1148_start_convert(ads1148Obj_t* obj)
 {
 	obj->pins_start_set_hight();
 }
+
 void ads1148_stop_convert(ads1148Obj_t* obj)
 {
 	obj->pins_start_set_low();
 }
+
 void ads1148_waite_convert(ads1148Obj_t* obj)
 {
     uint16_t tm=0;
@@ -525,7 +529,7 @@ void ads1148_waite_convert(ads1148Obj_t* obj)
         //asm("nop");
         //asm("nop");
         tm++;
-        if(tm>300)return;
+        //if(tm>3000)return;
     }
     tm=0;
     while(obj->pins_drdy_get())
@@ -533,17 +537,18 @@ void ads1148_waite_convert(ads1148Obj_t* obj)
         asm("nop");
         asm("nop");
         tm++;
-        if(tm>300)return;
+        //if(tm>3000)return;
     };
     asm("nop");
     asm("nop");
-    asm("nop");
-    asm("nop");
-    asm("nop");
-    asm("nop");
-    asm("nop");
-    asm("nop");    
+    // asm("nop");
+    // asm("nop");
+    // asm("nop");
+    // asm("nop");
+    // asm("nop");
+    // asm("nop");    
 }
+
 void ads1148_test(void)
 {
 	volatile uint32_t staTm,eclipsTm,convertNum;

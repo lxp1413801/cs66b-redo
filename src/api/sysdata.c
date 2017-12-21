@@ -150,7 +150,8 @@ const sysDataDef_t defultSystemData={
 		{{0,0},{10000,10000}},//st_exClibDef	exPr0Calib[2];				//外部压力传传感器标定
 		{{0,0},{10000,10000}},//st_exClibDef	exPr1Calib[2];
 		{{0,0},{10000,10000}},//st_exClibDef	exTempCalib[2];				//外部温度标定
-		
+		{{0,0},{10000,10000}},//st_exClibDef	exTempCalib[2];				//外部温度标定
+        
 		{1000,2000},//st_ilpScaleDef	exdiffPrilpScale0;			//外部压力4-20毫安范围
 		{1000,2000},//st_ilpScaleDef	exPrilpScale0;				//外部压力4-20毫安范围
 		{1000,2000},//st_ilpScaleDef	exPrIpScale0;

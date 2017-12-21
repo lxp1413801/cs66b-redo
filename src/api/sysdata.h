@@ -63,6 +63,12 @@ extern "C"{
 		int32_t ilpLow;
 		int32_t ilpHi;
 	}st_ilpScaleDef;
+    
+    typedef struct{
+        int32_t adcVaule;
+        int32_t tempRes;
+    }st_tmpCalib,tmpCalib_t;
+    
 	//定点数固定放�?000�?
 	typedef struct{
 		uint8_t name[6];
@@ -105,8 +111,11 @@ extern "C"{
 		
 		exClibDef_t	exPr0Calib[2];				//外部压力传传感器标定
 		exClibDef_t	exPr1Calib[2];
-		exClibDef_t	exTempCalib[2];				//外部温度标定
-		
+        
+		//exClibDef_t	exTempCalib[2];			//外部温度标定
+		tmpCalib_t  tempCalibEx0[2];
+        tmpCalib_t  tempCalibEx1[2];
+        
 		st_ilpScaleDef	diffPrilpScale0;			//压力4-20毫安范围
 		st_ilpScaleDef	PrilpScale0;				//压力4-20毫安范围
 		st_ilpScaleDef	exPrIpScaleCh0;

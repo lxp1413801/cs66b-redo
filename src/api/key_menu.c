@@ -290,6 +290,23 @@ void __enter_menu_ex1_pr_calib(uint8_t row,uint8_t col)
 	adjLocation=0;	
 }
 
+void __enter_menu_set_temp_ex0(uint8_t __subMenu)
+{
+    menu=MENU_SET_TMEP_EX0;
+    subMenu=__subMenu;	
+	adjValue=(int32_t)(stSysData.tempCalibEx0[__subMenu].tempRes);
+    adjLocation=0;      
+}
+
+void __enter_menu_set_temp_ex1(uint8_t __subMenu)
+{
+    menu=MENU_SET_TMEP_EX1;
+    subMenu=__subMenu;
+	adjValue=(int32_t)(stSysData.tempCalibEx1[__subMenu].tempRes);
+    adjLocation=0;    
+	paramChangedFlag=false;
+}
+
 void __enter_menu_poly_coeffic(uint8_t __subMenu)
 {
     menu=MENU_POLY_COEFFIC;
@@ -298,7 +315,8 @@ void __enter_menu_poly_coeffic(uint8_t __subMenu)
 	sysDataDef_t* fps= &stSysData;
 	//adjValue=0x00ul;
 	adjValue=(int32_t)(fps->ployCoeffic[subMenu]);
-	adjLocation=0;    
+	adjLocation=0;   
+	paramChangedFlag=false;	
 }
 
 void __enter_menu_warn_type(uint8_t __subMenu)
@@ -361,6 +379,7 @@ void __enter_menu_epr_calib(uint8_t __subMenu)
 	adjLocation=0;	
 }
 */
+/*
 void __enter_menu_etemp_calib(uint8_t __subMenu)
 {
 	int32_t t32;
@@ -380,6 +399,8 @@ void __enter_menu_etemp_calib(uint8_t __subMenu)
 	m_floatAdj.t32=t32;
 	adjLocation=0;		
 }
+*/
+
 void __enter_menu_epr_ilp_scale(uint8_t __subMenu)
 {
 	menu=MENU_SET_EPR_ILOOP_SCALE;
@@ -520,7 +541,11 @@ void __down_home_adj(void)
     //t8>>=4;
 	t8=subMenu & 0x0f;
     t8++;
-    if(t8>3)t8=0;
+	#if DEBUG_EX_TEMP_EN
+	if(t8>3)t8=0;
+	#else
+    if(t8>2)t8=0;
+	#endif
     //t8<<=4;
     subMenu &= 0xf0;
     subMenu |= t8;	
@@ -579,7 +604,11 @@ void __up_home_adj(void)
     t8=(subMenu & 0xf0);
     t8>>=4;
     t8++;
+	#if DEBUG_EX_TEMP_EN
+	if(t8>3)t8=0;
+	#else
     if(t8>2)t8=0;
+	#endif
     t8<<=4;
     subMenu &= 0x0f;
     subMenu |= t8;
@@ -874,7 +903,10 @@ void key_process_set_up_long(void)
 		case PSW_CALIB_PRESSURE_EX0:	__enter_menu_ex0_pr_calib(0,0);     	break;
 		case PSW_CALIB_PRESSURE_EX1:	__enter_menu_ex1_pr_calib(0,0);     	break;
 		
-		case PSW_SET_ETMEP_ZERO_LINE:	__enter_menu_etemp_calib(0);			break;
+		//case PSW_SET_ETMEP_ZERO_LINE:	__enter_menu_etemp_calib(0);			break;
+		case PSW_SET_TMEP_EX0:			__enter_menu_set_temp_ex0(0);			break;
+		case PSW_SET_TMEP_EX1:			__enter_menu_set_temp_ex1(0);			break;
+		
 		case PSW_SET_EPR_ILOOP_SCALE:	__enter_menu_epr_ilp_scale(0);			break;
 		case PSW_SET_BAR_LEVEL_SCALE:	__enter_menu_bar_scale();				break;
 		case PSW_SET_WORK_MODE:			__enter_menu_work_mode();				break;
@@ -1204,7 +1236,7 @@ void __set_short_ex1_pr_calib(bool gohome)
         calibRow++;
         if(calibRow>2)calibRow=0;
     }
-    __enter_menu_ex0_pr_calib(calibRow,calibCol);
+    __enter_menu_ex1_pr_calib(calibRow,calibCol);
 	
 }
 
@@ -1301,19 +1333,12 @@ void __set_short_epr_param(bool gohome)
     __enter_menu_epr_calib(subMenu);   	
 }
  **/
+ /*
 void __set_short_etemp_param(bool gohome)
 {
 	//uint8_t* p;
 	int32_t t32;
 	sysDataDef_t* stp=&stSysData;
-    /*
-    t32=__mflot32_2_int32(m_floatAdj.t32);	
-	if(stp->exTempCalib[subMenu].value!=t32){
-		stp->exTempCalib[subMenu].value=t32;
-		stp->exTempCalib[subMenu].adcValue=adc_exPt100;
-		__sys_data_save_write_flash();
-	}
-	*/
     t32=__mflot32_2_int32(m_floatAdj.t32);	
     stp->exTempCalib[subMenu].value=t32;
     stp->exTempCalib[subMenu].adcValue=adc_exPt100;
@@ -1323,6 +1348,7 @@ void __set_short_etemp_param(bool gohome)
 	if(subMenu>1)subMenu=0;
 	__enter_menu_etemp_calib(subMenu); 
 }
+*/
 void __set_short_epr_ilp_scale(bool gohome)
 {
 	//uint8_t* p;
@@ -1463,7 +1489,7 @@ void key_process_set_long(void)
 		case MENU_SET_WARN_TYPE:		__set_short_warn_type(goHOME);      break;        
         case MENU_SET_WARN_VALUE:		__set_short_warn_value(goHOME);     break;
 		//case MENU_SET_EPR_ZERO_LINE:	__set_short_epr_param(goHOME);      break;
-		case MENU_SET_ETMEP_ZERO_LINE:	__set_short_etemp_param(goHOME);	break;
+		//case MENU_SET_ETMEP_ZERO_LINE:	__set_short_etemp_param(goHOME);	break;
 		case MENU_PRESSURE_CALIB_EX0:	__set_short_ex0_pr_calib(goHOME);	break;
 		case MENU_PRESSURE_CALIB_EX1:	__set_short_ex1_pr_calib(goHOME);	break;	
 		
@@ -1501,7 +1527,7 @@ void key_process_set(void)
 		case MENU_PRESSURE_CALIB_EX0:	__set_short_ex0_pr_calib(unGoHome);	break;
 		case MENU_PRESSURE_CALIB_EX1:	__set_short_ex1_pr_calib(unGoHome);	break;
 		
-		case MENU_SET_ETMEP_ZERO_LINE:	__set_short_etemp_param(unGoHome);	break;
+		//case MENU_SET_ETMEP_ZERO_LINE:	__set_short_etemp_param(unGoHome);	break;
 		case MENU_SET_EPR_ILOOP_SCALE:	__set_short_epr_ilp_scale(unGoHome);break;
 		
 		case MENU_SET_BAR_LEVEL_SCALE:	break;

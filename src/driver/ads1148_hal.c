@@ -5,7 +5,6 @@
 //rd10
 #define __some_nop() do{ \
 	__nop();__nop();__nop();__nop();__nop();__nop(); \
-	__nop();__nop();__nop();__nop();__nop();__nop(); \
 }while(0);
 	
 void ads1148_hal_sck_mod_out(void)

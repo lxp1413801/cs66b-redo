@@ -104,10 +104,7 @@ void event_enter_sleep(void)
 int main(void)
 {
     SYSTEM_Initialize(); 
-    kz_vadd_on();
-    while(1){
-    samlpe_in_soc_battery();
-    }
+
     //m_system_init();
     //pre_system_sleep_deinit_all_pins();
 	#if BJ_BAORD_EN

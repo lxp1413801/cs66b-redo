@@ -585,7 +585,7 @@ void ui_disp_home_sm_ex(uint8_t* str,int32_t x)
 void ui_disp_ext_loop(void)
 {
 	uint32_t t32=globleHalfSec;
-	t32>>=2;
+	t32>>=4;
 	t32%=4;
 	switch(t32){
 		case 0:
@@ -616,6 +616,8 @@ void ui_disp_menu_home(void)
 	}else if(t8==2){
 		mf.t32=__int32_2_mflot32(rtWeight);
 		lcd_disp_unit_t(true);		
+	}else if(t8==3){
+		mf.t32=__int32_2_mflot32(rtTemperatureEx0);
 	}
 	ui_disp_xfloat_pt(&mf,LCD_LINE_0);
 	//
@@ -629,6 +631,8 @@ void ui_disp_menu_home(void)
 	}else if(t8==2){
 		mf.t32=__int32_2_mflot32(rtVolume);
 		lcd_disp_unit_2nd_m3(true);			
+	}else if(t8==3){
+		mf.t32=__int32_2_mflot32(rtTemperatureEx1);
 	}
 	ui_disp_xfloat_pt(&mf,LCD_LINE_1);
 	
@@ -1029,7 +1033,7 @@ void ui_disp_menu_epr_calib_adj(void)
 	ui_disp_adj_xfloat_pt(buf,&m_floatAdj,adjLocation);		
 }
 */
-
+/*
 void ui_disp_menu_etemp_calib_adj(void)
 {
 	uint8_t buf[6];
@@ -1039,7 +1043,7 @@ void ui_disp_menu_etemp_calib_adj(void)
 	buf[3]=subMenu+'0';
 	ui_disp_adj_xfloat_pt(buf,&m_floatAdj,adjLocation);	
 }
-
+*/
 void ui_disp_menu_epr_ilp_scale_adj(void)
 {
     uint8_t buf[6];
@@ -1153,8 +1157,8 @@ void ui_disp_menu(void)
 		//case MENU_SET_EPR_ZERO_LINE:ui_disp_menu_epr_calib_adj();		break;
         case MENU_PRESSURE_CALIB_EX0:   ui_disp_menu_calib_adj_x('1',&x_ex0prData);break;
         case MENU_PRESSURE_CALIB_EX1:   ui_disp_menu_calib_adj_x('2',&x_ex1prData);break;
-		case MENU_SET_ETMEP_ZERO_LINE:
-									ui_disp_menu_etemp_calib_adj();		break;
+		// case MENU_SET_ETMEP_ZERO_LINE:
+									// ui_disp_menu_etemp_calib_adj();		break;
 		case MENU_SET_EPR_ILOOP_SCALE:	
 									ui_disp_menu_epr_ilp_scale_adj();	break;
 		case MENU_SET_BAR_LEVEL_SCALE:	ui_disp_menu_bar_full_adj();	break;

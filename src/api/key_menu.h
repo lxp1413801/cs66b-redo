@@ -23,9 +23,12 @@ extern "C"{
 	#define PSW_SET_WARN_TYPE					6
 	#define PSW_SET_WARN_VALUE					16
 	//外压零点和线性
-	//#define PSW_SET_EPR_ZERO_LINE               138
-	#define PSW_CALIB_PRESSURE_EX0					161
-	#define PSW_CALIB_PRESSURE_EX1					162
+	//#define PSW_SET_EPR_ZERO_LINE             138
+	#define PSW_CALIB_PRESSURE_EX0				161
+	#define PSW_CALIB_PRESSURE_EX1				162
+	
+	#define PSW_SET_TMEP_EX0					163
+	#define PSW_SET_TMEP_EX1					164
 	//外部温度修正
 	#define PSW_SET_ETMEP_ZERO_LINE				136	
 	//差压二次修正
@@ -101,10 +104,8 @@ extern "C"{
 	#define sub_MENU_SET_EPR_CH1_P1				0x03
 	*/
 	
-	//外部温度修正PSW_SET_ETMEP_ZERO_LINE	=136
-	#define MENU_SET_ETMEP_ZERO_LINE			0xa2
-	#define sub_MENU_SET_P0						0x00
-	#define sub_MENU_SET_P1						0x01
+
+
 	//2017.12.07 add
 	//休眠唤醒周期
 	#define MENU_SET_WAKEUP_PERIOD				0xa3
@@ -116,6 +117,14 @@ extern "C"{
 	#define MENU_SET_DPR_ILOOP_SCALE			0xa5
 	#define	sub_MENU_DPR_ILP_CH0_Lo				0x00
 	
+	//外部温度修正PSW_SET_ETMEP_ZERO_LINE	=136
+	#define MENU_SET_TMEP_EX0					0xa6
+	#define sub_MENU_SET_TEMP_P0				0x00
+	#define sub_MENU_SET_TEMP_P1				0x01
+	
+	#define MENU_SET_TMEP_EX1					0xa7
+	#define sub_MENU_SET_TEMP_P0				0x00
+	#define sub_MENU_SET_TEMP_P1				0x01
 	//add end
 	//外部压输出范围,psd=139
 	#define MENU_SET_EPR_ILOOP_SCALE			0xb0

@@ -4,13 +4,13 @@ src/app/event.c  \
  src/app/../includes/../../mcc_generated_files/mcc.h  \
  src/app/../includes/../../mcc_generated_files/pin_manager.h  \
  src/app/../includes/../../mcc_generated_files/rtcc.h  \
+ src/app/../includes/../../mcc_generated_files/tmr2.h  \
+ src/app/../includes/../../mcc_generated_files/tmr1.h  \
+ src/app/../includes/../../mcc_generated_files/uart2.h  \
+ src/app/../includes/../../mcc_generated_files/uart1.h  \
  src/app/../includes/../../mcc_generated_files/adc1.h  \
  src/app/../includes/../../mcc_generated_files/interrupt_manager.h  \
  src/app/../includes/../../mcc_generated_files/traps.h  \
- src/app/../includes/../../mcc_generated_files/tmr1.h  \
- src/app/../includes/../../mcc_generated_files/tmr2.h  \
- src/app/../includes/../../mcc_generated_files/uart1.h  \
- src/app/../includes/../../mcc_generated_files/uart2.h  \
  src/app/../includes/../configs/configs.h  \
  src/app/../includes/../configs/../../mcc_generated_files/mcc.h  \
  src/app/../includes/../global/globle.h  \

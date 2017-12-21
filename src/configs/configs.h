@@ -21,6 +21,10 @@
 		#define I_LOOP_BOARD 1
 	#endif
 	
+	#ifndef DEBUG_EX_TEMP_EN
+		#define DEBUG_EX_TEMP_EN 1
+	#endif
+	
 #ifdef __cplusplus
 	}
 #endif

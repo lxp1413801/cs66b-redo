@@ -84,18 +84,14 @@ void ADC1_Initialize (void)
 
    AD1CON1 = 0x8400;
 
-    // CSCNA disabled; NVCFG0 AVSS; PVCFG AVDD; ALTS disabled; BUFM disabled; SMPI 1; OFFCAL disabled; BUFREGEN disabled; 
+    // CSCNA disabled; NVCFG0 AVSS; PVCFG VREF+; ALTS disabled; BUFM disabled; SMPI 1; OFFCAL disabled; BUFREGEN disabled; 
 
-   AD1CON2 = 0x0000;
-   AD1CON2bits.PVCFG=1;
-   //AD1CON2bits.NVCFG0=1;
-   //AD1CON2bits.SMPI=15;
+   AD1CON2 = 0x4000;
 
     // SAMC 0; EXTSAM disabled; ADRC FOSC/2; ADCS 0; 
 
    AD1CON3 = 0x0000;
-//AD1CON3bits.ADCS=32;
-//AD1CON3bits.ADRC=1;
+
     // CH0SA AN0; CH0SB AN0; CH0NB AVSS; CH0NA AVSS; 
 
    AD1CHS = 0x0000;

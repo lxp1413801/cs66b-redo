@@ -19,10 +19,19 @@ volatile int16_t rtAdcValuePrEx0Signal;
 //volatile int16_t rtAdcValuePrEx1Bridge;
 volatile int16_t rtAdcValuePrEx1Signal;
 
-volatile int16_t rtAdcValueTemperatureEx0A;
-volatile int16_t rtAdcValueTemperatureEx0B;
-volatile int16_t rtAdcValueTemperatureEx1A;
-volatile int16_t rtAdcValueTemperatureEx1B;
+// volatile int16_t rtAdcValueTemperatureEx0A;
+// volatile int16_t rtAdcValueTemperatureEx0B;
+// volatile int16_t rtAdcValueTemperatureEx1A;
+// volatile int16_t rtAdcValueTemperatureEx1B;
+
+
+volatile int32_t rtAdcValueTemperatureEx0A;
+volatile int32_t rtAdcValueTemperatureEx0B;
+volatile int32_t rtAdcValueTemperatureEx1A;
+volatile int32_t rtAdcValueTemperatureEx1B;
+volatile int32_t rtTempRes0;
+volatile int32_t rtTempRes1;
+
 //volatile int16_t rtAdcValueChip1Ref0;
 //volatile int16_t rtAdcValueChip1Ref1;
 volatile int16_t rtAdcValueBat;
@@ -109,7 +118,7 @@ volatile int16_t samlpe_read_adc(ads1148Obj_t* obj,volatile int16_t* buf,uint8_t
 	volatile int16_t t16;
 	volatile int32_t	t32=0;
     ads1148_start_convert(obj);
-	for(i=0;i<4;i++){
+	for(i=0;i<6;i++){
 		ads1148_waite_convert(obj);
 		__nop();
 	}
@@ -124,6 +133,29 @@ volatile int16_t samlpe_read_adc(ads1148Obj_t* obj,volatile int16_t* buf,uint8_t
 		m_mem_cpy_len((uint8_t*)buf,(uint8_t*)samlpeBuf,len*sizeof(int16_t));
 	}
 	return (int16_t)t32;
+}
+volatile int32_t samlpe_read_adc_ex(ads1148Obj_t* obj,volatile int16_t* buf,uint8_t len)
+{
+	
+	volatile uint8_t i=0;
+	volatile int16_t t16;
+	volatile int32_t	t32=0;
+    ads1148_start_convert(obj);
+	for(i=0;i<6;i++){
+		ads1148_waite_convert(obj);
+		__nop();
+	}
+	for(i=0;i<len;i++){
+		ads1148_waite_convert(obj);
+		t16=ads1148_read_data(obj);
+		samlpeBuf[i]=t16;
+		t32+=(int32_t)t16;
+	}
+	//t32/=i;
+	if(buf){
+		m_mem_cpy_len((uint8_t*)buf,(uint8_t*)samlpeBuf,len*sizeof(int16_t));
+	}
+	return t32;
 }
 //ads1148Chip0
 
@@ -445,14 +477,16 @@ void samlpe_chip1_ch_ex0_temperature_A(void)
 	ads1148_set_vbias_ex(&ads1148Chip1,0);
 	ads1148_set_mux1_ex(&ads1148Chip1,ADS1148_VREFCON_INREF_ON,ADS1148_REFSELT_INREF,ADS1148_MUXCAL_NORMAL);
 	
-	ads1148_set_sys0_ex(&ads1148Chip1,ADS1148_PGA_1,ADS1148_SYS0_DR_2000SPS);
+	ads1148_set_sys0_ex(&ads1148Chip1,ADS1148_PGA_1,ADS1148_SYS0_DR_640SPS);
 	
 	ads1148_set_idac0_ex(&ads1148Chip1,ADS1148_DRDY_VIA_DRDY,ADS1148_IMAG_500uA);
 	ads1148_set_idac1_ex(&ads1148Chip1,IDAC_OUT_IEXC1,IDAC_OUT_NC);
-	
+
 	ads1148_set_config_ex(&ads1148Chip1);	
 	
-	rtAdcValueTemperatureEx0A=samlpe_read_adc(&ads1148Chip1,samlpeBuf,8);
+	samlpe_read_adc(&ads1148Chip1,samlpeBuf,SAMPLE_ADC_BUF_LEN);
+	rtAdcValueTemperatureEx0A=samlpe_get_adc_average_value_ex(samlpeBuf,SAMPLE_ADC_BUF_LEN);
+	
 	__nop();
 	__nop();		
 }
@@ -462,14 +496,16 @@ void samlpe_chip1_ch_ex0_temperature_B(void)
 	ads1148_set_vbias_ex(&ads1148Chip1,0);
 	ads1148_set_mux1_ex(&ads1148Chip1,ADS1148_VREFCON_INREF_ON,ADS1148_REFSELT_INREF,ADS1148_MUXCAL_NORMAL);
 	
-	ads1148_set_sys0_ex(&ads1148Chip1,ADS1148_PGA_1,ADS1148_SYS0_DR_2000SPS);
+	ads1148_set_sys0_ex(&ads1148Chip1,ADS1148_PGA_1,ADS1148_SYS0_DR_640SPS);
 	
 	ads1148_set_idac0_ex(&ads1148Chip1,ADS1148_DRDY_VIA_DRDY,ADS1148_IMAG_500uA);
 	ads1148_set_idac1_ex(&ads1148Chip1,IDAC_OUT_IEXC1,IDAC_OUT_NC);
-	
+
 	ads1148_set_config_ex(&ads1148Chip1);	
 	
-	rtAdcValueTemperatureEx0B=samlpe_read_adc(&ads1148Chip1,samlpeBuf,8);
+	samlpe_read_adc(&ads1148Chip1,samlpeBuf,SAMPLE_ADC_BUF_LEN);
+	rtAdcValueTemperatureEx0B=samlpe_get_adc_average_value_ex(samlpeBuf,SAMPLE_ADC_BUF_LEN);
+	
 	__nop();
 	__nop();		
 }
@@ -481,9 +517,10 @@ void sample_calc_temperature_ex0(void)
 	y=(float)rtAdcValueTemperatureEx0B;
 	x=x-y-y;
 	y=x*2.048/32767/5.0e-4;
-	//y=(y/x-1.0)*100;
-	//转换为温度
+    rtTempRes0=(int32_t)(y*1000);
+
     x=calc_res_2_temp(y);	
+    x=x*1000;
 	rtTemperatureEx0=(int32_t)x;
 	__nop();
 	__nop();
@@ -536,14 +573,15 @@ void samlpe_chip1_ch_ex1_temperature_A(void)
 	ads1148_set_vbias_ex(&ads1148Chip1,0);
 	ads1148_set_mux1_ex(&ads1148Chip1,ADS1148_VREFCON_INREF_ON,ADS1148_REFSELT_INREF,ADS1148_MUXCAL_NORMAL);
 	
-	ads1148_set_sys0_ex(&ads1148Chip1,ADS1148_PGA_1,ADS1148_SYS0_DR_2000SPS);
+	ads1148_set_sys0_ex(&ads1148Chip1,ADS1148_PGA_1,ADS1148_SYS0_DR_640SPS);
 	
 	ads1148_set_idac0_ex(&ads1148Chip1,ADS1148_DRDY_VIA_DRDY,ADS1148_IMAG_500uA);
 	ads1148_set_idac1_ex(&ads1148Chip1,IDAC_OUT_NC,IDAC_OUT_IEXC2);
-	
+
 	ads1148_set_config_ex(&ads1148Chip1);	
 	
-	rtAdcValueTemperatureEx1A=samlpe_read_adc(&ads1148Chip1,samlpeBuf,8);
+	samlpe_read_adc(&ads1148Chip1,samlpeBuf,SAMPLE_ADC_BUF_LEN);
+	rtAdcValueTemperatureEx1A=samlpe_get_adc_average_value_ex(samlpeBuf,SAMPLE_ADC_BUF_LEN);
 	__nop();
 	__nop();		
 }
@@ -554,14 +592,15 @@ void samlpe_chip1_ch_ex1_temperature_B(void)
 	ads1148_set_vbias_ex(&ads1148Chip1,0);
 	ads1148_set_mux1_ex(&ads1148Chip1,ADS1148_VREFCON_INREF_ON,ADS1148_REFSELT_INREF,ADS1148_MUXCAL_NORMAL);
 	
-	ads1148_set_sys0_ex(&ads1148Chip1,ADS1148_PGA_1,ADS1148_SYS0_DR_2000SPS);
+	ads1148_set_sys0_ex(&ads1148Chip1,ADS1148_PGA_1,ADS1148_SYS0_DR_640SPS);
 	
 	ads1148_set_idac0_ex(&ads1148Chip1,ADS1148_DRDY_VIA_DRDY,ADS1148_IMAG_500uA);
 	ads1148_set_idac1_ex(&ads1148Chip1,IDAC_OUT_NC,IDAC_OUT_IEXC2);
-	
+
 	ads1148_set_config_ex(&ads1148Chip1);	
 	
-	rtAdcValueTemperatureEx1B=samlpe_read_adc(&ads1148Chip1,samlpeBuf,8);
+	samlpe_read_adc(&ads1148Chip1,samlpeBuf,SAMPLE_ADC_BUF_LEN);
+	rtAdcValueTemperatureEx1B=samlpe_get_adc_average_value_ex(samlpeBuf,SAMPLE_ADC_BUF_LEN);
 	__nop();
 	__nop();		
 }
@@ -573,9 +612,10 @@ void sample_calc_temperature_ex1(void)
 	y=(float)rtAdcValueTemperatureEx1B;
 	x=x-y-y;
 	y=x*2.048/32767/5.0e-4;
-	//y=(y/x-1.0)*100;
-	//转换为温度
+    rtTempRes1=(int32_t)(y*1000);
+
     x=calc_res_2_temp(y);	
+    x=x*1000;
 	rtTemperatureEx1=(int32_t)x;
 	__nop();
 	__nop();
@@ -652,7 +692,7 @@ uint8_t sample_process(void)
 		case 0x0f:sample_calc_press_ex1();				break;
 		case 0x10:samlpe_chip1_ch_ex1_temperature_A();	break;
 		case 0x11:samlpe_chip1_ch_ex1_temperature_B();	break;
-		case 0x12:sample_calc_temperature_ex0();		break;		
+		case 0x12:sample_calc_temperature_ex1();		break;		
 
 		case 0x13:samlpe_in_soc_battery();				break;
 		case 0x14:sample_in_soc_solar();				break;

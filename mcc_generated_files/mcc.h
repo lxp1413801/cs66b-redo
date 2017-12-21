@@ -49,13 +49,13 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "rtcc.h"
+#include "tmr2.h"
+#include "tmr1.h"
+#include "uart2.h"
+#include "uart1.h"
 #include "adc1.h"
 #include "interrupt_manager.h"
 #include "traps.h"
-#include "tmr1.h"
-#include "tmr2.h"
-#include "uart1.h"
-#include "uart2.h"
 
 #define _XTAL_FREQ  11059200UL
 

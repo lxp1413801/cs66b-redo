@@ -29,6 +29,10 @@
 	
 	//extern void thread_sample_create(void);
     extern volatile bool sampleFreashFlg;
+    
+    extern volatile int32_t rtTempRes0;
+    extern volatile int32_t rtTempRes1;    
+    
     extern uint8_t sample_process(void);
 	
 	#define AIN_BAT_PIN 	PIN8
