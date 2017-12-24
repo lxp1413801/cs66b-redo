@@ -31,10 +31,16 @@
     extern volatile bool sampleFreashFlg;
     
     extern volatile int32_t rtTempRes0;
-    extern volatile int32_t rtTempRes1;    
+    extern volatile int32_t rtTempRes1;  
+    
+    extern volatile int32_t rtAdcValueTemperatureEx0A;
+    extern volatile int32_t rtAdcValueTemperatureEx0B;
+    extern volatile int32_t rtAdcValueTemperatureEx1A;
+    extern volatile int32_t rtAdcValueTemperatureEx1B;    
     
     extern uint8_t sample_process(void);
 	
+    
 	#define AIN_BAT_PIN 	PIN8
 	#define AIN_BAT_PORT	portg
 	

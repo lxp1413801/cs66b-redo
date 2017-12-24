@@ -10,6 +10,7 @@
 
 #define ui_delay_ms(ms) ticker_ms_delay(ms)
 uint8_t lcdTwinkle=0;
+extern bool paramChangedFlag;
 
 void __x_arrange_str(uint8_t *str,uint8_t len)
 {
@@ -61,8 +62,9 @@ int32_t __int32_2_mflot32(int32_t x)
 //显示两个小数点的装换
 int32_t __int32_2_mflot32_02(int32_t x)
 {
-	st_float32 mf={0};
+	uint32_t tt=0;
 	uint32_t t32;
+	st_float32 mf={0};
 	t32=x;
 	if(x<0){
 		t32 = ((~x) +1);
@@ -70,9 +72,12 @@ int32_t __int32_2_mflot32_02(int32_t x)
 	}
 	while(t32>999){
 		mf.stru.exponent++;
+		tt=t32%10;
 		t32/=10;
+		
 		if( mf.stru.exponent>=2)break;
 	}
+	if(tt>=5)t32++;
 	if(t32>999)t32=999;
 	mf.stru.significand=t32;
 	return mf.t32;
@@ -98,6 +103,7 @@ void ui_disp_xfloat_pt_02(st_float32_m* xpf)
 
 int32_t __int32_2_mflot32(int32_t x)
 {
+	uint32_t tt=0;
 	st_float32 mf={0};
 	uint32_t t32;
 	t32=x;
@@ -107,9 +113,11 @@ int32_t __int32_2_mflot32(int32_t x)
 	}
 	while(t32>9999){
 		mf.stru.exponent++;
+		tt=t32%10;
 		t32/=10;
 		if( mf.stru.exponent>=3)break;
 	}
+	if(tt>=5)t32++;
 	if(t32>9999)t32=9999;
 	mf.stru.significand=t32;
 	return mf.t32;
@@ -584,40 +592,58 @@ void ui_disp_home_sm_ex(uint8_t* str,int32_t x)
 
 void ui_disp_ext_loop(void)
 {
+    int32_t x;
 	uint32_t t32=globleHalfSec;
 	t32>>=4;
 	t32%=4;
 	switch(t32){
 		case 0:
 			lcd_disp_unit_temperature(true);
-			ui_disp_home_sm_ex((uint8_t*)"ww1",rtTemperatureEx0/10);break;
+            x=rtTemperatureEx0/10;
+            if((rtTemperatureEx0%10)>=5)x++;
+			ui_disp_home_sm_ex((uint8_t*)"ww1",x);break;
 		case 1:
 			lcd_disp_unit_temperature(true);
-			ui_disp_home_sm_ex((uint8_t*)"ww2",rtTemperatureEx1/10);break;
-		case 2:ui_disp_home_sm_ex((uint8_t*)"wy1",rtEx0Pressure/10);break;
-		case 3:ui_disp_home_sm_ex((uint8_t*)"wy2",rtEx1Pressure/10);break;
+            x=rtTemperatureEx1/10;
+            if((rtTemperatureEx1%10)>=5)x++;
+			ui_disp_home_sm_ex((uint8_t*)"ww2",x);break;
+		case 2:
+            x=rtEx0Pressure/10;
+            if((rtEx0Pressure%10)>=5)x++;
+            ui_disp_home_sm_ex((uint8_t*)"wy1",x);
+            break;
+		case 3:
+            x=rtEx1Pressure/10;
+            if((rtEx1Pressure%10)>=5);
+            x++;
+            ui_disp_home_sm_ex((uint8_t*)"wy2",x);break;
 	}
 }
 
 void ui_disp_menu_home(void)
 {
 	uint8_t t8;
+	int32_t t32;
     st_float32 mf;
 	lcd_clear_all();
 	lcd_disp_logo(true);
 	t8=subMenu & 0xf0;
 	t8>>=4;
 	if(t8==0){
-		mf.t32=__int32_2_mflot32(rtHight);
+		t32=rtHight;
+		if(t32<0l)t32=0l;
+		mf.t32=__int32_2_mflot32(t32);
 		lcd_disp_unit_1st_m(true);		
 	}else if(t8==1){
+		
 		mf.t32=__int32_2_mflot32(rtVolume);
 		lcd_disp_unit_1st_m3(true);		
 	}else if(t8==2){
+		
 		mf.t32=__int32_2_mflot32(rtWeight);
 		lcd_disp_unit_t(true);		
 	}else if(t8==3){
-		mf.t32=__int32_2_mflot32(rtTemperatureEx0);
+		mf.t32=__int32_2_mflot32(rtTempRes0);
 	}
 	ui_disp_xfloat_pt(&mf,LCD_LINE_0);
 	//
@@ -626,13 +652,15 @@ void ui_disp_menu_home(void)
 		mf.t32=__int32_2_mflot32(rtPressure);
 		lcd_disp_unit_mpa(true);		
 	}else if(t8==1){
-		mf.t32=__int32_2_mflot32(rtHight);
+		t32=rtHight;
+		if(t32<0l)t32=0l;		
+		mf.t32=__int32_2_mflot32(t32);
 		lcd_disp_unit_2nd_m(true);			
 	}else if(t8==2){
 		mf.t32=__int32_2_mflot32(rtVolume);
 		lcd_disp_unit_2nd_m3(true);			
 	}else if(t8==3){
-		mf.t32=__int32_2_mflot32(rtTemperatureEx1);
+		mf.t32=__int32_2_mflot32(rtTempRes1);
 	}
 	ui_disp_xfloat_pt(&mf,LCD_LINE_1);
 	
@@ -984,30 +1012,14 @@ void ui_disp_menu_warn_v_adj(void)
 	lcd_disp_logo(true);
 	t8=subMenu;
 	if(t8>7)return;
-	//sysDataDef_t* fps=(sysDataDef_t*)SYSTEM_DATA_ADDR;
 	sysDataDef_t* fps= &stSysData;
-	/*
-	//if(fps->diffPressureWarnSet[t8>>1].type);
-	if(t8<4){
-		//t32=fps->diffPressureWarnSet[t8].warnValueLo;
-		type=fps->diffPressureWarnSet[t8].type;
-		m_mem_cpy(buf,(uint8_t*)" al0");
-	}else{
-		t8=t8-4;
-		//t32=fps->diffPressureWarnSet[t8].warnValueHi;
-		type=fps->diffPressureWarnSet[t8].type;	
-		m_mem_cpy(buf,(uint8_t*)" ah0");
-	}
-	*/
 	t8=subMenu>>1;
-	
-	//buf[3]='1'+t8;
-	type=fps->diffPressureWarnSet[t8].type;
-	m_mem_cpy(buf,(uint8_t*)" al0");
-	buf[3]='1'+t8;
+	type=fps->dprWarnSet[t8].type;
+	m_mem_cpy(buf,(uint8_t*)"al1u");
+	buf[2]='1'+t8;
 	if(subMenu & 0x01){
 		//m_mem_cpy(buf,(uint8_t*)" ah0");
-		buf[2]='H';
+		buf[3]='d';
 	}
 	
 	if(type == HIGHT_HI || type== HIGHT_LO){
@@ -1017,55 +1029,89 @@ void ui_disp_menu_warn_v_adj(void)
 	}
 	ui_disp_adj_xfloat_pt(buf,&m_floatAdj,adjLocation);
 }
-/*
-void ui_disp_menu_epr_calib_adj(void)
+
+
+void ui_disp_menu_calib_ex0_temp_adj(void)
 {
-	uint8_t buf[6];
+	int32_t t32;
+	st_float32 ft;
+	uint8_t buf[10];
 	lcd_clear_all();
-	lcd_disp_logo(true);	
-    switch(subMenu){
-		case sub_MENU_SET_EPR_CH0_P0:m_mem_cpy(buf,(uint8_t*)"ep00");break;
-		case sub_MENU_SET_EPR_CH0_P1:m_mem_cpy(buf,(uint8_t*)"ep01");break;
-		case sub_MENU_SET_EPR_CH1_P0:m_mem_cpy(buf,(uint8_t*)"ep10");break;
-		case sub_MENU_SET_EPR_CH1_P1:m_mem_cpy(buf,(uint8_t*)"ep11");break;
-		default: break;
-	}
-	ui_disp_adj_xfloat_pt(buf,&m_floatAdj,adjLocation);		
+	buf[0]='E';
+	buf[1]='t';
+	buf[2]='1';
+	buf[3]='\0';	
+	lcd_show_string_ex(buf);
+
+	t32=stSysData.tempCalibEx0[subMenu].resValue;
+	ft.t32=__int32_2_mflot32(t32);
+	ui_disp_xfloat_pt(&ft,0);
+   
+    if(paramChangedFlag){
+        t32=(uint32_t)(rtAdcValueTemperatureEx0A-rtAdcValueTemperatureEx0B-rtAdcValueTemperatureEx0B);
+    }else{
+        t32=stSysData.tempCalibEx0[subMenu].adcValue;
+    }
+    ft.t32=__int32_2_mflot32(t32);
+    ui_disp_xfloat_pt(&ft,1);
+    lcd_disp_refresh(); 	
 }
-*/
-/*
-void ui_disp_menu_etemp_calib_adj(void)
+
+void ui_disp_menu_calib_ex1_temp_adj(void)
 {
-	uint8_t buf[6];
+	int32_t t32;
+	st_float32 ft;
+	uint8_t buf[10];
 	lcd_clear_all();
-	lcd_disp_logo(true);
-	m_mem_cpy(buf,(uint8_t*)"etp0");
-	buf[3]=subMenu+'0';
-	ui_disp_adj_xfloat_pt(buf,&m_floatAdj,adjLocation);	
+	buf[0]='E';
+	buf[1]='t';
+	buf[2]='2';
+	buf[3]='\0';	
+	lcd_show_string_ex(buf);
+
+	t32=stSysData.tempCalibEx1[subMenu].resValue;
+	ft.t32=__int32_2_mflot32(t32);
+	ui_disp_xfloat_pt(&ft,0);
+   
+    if(paramChangedFlag){
+        t32=(uint32_t)(rtAdcValueTemperatureEx1A-rtAdcValueTemperatureEx1B-rtAdcValueTemperatureEx1B);
+    }else{
+        t32=stSysData.tempCalibEx1[subMenu].adcValue;
+    }
+    ft.t32=__int32_2_mflot32(t32);
+    ui_disp_xfloat_pt(&ft,1);
+    lcd_disp_refresh(); 	
 }
-*/
+
 void ui_disp_menu_epr_ilp_scale_adj(void)
 {
     uint8_t buf[6];
 	lcd_clear_all();
 	lcd_disp_logo(true);	
 	switch(subMenu){
-		case sub_MENU_SET_EXPR_ILP_CH0_Lo:m_mem_cpy(buf,(uint8_t*)"lp0l");break;
-		case sub_MENU_SET_EXPR_ILP_CH0_Hi:m_mem_cpy(buf,(uint8_t*)"lp0H");break;
-		case sub_MENU_SET_EXPR_ILP_CH1_Lo:m_mem_cpy(buf,(uint8_t*)"lp1l");break;
-		case sub_MENU_SET_EXPR_ILP_CH1_Hi:m_mem_cpy(buf,(uint8_t*)"lp1H");break;
+		case sub_MENU_SET_ILP_CH0_Lo:m_mem_cpy(buf,(uint8_t*)" cyl");break;
+		case sub_MENU_SET_ILP_CH0_Hi:m_mem_cpy(buf,(uint8_t*)" cyH");break;
+		case sub_MENU_SET_ILP_CH1_Lo:m_mem_cpy(buf,(uint8_t*)" yll");break;
+		case sub_MENU_SET_ILP_CH1_Hi:m_mem_cpy(buf,(uint8_t*)" ylH");break;
         default:return;
 	}
 	ui_disp_adj_xfloat_pt(buf,&m_floatAdj,adjLocation);	
 }
-
+/*
 void ui_disp_menu_bar_full_adj(void)
 {
 	lcd_clear_all();
-	lcd_disp_logo(true);	
+	//lcd_disp_logo(true);	
 	ui_disp_adj_xfixed_pt_dp((uint8_t*)" scl",(int16_t)adjValue,adjLocation,0);
 }
-
+*/
+void ui_disp_menu_bar_full_adj(void)
+{
+	lcd_clear_all();
+	//lcd_disp_logo(true);	
+	ui_disp_adj_xfixed_static((uint8_t*)" scl",(int16_t)adjValue,0);
+}
+//ui_disp_adj_xfixed_static
 void ui_disp_menu_work_mode_adj(void)
 {
     uint8_t* p;
@@ -1159,7 +1205,9 @@ void ui_disp_menu(void)
         case MENU_PRESSURE_CALIB_EX1:   ui_disp_menu_calib_adj_x('2',&x_ex1prData);break;
 		// case MENU_SET_ETMEP_ZERO_LINE:
 									// ui_disp_menu_etemp_calib_adj();		break;
-		case MENU_SET_EPR_ILOOP_SCALE:	
+		case MENU_SET_TMEP_EX0:			ui_disp_menu_calib_ex0_temp_adj();	break;
+		case MENU_SET_TMEP_EX1:			ui_disp_menu_calib_ex1_temp_adj();	break;
+		case MENU_SET_ILOOP_SCALE:	
 									ui_disp_menu_epr_ilp_scale_adj();	break;
 		case MENU_SET_BAR_LEVEL_SCALE:	ui_disp_menu_bar_full_adj();	break;
         case MENU_SET_WORK_MODE:        ui_disp_menu_work_mode_adj();   break;

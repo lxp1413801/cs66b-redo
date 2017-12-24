@@ -34,8 +34,10 @@ volatile int32_t rtTempRes1;
 
 //volatile int16_t rtAdcValueChip1Ref0;
 //volatile int16_t rtAdcValueChip1Ref1;
-volatile int16_t rtAdcValueBat;
-volatile int16_t rtAdcValueSolor;
+volatile int16_t rtValueBat;
+volatile int16_t rtValueSolor;
+#define IN_SOC_VREF_VALUE   2048
+
 int16_t abs_diff(uint16_t a,uint16_t b)
 {
 	if(a>b){
@@ -52,15 +54,14 @@ int16_t samlpe_get_adc_average_value_ex(volatile int16_t* buf,uint8_t len)
     int16_t max[2];
 	int16_t absdiff;
     for(j=0;j<8;j++){
-        
-
 		t32=0;
 		for(i=0;i<len;i++){
 			t32+=buf[i];
 		}
-		t32/=i;
-		
-		ret=t32;
+		ret=t32/i;
+		if((t32%i) >= (i/2)){
+			ret++;
+		}
 		max[0]=0;max[1]=1;
 		maxIndex[0]=0;maxIndex[1]=1;		
 		for(i=0;i<len;i++){
@@ -264,15 +265,49 @@ void samlpe_chip0_ch_diff_pr_ref0(void)
     __nop();
     //ads1148_stop_convert(&ads1148Chip0);
 }
+int32_t sample_calc_diff_press_fliter(int32_t t32)
+{
+	/*
+	float f1;
+	uint8_t i;
+	rtDiffPrBuf[3]=rtDiffPrBuf[2];
+	rtDiffPrBuf[2]=rtDiffPrBuf[1];
+	rtDiffPrBuf[1]=rtDiffPrBuf[0];
+	rtDiffPrBuf[0]=t32;
+	f1=0;
+	for(i=0;i<4;i++){
+		f1=f1+(float)(rtDiffPrBuf[i])*(float)(stSysData.ployCoeffic[i]);
+	}
+    return (int32_t)f1;
+	*/
+	
+	float f1,f2;
+	uint8_t i;
+	rtDiffPrBuf[3]=rtDiffPrBuf[2];
+	rtDiffPrBuf[2]=rtDiffPrBuf[1];
+	rtDiffPrBuf[1]=rtDiffPrBuf[0];
+	rtDiffPrBuf[0]=t32;
+	f1=0;
+	for(i=0;i<4;i++){
+		f2=(float)(stSysData.ployCoeffic[i]);
+		f2=f2*rtDiffPrBuf[i];
+		f1=f1+f2;
+	}
+	f1=f1/1000;
+    //rtDiffPrBuf[0]=(int32_t)f1;	
+    return (int32_t)f1;	
+}
 void sample_calc_diff_press(void)
 {
+    uint8_t i;
     int32_t t32;
 	x_prDiffData.sigAdcValue=rtAdcValueDPrSignal;
     x_prDiffData.tAdcValue=rtAdcValueDPrBridge;
     x_prDiffData.value=0;                                           
     t32=calculate_and_compensate(diffPrCalibDataObj.calibTab,&x_prDiffData);
-    rtDiffPressure=t32;
-	cal_diff_p_to_h(t32);
+    //rtDiffPressure=t32;
+    rtDiffPressure=sample_calc_diff_press_fliter(t32);
+	cal_diff_p_to_h(rtDiffPressure);
     __nop();
     __nop();
     //rtPressure=t32;
@@ -509,7 +544,7 @@ void samlpe_chip1_ch_ex0_temperature_B(void)
 	__nop();
 	__nop();		
 }
-
+/*
 void sample_calc_temperature_ex0(void)
 {
 	float x,y;
@@ -521,6 +556,35 @@ void sample_calc_temperature_ex0(void)
 
     x=calc_res_2_temp(y);	
     x=x*1000;
+	rtTemperatureEx0=(int32_t)x;
+	__nop();
+	__nop();
+}
+*/
+
+void sample_calc_temperature_ex0(void)
+{
+	int32_t t32;
+	float x,y;    
+
+	t32=(int32_t)(stSysData.tempCalibEx0[1].adcValue-stSysData.tempCalibEx0[0].adcValue);
+	if(t32==0)t32=1;
+	x=(float)t32;
+
+	t32=(int32_t)(stSysData.tempCalibEx0[1].resValue-stSysData.tempCalibEx0[0].resValue);
+	y=(float)t32;
+
+	t32=(int32_t)(rtAdcValueTemperatureEx0A-rtAdcValueTemperatureEx0B-rtAdcValueTemperatureEx0B);
+    __nop();
+    y=y/x;
+    x=(float)(t32-stSysData.tempCalibEx0[0].adcValue);
+    y=y*x;
+	y=y+(float)(stSysData.tempCalibEx0[0].resValue);
+
+	rtTempRes0=(int32_t)(y);
+
+	x=calc_res_2_temp(y/1000);	
+	x=x*1000;
 	rtTemperatureEx0=(int32_t)x;
 	__nop();
 	__nop();
@@ -605,6 +669,7 @@ void samlpe_chip1_ch_ex1_temperature_B(void)
 	__nop();		
 }
 
+/*
 void sample_calc_temperature_ex1(void)
 {
 	float x,y;
@@ -620,11 +685,36 @@ void sample_calc_temperature_ex1(void)
 	__nop();
 	__nop();
 }
-
-
-void sample_in_soc_solar(void)
+ */
+ 
+void sample_calc_temperature_ex1(void)
 {
+	//tempCalibEx0
+	int32_t t32;
+	float x,y;    
 
+	t32=(int32_t)(stSysData.tempCalibEx1[1].adcValue-stSysData.tempCalibEx1[0].adcValue);
+	if(t32==0)t32=1;
+	x=(float)t32;
+
+	t32=(int32_t)(stSysData.tempCalibEx1[1].resValue-stSysData.tempCalibEx1[0].resValue);
+	y=(float)t32;
+
+	t32=(int32_t)(rtAdcValueTemperatureEx1A-rtAdcValueTemperatureEx1B-rtAdcValueTemperatureEx1B);
+
+    y=y/x;
+    x=(float)(t32-stSysData.tempCalibEx1[0].adcValue);
+    y=y*x;
+    
+	y=y+stSysData.tempCalibEx1[0].resValue;
+
+	rtTempRes1=(int32_t)(y);
+
+	x=calc_res_2_temp(y/1000);	
+	x=x*1000;
+	rtTemperatureEx1=(int32_t)x;
+	__nop();
+	__nop();
 }
 void ain_ref_config(void){
     set_port_mode_an(AIN_REF_P_PORT,AIN_REF_P_PIN); 
@@ -637,25 +727,68 @@ void ain_bat_config(void) {
     set_port_mode_in(AIN_BAT_PORT,AIN_BAT_PIN); 
 }
 
+void sample_in_soc_solar(void)
+{
+	uint32_t t32;
+	uint16_t t16;
+	uint8_t  i;
+
+	ain_ref_config();
+	//ain_bat_config();
+    ain_solor_config();
+    check_solor_set_hight();
+    
+	ADC1_Initialize();
+	ADC1_ChannelSelect(ADC1_CHANNEL_SOLAR);
+    //ADC1_Stop();
+	t32=0;
+	for(i=0;i<16;i++){
+		ADC1_Start();
+		delay_ms(1);
+		ADC1_Stop();
+		while(!ADC1_IsConversionComplete())	{
+			__nop();
+		}
+		t16=ADC1_ConversionResultGet();
+		t32+=t16;
+	}
+    check_solor_set_low();
+    t16=(uint16_t)(t32/i);
+    t32=IN_SOC_VREF_VALUE*t16*12/4095;    
+    
+	rtValueSolor=(uint16_t)(t32/i);
+	__nop();
+	__nop();	
+}
+
+
+
 void samlpe_in_soc_battery(void)
 {
+	uint32_t t32;
 	uint16_t t16;
-	//ain_ref_config();
+	uint8_t  i;
+
+	ain_ref_config();
 	ain_bat_config();
 	ADC1_Initialize();
 	ADC1_ChannelSelect(ADC1_CHANNEL_BAT);
     //ADC1_Stop();
-	ADC1_Start();
-	delay_ms(1);
-    ADC1_Stop();
-    //delay_us(10);
-	while(!ADC1_IsConversionComplete())
-    {
-        __nop();
-    }
-	//ADC1_Stop();
-	t16=ADC1_ConversionResultBufferGet((uint16_t*)samlpeBuf);
-	rtAdcValueBat=samlpe_get_adc_average_value_ex(samlpeBuf,t16);
+	t32=0;
+	for(i=0;i<16;i++){
+		ADC1_Start();
+		delay_ms(1);
+		ADC1_Stop();
+		while(!ADC1_IsConversionComplete())	{
+			__nop();
+		}
+		t16=ADC1_ConversionResultGet();
+		t32+=t16;
+	}
+    t16=(uint16_t)(t32/i);
+    t32=IN_SOC_VREF_VALUE*t16*6/4095;
+	rtValueBat=(uint16_t)t32;
+    
 	__nop();
 	__nop();	
 }
@@ -714,6 +847,8 @@ uint8_t sample_process(void)
     }
 #endif
     if(stSysData.sleepPeriod==0){
+        calc_warning_pr_dpr();
+        bi_output();
         TMR2_Start();
     }
     return sampleIndex;

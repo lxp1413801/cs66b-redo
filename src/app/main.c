@@ -64,7 +64,7 @@ void event_sample_real_time_mode(void)
 void event_sample_sleep_wake_mode(void)
 {
     uint8_t t8=0;
-    uint32_t t32=0;
+    //uint32_t t32=0;
 	if(stSysData.sleepPeriod==0)return;
 	if(sleepHalfSec<(stSysData.sleepPeriod)*2)return ;
     //if( !T1CONbits.TON )TMR1_Start();
@@ -83,6 +83,23 @@ void event_sample_sleep_wake_mode(void)
     __nop();
 }
 
+void event_iloop_out_put(void)
+{
+	#if I_LOOP_BOARD
+	uint16_t t16;
+	uint32_t t32;
+	if(stSysData.sleepPeriod>0)return;
+	t32=globleHalfSec;
+	if(t32 & 0x07ul)return;
+	t16=calc_dpr_iloop_out_put();
+	ad421ObjChip0.pins_init();
+	ad421_chip0_set_idac_value(t16);
+	
+	t16=calc_pr_iloop_out_put();
+	ad421ObjChip1.pins_init();
+	ad421_chip1_set_idac_value(t16);	
+	#endif
+}
 void event_enter_sleep(void)
 {
 	if(noEventTimeOut==0 && stSysData.sleepPeriod>0){
@@ -121,7 +138,7 @@ int main(void)
 	blShowTime*=2;
 	#if I_LOOP_BOARD 
     ad421_all_obj_init();
-    ad421_test();
+    //ad421_test();
 	#endif
     while (1){
 		if(event & flg_KEY_DOWN){
@@ -150,7 +167,7 @@ int main(void)
                 delay_us(100);
             }
 			run_status_off();            
-            
+            event_iloop_out_put();
 		}
         
 		event_sample_real_time_mode();

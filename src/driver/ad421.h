@@ -36,6 +36,9 @@ extern "C"{
 	
 	extern void ad421_all_obj_init(void);
 	extern void ad421_test(void);
+    
+    extern void ad421_chip0_set_idac_value(uint16_t x);
+    extern void ad421_chip1_set_idac_value(uint16_t x);
 	
 #ifdef __cplusplus
 }

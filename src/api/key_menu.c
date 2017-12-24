@@ -294,15 +294,16 @@ void __enter_menu_set_temp_ex0(uint8_t __subMenu)
 {
     menu=MENU_SET_TMEP_EX0;
     subMenu=__subMenu;	
-	adjValue=(int32_t)(stSysData.tempCalibEx0[__subMenu].tempRes);
+	//adjValue=(int32_t)(stSysData.tempCalibEx0[__subMenu].tempRes);
     adjLocation=0;      
+    paramChangedFlag=false;	
 }
 
 void __enter_menu_set_temp_ex1(uint8_t __subMenu)
 {
     menu=MENU_SET_TMEP_EX1;
     subMenu=__subMenu;
-	adjValue=(int32_t)(stSysData.tempCalibEx1[__subMenu].tempRes);
+	//adjValue=(int32_t)(stSysData.tempCalibEx1[__subMenu].tempRes);
     adjLocation=0;    
 	paramChangedFlag=false;
 }
@@ -326,7 +327,7 @@ void __enter_menu_warn_type(uint8_t __subMenu)
 	//sysDataDef_t* fps=(sysDataDef_t*)SYSTEM_DATA_ADDR;
 	sysDataDef_t* fps= &stSysData;
 	adjValue=0x00ul;
-	*((uint8_t*)(&adjValue))=(uint8_t)(fps->diffPressureWarnSet[subMenu].type);
+	*((uint8_t*)(&adjValue))=(uint8_t)(fps->dprWarnSet[subMenu].type);
 	adjLocation=0;	
 }
 
@@ -348,9 +349,9 @@ void __enter_menu_warn_value(uint8_t __subMenu)
 	t8=subMenu >>1;
 	if(subMenu & 0x01){
 		//value hight
-		t32=fps->diffPressureWarnSet[t8].warnValueHi;
+		t32=fps->dprWarnSet[t8].warnValueOop;
 	}else{
-		t32=fps->diffPressureWarnSet[t8].warnValueLo;
+		t32=fps->dprWarnSet[t8].warnValue;
 	}
 	
 	t32=__int32_2_mflot32(t32);
@@ -401,9 +402,9 @@ void __enter_menu_etemp_calib(uint8_t __subMenu)
 }
 */
 
-void __enter_menu_epr_ilp_scale(uint8_t __subMenu)
+void __enter_menu_ilp_scale(uint8_t __subMenu)
 {
-	menu=MENU_SET_EPR_ILOOP_SCALE;
+	menu=MENU_SET_ILOOP_SCALE;
 	subMenu=__subMenu;
     int32_t t32=0;
 	//if(subMenu>sub_MENU_SET_EX_DPR_ILP_Hi1)subMenu=sub_MENU_SET_EX_DPR_ILP_Hi1;
@@ -411,10 +412,10 @@ void __enter_menu_epr_ilp_scale(uint8_t __subMenu)
     sysDataDef_t* fps= &stSysData;
 	switch(subMenu)
 	{
-		case sub_MENU_SET_EXPR_ILP_CH0_Lo:t32=fps->exPrIpScaleCh0.ilpLow;break;
-		case sub_MENU_SET_EXPR_ILP_CH0_Hi:t32=fps->exPrIpScaleCh0.ilpHi;break;
-		case sub_MENU_SET_EXPR_ILP_CH1_Lo:t32=fps->exPrIpScaleCh1.ilpLow;break;
-		case sub_MENU_SET_EXPR_ILP_CH1_Hi:t32=fps->exPrIpScaleCh1.ilpHi;break;
+		case sub_MENU_SET_ILP_CH0_Lo:t32=fps->IpScaleCh0.ilpLow;break;
+		case sub_MENU_SET_ILP_CH0_Hi:t32=fps->IpScaleCh0.ilpHi;break;
+		case sub_MENU_SET_ILP_CH1_Lo:t32=fps->IpScaleCh1.ilpLow;break;
+		case sub_MENU_SET_ILP_CH1_Hi:t32=fps->IpScaleCh1.ilpHi;break;
 		default:return;
 	}
     
@@ -582,15 +583,18 @@ void key_process_down(void)
 		case MENU_SET_BASE_ZERO:key_shift_loc((uint8_t*)(&adjLocation),0,5);break;
 		case MENU_DIFF_CALIB:__down_dpr_calib();break;
 		case MENU_PRESSURE_CALIB:__down_pr_calib();break;
-		case MENU_POLY_COEFFIC:key_shift_loc((uint8_t*)(&adjLocation),0,2);break;
+		case MENU_POLY_COEFFIC:key_shift_loc((uint8_t*)(&adjLocation),0,3);break;
 		case MENU_SET_WARN_TYPE:break;
 		case MENU_SET_WARN_VALUE:key_shift_loc((uint8_t*)(&adjLocation),0,4);break;
 		//case MENU_SET_EPR_ZERO_LINE:key_shift_loc((uint8_t*)(&adjLocation),0,4);break;
         case MENU_PRESSURE_CALIB_EX0:__down_ex0_pr_calib();break;
         case MENU_PRESSURE_CALIB_EX1:__down_ex1_pr_calib();break;
 		//case MENU_SET_ETMEP_ZERO_LINE:key_shift_loc((uint8_t*)(&adjLocation),0,4);break;
-		case MENU_SET_EPR_ILOOP_SCALE:key_shift_loc((uint8_t*)(&adjLocation),0,4);break;
-		case MENU_SET_BAR_LEVEL_SCALE:key_shift_loc((uint8_t*)(&adjLocation),0,2);break;
+		case MENU_SET_TMEP_EX0:
+		case MENU_SET_TMEP_EX1:			paramChangedFlag=!(paramChangedFlag);break;
+
+		case MENU_SET_ILOOP_SCALE:key_shift_loc((uint8_t*)(&adjLocation),0,4);break;
+		//case MENU_SET_BAR_LEVEL_SCALE:key_shift_loc((uint8_t*)(&adjLocation),0,2);break;
 		default:break;
 	}	
 }
@@ -772,11 +776,23 @@ void __up_epr_ilp_scale_adj(void)
 }
 
 //-----------------------------------------------------
+/*
 void __up_adj_bar_level_scale(void)
 {
 	key_adj_value_fixed((uint16_t*)(&adjValue),adjLocation);
 }
-
+*/
+void __up_adj_bar_level_scale(void)
+{
+	uint16_t t16;
+	//t16=*((uint16_t*)(&adjValue));
+	t16=(uint16_t)adjValue;
+	if(t16==900)t16=950;
+	else
+		t16=900;
+	
+	adjValue=t16;
+}
 void __up_adj_work_mode(void)
 {
 	uint8_t* p;
@@ -817,17 +833,21 @@ void __up_adj_wakeup_period(void)
 	uint16_t t16;
 	t16=(*(uint16_t*)(&adjValue));
 	switch(t16){
-		case 0:t16=10;break;
+		case 0:t16=2;break;
+		case 2:t16=4;break;
+		case 4:t16=6;break;
+		case 6:t16=10;break;
 		
 		case 10:t16=20;break;
 		case 20:t16=40;break;
 		case 40:t16=60;break;
 		case 60:t16=100;break;
-		
+		/*
 		case 100:t16=200;break;
 		case 200:t16=400;break;
 		case 400:t16=600;break;
 		case 600:t16=1000;break;	
+		*/
 		default:t16=0;break;
 	}
 	(*(uint16_t*)(&adjValue))=t16;
@@ -871,7 +891,11 @@ void key_process_up(void)
         case MENU_PRESSURE_CALIB_EX0:   __up_ex0_pr_calib_adj();			break;
         case MENU_PRESSURE_CALIB_EX1:   __up_ex1_pr_calib_adj();			break;
 		//case MENU_SET_ETMEP_ZERO_LINE:	__up_etemp_calib_adj();			break;
-		case MENU_SET_EPR_ILOOP_SCALE:	__up_epr_ilp_scale_adj();		break;
+		case MENU_SET_TMEP_EX0:
+		case MENU_SET_TMEP_EX1:			paramChangedFlag=!(paramChangedFlag);break;
+		
+		
+		case MENU_SET_ILOOP_SCALE:		__up_epr_ilp_scale_adj();		break;
 		
 		case MENU_SET_BAR_LEVEL_SCALE:	__up_adj_bar_level_scale();	break;
 		case MENU_SET_WORK_MODE:        __up_adj_work_mode();		break;
@@ -907,7 +931,7 @@ void key_process_set_up_long(void)
 		case PSW_SET_TMEP_EX0:			__enter_menu_set_temp_ex0(0);			break;
 		case PSW_SET_TMEP_EX1:			__enter_menu_set_temp_ex1(0);			break;
 		
-		case PSW_SET_EPR_ILOOP_SCALE:	__enter_menu_epr_ilp_scale(0);			break;
+		case PSW_SET_ILOOP_SCALE:       __enter_menu_ilp_scale(0);			break;
 		case PSW_SET_BAR_LEVEL_SCALE:	__enter_menu_bar_scale();				break;
 		case PSW_SET_WORK_MODE:			__enter_menu_work_mode();				break;
 		
@@ -1005,8 +1029,8 @@ void __set_short_pose_size(bool gohome)
             stp->d=t32;
 			break;
     }
+	__sys_data_save_write_flash();
 	if(gohome){__exit_menu_to_home_unsave(); return;}
-    __sys_data_save_write_flash();
     subMenu++;
     if(subMenu>sub_MENU_SET_D)subMenu=sub_MENU_SET_POSE;
     switch(subMenu){
@@ -1239,6 +1263,32 @@ void __set_short_ex1_pr_calib(bool gohome)
     __enter_menu_ex1_pr_calib(calibRow,calibCol);
 	
 }
+void __set_short_ex0_etemp_calib(bool gohome)
+{
+	int32_t t32;
+    if(paramChangedFlag){
+        t32=(int32_t)(rtAdcValueTemperatureEx0A-rtAdcValueTemperatureEx0B-rtAdcValueTemperatureEx0B);
+        stSysData.tempCalibEx0[subMenu].adcValue=t32;
+        __sys_data_save_write_flash();
+    }
+	if(gohome){__exit_menu_to_home_unsave(); return;}
+    subMenu++;
+    if(subMenu>sub_MENU_SET_TEMP_P1)subMenu=sub_MENU_SET_TEMP_P0;
+    __enter_menu_set_temp_ex0(subMenu);
+}
+void __set_short_ex1_etemp_calib(bool gohome)
+{
+	int32_t t32;
+    if(paramChangedFlag){
+        t32=(int32_t)(rtAdcValueTemperatureEx1A-rtAdcValueTemperatureEx1B-rtAdcValueTemperatureEx1B);
+        stSysData.tempCalibEx1[subMenu].adcValue=t32;
+        __sys_data_save_write_flash();
+    }
+    if(gohome){__exit_menu_to_home_unsave(); return;}
+    subMenu++;
+    if(subMenu>sub_MENU_SET_TEMP_P1)subMenu=sub_MENU_SET_TEMP_P0;
+    __enter_menu_set_temp_ex1(subMenu);
+}
 
 void __set_short_poly_coefic(bool gohome)
 {
@@ -1267,7 +1317,7 @@ void __set_short_warn_type(bool gohome)
 	// m_flash_read(SYSTEM_DATA_ADDR,globleBuffer1,sizeof(sysDataDef_t));	
 	sysDataDef_t* stp=&stSysData;
 	p=(uint8_t*)(&adjValue);
-	stp->diffPressureWarnSet[subMenu].type=*p;
+	stp->dprWarnSet[subMenu].type=*p;
     __sys_data_save_write_flash();
     
     if(gohome){__exit_menu_to_home_unsave(); return;}
@@ -1295,9 +1345,9 @@ void  __set_short_warn_value(bool gohome)
 	*/
 	t8=subMenu>>1;
 	if(subMenu & 0x01){
-		stp->diffPressureWarnSet[t8].warnValueHi=t32;
+		stp->dprWarnSet[t8].warnValueOop=t32;
 	}else{
-		stp->diffPressureWarnSet[t8].warnValueLo=t32;
+		stp->dprWarnSet[t8].warnValue=t32;
 	}
 	//
 	__sys_data_save_write_flash();
@@ -1349,7 +1399,7 @@ void __set_short_etemp_param(bool gohome)
 	__enter_menu_etemp_calib(subMenu); 
 }
 */
-void __set_short_epr_ilp_scale(bool gohome)
+void __set_short_ilp_scale(bool gohome)
 {
 	//uint8_t* p;
 	int32_t t32;
@@ -1358,10 +1408,10 @@ void __set_short_epr_ilp_scale(bool gohome)
 	sysDataDef_t* stp=&stSysData;
     t32=__mflot32_2_int32(m_floatAdj.t32);
 	switch(subMenu){
-		case sub_MENU_SET_EXPR_ILP_CH0_Lo:stp->exPrIpScaleCh0.ilpLow=t32;break;
-		case sub_MENU_SET_EXPR_ILP_CH0_Hi:stp->exPrIpScaleCh0.ilpHi=t32;break;
-		case sub_MENU_SET_EXPR_ILP_CH1_Lo:stp->exPrIpScaleCh1.ilpLow=t32;break;
-		case sub_MENU_SET_EXPR_ILP_CH1_Hi:stp->exPrIpScaleCh1.ilpHi=t32;break;
+		case sub_MENU_SET_ILP_CH0_Lo:stp->IpScaleCh0.ilpLow=t32;break;
+		case sub_MENU_SET_ILP_CH0_Hi:stp->IpScaleCh0.ilpHi=t32;break;
+		case sub_MENU_SET_ILP_CH1_Lo:stp->IpScaleCh1.ilpLow=t32;break;
+		case sub_MENU_SET_ILP_CH1_Hi:stp->IpScaleCh1.ilpHi=t32;break;
 		default:break;
 	}
 	__sys_data_save_write_flash();
@@ -1369,8 +1419,8 @@ void __set_short_epr_ilp_scale(bool gohome)
     if(gohome){__exit_menu_to_home_unsave(); return;}
     
     subMenu++;
-    if(subMenu>sub_MENU_SET_EXPR_ILP_CH1_Hi)subMenu=sub_MENU_SET_EXPR_ILP_CH0_Lo;
-    __enter_menu_epr_ilp_scale(subMenu); 	
+    if(subMenu>sub_MENU_SET_ILP_CH1_Hi)subMenu=sub_MENU_SET_ILP_CH0_Lo;
+    __enter_menu_ilp_scale(subMenu); 	
 }
 
 void __set_long_density(void)
@@ -1412,16 +1462,16 @@ void __set_long_base_zero(void)
 }
 void __set_long_bar_level_scale(void)
 {
-	uint16_t* p;
+	//uint16_t* p;
 	//int32_t t32;
 	// sysDataDef_t* stp=(sysDataDef_t*)globleBuffer1; 
 	// m_flash_read(SYSTEM_DATA_ADDR,globleBuffer1,sizeof(sysDataDef_t));	
 	sysDataDef_t* stp=&stSysData;
-    p=(uint16_t*)(&adjValue);	
-	stp->barScale=*p;
-    
+    //p=(uint16_t*)(&adjValue);	
+	//stp->barScale=*p;
+    stp->barScale=(uint16_t)adjValue;
+	
     __sys_data_save_write_flash();
-    
     __exit_menu_to_home_unsave();    
 }
 
@@ -1490,10 +1540,13 @@ void key_process_set_long(void)
         case MENU_SET_WARN_VALUE:		__set_short_warn_value(goHOME);     break;
 		//case MENU_SET_EPR_ZERO_LINE:	__set_short_epr_param(goHOME);      break;
 		//case MENU_SET_ETMEP_ZERO_LINE:	__set_short_etemp_param(goHOME);	break;
+		case MENU_SET_TMEP_EX0:			__set_short_ex0_etemp_calib(goHOME);	break;
+		case MENU_SET_TMEP_EX1:			__set_short_ex1_etemp_calib(goHOME);	break;		
+		
 		case MENU_PRESSURE_CALIB_EX0:	__set_short_ex0_pr_calib(goHOME);	break;
 		case MENU_PRESSURE_CALIB_EX1:	__set_short_ex1_pr_calib(goHOME);	break;	
 		
-		case MENU_SET_EPR_ILOOP_SCALE:	__set_short_epr_ilp_scale(goHOME);  break;    
+		case MENU_SET_ILOOP_SCALE:	__set_short_ilp_scale(goHOME);  break;    
         
 		case MENU_SET_BAR_LEVEL_SCALE:	__set_long_bar_level_scale();       break;
 		case MENU_SET_WORK_MODE:        __set_long_work_mode();             break;	
@@ -1528,7 +1581,10 @@ void key_process_set(void)
 		case MENU_PRESSURE_CALIB_EX1:	__set_short_ex1_pr_calib(unGoHome);	break;
 		
 		//case MENU_SET_ETMEP_ZERO_LINE:	__set_short_etemp_param(unGoHome);	break;
-		case MENU_SET_EPR_ILOOP_SCALE:	__set_short_epr_ilp_scale(unGoHome);break;
+		case MENU_SET_TMEP_EX0:			__set_short_ex0_etemp_calib(unGoHome);	break;
+		case MENU_SET_TMEP_EX1:			__set_short_ex1_etemp_calib(unGoHome);	break;
+		
+		case MENU_SET_ILOOP_SCALE:	__set_short_ilp_scale(unGoHome);break;
 		
 		case MENU_SET_BAR_LEVEL_SCALE:	break;
 		case MENU_SET_WORK_MODE:        break;		

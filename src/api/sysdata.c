@@ -33,7 +33,7 @@ volatile int16_t	adc_ibat;
 volatile int16_t	adc_iRef;
 
 volatile int32_t    rtTemperatureInBuf[4]={0,0,0,0};
-volatile int32_t    rtDiffPrBuf[4];
+volatile int32_t    rtDiffPrBuf[4]={0,0,0,0};
 volatile int32_t	rtDiffPressure;
 volatile int32_t	rtHight;
 volatile int32_t	rtWeight;
@@ -52,6 +52,8 @@ volatile int32_t	rtEx1Pressure;
 //
 
 volatile st_deviceOpMode dwm=TEST_MODE;
+
+deviceEventDef_t deviceEvent={0};
 
 // %水平圆筒的局部容积系数,其中x=H/D
 // %Vp=k*Va
@@ -122,40 +124,40 @@ const float hKel[]={
 const sysDataDef_t defultSystemData={
 
 		1234,//uint32_t 	id;
-		0,//em_posture	pos;							//立式或者卧式
+		1,//em_posture	pos;							//立式或者卧式
 		95,//uint8_t		maxValueForlevelBar;			//状态条显示满时对应的高度值,
 													//(95%或者100%)
 		5,//uint16_t	density;						//密度
 		{{"LO2",1140},{"LN2",810},{"LAR",1402},{"CO2",1020},{"LNG",460},{"Oth",1000}},
-		15000,//int32_t		h;								//高
-		3000,//uint32_t	d;								//直径
+		3765,//int32_t		h;								//高
+		1400,//uint32_t	d;								//直径
 		
 		0,//int32_t		V1;								//圆筒部分体积
 		0,//int32_t		V2;								//封头椭球体积
 		
-		-200,//int32_t		baseZero;						//基础零位
+		200,//int32_t		baseZero;						//基础零位
 		//
 
 		{{0,0},{10000,10000}},//st_2ndCalibDef	_2ndPrDiffCalib[2];			//二次修正，差压
 		{{0,0},{10000,10000}},//st_2ndCalibDef	_2ndPrCalib[2];				//二次修正，压力
 		
-		{{0},{0},{0},{0}},//st_warnDef		diffPressureWarnSet[4];		//差压报警设置
-		{{0},{0}},//st_warnDef		pressureWarnSet[2];			//压力报警设置
+		{{6000,20,0,0},{1000,20,1,0},{800,5,2,0},{200,5,3,0}},//st_warnDef		diffPressureWarnSet[4];		//差压报警设置
+		//{{0},{0}},//st_warnDef		pressureWarnSet[2];			//压力报警设置
 
 		
-		{400,300,200,100},//uint16_t		ployCoeffic[4];					//v0'=a0.v0+a1.v1+ ...+an.vn
+		{1000,0,0,0},//uint16_t		ployCoeffic[4];					//v0'=a0.v0+a1.v1+ ...+an.vn
 
 		{{0,0},{10000,10000}},//st_exClibDef	TmepCalib[2];				//温度标定，
 		
 		{{0,0},{10000,10000}},//st_exClibDef	exPr0Calib[2];				//外部压力传传感器标定
 		{{0,0},{10000,10000}},//st_exClibDef	exPr1Calib[2];
-		{{0,0},{10000,10000}},//st_exClibDef	exTempCalib[2];				//外部温度标定
-		{{0,0},{10000,10000}},//st_exClibDef	exTempCalib[2];				//外部温度标定
+		{{20000,171},{120000,971}},//st_exClibDef	exTempCalib[2];				//外部温度标定
+		{{20000,171},{120000,971}},//st_exClibDef	exTempCalib[2];				//外部温度标定
         
-		{1000,2000},//st_ilpScaleDef	exdiffPrilpScale0;			//外部压力4-20毫安范围
-		{1000,2000},//st_ilpScaleDef	exPrilpScale0;				//外部压力4-20毫安范围
-		{1000,2000},//st_ilpScaleDef	exPrIpScale0;
-		{1000,2000},//st_ilpScaleDef	exPrIpScale1;		
+		//{1000,2000},//st_ilpScaleDef	exdiffPrilpScale0;			//外部压力4-20毫安范围
+		//{1000,2000},//st_ilpScaleDef	exPrilpScale0;				//外部压力4-20毫安范围
+		{0,2000},//st_ilpScaleDef	exPrIpScale0;
+		{0,2000},//st_ilpScaleDef	exPrIpScale1;		
 		//st_ilpScaleDef
 	
 		950,//uint16_t	barScale;
@@ -182,6 +184,7 @@ uint32_t data_sys_cal_v1(sysDataDef_t* stp)
     h=(float)(stp->h);
     r=r/1000/2;
     h=h/1000;
+	h=h-r;
     f=h*(r*r)*3.1416f;
     f*=1000;
     return (uint32_t)f;
@@ -193,7 +196,7 @@ uint32_t data_sys_cal_v2(sysDataDef_t* stp)
     //int32_t t32;
     //t32=stp->d;
     r=(float)(stp->d);
-    r=r/1000/2;
+    r=r/1000;
     f=r*r*r*0.2618;
     f*=1000;
     return (uint32_t)f;
@@ -454,6 +457,7 @@ int32_t cal_diff_hight_to_vol_h(int32_t h)
     
     v1=v1+v2;
     t32=(int32_t)v1;
+    if(t32<0)t32=0;
 	return t32;
 }
 
@@ -465,7 +469,8 @@ uint8_t cal_diff_hight_level(void)
 	f2=(float)stSysData.h;
 	if(stSysData.pos==HOTIZONTAL){
 	}else{
-		f1=f1+f2/2;
+		//f1=f1+f2/2;
+        f1=f2;
 	}
 	/*
 	if(stSysData.pos==HOTIZONTAL){
@@ -475,7 +480,7 @@ uint8_t cal_diff_hight_level(void)
         f1=(f1+stSysData.d)+(f1+stSysData.d);
     }
 	*/
-	f2=(float)(stSysData.maxValueForlevelBar)/100.0;
+	f2=(float)(stSysData.barScale)/1000.0;
 	f1=f1*f2;
 	
     //f1=f1*(stSysData.maxValueForlevelBar)/100;
@@ -492,33 +497,40 @@ uint8_t cal_diff_hight_level(void)
 //高度折算容积，竖直放置
 int32_t cal_diff_hight_to_vol_v(int32_t h)
 {
+    int32_t t32;
 	float v1,v2;
 	float f1,D,H;
 	v1=(float)(stSysData.V1);
 	v2=(float)(stSysData.V2);
-	
+	__nop();
     f1=(float)h;
 	D=(float)(stSysData.d);
 	H=(float)(stSysData.h);
+    H=H-(D/2);
     if(f1<D/4){
         f1=2*f1/D;
         f1=m_interp1_float_fast((float*)hKel,f1,sizeof(hKel)/sizeof(hKel[0]));
 		v2=v2*f1;
-        return (int32_t)v2;
+        t32=(int32_t)v2;
+        if(t32<0l)t32=0l;
+        return t32;
     }else if(f1<D/4+H){
         f1=f1-D/4;
         v1=v1*(f1/H);
         v2=v2/2;
-        return (int32_t)(v1+v2);
+        t32=(int32_t)(v1+v2);
+        if(t32<0l)t32=0l;
+        return t32;
     }else{
         if(f1>H+D/2)f1=H+D/2;
-        f1=H+D/2-f1;
-		f1=0.5-f1;
-		if(f1<=0.0)f1=0.0;
+		f1=(H+D/2)-f1;
 		f1=2*f1/D;
         f1=m_interp1_float_fast((float*)hKel,f1,sizeof(hKel)/sizeof(hKel[0]));
-        v2=v2*(0.5+f1);
-        return (int32_t)(v1+v2); 
+		v2=v2*(1-f1);
+        t32=(int32_t)(v1+v2);
+        if(t32<0l)t32=0l;
+        return t32;
+        
     }
 }
 
@@ -526,6 +538,7 @@ int32_t cal_diff_hight_to_vol_v(int32_t h)
 //折算为，高度，P=ρgh<-->h=p/ρg;单位为P(KPa),ρ(N/m3),(g=9.8)
 int32_t cal_diff_p_to_h(int32_t p)
 {
+    int32_t t32;
     uint16_t density;
 	float f1,f2;
 	//t32=xin->pValue;
@@ -534,7 +547,9 @@ int32_t cal_diff_p_to_h(int32_t p)
 	f2=(float)(density);
     f1=f1/(f2*9.8f);
     f1*=1000;
-	rtHight=(int32_t)f1;	
+    t32=(int32_t)f1;	
+    //if(t32<0l)t32=0l;
+	rtHight=t32;
 	return rtHight;
 }
 
@@ -594,4 +609,73 @@ void cal_battery_voltage(void)
 	
 }
 
+uint8_t calc_warning_pr_dpr(void)
+{
+	uint16_t oldEvent;
+	oldEvent=deviceEvent.t16;
+	warnType_t type;
+    uint8_t i;
+    int32_t v,oop;
+    for(i=0;i<4;i++){
+        v=stSysData.dprWarnSet[i].warnValue;
+        oop=stSysData.dprWarnSet[i].warnValueOop;
+        if(v==oop)continue;
+        type=stSysData.dprWarnSet[i].type;
+        switch(type){
+            case HIGHT_LO:
+                if(rtHight<v)deviceEvent.t16 |= (0x01<<i);
+                else if(rtHight>v+oop)
+                    deviceEvent.t16 &= ~(0x01<<i);
+                break;
+			case HIGHT_HI:
+				if(rtHight>v)deviceEvent.t16 |= (0x01<<i);
+                else if(rtHight < v-oop)
+                    deviceEvent.t16 &= ~(0x01<<i);
+                break;
+			case PRESSURE_HI:
+				if(rtPressure>v)deviceEvent.t16 |= (0x01<<i);
+                else if(rtPressure < v-oop)
+                    deviceEvent.t16 &= ~(0x01<<i);
+                break;
+			case PRESSURE_LO:
+				if(rtPressure<v)deviceEvent.t16 |= (0x01<<i);
+				else if(rtPressure > v+oop)
+					deviceEvent.t16 &= ~(0x01<<i);
+				break;
+			default:
+				break;
+        }
+    }
+	return (oldEvent != deviceEvent.t16);
+}
+
+uint16_t calc_dpr_iloop_out_put(void)
+{
+	float x,y;
+    uint16_t t16;
+    x=(float)(stSysData.IpScaleCh0.ilpHi-stSysData.IpScaleCh0.ilpLow);
+    y=65535;
+    y=y/x;
+    x=(float)(rtHight-stSysData.IpScaleCh0.ilpLow);
+    y=y*x;
+    if(y<=0)y=0;
+    if(y>=65535)y=65535;
+    t16=(uint16_t)y;
+    return t16;
+}
+
+uint16_t calc_pr_iloop_out_put(void)
+{
+	float x,y;
+    uint16_t t16;
+    x=(float)(stSysData.IpScaleCh1.ilpHi-stSysData.IpScaleCh1.ilpLow);
+    y=65535;
+    y=y/x;
+    x=(float)(rtPressure-stSysData.IpScaleCh1.ilpLow);
+    y=y*x;
+    if(y<=0)y=0;
+    if(y>=65535)y=65535;
+    t16=(uint16_t)y;
+    return t16;
+}
 //file end

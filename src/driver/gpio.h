@@ -20,6 +20,10 @@
 	extern void check_solor_set_hight(void);
 	extern void check_solor_set_low(void);
 	
+    #define ANI_SOLOR_PIN   PIN9
+    #define ANI_SOLOR_PORT  porta
+    extern void ain_solor_config(void);
+
 	#define BJ_1_PIN		PIN4
 	#define BJ_1_PORT		portd
 
@@ -68,7 +72,9 @@
 	extern void bj_4_off(void);
 	extern void bj_all_on(void);
 	extern void bj_all_off(void);
-	
+    
+    extern void bi_output(void);	
+    
 	#define RUN_STATUS_PINS PIN12
 	#define RUN_STATUS_PORT	portd
 	
@@ -79,6 +85,7 @@
 	
 	extern void pre_system_sleep(void);
     extern void pre_system_sleep_deinit_all_pins(void);
+
 	
 #ifdef __cplusplus
 	}

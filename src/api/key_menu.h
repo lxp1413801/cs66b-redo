@@ -30,11 +30,10 @@ extern "C"{
 	#define PSW_SET_TMEP_EX0					163
 	#define PSW_SET_TMEP_EX1					164
 	//外部温度修正
-	#define PSW_SET_ETMEP_ZERO_LINE				136	
+	//#define PSW_SET_ETMEP_ZERO_LINE				136	
 	//差压二次修正
 	//压力二次修正
-	//外部差压输出范围
-	#define PSW_SET_EPR_ILOOP_SCALE				139
+	#define PSW_SET_ILOOP_SCALE					42
 
 	//高度条满刻度对应的值95%还是100%
 	#define PSW_SET_BAR_LEVEL_SCALE				188
@@ -92,8 +91,7 @@ extern "C"{
 	#define sub_MENU_SET_WARN_VALUE_5			0x05
 	#define sub_MENU_SET_WARN_VALUE_6			0x06
 	#define sub_MENU_SET_WARN_VALUE_7			0x07
-	//外部压力零点和线性,psd=138
-	//#define MENU_SET_EPR_ZERO_LINE              0xa0
+ 
 	#define MENU_PRESSURE_CALIB_EX0				0xa0
 	#define MENU_PRESSURE_CALIB_EX1				0xa1
 	/*
@@ -114,8 +112,8 @@ extern "C"{
 	#define MENU_SET_RF_SEND_PERIOD				0xa4
 	#define sub_MENU_SET_RF_SEND_PERIOD			0x00
 	//4-20mA输出范围（差压、压力）
-	#define MENU_SET_DPR_ILOOP_SCALE			0xa5
-	#define	sub_MENU_DPR_ILP_CH0_Lo				0x00
+//	#define MENU_SET_DPR_ILOOP_SCALE			0xa5
+//	#define	sub_MENU_DPR_ILP_CH0_Lo				0x00
 	
 	//外部温度修正PSW_SET_ETMEP_ZERO_LINE	=136
 	#define MENU_SET_TMEP_EX0					0xa6
@@ -127,12 +125,12 @@ extern "C"{
 	#define sub_MENU_SET_TEMP_P1				0x01
 	//add end
 	//外部压输出范围,psd=139
-	#define MENU_SET_EPR_ILOOP_SCALE			0xb0
+	#define MENU_SET_ILOOP_SCALE			0xb0
 	//#define MENU_SET_EX_D_PR_ILOOP_L			0xb0
-	#define sub_MENU_SET_EXPR_ILP_CH0_Lo		0x00
-	#define sub_MENU_SET_EXPR_ILP_CH0_Hi		0x01
-	#define sub_MENU_SET_EXPR_ILP_CH1_Lo		0x02
-	#define sub_MENU_SET_EXPR_ILP_CH1_Hi		0x03
+	#define sub_MENU_SET_ILP_CH0_Lo		0x00
+	#define sub_MENU_SET_ILP_CH0_Hi		0x01
+	#define sub_MENU_SET_ILP_CH1_Lo		0x02
+	#define sub_MENU_SET_ILP_CH1_Hi		0x03
 	
 	//高度条满刻度对应的值95%还是100%,psd=188	
 	#define MENU_SET_BAR_LEVEL_SCALE			0xc0
@@ -146,6 +144,7 @@ extern "C"{
 	//背光打开时间
 	#define	MENU_PSW_SET_BL_ON_TM				0xf2
 	#define sub_MENU_PSW_SET_BL_ON_TM			0x00
+	
 	typedef union{
 		uint8_t t8;
 		struct{

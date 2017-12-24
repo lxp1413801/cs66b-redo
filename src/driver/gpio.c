@@ -1,3 +1,5 @@
+#include "../configs/configs.h"
+#include "../api/sysdata.h"
 #include "gpio_config.h"
 #include "gpio.h"
 #include "lcd.h"
@@ -76,7 +78,11 @@ void check_solor_set_low(void)
 	set_port_value_low(CHECK_SOLOR_PORT,CHECK_SOLOR_PIN);
 }
 
-
+void ain_solor_config(void) 
+{
+    set_port_mode_an(ANI_SOLOR_PORT,ANI_SOLOR_PIN); 
+    set_port_mode_in(ANI_SOLOR_PORT,ANI_SOLOR_PIN); 
+}
 void all_bj_init(void)
 {
 	set_port_mode_dig(BJ_PORT,ALL_BJ_PINS);
@@ -143,7 +149,32 @@ void bj_all_off(void)
 	set_port_value_low(BJ_V_PORT,BJ_V_PIN);
 	set_port_value_low(BJ_PORT,ALL_BJ_PINS);
 }
+void bi_output(void)
+{
+#if BJ_BAORD_EN
+    uint16_t t16;
+    t16=deviceEvent.t16;
+    if(t16 & 0x0f){
+        set_port_value_hight(BJ_V_PORT,BJ_V_PIN);
+    }
+    
+    if(t16 & 0x01)bj_1_on();
+    else
+        bj_1_off();
+    
+    if(t16 & 0x02)bj_2_on();
+    else
+        bj_2_off(); 
+    
+    if(t16 & 0x04)bj_3_on();
+    else
+        bj_3_off();   
 
+    if(t16 & 0x08)bj_4_on();
+    else
+        bj_4_off();  
+#endif
+}
 void run_status_init(void)
 {
 	set_port_mode_dig(RUN_STATUS_PORT,RUN_STATUS_PINS);
