@@ -549,8 +549,8 @@ int32_t cal_diff_p_to_h(int32_t p)
     f1*=1000;
     t32=(int32_t)f1;	
     //if(t32<0l)t32=0l;
-	rtHight=t32;
-	return rtHight;
+	//rtHight=t32;
+	return t32;
 }
 
 int32_t cal_diff_vol_to_t(int32_t v)

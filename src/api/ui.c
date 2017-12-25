@@ -8,7 +8,7 @@
 //uint8_t tmpBuffer[16];
 //extern st_RtcDef glRtc;
 
-#define ui_delay_ms(ms) ticker_ms_delay(ms)
+//#define ui_delay_ms(ms) ticker_ms_delay(ms)
 uint8_t lcdTwinkle=0;
 extern bool paramChangedFlag;
 
@@ -210,7 +210,7 @@ void ui_disp_start_cs600(uint8_t dly)
 		lcd_show_string_l1(buf);
         //lcd_disp_level(60);
 		lcd_disp_refresh();
-		ui_delay_ms(1000);
+		ticker_ms_delay(1000);
 		t8--;
 	}
 }
@@ -433,6 +433,31 @@ void ui_disp_xfloat_pt_twinkle(st_float32_m* xpf,uint8_t line,uint8_t loc)
 	}
 	//lcd_disp_refresh();    
 }
+void ui_disp_xfloat_pt_ex(st_float32_m* xpf,uint8_t line)
+{
+    uint8_t buf[10];
+    uint8_t t8;
+	uint16_t x;
+	if(line>1)return; 
+	x=xpf->stru.significand;
+	if(xpf->stru.sign){
+        if(x>999)x=999;
+        m_int16_2_str_4(buf,x);
+        buf[0]='-';
+    }else{
+        if(x>9999)x=9999;
+        m_int16_2_str_4(buf,x);
+    }
+    buf[5]='\0';
+	if(line==0){
+		lcd_show_string_l0(buf);
+	}else{
+		lcd_show_string_l1(buf);
+	}
+    t8=xpf->stru.exponent;
+    if(t8<3)lcd_show_dp(t8+4*line,true);
+	//lcd_disp_refresh();    
+}
 void ui_disp_xfloat_pt(st_float32_m* xpf,uint8_t line)
 {
     uint8_t buf[10];
@@ -456,6 +481,7 @@ void ui_disp_xfloat_pt(st_float32_m* xpf,uint8_t line)
 		lcd_show_string_l1(buf);
 	}
     t8=xpf->stru.exponent+xpf->stru.sign;
+    
     if(t8<3)lcd_show_dp(t8+4*line,true);
 	//lcd_disp_refresh();    
 }
@@ -667,6 +693,8 @@ void ui_disp_menu_home(void)
     t8=rtLevel;
     //t8=60;
 	lcd_disp_level(t8);
+	lcd_disp_battary(batLevel);
+	lcd_disp_light(solorLevel);
 	//ui_disp_home_sm_tmp_ex(rtTemperatureIn);
 	if(stSysData.exPrTempShowEn){
 		//循环显示
@@ -765,9 +793,29 @@ void ui_disp_menu_pose_size(void)
 
 void ui_disp_menu_bzero_adj(void)
 {
+    int16_t t16;
+	//int16_t* p16;
+	int32_t t32;
+	st_float32 mf;
 	lcd_clear_all();
 	lcd_disp_logo(true);
-	ui_disp_adj_xfloat_pt((uint8_t*)"  Hb",&m_floatAdj,adjLocation);	
+	//ui_disp_adj_xfloat_pt((uint8_t*)"  Hb",&m_floatAdj,adjLocation);
+	//ui_disp_adj_xfloat_pt()
+	//(uint16_t*)(&adjValue)
+	t16=*(int16_t*)(&adjValue);
+    //t16=
+	t32=(stSysData.baseZero);
+	if(t32>32767)t32=32767;
+	if(t32<-32768)t32=-32768;
+	t32=(int32_t)(t16)-t32;
+	t32=rtHight-t32;
+    if(t32<-999)t32=-999;
+	 mf.t32=__int32_2_mflot32(t32);
+	
+	lcd_show_string_l0((uint8_t*)"  Hb");
+	ui_disp_xfloat_pt_ex(&mf,LCD_LINE_1);
+    
+	lcd_disp_refresh(); 
 }
 
 void ui_disp_menu_calib_adj_x(uint8_t chr,__xDataStruct_t* xdat)
@@ -1015,11 +1063,11 @@ void ui_disp_menu_warn_v_adj(void)
 	sysDataDef_t* fps= &stSysData;
 	t8=subMenu>>1;
 	type=fps->dprWarnSet[t8].type;
-	m_mem_cpy(buf,(uint8_t*)"al1u");
-	buf[2]='1'+t8;
+	m_mem_cpy(buf,(uint8_t*)" al1");
+	buf[3]='1'+t8;
 	if(subMenu & 0x01){
 		//m_mem_cpy(buf,(uint8_t*)" ah0");
-		buf[3]='d';
+		buf[2]='H';
 	}
 	
 	if(type == HIGHT_HI || type== HIGHT_LO){

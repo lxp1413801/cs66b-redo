@@ -154,18 +154,19 @@ void lcd_disp_battary_bar(uint8_t bar,uint8_t show)
 	if(bar>=4)bar=4;
 	switch(bar){
 		case 0:	lcd_set_com_seg(3,50,show);	break;
-		case 3:	lcd_set_com_seg(4,46,show);	break;
+		case 1:	lcd_set_com_seg(4,46,show);	break;
 		case 2:	lcd_set_com_seg(3,46,show);	break;
-		case 1:	lcd_set_com_seg(4,50,show);	break;
+		case 3:	lcd_set_com_seg(4,50,show);	break;
 	}
 }
 void lcd_disp_battary(uint8_t level)
 {
 	uint8_t i;
-	if(level>=100)level=100;
-	level/=25;
-	if(level<1)level=1;
-	for(i=0;i<level;i++){
+	//if(level>=100)level=100;
+	//level/=25;
+	if(level>3)level=3;
+	//if(level<1)level=1;
+	for(i=0;i<=level;i++){
 		lcd_disp_battary_bar(i,1);
 	}
 	for(;i<4;i++){
@@ -215,16 +216,17 @@ void lcd_disp_light_bar(uint8_t bar,uint8_t show)
 {
 	if(bar>=1)bar=1;
 	switch(bar){
-		case 1:	lcd_set_com_seg(2,46,show);	break;
-		case 0:	lcd_set_com_seg(2,50,show);	break;
+		case 0:	lcd_set_com_seg(2,46,show);	break;
+		case 1:	lcd_set_com_seg(2,50,show);	break;
 	}	
 }
 void lcd_disp_light(uint8_t light)
 {
-	if(light>=100)light=100;
-	light/=50;
-	if(light<1)light=1;
-	if(2==light){
+	//if(light>=100)light=100;
+	//light/=50;
+	if(light>1)light=1;
+	//if(light<1)light=1;
+	if(1==light){
 		lcd_disp_light_bar(0,1);
 		lcd_disp_light_bar(1,1);
 	}else{
@@ -816,7 +818,7 @@ void lcd_disp_all(uint16_t x)
 
 void lcd_config(void)
 {
-    LCDCONbits.CS=1;
+    LCDCONbits.CS=3;
     LCDCONbits.LCDSIDL=0;
     LCDCONbits.SLPEN=0;
     LCDCONbits.WERR=0;

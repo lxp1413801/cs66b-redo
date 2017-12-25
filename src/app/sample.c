@@ -35,8 +35,10 @@ volatile int32_t rtTempRes1;
 //volatile int16_t rtAdcValueChip1Ref0;
 //volatile int16_t rtAdcValueChip1Ref1;
 volatile int16_t rtValueBat;
+volatile uint8_t batLevel=0;
 volatile int16_t rtValueSolor;
-#define IN_SOC_VREF_VALUE   2048
+volatile uint8_t solorLevel=0;
+#define IN_SOC_VREF_VALUE   2500
 
 int16_t abs_diff(uint16_t a,uint16_t b)
 {
@@ -307,7 +309,9 @@ void sample_calc_diff_press(void)
     t32=calculate_and_compensate(diffPrCalibDataObj.calibTab,&x_prDiffData);
     //rtDiffPressure=t32;
     rtDiffPressure=sample_calc_diff_press_fliter(t32);
-	cal_diff_p_to_h(rtDiffPressure);
+	t32=cal_diff_p_to_h(rtDiffPressure);
+	t32=t32-stSysData.baseZero;
+	rtHight=t32;
     __nop();
     __nop();
     //rtPressure=t32;
@@ -754,9 +758,15 @@ void sample_in_soc_solar(void)
 	}
     check_solor_set_low();
     t16=(uint16_t)(t32/i);
-    t32=IN_SOC_VREF_VALUE*t16*12/4095;    
+    t32=IN_SOC_VREF_VALUE;
+    t32=t32*t16*12/4095;    
     
 	rtValueSolor=(uint16_t)(t32/i);
+    if(rtValueSolor>9000){
+        solorLevel=1;
+    }else{
+        solorLevel=0;
+    }
 	__nop();
 	__nop();	
 }
@@ -786,9 +796,18 @@ void samlpe_in_soc_battery(void)
 		t32+=t16;
 	}
     t16=(uint16_t)(t32/i);
-    t32=IN_SOC_VREF_VALUE*t16*6/4095;
+    t32=IN_SOC_VREF_VALUE;
+    t32=t32*t16*6/4095;
 	rtValueBat=(uint16_t)t32;
-    
+    if(rtValueBat>3500){
+		batLevel=3;
+	}else if(rtValueBat>3300){
+		batLevel=2;
+	}else if(rtValueBat>3000){
+		batLevel=1;
+	}else{
+		batLevel=0;
+	}
 	__nop();
 	__nop();	
 }

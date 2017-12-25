@@ -91,8 +91,8 @@ void RTCC_Initialize(void)
    // ALRMPTR MIN_SEC; AMASK Every Half Second; ARPT 0; CHIME enabled; ALRMEN enabled; 
    ALCFGRPT = 0xC000;
    // RTCOUT Alarm Pulse; PWSPRE disabled; RTCLK LPRC; PWCPRE disabled; PWCEN disabled; PWCPOL disabled; 
-   RTCPWC = 0x0400;
-
+   //RTCPWC = 0x0400;
+    RTCPWC=0x00;
            
    // Enable RTCC, clear RTCWREN
    RCFGCALbits.RTCEN = 1;

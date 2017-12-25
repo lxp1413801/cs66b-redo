@@ -1,6 +1,6 @@
 #include "../includes/includes.h"
 //EventGroupHandle_t threadMainEvent;
-#define main_delay_ms(ms) ticker_ms_delay(ms)
+//#define main_delay_ms(ms) ticker_ms_delay(ms)
 
 volatile uint8_t blShowTime=60;
 volatile uint16_t sleepHalfSec=1000;
@@ -26,7 +26,7 @@ void thread_main_pre(void)
     ui_disp_all_on();
     __nop();
     __nop();
-    main_delay_ms(1000);
+    ticker_ms_delay(1000);
     // ui_disp_all_off();
     // main_delay_ms(1000);
 

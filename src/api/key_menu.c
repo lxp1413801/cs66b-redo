@@ -103,7 +103,51 @@ void key_adj_value_float(st_float32_m* mfp,uint8_t loc)
     }
 }
 
-
+void key_process_up_down_variable_speed_ex(
+	int16_t *val, int16_t min,int16_t max, bool up) {
+    bool change = true;
+    uint16_t speed = 0, t32;
+    uint8_t key = keyValue;
+	if(min>=max)return;
+    //TMR1_Stop();
+    TMR1_Start();
+    ticker_ms_set(0);
+    do {
+        noEventTimeOut=NO_EVENT_TIME_MAX;
+        if (change == true) {
+            change = false;
+            if (up) {
+                (*val) += 1;
+                if (*val > max)*val = min;
+            } else {
+                if (*val <= min)*val = max;
+                else {
+                    (*val) -= 1;
+                }
+            }
+			ui_disp_menu();//bug stack meby over flow
+        }
+        key=get_key_value();
+        if (key != keyValue)break;
+        t32 = ticker_ms_get();
+        if (t32 <= 1000) {
+            if (t32 - speed >= 200) {
+                speed = t32;
+                change = true;
+            }
+        } else if (t32 <= 2000) {
+            if (t32 - speed >= 100) {
+                speed = t32;
+                change = true;
+            }
+        } else {
+            if (t32 - speed >= 50) {
+                speed = t32;
+                change = true;
+            }
+        }
+    } while (1);
+}
 
 //set long time press process
 void __enter_menu_password(void)
@@ -172,11 +216,14 @@ void __enter_menu_set_h(void){
 void __enter_menu_set_base_zero(void)
 {
 	int32_t t32;
+
 	menu=MENU_SET_BASE_ZERO;
 	subMenu=0;
 	//sysDataDef_t* fps=(sysDataDef_t*)SYSTEM_DATA_ADDR;
 	sysDataDef_t* fps= &stSysData;
 	t32=(fps->baseZero);
+	*((uint16_t*)(&adjValue))=(uint16_t)t32;
+	/*
 	t32=__int32_2_mflot32(t32);
 	m_floatAdj.t32=t32;
 	if(m_floatAdj.stru.sign){
@@ -184,6 +231,8 @@ void __enter_menu_set_base_zero(void)
     }else{
         adjLocation=0;
     }
+	*/
+	
 }
 //
 /*
@@ -490,6 +539,13 @@ void __exit_menu_to_home_unsave(void)
 	passWord=0x00;
 }
 
+void __down_base_zero_adj(void)
+{
+	//key_adj_value_float(&m_floatAdj,adjLocation);
+	//int16_t *val, int16_t min,int16_t max, bool up)
+	key_process_up_down_variable_speed_ex((int16_t*)(&adjValue),-1000,1000,true);
+}
+
 void __down_pose_size(void)
 {
 	switch(subMenu){
@@ -580,7 +636,9 @@ void key_process_down(void)
 		case MENU_PASSWORD:key_shift_loc((uint8_t*)(&adjLocation),0,3);break;
 		case MENU_SET_DENSITY:__down_density();break;
 		case MENU_SET_POSE_SIZE:__down_pose_size();break;
-		case MENU_SET_BASE_ZERO:key_shift_loc((uint8_t*)(&adjLocation),0,5);break;
+		//case MENU_SET_BASE_ZERO:key_shift_loc((uint8_t*)(&adjLocation),0,5);break;
+		case MENU_SET_BASE_ZERO:__down_base_zero_adj();break;
+
 		case MENU_DIFF_CALIB:__down_dpr_calib();break;
 		case MENU_PRESSURE_CALIB:__down_pr_calib();break;
 		case MENU_POLY_COEFFIC:key_shift_loc((uint8_t*)(&adjLocation),0,3);break;
@@ -669,7 +727,9 @@ void __up_pose_size_adj(void)
 
 void __up_base_zero_adj(void)
 {
-	key_adj_value_float(&m_floatAdj,adjLocation);
+	//key_adj_value_float(&m_floatAdj,adjLocation);
+	//int16_t *val, int16_t min,int16_t max, bool up)
+	key_process_up_down_variable_speed_ex((int16_t*)(&adjValue),-1000,1000,false);
 }
 
 
@@ -1448,18 +1508,14 @@ void __set_long_density(void)
 
 void __set_long_base_zero(void)
 {
-	//uint8_t* p;
-	int32_t t32;
-	// sysDataDef_t* stp=(sysDataDef_t*)globleBuffer1; 
-	// m_flash_read(SYSTEM_DATA_ADDR,globleBuffer1,sizeof(sysDataDef_t));	
-	sysDataDef_t* stp=&stSysData;
-    t32=__mflot32_2_int32(m_floatAdj.t32);	
-	stp->baseZero=t32;
-    
+	int16_t t16;
+	//uint16_t* p16;
+	t16=*((int16_t*)(&adjValue));
+	stSysData.baseZero=(int32_t)(t16);
     __sys_data_save_write_flash();
-    
     __exit_menu_to_home_unsave();
 }
+
 void __set_long_bar_level_scale(void)
 {
 	//uint16_t* p;
@@ -1595,7 +1651,7 @@ void key_process_set(void)
 
 void key_process(void)
 {
-	uint16_t tm;
+	uint16_t tm=0;
 	uint8_t key;
 	
 	if(keyEventCount)keyEventCount--;
@@ -1603,7 +1659,8 @@ void key_process(void)
     key=get_key_value();
     if(keyValue==KEY_VALUE_NONE && key== KEY_VALUE_NONE)return;
 	//玛德，这里可能有问题！
-	tm=key_waite_release(LONG_PRESS_TIME,&key);
+    if(!((keyValue == KEY_VALUE_UP || keyValue==KEY_VALUE_DOWN) && menu==MENU_SET_BASE_ZERO) )
+        tm=key_waite_release(LONG_PRESS_TIME,&key);
 	if(tm>=LONG_PRESS_TIME){
 		//长按
 		if(key==KEY_VALUE_SET){

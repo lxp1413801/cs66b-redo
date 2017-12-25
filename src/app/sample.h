@@ -36,7 +36,10 @@
     extern volatile int32_t rtAdcValueTemperatureEx0A;
     extern volatile int32_t rtAdcValueTemperatureEx0B;
     extern volatile int32_t rtAdcValueTemperatureEx1A;
-    extern volatile int32_t rtAdcValueTemperatureEx1B;    
+    extern volatile int32_t rtAdcValueTemperatureEx1B;
+
+	extern volatile uint8_t batLevel;    
+    extern volatile uint8_t solorLevel;
     
     extern uint8_t sample_process(void);
 	

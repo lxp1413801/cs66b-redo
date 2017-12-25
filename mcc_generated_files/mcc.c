@@ -54,7 +54,7 @@
 // CONFIG3
 #pragma config WPFP = WPFP127    // Write Protection Flash Page Segment Boundary->Page 127 (0x1FC00)
 #pragma config VBTBOR = ON    // VBAT BOR enable bit->VBAT BOR enabled
-#pragma config SOSCSEL = OFF    // SOSC Selection bits->Digital (SCLKI) mode
+#pragma config SOSCSEL = ON    // SOSC Selection bits->Digital (SCLKI) mode
 #pragma config WDTWIN = PS25_0    // Watch Dog Timer Window Width->Watch Dog Timer Window Width is 25 percent
 #pragma config BOREN = ON    // Brown-out Reset Enable->Brown-out Reset Enable
 #pragma config WPDIS = WPDIS    // Segment Write Protection Disable->Disabled
