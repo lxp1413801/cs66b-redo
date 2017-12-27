@@ -600,6 +600,25 @@ void ui_disp_menu_home_test(void)
 	}
     lcd_disp_refresh(); 
 }
+void ui_disp_home_sm_tmp_in(int32_t x)
+{
+	//int8_t x;
+	uint8_t buf[4];
+	x=x/100;
+	if(x>99)x=99;
+	if(x<-99)x=-99;
+	if(x<0){
+		lcd_disp_dp_loc_sign_sm(true);
+		x=0-x;
+	}
+	buf[0]=(x/10)+'0';
+	buf[1]=(x%10)+'0';
+	buf[2]='*';
+	buf[3]=0;
+	lcd_show_string_sm(buf);
+	lcd_disp_dp_loc_sm_temperature(true);
+}
+/*
 void ui_disp_home_sm_tmp_ex(int32_t x)
 {
 	st_float32 tempft;
@@ -607,6 +626,7 @@ void ui_disp_home_sm_tmp_ex(int32_t x)
 	ui_disp_xfloat_pt_02(&tempft);
 	lcd_disp_unit_temperature(true);
 }
+*/
 
 void ui_disp_home_sm_ex(uint8_t* str,int32_t x)
 {
@@ -702,6 +722,8 @@ void ui_disp_menu_home(void)
 	}else{
 		t8=(uint16_t)stSysData.matterIndex;
 		lcd_show_string_ex((uint8_t*)(stSysData.matterTab[t8].name));
+		//ui_disp_home_sm_tmp_ex(rtTemperatureIn);
+		ui_disp_home_sm_tmp_in(rtTemperatureIn);
 	}
 	lcd_disp_refresh(); 	
 }

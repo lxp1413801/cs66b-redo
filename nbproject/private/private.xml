@@ -19,16 +19,18 @@
         </group>
         <group name="cs600_test">
             <file>file:/F:/2017/cs66-b/cs66b.X/mcc_generated_files/adc1.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/driver/ads1148.c</file>
             <file>file:/F:/2017/cs66-b/cs66b.X/src/soc/delay.c</file>
             <file>file:/F:/2017/cs66-b/cs66b.X/mcc_generated_files/mcc.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/app/main.c</file>
             <file>file:/F:/2017/cs66-b/cs66b.X/src/api/sysdata.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/driver/ads1148_hal.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/app/sample.c</file>
             <file>file:/F:/2017/cs66-b/cs66b.X/src/api/sysdata.h</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/driver/gpio.c</file>
             <file>file:/F:/2017/cs66-b/cs66b.X/mcc_generated_files/rtcc.c</file>
+            <file>file:/F:/2017/cs66-b/cs66b.X/src/driver/ads1148.c</file>
+            <file>file:/F:/2017/cs66-b/cs66b.X/src/app/main.c</file>
+            <file>file:/F:/2017/cs66-b/cs66b.X/src/driver/ads1148_hal.c</file>
+            <file>file:/F:/2017/cs66-b/cs66b.X/src/driver/ads1148.h</file>
+            <file>file:/F:/2017/cs66-b/cs66b.X/src/app/sample.c</file>
+            <file>file:/F:/2017/cs66-b/cs66b.X/src/driver/gpio.c</file>
+            <file>file:/F:/2017/cs66-b/cs66b.X/src/api/ui.c</file>
         </group>
     </open-files>
 </project-private>
