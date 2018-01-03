@@ -970,7 +970,8 @@ uint8_t sample_process(void)
 		case 0x12:sample_calc_temperature_ex1();		break;		
 
 		case 0x13:samlpe_in_soc_battery();				break;
-		case 0x14:sample_in_soc_solar();				break;
+		//case 0x14:sample_in_soc_solar();				break;
+		case 0x14:break;
 		case 0x15:samlpe_in_soc_ref();					break;
 		
 #endif

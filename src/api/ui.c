@@ -762,7 +762,6 @@ void ui_disp_menu_density_adj(void)
 	switch(subMenu){
 		case sub_MENU_SET_SEL_MATTER:ui_disp_menu_density_sel_matter();break;
 		case sub_MENU_SET_DENSITY_CUSTOM:ui_disp_menu_density_sel_custom();break;
-		
 	}
 }
 
