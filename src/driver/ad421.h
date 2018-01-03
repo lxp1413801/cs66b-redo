@@ -29,6 +29,7 @@ extern "C"{
 		void (*pins_init)(void);
 		void (*pins_deinit)(void);
 		void (*set_idac_value)(uint16_t x);
+		void (*set_idac_value_ex)(uint32_t x);
 	}stAd421Obj,ad421Obj_t;
 	
 	extern  ad421Obj_t ad421ObjChip0;

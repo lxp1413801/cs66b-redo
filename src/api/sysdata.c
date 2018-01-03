@@ -140,6 +140,7 @@ for t=-200:1:200;
     end
 end  
 */
+/*
 const float pt100ResTempTable[]={
 	20.5279,20.9235,21.3192,21.7151,22.1111,22.5072,22.9034,23.2998,23.6963,24.0929,
 	24.4896,24.8864,25.2833,25.6804,26.0775,26.4748,26.8721,27.2696,27.6672,28.0648,
@@ -184,7 +185,7 @@ const float pt100ResTempTable[]={
 	175.8560,
     
 };
-
+*/
 const sysDataDef_t defultSystemData={
 
 		1234,//uint32_t 	id;
@@ -192,7 +193,7 @@ const sysDataDef_t defultSystemData={
 		95,//uint8_t		maxValueForlevelBar;			//状态条显示满时对应的高度值,
 													//(95%或者100%)
 		5,//uint16_t	density;						//密度
-		{{"LO2",1140},{"LN2",810},{"LAR",1402},{"CO2",1020},{"LNG",460},{"Oth",1000}},
+		{{"LO2",1140},{"LN2",810},{"LAR",1402},{"CO2",1020},{"LNG",460},{"  P",1000}},
 		3765,//int32_t		h;								//高
 		1400,//uint32_t	d;								//直径
 		
@@ -205,7 +206,7 @@ const sysDataDef_t defultSystemData={
 		{{0,0},{10000,10000}},//st_2ndCalibDef	_2ndPrDiffCalib[2];			//二次修正，差压
 		{{0,0},{10000,10000}},//st_2ndCalibDef	_2ndPrCalib[2];				//二次修正，压力
 		
-		{{6000,20,0,0},{1000,20,1,0},{800,5,2,0},{200,5,3,0}},//st_warnDef		diffPressureWarnSet[4];		//差压报警设置
+		{{6000,20,0,{0}},{1000,20,1,{0}},{800,5,2,{0}},{200,5,3,{0}}},//st_warnDef		diffPressureWarnSet[4];		//差压报警设置
 		//{{0},{0}},//st_warnDef		pressureWarnSet[2];			//压力报警设置
 
 		
@@ -223,7 +224,8 @@ const sysDataDef_t defultSystemData={
 		{0,2000},//st_ilpScaleDef	exPrIpScale0;
 		{0,2000},//st_ilpScaleDef	exPrIpScale1;		
 		//st_ilpScaleDef
-	
+        {0,0},      //ilpAdjustValue_t   ilpAdjustCh0;
+        {0,0},      //ilpAdjustValue_t   ilpAdjustCh1;
 		950,//uint16_t	barScale;
 		0,//uint8_t 	exPrTempShowEn;
 		60,//uint8_t		lcdShowTm;		        
@@ -749,6 +751,30 @@ uint16_t calc_dpr_iloop_out_put(void)
     return t16;
 }
 
+int32_t calc_dpr_iloop_out_put_ex(void)
+{
+	int32_t lo,hi;
+	float x,y;
+    int32_t t32;
+
+	lo=0x4000+(int32_t)stSysData.ilpAdjustCh0.valueLo;
+    hi=0x14000+(int32_t)stSysData.ilpAdjustCh0.valueHi;
+    
+    x=(float)(stSysData.IpScaleCh0.ilpHi-stSysData.IpScaleCh0.ilpLow);
+    y=(float)(hi-lo);
+    
+    y=y/x;
+    x=(float)(rtHight-stSysData.IpScaleCh0.ilpLow);
+    y=y*x;
+    y=y+(float)lo;
+    
+    t32=(int32_t)y;
+    if(t32<=lo)t32=lo;
+    if(t32>=hi)t32=hi;
+
+    return t32;
+}
+
 uint16_t calc_pr_iloop_out_put(void)
 {
 	float x,y;
@@ -762,5 +788,29 @@ uint16_t calc_pr_iloop_out_put(void)
     if(y>=65535)y=65535;
     t16=(uint16_t)y;
     return t16;
+}
+
+int32_t calc_pr_iloop_out_put_ex(void)
+{
+	int32_t lo,hi;
+	float x,y;
+    int32_t t32;
+
+	lo=0x4000+(int32_t)stSysData.ilpAdjustCh1.valueLo;
+    hi=0x14000+(int32_t)stSysData.ilpAdjustCh1.valueHi;
+    
+    x=(float)(stSysData.IpScaleCh1.ilpHi-stSysData.IpScaleCh1.ilpLow);
+    y=(float)(hi-lo);
+    
+    y=y/x;
+    x=(float)(rtPressure-stSysData.IpScaleCh1.ilpLow);
+    y=y*x;
+    y=y+(float)lo;
+    
+    t32=(int32_t)y;
+    if(t32<=lo)t32=lo;
+    if(t32>=hi)t32=hi;
+
+    return t32;    
 }
 //file end

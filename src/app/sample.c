@@ -296,7 +296,7 @@ int32_t sample_calc_diff_press_fliter(int32_t t32)
 }
 void sample_calc_diff_press(void)
 {
-    uint8_t i;
+    //uint8_t i;
     int32_t t32;
 	x_prDiffData.sigAdcValue=rtAdcValueDPrSignal;
     x_prDiffData.tAdcValue=rtAdcValueDPrBridge;
@@ -956,24 +956,30 @@ uint8_t sample_process(void)
 		case 0x07:sample_calc_press();					break;
 
         case 0x08:sample_calc_temperature_in();         break; 
-#if ADS1148_CHIP_OTRHER_ONE_ENABLE==1
-		case 0x09:samlpe_chip1_ch_expr0_signal();		break;
-		case 0x0a:sample_calc_press_ex0();				break;
-		case 0x0b:samlpe_chip1_ch_ex0_temperature_A();	break;
-		case 0x0c:samlpe_chip1_ch_ex0_temperature_B();	break;
-		case 0x0d:sample_calc_temperature_ex0();		break;
 		
-		case 0x0e:samlpe_chip1_ch_expr1_signal();		break;	
-		case 0x0f:sample_calc_press_ex1();				break;
-		case 0x10:samlpe_chip1_ch_ex1_temperature_A();	break;
-		case 0x11:samlpe_chip1_ch_ex1_temperature_B();	break;
-		case 0x12:sample_calc_temperature_ex1();		break;		
-
+		case 0x09:samlpe_in_soc_battery();				break;
+		//case 0x0a:sample_in_soc_solar();				break;
+		case 0x0a:break;
+		case 0x0b:samlpe_in_soc_ref();					break;		
+		
+#if ADS1148_CHIP_OTRHER_ONE_ENABLE==1
+		case 0x0c:samlpe_chip1_ch_expr0_signal();		break;
+		case 0x0d:sample_calc_press_ex0();				break;
+		case 0x0e:samlpe_chip1_ch_ex0_temperature_A();	break;
+		case 0x0f:samlpe_chip1_ch_ex0_temperature_B();	break;
+		case 0x10:sample_calc_temperature_ex0();		break;
+		
+		case 0x11:samlpe_chip1_ch_expr1_signal();		break;	
+		case 0x12:sample_calc_press_ex1();				break;
+		case 0x13:samlpe_chip1_ch_ex1_temperature_A();	break;
+		case 0x14:samlpe_chip1_ch_ex1_temperature_B();	break;
+		case 0x15:sample_calc_temperature_ex1();		break;		
+/*
 		case 0x13:samlpe_in_soc_battery();				break;
 		//case 0x14:sample_in_soc_solar();				break;
 		case 0x14:break;
 		case 0x15:samlpe_in_soc_ref();					break;
-		
+*/		
 #endif
 		default:	break;
 	}
@@ -984,7 +990,7 @@ uint8_t sample_process(void)
         sampleFreashFlg=true;
     }
 #else
-    if(sampleIndex>0x08){
+    if(sampleIndex>0x0b){
         sampleIndex=0;
         sampleFreashFlg=true;
     }

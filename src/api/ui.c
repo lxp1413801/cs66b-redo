@@ -340,6 +340,28 @@ void ui_disp_adj_xfloat_pt(uint8_t* str,st_float32_m* xpf,uint8_t loc)
 	lcd_disp_refresh();  
 	*/	
 }
+//无小数点，符号数，无闪烁
+void ui_disp_adj_xfixed(uint8_t* str,int16_t x)
+{
+    uint8_t buf[10];
+	ui_disp_clear_num_dp();
+	m_mem_cpy(buf,str);
+	if(x>=0){
+		if(x>9999)x=9999;
+
+		m_int16_2_str_4(buf+4,x);
+	}else{
+		x=0-x;
+		if(x>999)x=999;
+		m_int16_2_str_4(buf+4,x);
+		buf[4]='-';
+	}
+	__x_arrange_str(buf,8);
+
+	lcd_show_string(buf); 
+	lcd_disp_refresh();
+}
+//有小数点，不闪烁
 void ui_disp_adj_xfixed_static(uint8_t* str,uint16_t x,uint8_t dp)
 {
     uint8_t buf[10];
@@ -349,18 +371,13 @@ void ui_disp_adj_xfixed_static(uint8_t* str,uint16_t x,uint8_t dp)
 	m_int16_2_str_4(buf+4,x);
 	
 	__x_arrange_str(buf,8);
-	/*
-	if(loc>3)loc=3;
-	loc=3-loc;
-	if(!fi_lcd_twinkle_lock()){
-		if(!fi_twinkle())buf[4+loc]=' ';
-	}
-	*/
+
 	if(dp<=2)lcd_show_dp(4+dp,true);
 	
 	lcd_show_string(buf); 
 	lcd_disp_refresh();
 }
+//无小数点，闪烁
 void ui_disp_adj_xfixed_pt(uint8_t* str,uint16_t x,uint8_t loc)
 {
     uint8_t buf[10];
@@ -377,7 +394,7 @@ void ui_disp_adj_xfixed_pt(uint8_t* str,uint16_t x,uint8_t loc)
 	lcd_show_string(buf); 
 	lcd_disp_refresh();
 }
-
+//有小数点，闪烁，
 void ui_disp_adj_xfixed_pt_dp(uint8_t* str,uint16_t x,uint8_t loc,uint8_t dploc)
 {
     uint8_t buf[10];
@@ -1166,6 +1183,21 @@ void ui_disp_menu_epr_ilp_scale_adj(void)
 	}
 	ui_disp_adj_xfloat_pt(buf,&m_floatAdj,adjLocation);	
 }
+
+void ui_disp_menu_ilp_adj(void)
+{
+	int16_t t16;
+	lcd_clear_all();
+	//lcd_disp_logo(true);
+	t16=*((int16_t*)(&adjValue));
+	switch(subMenu){
+		case sub_MENU_SET_ILP_ADJUST_CH0_Lo:ui_disp_adj_xfixed((uint8_t*)"cy04",t16);break;
+		case sub_MENU_SET_ILP_ADJUST_CH0_Hi:ui_disp_adj_xfixed((uint8_t*)"cy20",t16);break;
+		case sub_MENU_SET_ILP_ADJUST_CH1_Lo:ui_disp_adj_xfixed((uint8_t*)"yl04",t16);break;
+		case sub_MENU_SET_ILP_ADJUST_CH1_Hi:ui_disp_adj_xfixed((uint8_t*)"yl20",t16);break;
+        default:break;
+	}	
+}
 /*
 void ui_disp_menu_bar_full_adj(void)
 {
@@ -1286,6 +1318,8 @@ void ui_disp_menu(void)
 		//
 		case MENU_SET_WAKEUP_PERIOD:	ui_disp_menu_wake_up_period();break;
 		case MENU_SET_RF_SEND_PERIOD:	ui_disp_menu_rf_send_period();break;
+		//
+		case MENU_SET_ILOOP_ADJUST:		ui_disp_menu_ilp_adj();		break;
 		default:break;
 	}	
 }

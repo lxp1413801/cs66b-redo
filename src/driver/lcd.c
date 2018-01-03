@@ -22,7 +22,7 @@ const uint8_t LCDDigitalTable[]=
     LCD_CODE_DOT,LCD_CODE__,LCD_CODE_DDOT,0x00,
 	LCD_CODE_G_U,LCD_CODE_H_U,LCD_CODE_C,LCD_CODE_STAR,
 };
-const uint8_t LCDDigitalTableIndexEx[]="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const uint8_t LCDDigitalTableIndexEx[]="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ";
 const uint16_t LCDDigitalTableEx[]=
 {
     LCD_CODE_0_EX,LCD_CODE_1_EX,LCD_CODE_2_EX,LCD_CODE_3_EX,
@@ -41,6 +41,7 @@ const uint16_t LCDDigitalTableEx[]=
     LCD_CODE_O_EX,LCD_CODE_P_EX,LCD_CODE_Q_EX,LCD_CODE_R_EX,
     LCD_CODE_S_EX,LCD_CODE_T_EX,LCD_CODE_U_EX,LCD_CODE_V_EX,
     LCD_CODE_W_EX,LCD_CODE_X_EX,LCD_CODE_Y_EX,LCD_CODE_Z_EX,	
+    0,
 };
 void lcd_set_com_seg(uint8_t com,uint8_t seg,uint16_t show)
 {

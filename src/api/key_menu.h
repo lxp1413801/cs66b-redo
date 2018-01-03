@@ -33,7 +33,11 @@ extern "C"{
 	//#define PSW_SET_ETMEP_ZERO_LINE				136	
 	//差压二次修正
 	//压力二次修正
+	
+	//设置输出范围
 	#define PSW_SET_ILOOP_SCALE					42
+	//修正4-20mA输出
+	#define PSW_SET_ILOOP_ADJUST				112
 
 	//高度条满刻度对应的值95%还是100%
 	#define PSW_SET_BAR_LEVEL_SCALE				188
@@ -123,14 +127,20 @@ extern "C"{
 	#define MENU_SET_TMEP_EX1					0xa7
 	#define sub_MENU_SET_TEMP_P0				0x00
 	#define sub_MENU_SET_TEMP_P1				0x01
-	//add end
-	//外部压输出范围,psd=139
-	#define MENU_SET_ILOOP_SCALE			0xb0
-	//#define MENU_SET_EX_D_PR_ILOOP_L			0xb0
-	#define sub_MENU_SET_ILP_CH0_Lo		0x00
-	#define sub_MENU_SET_ILP_CH0_Hi		0x01
-	#define sub_MENU_SET_ILP_CH1_Lo		0x02
-	#define sub_MENU_SET_ILP_CH1_Hi		0x03
+	
+	//4-20mA修正,psd=112
+	#define MENU_SET_ILOOP_ADJUST				0xa8
+	#define sub_MENU_SET_ILP_ADJUST_CH0_Lo		0x00
+	#define sub_MENU_SET_ILP_ADJUST_CH0_Hi		0x01
+	#define sub_MENU_SET_ILP_ADJUST_CH1_Lo		0x02
+	#define sub_MENU_SET_ILP_ADJUST_CH1_Hi		0x03	
+
+	//4-20mA输出范围,psd=139
+	#define MENU_SET_ILOOP_SCALE				0xb0
+	#define sub_MENU_SET_ILP_CH0_Lo				0x00
+	#define sub_MENU_SET_ILP_CH0_Hi				0x01
+	#define sub_MENU_SET_ILP_CH1_Lo				0x02
+	#define sub_MENU_SET_ILP_CH1_Hi				0x03
 	
 	//高度条满刻度对应的值95%还是100%,psd=188	
 	#define MENU_SET_BAR_LEVEL_SCALE			0xc0

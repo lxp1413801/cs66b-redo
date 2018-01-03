@@ -79,6 +79,11 @@ extern "C"{
 	}st_ilpScaleDef;
     
     typedef struct{
+        int16_t valueLo;
+        int16_t valueHi;
+    }st_ilpAdjustValue,ilpAdjustValue_t;
+    
+    typedef struct{
 		int32_t resValue;
         int32_t adcValue;
     }st_tmpCalib,tmpCalib_t;
@@ -134,7 +139,11 @@ extern "C"{
 		//st_ilpScaleDef	PrilpScale0;				//压力4-20毫安范围
 		st_ilpScaleDef	IpScaleCh0;
 		st_ilpScaleDef	IpScaleCh1;
-		//st_ilpScaleDef	
+        
+        ilpAdjustValue_t   ilpAdjustCh0;
+        ilpAdjustValue_t   ilpAdjustCh1;
+		//st_ilpScaleDef
+        
 
 		uint16_t		barScale;
 		uint8_t			exPrTempShowEn;
@@ -262,6 +271,8 @@ extern "C"{
 	extern uint8_t calc_warning_pr_dpr(void);
 	extern uint16_t calc_dpr_iloop_out_put(void);
 	extern uint16_t calc_pr_iloop_out_put(void);
+	extern int32_t calc_dpr_iloop_out_put_ex(void);
+	extern int32_t calc_pr_iloop_out_put_ex(void);
 #ifdef __cplusplus
 }
 #endif

@@ -456,8 +456,6 @@ void __enter_menu_ilp_scale(uint8_t __subMenu)
 	menu=MENU_SET_ILOOP_SCALE;
 	subMenu=__subMenu;
     int32_t t32=0;
-	//if(subMenu>sub_MENU_SET_EX_DPR_ILP_Hi1)subMenu=sub_MENU_SET_EX_DPR_ILP_Hi1;
-	//sysDataDef_t* fps=(sysDataDef_t*)SYSTEM_DATA_ADDR;
     sysDataDef_t* fps= &stSysData;
 	switch(subMenu)
 	{
@@ -470,6 +468,26 @@ void __enter_menu_ilp_scale(uint8_t __subMenu)
     
 	t32=__int32_2_mflot32(t32);
 	m_floatAdj.t32=t32;
+	adjLocation=0;	
+}
+
+void __enter_menu_ilp_adjust(uint8_t __subMenu)
+{
+    int16_t t16=0;    
+	menu=MENU_SET_ILOOP_ADJUST;
+	subMenu=__subMenu;
+
+    //sysDataDef_t* fps= &stSysData;
+	switch(subMenu)
+	{
+		case sub_MENU_SET_ILP_ADJUST_CH0_Lo:t16=stSysData.ilpAdjustCh0.valueLo;break;
+		case sub_MENU_SET_ILP_ADJUST_CH0_Hi:t16=stSysData.ilpAdjustCh0.valueHi;break;
+		case sub_MENU_SET_ILP_ADJUST_CH1_Lo:t16=stSysData.ilpAdjustCh1.valueLo;break;
+		case sub_MENU_SET_ILP_ADJUST_CH1_Hi:t16=stSysData.ilpAdjustCh1.valueHi;break;
+
+		default:break;
+	}
+    *((int16_t*)(&adjValue))=t16;
 	adjLocation=0;	
 }
 
@@ -620,7 +638,10 @@ void __down_home_adj_test(void)
     subMenu &= 0xf0;
     subMenu |= t8;		
 }
-
+void __down_ilp_adjust_value_adj(void)
+{
+	key_process_up_down_variable_speed_ex((int16_t*)(&adjValue),-500,1000,false);
+}
 /*
 key_shift_loc(*loc,min,max)
 loc:up键修改的位置;0-3表示(个位到千位)数位级，4表示小数点，5表示符号
@@ -653,6 +674,8 @@ void key_process_down(void)
 
 		case MENU_SET_ILOOP_SCALE:key_shift_loc((uint8_t*)(&adjLocation),0,4);break;
 		//case MENU_SET_BAR_LEVEL_SCALE:key_shift_loc((uint8_t*)(&adjLocation),0,2);break;
+		//
+		case MENU_SET_ILOOP_ADJUST:__down_ilp_adjust_value_adj();break;
 		default:break;
 	}	
 }
@@ -835,6 +858,11 @@ void __up_epr_ilp_scale_adj(void)
 	key_adj_value_float(&m_floatAdj,adjLocation);
 }
 
+void __up_ilp_adjust_value_adj(void)
+{
+	key_process_up_down_variable_speed_ex((int16_t*)(&adjValue),-500,1000,true);
+}
+
 //-----------------------------------------------------
 /*
 void __up_adj_bar_level_scale(void)
@@ -966,6 +994,7 @@ void key_process_up(void)
 		//
 		case MENU_SET_WAKEUP_PERIOD:__up_adj_wakeup_period();break;
 		case MENU_SET_RF_SEND_PERIOD:__up_adj_rf_send_period();break;
+		case MENU_SET_ILOOP_ADJUST:__up_ilp_adjust_value_adj();break;
 		default:break;
 	}		
 }
@@ -1001,6 +1030,7 @@ void key_process_set_up_long(void)
 		//
 		case PSW_SET_WAKEUP_PERIOD:		__enter_menu_set_wakeup_period();		break;
 		case PSW_SET_RF_SEND_PERIOD:	__enter_menu_set_rf_send_period();		break;
+		case PSW_SET_ILOOP_ADJUST:		__enter_menu_ilp_adjust(0);				break;
 		default:break;
 		}
 	}	
@@ -1461,10 +1491,7 @@ void __set_short_etemp_param(bool gohome)
 */
 void __set_short_ilp_scale(bool gohome)
 {
-	//uint8_t* p;
-	int32_t t32;
-	// sysDataDef_t* stp=(sysDataDef_t*)globleBuffer1; 
-	// m_flash_read(SYSTEM_DATA_ADDR,globleBuffer1,sizeof(sysDataDef_t));	
+	int32_t t32;	
 	sysDataDef_t* stp=&stSysData;
     t32=__mflot32_2_int32(m_floatAdj.t32);
 	switch(subMenu){
@@ -1482,7 +1509,25 @@ void __set_short_ilp_scale(bool gohome)
     if(subMenu>sub_MENU_SET_ILP_CH1_Hi)subMenu=sub_MENU_SET_ILP_CH0_Lo;
     __enter_menu_ilp_scale(subMenu); 	
 }
-
+void __set_short_ilp_adjust_value(bool gohome)
+{
+    int16_t t16;
+	t16=*((int16_t*)(&adjValue));
+	switch(subMenu){
+		case sub_MENU_SET_ILP_ADJUST_CH0_Lo:stSysData.ilpAdjustCh0.valueLo=t16;break;
+		case sub_MENU_SET_ILP_ADJUST_CH0_Hi:stSysData.ilpAdjustCh0.valueHi=t16;break;
+		case sub_MENU_SET_ILP_ADJUST_CH1_Lo:stSysData.ilpAdjustCh1.valueLo=t16;break;
+		case sub_MENU_SET_ILP_ADJUST_CH1_Hi:stSysData.ilpAdjustCh1.valueHi=t16;break;
+        default:break;
+	}
+	__sys_data_save_write_flash();
+    
+    if(gohome){__exit_menu_to_home_unsave(); return;}
+    
+    subMenu++;
+    if(subMenu>sub_MENU_SET_ILP_ADJUST_CH1_Hi)subMenu=sub_MENU_SET_ILP_ADJUST_CH0_Lo;
+    __enter_menu_ilp_adjust(subMenu); 		
+}
 void __set_long_density(void)
 {
 	//int32_t t32;
@@ -1612,6 +1657,7 @@ void key_process_set_long(void)
 		//
 		case MENU_SET_WAKEUP_PERIOD:	__set_long_wake_up_period();break;
 		case MENU_SET_RF_SEND_PERIOD:	__set_long_rf_send_period();break;
+		case MENU_SET_ILOOP_ADJUST:		__set_short_ilp_adjust_value(goHOME);break;
 		default:break;
 	}
 }
@@ -1640,10 +1686,11 @@ void key_process_set(void)
 		case MENU_SET_TMEP_EX0:			__set_short_ex0_etemp_calib(unGoHome);	break;
 		case MENU_SET_TMEP_EX1:			__set_short_ex1_etemp_calib(unGoHome);	break;
 		
-		case MENU_SET_ILOOP_SCALE:	__set_short_ilp_scale(unGoHome);break;
+		case MENU_SET_ILOOP_SCALE:		__set_short_ilp_scale(unGoHome);break;
 		
 		case MENU_SET_BAR_LEVEL_SCALE:	break;
 		case MENU_SET_WORK_MODE:        break;		
+		case MENU_SET_ILOOP_ADJUST:		__set_short_ilp_adjust_value(unGoHome);break;
 		default:break;
 	}
 }
@@ -1658,9 +1705,11 @@ void key_process(void)
 	if(keyEventCount==0)event &= ~flg_KEY_DOWN;
     key=get_key_value();
     if(keyValue==KEY_VALUE_NONE && key== KEY_VALUE_NONE)return;
-	//玛德，这里可能有问题！
-    if(!((keyValue == KEY_VALUE_UP || keyValue==KEY_VALUE_DOWN) && menu==MENU_SET_BASE_ZERO) )
+	//玛德，这里可能有问题！可以把这个判断放在key_waite_release函数中，结构更简单！！！
+    if(!((keyValue == KEY_VALUE_UP || keyValue==KEY_VALUE_DOWN) && \
+	(menu==MENU_SET_BASE_ZERO || menu==MENU_SET_ILOOP_ADJUST) )){
         tm=key_waite_release(LONG_PRESS_TIME,&key);
+	}
 	if(tm>=LONG_PRESS_TIME){
 		//长按
 		if(key==KEY_VALUE_SET){
