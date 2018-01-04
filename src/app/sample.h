@@ -6,6 +6,9 @@
 #endif
 	#include "../../mcc_generated_files/mcc.h"
     #include <stdint.h>
+
+    #define IN_SOC_VREF_VALUE   2048
+
 	#define SAMPLE_ADC_BUF_LEN 64
 	extern volatile int16_t samlpeBuf[SAMPLE_ADC_BUF_LEN];
 	//extern void thread_sample_void(void);

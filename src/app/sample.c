@@ -38,7 +38,7 @@ volatile int16_t rtValueBat;
 volatile uint8_t batLevel=0;
 volatile int16_t rtValueSolor;
 volatile uint8_t solorLevel=0;
-#define IN_SOC_VREF_VALUE   2500
+
 
 int16_t abs_diff(uint16_t a,uint16_t b)
 {
@@ -294,6 +294,26 @@ int32_t sample_calc_diff_press_fliter(int32_t t32)
     //rtDiffPrBuf[0]=(int32_t)f1;	
     return (int32_t)f1;	
 }
+
+int32_t sample_calc_diff_press_static_err(void)
+{
+	int32_t t32;
+	float x,y;
+	y=(float)(calibTab0.staticPreAdj1.diffPrZero-calibTab0.staticPreAdj0.diffPrZero);
+    if(y>100)return rtDiffPrOriginal;
+    x=(float)(calibTab0.staticPreAdj1.pr-calibTab0.staticPreAdj0.pr);
+    if(x<1)x=1;
+    y=y/x;//y为斜率
+    x=(float)(rtPressure-calibTab0.staticPreAdj0.pr);
+    y=y*x;
+    y=y+(float)calibTab0.staticPreAdj0.diffPrZero;
+
+    t32=(int32_t)y;
+    t32=rtDiffPrOriginal-t32;
+	return t32;
+}
+
+
 void sample_calc_diff_press(void)
 {
     //uint8_t i;
@@ -303,7 +323,10 @@ void sample_calc_diff_press(void)
     x_prDiffData.value=0;                                           
     t32=calculate_and_compensate(diffPrCalibDataObj.calibTab,&x_prDiffData);
     //rtDiffPressure=t32;
-    rtDiffPressure=sample_calc_diff_press_fliter(t32);
+    rtDiffPrOriginal=sample_calc_diff_press_fliter(t32);
+	
+	rtDiffPressure=sample_calc_diff_press_static_err();
+	
 	t32=cal_diff_p_to_h(rtDiffPressure);
 	t32=t32-stSysData.baseZero;
 	rtHight=t32;
@@ -942,18 +965,20 @@ void samlpe_in_soc_ref(void)
 uint8_t sample_process(void)
 {
 	switch(sampleIndex){
+		
 		case 0x00:samlpe_chip0_ch_diff_pr_bridge();		break;
 		case 0x01:samlpe_chip0_ch_diff_pr_signal();		break;
+
+		case 0x02:samlpe_chip0_ch_pr_bridge();			break;
+		case 0x03:samlpe_chip0_ch_pr_signal();			break;
+
 		
-        
-		case 0x02:sample_calc_diff_press();             break;
-        //case 0x03:break;
-		case 0x03:samlpe_chip0_ch_pr_bridge();			break;
-		case 0x04:samlpe_chip0_ch_pr_signal();			break;
-		//case 0x06:samlpe_chip0_ch_pr_ref1();			break;
+		case 0x04:samlpe_chip0_ch_temperature_in();		break;
 		case 0x05:samlpe_chip0_ch_diff_pr_ref0();		break;
-		case 0x06:samlpe_chip0_ch_temperature_in();		break;
-		case 0x07:sample_calc_press();					break;
+		
+		case 0x06:sample_calc_press();					break;
+		case 0x07:sample_calc_diff_press();             break;				
+		
 
         case 0x08:sample_calc_temperature_in();         break; 
 		

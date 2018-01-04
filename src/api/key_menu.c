@@ -296,6 +296,7 @@ void __enter_menu_calib_press(uint8_t row,uint8_t col)
         t32=__int32_2_mflot32(t32);
         m_floatAdj.t32=t32;        
     }
+	paramChangedFlag=false;
 	adjLocation=0;
 }
 
@@ -317,6 +318,7 @@ void __enter_menu_ex0_pr_calib(uint8_t row,uint8_t col)
         m_floatAdj.t32=t32;        
     }
 	adjLocation=0;	
+	paramChangedFlag=false;
 }
 
 void __enter_menu_ex1_pr_calib(uint8_t row,uint8_t col)
@@ -336,6 +338,7 @@ void __enter_menu_ex1_pr_calib(uint8_t row,uint8_t col)
         t32=__int32_2_mflot32(t32);
         m_floatAdj.t32=t32;        
     }
+	paramChangedFlag=false;
 	adjLocation=0;	
 }
 
@@ -784,6 +787,7 @@ void __up_pr_calib_adj(void)
 		*(uint8_t*)(&adjValue)=t8;
 	}else{	
 		key_adj_value_float(&m_floatAdj,adjLocation);
+		paramChangedFlag=true;
 	}
 }
 //__up_ex0_pr_calib_adj
@@ -798,6 +802,7 @@ void __up_ex0_pr_calib_adj(void)
 		*(uint8_t*)(&adjValue)=t8;
 	}else{	
 		key_adj_value_float(&m_floatAdj,adjLocation);
+		paramChangedFlag=true;
 	}
 }
 void __up_ex1_pr_calib_adj(void)
@@ -811,6 +816,7 @@ void __up_ex1_pr_calib_adj(void)
 		*(uint8_t*)(&adjValue)=t8;
 	}else{	
 		key_adj_value_float(&m_floatAdj,adjLocation);
+		paramChangedFlag=true;
 	}
 }
 void __up_poly_coefic_adj(void)
@@ -1241,7 +1247,7 @@ void __set_short_pr_calib(bool gohome)
     }else{
         t32=__mflot32_2_int32(m_floatAdj.t32);
         pra=calibTab1.calibRow[calibRow].calibPoint[calibCol-1].value;
-        if(pra!=t32){
+        if(pra!=t32 || paramChangedFlag){
             calibTab1.calibRow[calibRow].calibPoint[calibCol-1].value=t32;
             calibTab1.calibRow[calibRow].calibPoint[calibCol-1].sigAdcValue=x_prData.sigAdcValue;
             calibTab1.calibRow[calibRow].calibPoint[calibCol-1].tAdcValue=x_prData.tAdcValue;
@@ -1253,8 +1259,38 @@ void __set_short_pr_calib(bool gohome)
 		t16=sizeof(calibTab1);
 		crc_append((uint8_t*)&calibTab1,t16-2);
 		at24c02_write_n_byte(&at24c02Obj1,0,(uint8_t*)&calibTab1,t16);  
-		at24c02_read_n_byte(&at24c02Obj1,0,globleBuffer,t16);		
+		at24c02_read_n_byte(&at24c02Obj1,0,globleBuffer,t16);
+		paramChangedFlag=0;	
     }
+    //保存静压误差
+    if(saveFlg){
+        saveFlg=0;
+        if(calibRow==0){
+            if(calibCol==1){
+                calibTab0.staticPreAdj0.pr=t32;
+                calibTab0.staticPreAdj0.diffPrZero=rtDiffPrOriginal;
+                saveFlg=1;
+            }
+            if(calibCol==calibTab1.calibRow[calibRow].pCount){
+                calibTab0.staticPreAdj1.pr=t32;
+                calibTab0.staticPreAdj1.diffPrZero=rtDiffPrOriginal;                
+                saveFlg=1;
+            }
+        }
+    }
+    if(saveFlg){
+        t16=sizeof(calibTab0);
+        crc_append((uint8_t*)&calibTab0,t16-2);
+        at24c02_write_n_byte(&at24c02Obj0,0,(uint8_t*)&calibTab0,t16);     
+        at24c02_read_n_byte(&at24c02Obj0,0,globleBuffer,t16);
+        if(!m_str_cmp_len((uint8_t*)&calibTab0,globleBuffer,t16)){
+            __nop();
+        }
+		paramChangedFlag=0;            
+    }	
+	saveFlg=0;
+    //保存静压误差 end
+	paramChangedFlag=0; 
 	if(gohome){__exit_menu_to_home_unsave(); return;}
 	calibCol++;
 	if(calibCol>calibTab1.calibRow[calibRow].pCount){
@@ -1285,7 +1321,7 @@ void __set_short_ex0_pr_calib(bool gohome)
     }else{
         t32=__mflot32_2_int32(m_floatAdj.t32);
         pra=calibTab2.calibRow[calibRow].calibPoint[calibCol-1].value;
-        if(pra!=t32){
+        if(pra!=t32 || paramChangedFlag){
             calibTab2.calibRow[calibRow].calibPoint[calibCol-1].value=t32;
             calibTab2.calibRow[calibRow].calibPoint[calibCol-1].sigAdcValue=x_ex0prData.sigAdcValue;
             calibTab2.calibRow[calibRow].calibPoint[calibCol-1].tAdcValue=x_ex0prData.tAdcValue;
@@ -1297,7 +1333,8 @@ void __set_short_ex0_pr_calib(bool gohome)
 		t16=sizeof(calibTab2);
 		crc_append((uint8_t*)&calibTab2,t16-2);
 		at24c02_write_n_byte(&at24c02Obj2,0,(uint8_t*)&calibTab2,t16);   
-		at24c02_read_n_byte(&at24c02Obj2,0,globleBuffer,t16);			
+		at24c02_read_n_byte(&at24c02Obj2,0,globleBuffer,t16);	
+		paramChangedFlag=0;	
     }
 	if(gohome){__exit_menu_to_home_unsave(); return;}
 	calibCol++;
@@ -1329,7 +1366,7 @@ void __set_short_ex1_pr_calib(bool gohome)
     }else{
         t32=__mflot32_2_int32(m_floatAdj.t32);
         pra=calibTab3.calibRow[calibRow].calibPoint[calibCol-1].value;
-        if(pra!=t32){
+        if(pra!=t32 || paramChangedFlag){
             calibTab3.calibRow[calibRow].calibPoint[calibCol-1].value=t32;
             calibTab3.calibRow[calibRow].calibPoint[calibCol-1].sigAdcValue=x_ex1prData.sigAdcValue;
             calibTab3.calibRow[calibRow].calibPoint[calibCol-1].tAdcValue=x_ex1prData.tAdcValue;
@@ -1341,7 +1378,8 @@ void __set_short_ex1_pr_calib(bool gohome)
 		t16=sizeof(calibTab3);
 		crc_append((uint8_t*)&calibTab3,t16-2);
 		at24c02_write_n_byte(&at24c02Obj3,0,(uint8_t*)&calibTab3,t16);   
-		at24c02_read_n_byte(&at24c02Obj3,0,globleBuffer,t16);			
+		at24c02_read_n_byte(&at24c02Obj3,0,globleBuffer,t16);
+		paramChangedFlag=0;
     }
 	if(gohome){__exit_menu_to_home_unsave(); return;}
 	calibCol++;
@@ -1360,6 +1398,7 @@ void __set_short_ex0_etemp_calib(bool gohome)
         t32=(int32_t)(rtAdcValueTemperatureEx0A-rtAdcValueTemperatureEx0B-rtAdcValueTemperatureEx0B);
         stSysData.tempCalibEx0[subMenu].adcValue=t32;
         __sys_data_save_write_flash();
+		paramChangedFlag=0;
     }
 	if(gohome){__exit_menu_to_home_unsave(); return;}
     subMenu++;
@@ -1373,6 +1412,7 @@ void __set_short_ex1_etemp_calib(bool gohome)
         t32=(int32_t)(rtAdcValueTemperatureEx1A-rtAdcValueTemperatureEx1B-rtAdcValueTemperatureEx1B);
         stSysData.tempCalibEx1[subMenu].adcValue=t32;
         __sys_data_save_write_flash();
+		paramChangedFlag=0;
     }
     if(gohome){__exit_menu_to_home_unsave(); return;}
     subMenu++;

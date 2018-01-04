@@ -71,7 +71,7 @@ extern "C"{
 	typedef struct{
 		int32_t prOut;
 		int32_t prIn;
-	}st_2ndCalibDef;
+	}st_2ndCalibDef,__2ndCalibDef_t;
 	
 	typedef struct{
 		int32_t ilpLow;
@@ -177,9 +177,16 @@ extern "C"{
 	}xCalibRow_t;
 	
 	typedef struct{
+		int32_t pr;
+		int32_t	diffPrZero;
+	}staticPreErr_t;
+	
+	typedef struct{
 		uint8_t rowCount;	//有效的行�?组数,
 		uint8_t reverse[3];
 		xCalibRow_t calibRow[3];
+		staticPreErr_t staticPreAdj0;
+		staticPreErr_t staticPreAdj1;
 		uint16_t crc;		
 	}xCalibTab_t;	
 	
@@ -218,6 +225,7 @@ extern "C"{
 	extern volatile int16_t		adc_diffPr;
 	extern volatile int16_t		adc_bridgeTemp;	
     extern volatile int32_t		rtDiffPressure;
+    extern volatile int32_t     rtDiffPrOriginal;
 	extern volatile int32_t		rtVolume;
     extern volatile int32_t		rtHight;
 	extern volatile int32_t		rtWeight;

@@ -35,6 +35,7 @@ volatile int16_t	adc_iRef;
 volatile int32_t    rtTemperatureInBuf[4]={0,0,0,0};
 volatile int32_t    rtDiffPrBuf[4]={0,0,0,0};
 volatile int32_t	rtDiffPressure;
+volatile int32_t	rtDiffPrOriginal;
 volatile int32_t	rtHight;
 volatile int32_t	rtWeight;
 volatile int32_t	rtVolume;
@@ -335,6 +336,10 @@ void calib_data_set_default(xCalibTab_t *ctab,uint8_t rowCount)
             ctab->calibRow[i].calibPoint[j].tAdcValue=i*1000;
         }
     }
+    ctab->staticPreAdj0.pr=0;
+    ctab->staticPreAdj0.diffPrZero=0;
+    ctab->staticPreAdj1.pr=10000;
+    ctab->staticPreAdj1.diffPrZero=0;
     //crc_append((uint8_t*)(&diff_prCalibTabDef),sizeof(diff_prCalibTabDef)-2);
 }
 int32_t  cal_smoothing_filter(int32_t* buf,int32_t in,uint8_t len)
@@ -663,10 +668,9 @@ int32_t calculate_and_compensate(xCalibTab_t* cTab,__xDataStruct_t* xin)
 float calc_res_2_temp(float r)
 {
 	float x;
-	x=(r-100)/3.9083e-1;
-	//y= (-5.775e-5 * x * x) + (3.9083e-1 * x) + 100 - r;
+	x=(r-100)/3.940e-1;
 	//http://blog.csdn.net/xiaowei_cqu/article/details/8585703/
-    x= x - ((-5.775e-5 * x * x ) + (3.9083e-1 * x) + 100 - r)/(2* -5.775e-5 * x +  3.9083e-1);
+    x= x - ((-5.802e-5 * x * x ) + (3.940e-1 * x) + 100 - r)/(2* -5.802e-5 * x +  3.940e-1);
     return x;
 }
 
