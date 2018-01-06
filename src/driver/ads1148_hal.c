@@ -3,11 +3,15 @@
 #include "../soc/delay.h"
 #include "../global/globle.h"
 //rd10
+/*
 #define __some_nop() do{ \
 	__nop();__nop();__nop();__nop();__nop();__nop(); \
 	__nop();__nop();__nop();__nop();__nop();__nop(); \
 }while(0);
-	
+*/	
+#define __some_nop() do{ \
+	__nop();__nop();__nop();__nop();__nop();__nop(); \
+}while(0);
 void ads1148_hal_sck_mod_out(void)
 {
     set_port_mode_dig(ADS1148_SCK_PORT,ADS1148_SCK_PIN);

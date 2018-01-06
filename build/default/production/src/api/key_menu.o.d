@@ -44,5 +44,4 @@ src/api/../includes/../api/key_menu.h  \
  src/api/../includes/../app/../../mcc_generated_files/mcc.h  \
  src/api/../includes/../app/main.h  \
 src/api/../includes/../app/event.h  \
- src/api/../includes/../app/sample.h  \
-
+ src/api/../includes/../app/sample.h 

@@ -32,7 +32,30 @@ uint16_t __exp_10(uint8_t n)
 		default:return 	1000;		
 	}
 }
-
+// uint8_t __sys_data_save_load_buf(void)
+// {
+	// uint8_t* buf=ldbuf;
+    
+	// if(sizeof(globleBuffer1)<sizeof(sysDataDef_t))return 0;
+	// m_flash_read(SYSTEM_DATA_ADDR,buf,sizeof(sysDataDef_t));	
+	// return 1;
+// }
+uint8_t __sys_data_save_write_flash(void)
+{
+    uint8_t ret=0;
+    //sysDataDef_t* stp=(sysDataDef_t*)globleBuffer1; 
+	
+	sysDataDef_t* stp=&stSysData;
+	uint8_t* buf=(uint8_t*)(&stSysData);
+    stp->V1=data_sys_cal_v1(stp);
+    stp->V2=data_sys_cal_v2(stp);
+    crc_append(buf,sizeof(sysDataDef_t)-2);
+    m_flash_erase(SYSTEM_DATA_ADDR,sizeof(sysDataDef_t));
+    m_flash_write(SYSTEM_DATA_ADDR,buf,sizeof(sysDataDef_t));
+    m_flash_read(SYSTEM_DATA_ADDR,buf,sizeof(sysDataDef_t));
+    ret=crc_verify(buf,sizeof(sysDataDef_t));
+    return ret;
+}
 uint16_t key_waite_release(uint16_t timeout,uint8_t* key)
 {
     uint32_t tm=0;
@@ -152,6 +175,9 @@ void key_process_up_down_variable_speed_ex(
 //set long time press process
 void __enter_menu_password(void)
 {	
+	// stSysData.bpMenu=menu;
+	// stSysData.bpSubMenu=subMenu;
+	
 	menu=MENU_PASSWORD;
 	subMenu=0x00;
 	
@@ -372,6 +398,24 @@ void __enter_menu_poly_coeffic(uint8_t __subMenu)
 	paramChangedFlag=false;	
 }
 
+void __enter_menu_poly_coeffic_mod(void)
+{
+    menu=MENU_POLY_COEFFIC_MOD;
+    subMenu=sub_MENU_POLY_COEFFIC_MOD;
+
+	//adjValue=(int32_t)(fps->ployCoeffic[subMenu]);
+	
+	if(stSysData.ployCoeffic[0]==1000){
+		adjValue=0;
+	}else if(stSysData.ployCoeffic[0]==400){
+		adjValue=1;
+	}else{
+		adjValue=2;
+	}
+	adjLocation=0;   
+	paramChangedFlag=false;		
+}
+
 void __enter_menu_warn_type(uint8_t __subMenu)
 {
 	menu=MENU_SET_WARN_TYPE;
@@ -548,9 +592,12 @@ void __enter_menu_set_rf_send_period(void)
 
 void __exit_menu_to_home_unsave(void)
 {
-	menu=MENU_HOME;
-	subMenu=0x00;
-
+	//menu=MENU_HOME;
+	//subMenu=0x00;
+	
+	menu=stSysData.bpMenu;
+	subMenu=stSysData.bpSubMenu;
+	
 	adjValue=0;
 	m_floatAdj.t32=0;
 	adjLocation=0x00;
@@ -627,6 +674,11 @@ void __down_home_adj(void)
     //t8<<=4;
     subMenu &= 0xf0;
     subMenu |= t8;	
+	
+	stSysData.bpMenu=menu;
+	stSysData.bpSubMenu=subMenu;	
+	__sys_data_save_write_flash();
+	
 }
 
 void __down_home_adj_test(void)
@@ -644,6 +696,36 @@ void __down_home_adj_test(void)
 void __down_ilp_adjust_value_adj(void)
 {
 	key_process_up_down_variable_speed_ex((int16_t*)(&adjValue),-500,1000,false);
+}
+
+void __down_poly_coefic_adj_mod(void)
+{
+
+	if(adjValue==0)adjValue=2;
+	else{
+		adjValue--;
+	}
+	
+	if(adjValue>2)adjValue=0;
+	
+	if(adjValue==0){
+		stSysData.ployCoeffic[0]=1000;
+		stSysData.ployCoeffic[1]=0;
+		stSysData.ployCoeffic[2]=0;
+		stSysData.ployCoeffic[3]=0;
+	}else if(adjValue==1){
+		
+		stSysData.ployCoeffic[0]=400;
+		stSysData.ployCoeffic[1]=300;
+		stSysData.ployCoeffic[2]=200;
+		stSysData.ployCoeffic[3]=100;	
+	}else{
+		stSysData.ployCoeffic[0]=600;
+		stSysData.ployCoeffic[1]=200;
+		stSysData.ployCoeffic[2]=100;
+		stSysData.ployCoeffic[3]=100;			
+	}
+
 }
 /*
 key_shift_loc(*loc,min,max)
@@ -679,6 +761,7 @@ void key_process_down(void)
 		//case MENU_SET_BAR_LEVEL_SCALE:key_shift_loc((uint8_t*)(&adjLocation),0,2);break;
 		//
 		case MENU_SET_ILOOP_ADJUST:__down_ilp_adjust_value_adj();break;
+		case MENU_POLY_COEFFIC_MOD:__down_poly_coefic_adj_mod();			break;
 		default:break;
 	}	
 }
@@ -701,6 +784,9 @@ void __up_home_adj(void)
     subMenu &= 0x0f;
     subMenu |= t8;
     
+	stSysData.bpMenu=menu;
+	stSysData.bpSubMenu=subMenu;
+	__sys_data_save_write_flash();
 	//if(subMenu>sub_MENU_HOME_02)subMenu=sub_MENU_HOME_00;
 }
 
@@ -823,6 +909,32 @@ void __up_poly_coefic_adj(void)
 {
 	key_adj_value_fixed((uint16_t*)(&adjValue),adjLocation);
 }
+
+void __up_poly_coefic_adj_mod(void)
+{
+	adjValue++;
+	if(adjValue>2)adjValue=0;
+	if(adjValue==0){
+		stSysData.ployCoeffic[0]=1000;
+		stSysData.ployCoeffic[1]=0;
+		stSysData.ployCoeffic[2]=0;
+		stSysData.ployCoeffic[3]=0;
+	}else if(adjValue==1){
+		
+		stSysData.ployCoeffic[0]=400;
+		stSysData.ployCoeffic[1]=300;
+		stSysData.ployCoeffic[2]=200;
+		stSysData.ployCoeffic[3]=100;	
+	}else{
+		stSysData.ployCoeffic[0]=600;
+		stSysData.ployCoeffic[1]=200;
+		stSysData.ployCoeffic[2]=100;
+		stSysData.ployCoeffic[3]=100;			
+	}
+
+}
+
+
 
 void __up_warn_type_adj(void)
 {
@@ -1001,6 +1113,8 @@ void key_process_up(void)
 		case MENU_SET_WAKEUP_PERIOD:__up_adj_wakeup_period();break;
 		case MENU_SET_RF_SEND_PERIOD:__up_adj_rf_send_period();break;
 		case MENU_SET_ILOOP_ADJUST:__up_ilp_adjust_value_adj();break;
+		//修改滤波多现实
+		case MENU_POLY_COEFFIC_MOD:__up_poly_coefic_adj_mod();			break;
 		default:break;
 	}		
 }
@@ -1037,6 +1151,9 @@ void key_process_set_up_long(void)
 		case PSW_SET_WAKEUP_PERIOD:		__enter_menu_set_wakeup_period();		break;
 		case PSW_SET_RF_SEND_PERIOD:	__enter_menu_set_rf_send_period();		break;
 		case PSW_SET_ILOOP_ADJUST:		__enter_menu_ilp_adjust(0);				break;
+		//修改滤波多项式
+		case PSW_SET_POLY_COEFFIC_MOD:	__enter_menu_poly_coeffic_mod();		break;
+		
 		default:break;
 		}
 	}	
@@ -1064,30 +1181,7 @@ void key_process_set_down_long(void)
 }
 */
 //============================================================================
-// uint8_t __sys_data_save_load_buf(void)
-// {
-	// uint8_t* buf=ldbuf;
-    
-	// if(sizeof(globleBuffer1)<sizeof(sysDataDef_t))return 0;
-	// m_flash_read(SYSTEM_DATA_ADDR,buf,sizeof(sysDataDef_t));	
-	// return 1;
-// }
-uint8_t __sys_data_save_write_flash(void)
-{
-    uint8_t ret=0;
-    //sysDataDef_t* stp=(sysDataDef_t*)globleBuffer1; 
-	
-	sysDataDef_t* stp=&stSysData;
-	uint8_t* buf=(uint8_t*)(&stSysData);
-    stp->V1=data_sys_cal_v1(stp);
-    stp->V2=data_sys_cal_v2(stp);
-    crc_append(buf,sizeof(sysDataDef_t)-2);
-    m_flash_erase(SYSTEM_DATA_ADDR,sizeof(sysDataDef_t));
-    m_flash_write(SYSTEM_DATA_ADDR,buf,sizeof(sysDataDef_t));
-    m_flash_read(SYSTEM_DATA_ADDR,buf,sizeof(sysDataDef_t));
-    ret=crc_verify(buf,sizeof(sysDataDef_t));
-    return ret;
-}
+
 
 //============================================================================
 void __set_short_density(void)
@@ -1102,8 +1196,17 @@ void __set_short_density(void)
 		//}
 	}else{
 		
+		stSysData.matterTab[tmpAdjValue].density=adjValue;
+		stSysData.matterIndex=(uint16_t)tmpAdjValue;
+		__sys_data_save_write_flash();	
+		adjValue=tmpAdjValue;
+		tmpAdjValue=0;
+		adjLocation=0;
+		
+		subMenu=sub_MENU_SET_SEL_MATTER;
 	}
 }
+
 void __set_short_pose_size(bool gohome)
 {
 	uint8_t* p;
@@ -1665,6 +1768,12 @@ void __set_long_rf_send_period(void)
     __exit_menu_to_home_unsave();   
 }
 
+void __set_long_poly_coefic_adj_mod(void)
+{
+    __sys_data_save_write_flash();
+    __exit_menu_to_home_unsave(); 
+}
+
 //============================================================================
 void key_process_set_long(void)
 {
@@ -1698,6 +1807,8 @@ void key_process_set_long(void)
 		case MENU_SET_WAKEUP_PERIOD:	__set_long_wake_up_period();break;
 		case MENU_SET_RF_SEND_PERIOD:	__set_long_rf_send_period();break;
 		case MENU_SET_ILOOP_ADJUST:		__set_short_ilp_adjust_value(goHOME);break;
+		
+		case MENU_POLY_COEFFIC_MOD:		__set_long_poly_coefic_adj_mod();break;
 		default:break;
 	}
 }

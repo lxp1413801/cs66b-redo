@@ -766,6 +766,7 @@ void ui_disp_menu_density_sel_custom(void)
 	//if(adjValue>5)adjValue=5;
 	str[3]='1'+(uint8_t)tmpAdjValue;
 	ui_disp_adj_xfixed_pt_dp(str,adjValue,adjLocation,0);
+	lcd_show_string_ex((uint8_t*)(stSysData.matterTab[tmpAdjValue].name));
 	lcd_disp_refresh(); 
 }
 
@@ -1277,6 +1278,24 @@ void ui_disp_menu_rf_send_period(void)
 	ui_disp_adj_xfixed_static((uint8_t*)(" rfp"),(int16_t)adjValue,3);
 }
 
+void ui_disp_menu_poly_coefic_adj_mod(void)
+{
+    uint8_t* p;
+    uint8_t buf[10];
+	lcd_clear_all();
+	//lcd_disp_logo(true);
+	if(adjValue==0){
+		m_mem_cpy(buf,(uint8_t*)"   n   1");
+	}else if(adjValue==1){
+		m_mem_cpy(buf,(uint8_t*)"   n   4");
+	}else{
+		m_mem_cpy(buf,(uint8_t*)"   n   6");
+	}
+
+    lcd_show_string(buf);
+    lcd_disp_refresh(); 	
+}
+
 void ui_disp_menu(void)
 {
 	switch(menu){
@@ -1320,6 +1339,7 @@ void ui_disp_menu(void)
 		case MENU_SET_RF_SEND_PERIOD:	ui_disp_menu_rf_send_period();break;
 		//
 		case MENU_SET_ILOOP_ADJUST:		ui_disp_menu_ilp_adj();		break;
+		case MENU_POLY_COEFFIC_MOD:		ui_disp_menu_poly_coefic_adj_mod();break;
 		default:break;
 	}	
 }

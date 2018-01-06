@@ -150,6 +150,8 @@ extern "C"{
 		uint8_t			lcdShowTm;	
 		uint16_t		sleepPeriod;				//休眠周期s
 		uint16_t		rfSendPeriod;				//无线发送周期
+		uint8_t			bpMenu;
+		uint8_t			bpSubMenu;
 		//
 		uint16_t		crc;
 	}sysDataDef_t;
@@ -272,7 +274,7 @@ extern "C"{
 
 	extern void data_init_all(void);
 	
-	extern float calc_res_2_temp(float r);
+	extern float calc_res_2_temp(float rr);
 	
 	extern  int32_t  cal_smoothing_filter(int32_t* buf,int32_t in,uint8_t len);
 	//add 

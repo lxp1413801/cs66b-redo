@@ -27,12 +27,14 @@ void thread_main_pre(void)
     __nop();
     __nop();
     ticker_ms_delay(1000);
-    // ui_disp_all_off();
+	data_init_all();    
+    //
+     //ui_disp_all_off();
     // main_delay_ms(1000);
 
-	//ui_disp_start_cs600(4);
+	//ui_disp_start_cs600(6);
 
-	data_init_all();    
+	//
 	
 	//gpio_status_pins_mod_in();
     all_status_pins_mod_in();
@@ -50,39 +52,76 @@ void event_proess(void)
 */
 void event_sample_real_time_mode(void)
 {
-	if(stSysData.sleepPeriod>0)return;
+	if(stSysData.sleepPeriod>0 && menu==0)return;
 
 	noEventTimeOut=NO_EVENT_TIME_MAX;
 	if(event & flg_TICKER_10MS_PER){
 		event &= ~flg_TICKER_10MS_PER;
 		ads1148_post_sleep();
-		kz_vadd_on();
+		if(!kzAvddOn){
+			kz_vadd_on();
+			delay_ms(30);
+		}
 		sample_process();			
-	}             
+	}
+    if( !T2CONbits.TON )TMR2_Start();
 }
-
+/*
 void event_sample_sleep_wake_mode(void)
 {
     uint8_t t8=0;
-    //uint32_t t32=0;
-	if(stSysData.sleepPeriod==0)return;
+    uint32_t t32=0;
+	if(stSysData.sleepPeriod==0 || menu!=0)return;
+
 	if(sleepHalfSec<(stSysData.sleepPeriod)*2)return ;
-    //if( !T1CONbits.TON )TMR1_Start();
-    //ticker_ms_set(0);
+    if( !T1CONbits.TON )TMR1_Start();
+    ticker_ms_set(0);
 	sleepHalfSec=0;
-	kz_vadd_on();
+	
 	ads1148_post_sleep();
-	delay_ms(1);
+    kz_vadd_on();
+	delay_ms(30);
 	do{
 		t8=sample_process();
 	}while(t8!=0);
 	ads1148_pre_sleep();
-	//t32=ticker_ms_get();
-    if(event &  flg_RTC_SECOND)event &=  ~flg_RTC_SECOND;
+	t32=ticker_ms_get();
+    //if(event &  flg_RTC_SECOND)event &=  ~flg_RTC_SECOND;
     __nop();
     __nop();
 }
+*/
+volatile lpwSampleStatus=0;
+void event_sample_sleep_wake_mode(void)
+{
+    uint8_t t8=0;
+    uint32_t t32=0;
+	if(stSysData.sleepPeriod==0 || menu!=0)return;
 
+	if(sleepHalfSec<(stSysData.sleepPeriod)*2)return ;
+    if( !T1CONbits.TON )TMR1_Start();
+    ticker_ms_set(0);
+	sleepHalfSec=0;
+	
+	ads1148_post_sleep();
+    kz_vadd_on();
+	delay_ms(30);
+	do{
+		
+		t8=sample_process();
+		#if ADS1148_CHIP_OTRHER_ONE_ENABLE 
+		if(t8==0 || t8==0x0c)break;
+		#else
+		if(t8==0)break;	
+		#endif
+
+	}while(1);
+	ads1148_pre_sleep();
+	t32=ticker_ms_get();
+    //if(event &  flg_RTC_SECOND)event &=  ~flg_RTC_SECOND;
+    __nop();
+    __nop();
+}
 void event_iloop_out_put(void)
 {
 	#if I_LOOP_BOARD
@@ -102,6 +141,7 @@ void event_iloop_out_put(void)
 }
 void event_enter_sleep(void)
 {
+	if(menu!=0)return;
 	if(noEventTimeOut==0 && stSysData.sleepPeriod>0){
 		__nop();
 		__nop();
@@ -140,6 +180,10 @@ int main(void)
     ad421_all_obj_init();
     //ad421_test();
 	#endif
+     //ui_disp_all_off();
+    // main_delay_ms(1000);
+
+	ui_disp_start_cs600(6);
     while (1){
 		if(event & flg_KEY_DOWN){
 			//event &= ~flg_KEY_DOWN;
@@ -160,12 +204,15 @@ int main(void)
             if(stSysData.sleepPeriod)sleepHalfSec++;
             
 			run_status_on();
+            ui_disp_menu();
+            /*
             if((stSysData.sleepPeriod==0 || noEventTimeOut || sampleFreashFlg)){
                 ui_disp_menu();
                 sampleFreashFlg=false;
             }else{
                 delay_us(100);
             }
+             * */
 			run_status_off();            
             event_iloop_out_put();
 		}

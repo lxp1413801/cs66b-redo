@@ -19,7 +19,9 @@ extern "C"{
 	#define PSW_CALIB_DIFF_PRESSURE				168
 	#define PSW_CALIB_PRESSURE					169
 	//Polynomial coefficients(滤波多项式系数)
-	#define PSW_SET_POLY_COEFFIC				133
+	#define PSW_SET_POLY_COEFFIC				633
+	#define PSW_SET_POLY_COEFFIC_MOD			133
+	
 	#define PSW_SET_WARN_TYPE					6
 	#define PSW_SET_WARN_VALUE					16
 	//外压零点和线性
@@ -79,6 +81,10 @@ extern "C"{
 	#define sub_MENU_POLY_COEFFIC_b				0x01
 	#define sub_MENU_POLY_COEFFIC_c				0x02
 	#define sub_MENU_POLY_COEFFIC_d				0x03
+	//修改滤波多项式的方式
+	//#define PSW_SET_POLY_COEFFIC_MOD			133
+	#define MENU_POLY_COEFFIC_MOD				0x71
+	#define sub_MENU_POLY_COEFFIC_MOD			0x00	
 	//报警方式,psd=6								
 	#define MENU_SET_WARN_TYPE					0x80
 	#define sub_MENU_SET_WARN_TYPE_0			0x00
