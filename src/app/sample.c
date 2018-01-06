@@ -262,21 +262,24 @@ void samlpe_chip0_ch_diff_pr_ref0(void)
 }
 */
 
+int32_t sample_calc_calib_x_2nd(int32_t in,st_2ndCalibDef* tb)
+{
+	float y,x;
+	y=(float)(tb[1].realValue-tb[0].realValue);
+    x=(float)(tb[1].oringinValue-tb[0].oringinValue);
+    
+    if(x<1)x=1;
+    y=y/x;
+    
+    x=(float)(in)-tb[0].oringinValue;
+    y=y*x;
+    y=y+(float)tb[0].realValue;
+    return (int32_t)y;
+}
+
 int32_t sample_calc_diff_press_fliter(int32_t t32)
 {
-	/*
-	float f1;
-	uint8_t i;
-	rtDiffPrBuf[3]=rtDiffPrBuf[2];
-	rtDiffPrBuf[2]=rtDiffPrBuf[1];
-	rtDiffPrBuf[1]=rtDiffPrBuf[0];
-	rtDiffPrBuf[0]=t32;
-	f1=0;
-	for(i=0;i<4;i++){
-		f1=f1+(float)(rtDiffPrBuf[i])*(float)(stSysData.ployCoeffic[i]);
-	}
-    return (int32_t)f1;
-	*/
+
 	
 	float f1,f2;
 	uint8_t i;
@@ -295,12 +298,12 @@ int32_t sample_calc_diff_press_fliter(int32_t t32)
     return (int32_t)f1;	
 }
 
-int32_t sample_calc_diff_press_static_err(void)
+int32_t sample_calc_diff_press_static_err(int32_t in)
 {
 	int32_t t32;
 	float x,y;
 	y=(float)(calibTab0.staticPreAdj1.diffPrZero-calibTab0.staticPreAdj0.diffPrZero);
-    if(y>100)return rtDiffPrOriginal;
+    if(y>100)return in;
     x=(float)(calibTab0.staticPreAdj1.pr-calibTab0.staticPreAdj0.pr);
     if(x<1)x=1;
     y=y/x;//y为斜率
@@ -309,7 +312,7 @@ int32_t sample_calc_diff_press_static_err(void)
     y=y+(float)calibTab0.staticPreAdj0.diffPrZero;
 
     t32=(int32_t)y;
-    t32=rtDiffPrOriginal-t32;
+    t32=in-t32;
 	return t32;
 }
 
@@ -324,8 +327,10 @@ void sample_calc_diff_press(void)
     t32=calculate_and_compensate(diffPrCalibDataObj.calibTab,&x_prDiffData);
     //rtDiffPressure=t32;
     rtDiffPrOriginal=sample_calc_diff_press_fliter(t32);
-	
-	rtDiffPressure=sample_calc_diff_press_static_err();
+    
+	t32=sample_calc_calib_x_2nd(rtDiffPrOriginal,(st_2ndCalibDef*)(stSysData._2ndPrDiffCalib));
+    
+	rtDiffPressure=sample_calc_diff_press_static_err(t32);
 	
 	t32=cal_diff_p_to_h(rtDiffPressure);
 	t32=t32-stSysData.baseZero;
@@ -509,6 +514,7 @@ void samlpe_chip0_ch_diff_pr_ref0(void)
     __nop();
     //ads1148_stop_convert(&ads1148Chip0);
 }
+
 void sample_calc_press(void)
 {
     int32_t t32;
@@ -516,6 +522,7 @@ void sample_calc_press(void)
     x_prData.tAdcValue=rtAdcValuePrBridge;
     x_prData.value=0;                                           
     t32=calculate_and_compensate(prPrCalibDataObj.calibTab,&x_prData);
+    rtPrOriginal=t32;
     rtPressure=t32;
 	//cal_diff_p_to_h(t32);
     __nop();

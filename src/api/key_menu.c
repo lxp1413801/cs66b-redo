@@ -367,6 +367,63 @@ void __enter_menu_ex1_pr_calib(uint8_t row,uint8_t col)
 	paramChangedFlag=false;
 	adjLocation=0;	
 }
+//二次标定
+
+void __enter_menu_calib_dpr_2nd(uint8_t __subMenu)
+{
+	int32_t t32;
+	menu=MENU_CALIB_DPR_2ND;
+	if(__subMenu>sub_MENU_CALIB_DPR_2ND_P1)__subMenu=sub_MENU_CALIB_DPR_2ND_P1;
+	subMenu=__subMenu;
+
+	t32=stSysData._2ndPrDiffCalib[subMenu].realValue;
+
+	t32=__int32_2_mflot32(t32);
+	m_floatAdj.t32=t32;
+	adjLocation=0;	
+}
+
+void __enter_menu_calib_pr_2nd(uint8_t __subMenu)
+{
+	int32_t t32;
+	menu=MENU_CALIB_PR_2ND;
+	if(__subMenu>sub_MENU_CALIB_DPR_2ND_P1)__subMenu=sub_MENU_CALIB_DPR_2ND_P1;
+	subMenu=__subMenu;
+
+	t32=stSysData._2ndPrCalib[subMenu].realValue;
+
+	t32=__int32_2_mflot32(t32);
+	m_floatAdj.t32=t32;
+	adjLocation=0;		
+}
+
+void __enter_menu_calib_epr0_2nd(uint8_t __subMenu)
+{
+	int32_t t32;
+	menu=MENU_CALIB_EPR0_2ND;
+	if(__subMenu>sub_MENU_CALIB_EPR0_2ND_P1)__subMenu=sub_MENU_CALIB_EPR0_2ND_P1;
+	subMenu=__subMenu;
+
+	t32=stSysData._2ndPrEx0[subMenu].realValue;
+
+	t32=__int32_2_mflot32(t32);
+	m_floatAdj.t32=t32;
+	adjLocation=0;		
+}
+
+void __enter_menu_calib_epr1_2nd(uint8_t __subMenu)
+{
+	int32_t t32;
+	menu=MENU_CALIB_EPR1_2ND;
+	if(__subMenu>sub_MENU_CALIB_EPR1_2ND_P1)__subMenu=sub_MENU_CALIB_EPR1_2ND_P1;
+	subMenu=__subMenu;
+
+	t32=stSysData._2ndPrEx1[subMenu].realValue;
+
+	t32=__int32_2_mflot32(t32);
+	m_floatAdj.t32=t32;
+	adjLocation=0;		
+}
 
 void __enter_menu_set_temp_ex0(uint8_t __subMenu)
 {
@@ -762,6 +819,10 @@ void key_process_down(void)
 		//
 		case MENU_SET_ILOOP_ADJUST:__down_ilp_adjust_value_adj();break;
 		case MENU_POLY_COEFFIC_MOD:__down_poly_coefic_adj_mod();			break;
+		case MENU_CALIB_DPR_2ND:	
+		case MENU_CALIB_PR_2ND:
+		case MENU_CALIB_EPR0_2ND:
+		case MENU_CALIB_EPR1_2ND:	key_shift_loc((uint8_t*)(&adjLocation),0,4);break;
 		default:break;
 	}	
 }
@@ -1115,6 +1176,13 @@ void key_process_up(void)
 		case MENU_SET_ILOOP_ADJUST:__up_ilp_adjust_value_adj();break;
 		//修改滤波多现实
 		case MENU_POLY_COEFFIC_MOD:__up_poly_coefic_adj_mod();			break;
+		//二次修正
+		case MENU_CALIB_DPR_2ND:	
+		case MENU_CALIB_PR_2ND:
+		case MENU_CALIB_EPR0_2ND:
+		case MENU_CALIB_EPR1_2ND:	
+			paramChangedFlag=true;
+			key_adj_value_float(&m_floatAdj,adjLocation);break;
 		default:break;
 	}		
 }
@@ -1140,7 +1208,7 @@ void key_process_set_up_long(void)
 		case PSW_SET_TMEP_EX0:			__enter_menu_set_temp_ex0(0);			break;
 		case PSW_SET_TMEP_EX1:			__enter_menu_set_temp_ex1(0);			break;
 		
-		case PSW_SET_ILOOP_SCALE:       __enter_menu_ilp_scale(0);			break;
+		case PSW_SET_ILOOP_SCALE:       __enter_menu_ilp_scale(0);				break;
 		case PSW_SET_BAR_LEVEL_SCALE:	__enter_menu_bar_scale();				break;
 		case PSW_SET_WORK_MODE:			__enter_menu_work_mode();				break;
 		
@@ -1153,7 +1221,12 @@ void key_process_set_up_long(void)
 		case PSW_SET_ILOOP_ADJUST:		__enter_menu_ilp_adjust(0);				break;
 		//修改滤波多项式
 		case PSW_SET_POLY_COEFFIC_MOD:	__enter_menu_poly_coeffic_mod();		break;
+		//二次 标定
+		case PSW_CALIB_DPR_2ND:			__enter_menu_calib_dpr_2nd(0);			break;
+		case PSW_CALIB_PR_2ND:			__enter_menu_calib_pr_2nd(0);			break;
 		
+		case PSW_CALIB_EPR0_2ND:		__enter_menu_calib_epr0_2nd(0);			break;
+		case PSW_CALIB_EPR1_2ND:		__enter_menu_calib_epr0_2nd(0);			break;
 		default:break;
 		}
 	}	
@@ -1565,17 +1638,10 @@ void  __set_short_warn_value(bool gohome)
 	uint8_t t8;
 	//uint8_t* p;
 	int32_t t32;
-	// sysDataDef_t* stp=(sysDataDef_t*)globleBuffer1; 
-	// m_flash_read(SYSTEM_DATA_ADDR,globleBuffer1,sizeof(sysDataDef_t));	
+
 	sysDataDef_t* stp=&stSysData;
 	t32=__mflot32_2_int32(m_floatAdj.t32);	
-	/*
-	if(subMenu<sub_MENU_SET_WARN_VALUE_4){
-		stp->diffPressureWarnSet[subMenu].warnValueLo=t32;
-	}else{
-        stp->diffPressureWarnSet[subMenu-sub_MENU_SET_WARN_VALUE_4].warnValueHi=t32;
-    }
-	*/
+
 	t8=subMenu>>1;
 	if(subMenu & 0x01){
 		stp->dprWarnSet[t8].warnValueOop=t32;
@@ -1590,6 +1656,77 @@ void  __set_short_warn_value(bool gohome)
     subMenu++;
     if(subMenu>sub_MENU_SET_WARN_VALUE_7)subMenu=sub_MENU_SET_WARN_VALUE_0;
     __enter_menu_warn_value(subMenu);     
+}
+
+void __set_short_calib_dpr_2nd(bool gohome)
+{
+	int32_t t32;
+	if(paramChangedFlag){
+		t32=__mflot32_2_int32(m_floatAdj.t32);	
+		stSysData._2ndPrDiffCalib[subMenu].realValue=t32;
+		stSysData._2ndPrDiffCalib[subMenu].oringinValue=rtDiffPrOriginal;
+		__sys_data_save_write_flash();
+    
+	}
+	paramChangedFlag=false;
+    if(gohome){__exit_menu_to_home_unsave(); return;}
+    
+    subMenu++;
+    if(subMenu>sub_MENU_CALIB_DPR_2ND_P1)subMenu=sub_MENU_CALIB_DPR_2ND_P0;
+    __enter_menu_calib_dpr_2nd(subMenu);   
+}
+void __set_short_calib_pr_2nd(bool gohome)
+{
+	int32_t t32;
+	if(paramChangedFlag){
+		t32=__mflot32_2_int32(m_floatAdj.t32);	
+		stSysData._2ndPrCalib[subMenu].realValue=t32;
+		stSysData._2ndPrCalib[subMenu].oringinValue=rtPrOriginal;
+		__sys_data_save_write_flash();
+    
+	}
+	paramChangedFlag=false;
+    if(gohome){__exit_menu_to_home_unsave(); return;}
+    
+    subMenu++;
+    if(subMenu>sub_MENU_CALIB_PR_2ND_P1)subMenu=sub_MENU_CALIB_PR_2ND_P0;
+    __enter_menu_calib_pr_2nd(subMenu);   
+}
+
+void __set_short_calib_epr0_2nd(bool gohome)
+{
+	int32_t t32;
+	if(paramChangedFlag){
+		t32=__mflot32_2_int32(m_floatAdj.t32);	
+		stSysData._2ndPrEx0[subMenu].realValue=t32;
+		stSysData._2ndPrEx0[subMenu].oringinValue=rtEx0PrOriginal;
+		__sys_data_save_write_flash();
+    
+	}
+	paramChangedFlag=false;
+    if(gohome){__exit_menu_to_home_unsave(); return;}
+    
+    subMenu++;
+    if(subMenu>sub_MENU_CALIB_EPR0_2ND_P1)subMenu=sub_MENU_CALIB_EPR0_2ND_P0;
+    __enter_menu_calib_epr0_2nd(subMenu);   
+}
+
+void __set_short_calib_epr1_2nd(bool gohome)
+{
+	int32_t t32;
+	if(paramChangedFlag){
+		t32=__mflot32_2_int32(m_floatAdj.t32);	
+		stSysData._2ndPrEx1[subMenu].realValue=t32;
+		stSysData._2ndPrEx1[subMenu].oringinValue=rtEx1PrOriginal;
+		__sys_data_save_write_flash();
+    
+	}
+	paramChangedFlag=false;
+    if(gohome){__exit_menu_to_home_unsave(); return;}
+    
+    subMenu++;
+    if(subMenu>sub_MENU_CALIB_EPR1_2ND_P1)subMenu=sub_MENU_CALIB_EPR1_2ND_P0;
+    __enter_menu_calib_epr1_2nd(subMenu);   
 }
 /*
 void __set_short_epr_param(bool gohome)
@@ -1809,6 +1946,11 @@ void key_process_set_long(void)
 		case MENU_SET_ILOOP_ADJUST:		__set_short_ilp_adjust_value(goHOME);break;
 		
 		case MENU_POLY_COEFFIC_MOD:		__set_long_poly_coefic_adj_mod();break;
+		
+		case MENU_CALIB_DPR_2ND:		__set_short_calib_dpr_2nd(goHOME);break;
+		case MENU_CALIB_PR_2ND:			__set_short_calib_pr_2nd(goHOME);break;
+		case MENU_CALIB_EPR0_2ND:		__set_short_calib_epr0_2nd(goHOME);break;
+		case MENU_CALIB_EPR1_2ND:		__set_short_calib_epr1_2nd(goHOME);break;		
 		default:break;
 	}
 }
@@ -1842,6 +1984,12 @@ void key_process_set(void)
 		case MENU_SET_BAR_LEVEL_SCALE:	break;
 		case MENU_SET_WORK_MODE:        break;		
 		case MENU_SET_ILOOP_ADJUST:		__set_short_ilp_adjust_value(unGoHome);break;
+		//
+		case MENU_CALIB_DPR_2ND:		__set_short_calib_dpr_2nd(unGoHome);break;
+		case MENU_CALIB_PR_2ND:			__set_short_calib_pr_2nd(unGoHome);break;
+		case MENU_CALIB_EPR0_2ND:		__set_short_calib_epr0_2nd(unGoHome);break;
+		case MENU_CALIB_EPR1_2ND:		__set_short_calib_epr1_2nd(unGoHome);break;
+
 		default:break;
 	}
 }

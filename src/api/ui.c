@@ -1278,9 +1278,11 @@ void ui_disp_menu_rf_send_period(void)
 	ui_disp_adj_xfixed_static((uint8_t*)(" rfp"),(int16_t)adjValue,3);
 }
 
+
+
 void ui_disp_menu_poly_coefic_adj_mod(void)
 {
-    uint8_t* p;
+
     uint8_t buf[10];
 	lcd_clear_all();
 	//lcd_disp_logo(true);
@@ -1295,7 +1297,51 @@ void ui_disp_menu_poly_coefic_adj_mod(void)
     lcd_show_string(buf);
     lcd_disp_refresh(); 	
 }
+/*
+		case MENU_CALIB_DPR_2ND:		__set_short_calib_dpr_2nd(goHOME);break;
+		case MENU_CALIB_PR_2ND:			__set_short_calib_pr_2nd(goHOME);break;
+		case MENU_CALIB_EPR0_2ND:		__set_short_calib_epr0_2nd(goHOME);break;
+		case MENU_CALIB_EPR1_2ND:		__set_short_calib_epr1_2nd(goHOME);break;
+*/
+void ui_disp_menu_calib_x_2nd(void)
+{
+    st_float32 ft;
 
+	uint8_t buf[10];
+	lcd_clear_all();
+	lcd_disp_logo(true);
+	switch(menu){
+		case MENU_CALIB_DPR_2ND:
+			m_mem_cpy(buf,(uint8_t*)"CY1");
+			buf[2]=subMenu+'1';
+			lcd_show_string_ex(buf);
+			ft.t32=__int32_2_mflot32(rtDiffPrOriginal);
+			break;
+		case MENU_CALIB_PR_2ND:
+			m_mem_cpy(buf,(uint8_t*)"YL1");
+			buf[2]=subMenu+'1';
+			lcd_show_string_ex(buf);
+			ft.t32=__int32_2_mflot32(rtPrOriginal);
+			break;
+		case MENU_CALIB_EPR0_2ND:
+			m_mem_cpy(buf,(uint8_t*)"W11");
+			buf[2]=subMenu+'1';
+			lcd_show_string_ex(buf);
+			ft.t32=__int32_2_mflot32(rtEx0PrOriginal);
+			break;	
+		case MENU_CALIB_EPR1_2ND:
+			m_mem_cpy(buf,(uint8_t*)"W21");
+			buf[2]=subMenu+'1';
+			lcd_show_string_ex(buf);
+			ft.t32=__int32_2_mflot32(rtEx1PrOriginal);
+			break;			
+		
+		
+	}
+	ui_disp_xfloat_pt(&ft,0);
+	ui_disp_xfloat_pt_twinkle(&m_floatAdj,1,adjLocation);		
+    lcd_disp_refresh(); 
+}
 void ui_disp_menu(void)
 {
 	switch(menu){
@@ -1340,6 +1386,11 @@ void ui_disp_menu(void)
 		//
 		case MENU_SET_ILOOP_ADJUST:		ui_disp_menu_ilp_adj();		break;
 		case MENU_POLY_COEFFIC_MOD:		ui_disp_menu_poly_coefic_adj_mod();break;
+		//二次标定
+		case MENU_CALIB_DPR_2ND:
+		case MENU_CALIB_PR_2ND:
+		case MENU_CALIB_EPR0_2ND:
+		case MENU_CALIB_EPR1_2ND:		ui_disp_menu_calib_x_2nd();break;			
 		default:break;
 	}	
 }

@@ -34,7 +34,11 @@ extern "C"{
 	//外部温度修正
 	//#define PSW_SET_ETMEP_ZERO_LINE				136	
 	//差压二次修正
-	//压力二次修正
+	//压力二次修正,精标
+	#define PSW_CALIB_DPR_2ND					268
+	#define PSW_CALIB_PR_2ND					269
+	#define PSW_CALIB_EPR0_2ND					261
+	#define PSW_CALIB_EPR1_2ND					262
 	
 	//设置输出范围
 	#define PSW_SET_ILOOP_SCALE					42
@@ -140,7 +144,24 @@ extern "C"{
 	#define sub_MENU_SET_ILP_ADJUST_CH0_Hi		0x01
 	#define sub_MENU_SET_ILP_ADJUST_CH1_Lo		0x02
 	#define sub_MENU_SET_ILP_ADJUST_CH1_Hi		0x03	
-
+	
+	//精标
+	#define MENU_CALIB_DPR_2ND					0xa9
+	#define sub_MENU_CALIB_DPR_2ND_P0			0x00
+	#define sub_MENU_CALIB_DPR_2ND_P1			0x01
+	
+	#define MENU_CALIB_PR_2ND					0xaa
+	#define sub_MENU_CALIB_PR_2ND_P0			0x00
+	#define sub_MENU_CALIB_PR_2ND_P1			0x01
+	
+	#define MENU_CALIB_EPR0_2ND					0xab
+	#define sub_MENU_CALIB_EPR0_2ND_P0			0x00
+	#define sub_MENU_CALIB_EPR0_2ND_P1			0x01
+	
+	#define MENU_CALIB_EPR1_2ND					0xac
+	#define sub_MENU_CALIB_EPR1_2ND_P0			0x00
+	#define sub_MENU_CALIB_EPR1_2ND_P1			0x01
+	
 	//4-20mA输出范围,psd=139
 	#define MENU_SET_ILOOP_SCALE				0xb0
 	#define sub_MENU_SET_ILP_CH0_Lo				0x00

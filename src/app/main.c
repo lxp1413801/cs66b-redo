@@ -91,7 +91,7 @@ void event_sample_sleep_wake_mode(void)
     __nop();
 }
 */
-volatile lpwSampleStatus=0;
+
 void event_sample_sleep_wake_mode(void)
 {
     uint8_t t8=0;
@@ -99,6 +99,7 @@ void event_sample_sleep_wake_mode(void)
 	if(stSysData.sleepPeriod==0 || menu!=0)return;
 
 	if(sleepHalfSec<(stSysData.sleepPeriod)*2)return ;
+	
     if( !T1CONbits.TON )TMR1_Start();
     ticker_ms_set(0);
 	sleepHalfSec=0;

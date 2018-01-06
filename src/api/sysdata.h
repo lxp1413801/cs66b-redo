@@ -69,8 +69,8 @@ extern "C"{
 	
 	//差压，压力二次修�?
 	typedef struct{
-		int32_t prOut;
-		int32_t prIn;
+		int32_t oringinValue;
+		int32_t realValue;
 	}st_2ndCalibDef,__2ndCalibDef_t;
 	
 	typedef struct{
@@ -119,6 +119,8 @@ extern "C"{
 
 		st_2ndCalibDef	_2ndPrDiffCalib[2];			//二次修正，差�?
 		st_2ndCalibDef	_2ndPrCalib[2];				//二次修正，压�?
+		st_2ndCalibDef	_2ndPrEx0[2];
+		st_2ndCalibDef	_2ndPrEx1[2];
 		
 		st_warnDef		dprWarnSet[4];		//差压报警设置
 		//st_warnDef		pressureWarnSet[2];			//压力报警设置
@@ -233,6 +235,7 @@ extern "C"{
 	extern volatile int32_t		rtWeight;
 	extern volatile uint8_t		rtLevel;
 	extern volatile int32_t		rtPressure;
+	extern volatile int32_t		rtPrOriginal;
     //extern volatile int32_t    rtTemperatureEx;
 	extern volatile int32_t		rtTemperatureIn;
     
@@ -241,6 +244,8 @@ extern "C"{
 
 	extern volatile int32_t		rtEx0Pressure;
 	extern volatile int32_t		rtEx1Pressure;	
+	extern volatile int32_t		rtEx0PrOriginal;
+	extern volatile int32_t		rtEx1PrOriginal;		
 	//
 	extern __xDataStruct_t		x_prDiffData;
 	extern __xDataStruct_t		x_prData;

@@ -35,21 +35,28 @@ volatile int16_t	adc_iRef;
 volatile int32_t    rtTemperatureInBuf[4]={0,0,0,0};
 volatile int32_t    rtDiffPrBuf[4]={0,0,0,0};
 volatile int32_t	rtDiffPressure;
-volatile int32_t	rtDiffPrOriginal;
+
 volatile int32_t	rtHight;
 volatile int32_t	rtWeight;
 volatile int32_t	rtVolume;
 
 volatile uint8_t    rtLevel;
 volatile int32_t    rtTemperatureIn=0;
+
 volatile int32_t    rtPressure=0;
 
 volatile int32_t    rtTemperatureEx0=0;
 volatile int32_t    rtTemperatureEx1=0;
 
 //volatile int32_t	rtExPressure[2];
-volatile int32_t	rtEx0Pressure;
-volatile int32_t	rtEx1Pressure;
+volatile int32_t		rtEx0Pressure;
+volatile int32_t		rtEx1Pressure;
+
+
+volatile int32_t		rtDiffPrOriginal;
+volatile int32_t		rtPrOriginal=0;
+volatile int32_t		rtEx0PrOriginal;
+volatile int32_t		rtEx1PrOriginal;	
 //
 
 volatile st_deviceOpMode dwm=TEST_MODE;
@@ -247,9 +254,10 @@ const sysDataDef_t defultSystemData={
 		0,//int32_t		baseZero;						//基础零位
 		//
 
-		{{0,0},{10000,10000}},//st_2ndCalibDef	_2ndPrDiffCalib[2];			//二次修正，差压
-		{{0,0},{10000,10000}},//st_2ndCalibDef	_2ndPrCalib[2];				//二次修正，压力
-		
+		{{0,0},{50000,50000}},//st_2ndCalibDef	_2ndPrDiffCalib[2];			//二次修正，差压
+		{{0,0},{50000,50000}},//st_2ndCalibDef	_2ndPrCalib[2];				//二次修正，压力
+		{{0,0},{50000,50000}},
+		{{0,0},{50000,50000}},
 		{{6000,20,0,{0}},{1000,20,1,{0}},{800,5,2,{0}},{200,5,3,{0}}},//st_warnDef		diffPressureWarnSet[4];		//差压报警设置
 		//{{0},{0}},//st_warnDef		pressureWarnSet[2];			//压力报警设置
 
