@@ -10,15 +10,17 @@ volatile bool kzAvddOn=false;
 void kz_vadd_on(void)
 {
     if(kzAvddOn)return;
-	set_portg_odc_en(PIN9);
+	//set_portg_odc_en(PIN9);
 	set_portg_mode_dig(PIN9);
+    set_portg_value_low(PIN9);
 	set_portg_mode_out(PIN9);
-	set_portg_value_low(PIN9);
+	//set_portg_value_low(PIN9);
 	kzAvddOn=true;
+    delay_ms(10);
 }
 void kz_vadd_off(void)
 {
-	set_portg_odc_en(PIN9);
+	//set_portg_odc_en(PIN9);
 	set_portg_mode_dig(PIN9);
 	set_portg_mode_out(PIN9);
 	set_portg_value_hight(PIN9);

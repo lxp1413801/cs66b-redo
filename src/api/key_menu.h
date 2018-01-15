@@ -204,6 +204,8 @@ extern "C"{
 	extern volatile uint8_t  calibCol;	
 	//function
 	extern void key_process(void);
+	//extern void key_process_set_long(void);
+	extern void no_operation_save_exit(void);
 	//9086504300
 	//3045006890
 #ifdef __cplusplus

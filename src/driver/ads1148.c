@@ -3,6 +3,7 @@
 #include "../soc/ticker.h"
 #include "ads1148.h"
 #include "float.h"
+#include "../api/api.h"
 
 // #include "../../os_configs/FreeRTOSConfig.h"
 // #include "../../os_kernel/include/FreeRTOS.h"
@@ -451,7 +452,7 @@ void ads1148_set_ready(ads1148Obj_t* obj)
 }
 const uint8_t ads1148DefaultBuf[]={1,0,0,0,0,0,0,0,0,0x40,0x90,0xff};
 
-void ads1148_init_chip_regs(ads1148Obj_t* obj)
+uint8_t  ads1148_init_chip_regs(ads1148Obj_t* obj)
 {
 	uint16_t t16;
     //float f;
@@ -461,10 +462,11 @@ void ads1148_init_chip_regs(ads1148Obj_t* obj)
 	delay_ms(1);
 	//ads1148_set_bcs(obj,ADS1148_BCS_2uA0);
 	ads1148_set_vref(obj,ADS1148_REFSELT_INREF);
-	//ads1148_set_data_rate(obj,ADS1148_SYS0_DR_2000SPS);
+	ads1148_set_data_rate(obj,ADS1148_SYS0_DR_640SPS);
 	ads1148_set_muxcal(obj,ADS1148_MUXCAL_GAIN_CALIB);
 	ads1148_set_ani_pga(obj,ADS1148_PGA_1);	
 	ads1148_get_all_register(obj);
+	if(obj->ads1148Regs.buf[0]!=0x01)return 0;
     __nop();
 	ads1148_start_convert(obj);
 	//delay_us(5);
@@ -480,10 +482,10 @@ void ads1148_init_chip_regs(ads1148Obj_t* obj)
 	obj->offset=t16;
 
 	ads1148_start_convert(obj);
-	//ads1148_set_data_rate(obj,ADS1148_SYS0_DR_2000SPS);
+	ads1148_set_data_rate(obj,ADS1148_SYS0_DR_640SPS);
 	ads1148_get_all_register(obj);
 	__nop();
-
+    return 1;
 }
 
 void ads1148_init_all_obj(void)
@@ -494,8 +496,13 @@ void ads1148_init_all_obj(void)
 
 void ads1148_init_device(void)
 {
-    ads1148_init_chip_regs(&ads1148Chip0);
-    ads1148_init_chip_regs(&ads1148Chip1);  
+    uint8_t ret;
+    //return;
+    ret=ads1148_init_chip_regs(&ads1148Chip0);
+    if(!ret)hardStatus.bits.bAdcChip0=0;
+    ret=ads1148_init_chip_regs(&ads1148Chip1);  
+    if(!ret)hardStatus.bits.bAdcChip1=0;
+    
 }
 
 void ads1148_pre_sleep(void)

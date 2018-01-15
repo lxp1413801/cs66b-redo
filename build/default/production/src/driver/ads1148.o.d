@@ -23,5 +23,11 @@ src/driver/ad421.h  \
 src/driver/../soc/delay.h  \
  src/driver/../soc/../../mcc_generated_files/mcc.h  \
  src/driver/../soc/ticker.h  \
-src/driver/../global/globle.h  \
+src/driver/../api/api.h  \
+ src/driver/../api/../../mcc_generated_files/mcc.h  \
+ src/driver/../api/sysdata.h  \
+src/driver/../api/../driver/drivers.h  \
+ src/driver/../api/ui.h  \
+src/driver/../api/key_menu.h  \
+ src/driver/../global/globle.h  \
  src/driver/../global/../../mcc_generated_files/mcc.h 

@@ -62,7 +62,8 @@ volatile int32_t		rtEx1PrOriginal;
 volatile st_deviceOpMode dwm=TEST_MODE;
 
 deviceEventDef_t deviceEvent={0};
-
+hardStatus_t hardStatus={~0x00ul};
+//emErrCode_t errCode=NO_ERROR;
 // %水平圆筒的局部容积系数,其中x=H/D
 // %Vp=k*Va
 // %k= k=(1/pi)*acos(1-2*x)-(1/pi)*(1-2*x)*((1-(1-2*x)^2))^0.5;
@@ -282,7 +283,7 @@ const sysDataDef_t defultSystemData={
 		0,//uint8_t 	exPrTempShowEn;
 		60,//uint8_t		lcdShowTm;		        
 		//
-		4,//sleepPeriod
+		0,//sleepPeriod
 		300,//rfSendPeriod
 		0,
 		0,
@@ -395,6 +396,10 @@ void calib_data_set_default(xCalibTab_t *ctab,uint8_t rowCount)
     ctab->staticPreAdj0.diffPrZero=0;
     ctab->staticPreAdj1.pr=10000;
     ctab->staticPreAdj1.diffPrZero=0;
+	ctab->status=0x01;
+	ctab->reverse[0]=0x55;
+    ctab->reverse[1]=0xAA;
+    //ctab->reverse[2]=0xAA;
     //crc_append((uint8_t*)(&diff_prCalibTabDef),sizeof(diff_prCalibTabDef)-2);
 }
 int32_t  cal_smoothing_filter(int32_t* buf,int32_t in,uint8_t len)
@@ -523,9 +528,12 @@ uint8_t  calib_data_obj_init(calibDataObj_t* obj,uint8_t rowCount)
 		ret=crc_verify(buf,t16);		
         if(!ret){
 			calib_data_set_default(obj->calibTab,rowCount);
+            obj->calibTab->status=0x00;
             crc_append(buf,t16-2);
            }
 	}
+    
+
 	return ret;    
 }
 
@@ -533,6 +541,7 @@ uint8_t  calib_data_obj_init(calibDataObj_t* obj,uint8_t rowCount)
 //api
 void data_init_all(void)
 {
+    uint8_t ret;
 	data_sys_init();
 	//初始化eeprom对象
 	at24c02_init_all_chip();
@@ -549,12 +558,33 @@ void data_init_all(void)
 	ex1PrCalibDataObj.calibTab=&calibTab3;
 	ex1PrCalibDataObj.eep24c02=&at24c02Obj3;
 	
-    calib_data_obj_init(&diffPrCalibDataObj,3);
-    calib_data_obj_init(&prPrCalibDataObj,1);
+    ret=calib_data_obj_init(&diffPrCalibDataObj,3);
+    if(ret){
+        hardStatus.bits.bDprEeprom=1;
+    }else{
+        hardStatus.bits.bDprEeprom=0;
+    }
+    
+    ret=calib_data_obj_init(&prPrCalibDataObj,1);
+     if(ret){
+        hardStatus.bits.bprEeprom=1;
+    }else{
+        hardStatus.bits.bprEeprom=0;
+    }   
 	
-	calib_data_obj_init(&ex0PrCalibDataObj,1);
-	calib_data_obj_init(&ex1PrCalibDataObj,1);
-	
+	ret=calib_data_obj_init(&ex0PrCalibDataObj,1);
+     if(ret){
+        hardStatus.bits.bEx0PrEeprom=1;
+    }else{
+        hardStatus.bits.bEx0PrEeprom=0;
+    }
+    
+	ret=calib_data_obj_init(&ex1PrCalibDataObj,1);
+     if(ret){
+        hardStatus.bits.bEx1PrEeprom=1;
+    }else{
+        hardStatus.bits.bEx1PrEeprom=0;
+    }	
     __nop();
     __nop();
 }

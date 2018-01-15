@@ -402,7 +402,7 @@
 	extern ads1148Obj_t ads1148Chip0,ads1148Chip1;
 	extern void ads1148_init_all_obj(void);
 	extern void ads1148_init_device(void);
-	extern void ads1148_init_chip_regs(ads1148Obj_t* obj);
+	extern uint8_t ads1148_init_chip_regs(ads1148Obj_t* obj);
 	
 	//extern void ads1148_init_all_obj(void);
 	//extern void ads1148_init_all(void);

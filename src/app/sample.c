@@ -2,6 +2,7 @@
 
 #define sample_delay_ms(ms) delay_ms(ms)
 volatile bool sampleFreashFlg=false;
+volatile bool firstSampleFlg=true;
 volatile uint8_t sampleIndex=0x00;
 volatile int16_t samlpeBuf[SAMPLE_ADC_BUF_LEN];
 
@@ -19,16 +20,16 @@ volatile int16_t rtAdcValuePrEx0Signal;
 //volatile int16_t rtAdcValuePrEx1Bridge;
 volatile int16_t rtAdcValuePrEx1Signal;
 
-// volatile int16_t rtAdcValueTemperatureEx0A;
-// volatile int16_t rtAdcValueTemperatureEx0B;
-// volatile int16_t rtAdcValueTemperatureEx1A;
-// volatile int16_t rtAdcValueTemperatureEx1B;
+volatile int16_t rtAdcValueTemperatureEx0A;
+volatile int16_t rtAdcValueTemperatureEx0B;
+volatile int16_t rtAdcValueTemperatureEx1A;
+volatile int16_t rtAdcValueTemperatureEx1B;
 
 
-volatile int32_t rtAdcValueTemperatureEx0A;
-volatile int32_t rtAdcValueTemperatureEx0B;
-volatile int32_t rtAdcValueTemperatureEx1A;
-volatile int32_t rtAdcValueTemperatureEx1B;
+// volatile int32_t rtAdcValueTemperatureEx0A;
+// volatile int32_t rtAdcValueTemperatureEx0B;
+// volatile int32_t rtAdcValueTemperatureEx1A;
+// volatile int32_t rtAdcValueTemperatureEx1B;
 volatile int32_t rtTempRes0;
 volatile int32_t rtTempRes1;
 
@@ -171,7 +172,7 @@ void samlpe_chip0_ch_diff_pr_bridge(void)
 	ads1148_set_idac12_pins(&ads1148Chip0,IDAC_OUT_IEXC1,IDAC_OUT_NC);
 	ads1148_set_imag_idac(&ads1148Chip0,ADS1148_IMAG_250uA);
     
-    ads1148_set_data_rate(&ads1148Chip0,ADS1148_SYS0_DR_1000SPS);
+    ads1148_set_data_rate(&ads1148Chip0,ADS1148_SYS0_DR_640SPS);
     //ads1148_set_muxcal(&ads1148Chip0,ADS1148_MUXCAL_NORMAL);  
     ads1148_set_ani_pga(&ads1148Chip0,ADS1148_PGA_1);
 	
@@ -180,7 +181,7 @@ void samlpe_chip0_ch_diff_pr_bridge(void)
 	ads1148_set_mux0_ex(&ads1148Chip0,ADS1148_BCS_OFF,AIN1P,AIN0N);
 	ads1148_set_vbias_ex(&ads1148Chip0,0);
 	ads1148_set_mux1_ex(&ads1148Chip0,ADS1148_VREFCON_INREF_ON,ADS1148_REFSELT_INREF,ADS1148_MUXCAL_NORMAL);
-	ads1148_set_sys0_ex(&ads1148Chip0,ADS1148_PGA_1,ADS1148_SYS0_DR_1000SPS);
+	ads1148_set_sys0_ex(&ads1148Chip0,ADS1148_PGA_1,ADS1148_SYS0_DR_640SPS);
 	
 	ads1148_set_idac0_ex(&ads1148Chip0,ADS1148_DRDY_VIA_DRDY,ADS1148_IMAG_250uA);
 	ads1148_set_idac1_ex(&ads1148Chip0,IDAC_OUT_IEXC1,IDAC_OUT_NC);
@@ -191,6 +192,11 @@ void samlpe_chip0_ch_diff_pr_bridge(void)
 	rtAdcValueDPrBridge=samlpe_read_adc(&ads1148Chip0,NULL,8);
     //ads1148_stop_convert(&ads1148Chip0);
 	//ads1148_send_cmd(&ads1148Chip0,ADS1148_CMD_SLEEP);
+	if(rtAdcValueDPrBridge>0x7f00){
+		hardStatus.bits.bDprSensor=0;
+	}else{
+		hardStatus.bits.bDprSensor=1;
+	}
 	__nop();
 	__nop();
 }
@@ -205,7 +211,7 @@ void samlpe_chip0_ch_diff_pr_signal(void)
 	ads1148_set_muxcal(&ads1148Chip0,ADS1148_MUXCAL_NORMAL); 
     
 	ads1148_set_imag_idac(&ads1148Chip0,ADS1148_IMAG_500uA);
-    ads1148_set_data_rate(&ads1148Chip0,ADS1148_SYS0_DR_1000SPS);
+    ads1148_set_data_rate(&ads1148Chip0,ADS1148_SYS0_DR_640SPS);
 	ads1148_set_ani_pga(&ads1148Chip0,ADS1148_PGA_64);
 	
 	ads1148_set_channle_normal(&ads1148Chip0,AIN5P,AIN4N);
@@ -216,7 +222,7 @@ void samlpe_chip0_ch_diff_pr_signal(void)
 	ads1148_set_vbias_ex(&ads1148Chip0,0);
 	ads1148_set_mux1_ex(&ads1148Chip0,ADS1148_VREFCON_INREF_ON,ADS1148_REFSELT_INREF,ADS1148_MUXCAL_NORMAL);
 	
-	ads1148_set_sys0_ex(&ads1148Chip0,ADS1148_PGA_32,ADS1148_SYS0_DR_1000SPS);
+	ads1148_set_sys0_ex(&ads1148Chip0,ADS1148_PGA_32,ADS1148_SYS0_DR_640SPS);
 	
 	ads1148_set_idac0_ex(&ads1148Chip0,ADS1148_DRDY_VIA_DRDY,ADS1148_IMAG_500uA);
 	ads1148_set_idac1_ex(&ads1148Chip0,IDAC_OUT_IEXC1,IDAC_OUT_NC);
@@ -243,7 +249,7 @@ void samlpe_chip0_ch_diff_pr_ref0(void)
 	ads1148_set_vbias_ex(&ads1148Chip0,0+0);
 	ads1148_set_mux1_ex(&ads1148Chip0,ADS1148_VREFCON_INREF_ON,ADS1148_REFSELT_INREF,ADS1148_MUXCAL_NORMAL);
 	
-	ads1148_set_sys0_ex(&ads1148Chip0,ADS1148_PGA_1,ADS1148_SYS0_DR_1000SPS);
+	ads1148_set_sys0_ex(&ads1148Chip0,ADS1148_PGA_1,ADS1148_SYS0_DR_640SPS);
 	
 	ads1148_set_idac0_ex(&ads1148Chip0,ADS1148_DRDY_VIA_DRDY,ADS1148_IMAG_500uA);
 	ads1148_set_idac1_ex(&ads1148Chip0,IDAC_OUT_IEXC1,IDAC_OUT_NC);
@@ -261,7 +267,7 @@ void samlpe_chip0_ch_diff_pr_ref0(void)
     //ads1148_stop_convert(&ads1148Chip0);
 }
 */
-
+/*
 int32_t sample_calc_calib_x_2nd(int32_t in,st_2ndCalibDef* tb)
 {
 	float y,x;
@@ -276,7 +282,40 @@ int32_t sample_calc_calib_x_2nd(int32_t in,st_2ndCalibDef* tb)
     y=y+(float)tb[0].realValue;
     return (int32_t)y;
 }
-
+*/
+int32_t sample_calc_calib_dpr_2nd(int32_t in,st_2ndCalibDef* tb)
+{
+	float y,x;
+	y=(float)(tb[1].realValue-tb[0].realValue);
+    x=(float)(tb[1].oringinValue-tb[0].oringinValue);
+    
+    if(x<1)x=1;
+    y=y/x;
+    
+    x=(float)(in)-tb[0].oringinValue;
+    y=y*x;
+    y=y+(float)tb[0].realValue;
+    return (int32_t)y;
+}
+int32_t sample_calc_calib_x_2nd(int32_t in,st_2ndCalibDef* tb)
+{
+	int32_t t32;
+	/*
+	float y,x;
+	y=(float)(tb[1].realValue-tb[0].realValue);
+    x=(float)(tb[1].oringinValue-tb[0].oringinValue);
+    
+    if(x<1)x=1;
+    y=y/x;
+    
+    x=(float)(in)-tb[0].oringinValue;
+    y=y*x;
+    y=y+(float)tb[0].realValue;
+    return (int32_t)y;*/
+	
+	t32=tb[0].oringinValue;
+	return in-t32;
+}
 int32_t sample_calc_diff_press_fliter(int32_t t32)
 {
 
@@ -327,11 +366,24 @@ void sample_calc_diff_press(void)
     t32=calculate_and_compensate(diffPrCalibDataObj.calibTab,&x_prDiffData);
     //rtDiffPressure=t32;
     rtDiffPrOriginal=sample_calc_diff_press_fliter(t32);
-    
-	t32=sample_calc_calib_x_2nd(rtDiffPrOriginal,(st_2ndCalibDef*)(stSysData._2ndPrDiffCalib));
-    
-	rtDiffPressure=sample_calc_diff_press_static_err(t32);
+    /*
 	
+	
+	t32=sample_calc_calib_dpr_2nd(rtDiffPrOriginal,(st_2ndCalibDef*)(stSysData._2ndPrDiffCalib));
+    
+	if(hardStatus.bits.bDprSensor==1){
+		rtDiffPressure=sample_calc_diff_press_static_err(t32);
+	}else{
+		rtDiffPressure=0;
+	}
+	*/
+	if(hardStatus.bits.bPrSensor==1){
+		t32=sample_calc_diff_press_static_err(rtDiffPrOriginal);
+	}else{
+		//t32=0;
+	}
+    rtDiffPressure=sample_calc_calib_dpr_2nd(t32,(st_2ndCalibDef*)(stSysData._2ndPrDiffCalib));
+    //
 	t32=cal_diff_p_to_h(rtDiffPressure);
 	t32=t32-stSysData.baseZero;
 	rtHight=t32;
@@ -370,7 +422,7 @@ void samlpe_chip0_ch_pr_bridge(void)
 	/*
 	ads1148_set_idac12_pins(&ads1148Chip0,IDAC_OUT_NC,IDAC_OUT_IEXC2);
 	ads1148_set_imag_idac(&ads1148Chip0,ADS1148_IMAG_250uA);
-    ads1148_set_data_rate(&ads1148Chip0,ADS1148_SYS0_DR_1000SPS);
+    ads1148_set_data_rate(&ads1148Chip0,ADS1148_SYS0_DR_640SPS);
     ads1148_set_muxcal(&ads1148Chip0,ADS1148_MUXCAL_NORMAL);
     ads1148_set_channle_normal(&ads1148Chip0,AIN7P,AIN6N);
     ads1148_set_ani_pga(&ads1148Chip0,ADS1148_PGA_1);
@@ -380,7 +432,7 @@ void samlpe_chip0_ch_pr_bridge(void)
 	ads1148_set_vbias_ex(&ads1148Chip0,0);
 	ads1148_set_mux1_ex(&ads1148Chip0,ADS1148_VREFCON_INREF_ON,ADS1148_REFSELT_INREF,ADS1148_MUXCAL_NORMAL);
 	
-	ads1148_set_sys0_ex(&ads1148Chip0,ADS1148_PGA_1,ADS1148_SYS0_DR_1000SPS);
+	ads1148_set_sys0_ex(&ads1148Chip0,ADS1148_PGA_1,ADS1148_SYS0_DR_640SPS);
 	
 	ads1148_set_idac0_ex(&ads1148Chip0,ADS1148_DRDY_VIA_DRDY,ADS1148_IMAG_250uA);
 	ads1148_set_idac1_ex(&ads1148Chip0,IDAC_OUT_NC,IDAC_OUT_IEXC2);
@@ -388,6 +440,11 @@ void samlpe_chip0_ch_pr_bridge(void)
 	ads1148_set_config_ex(&ads1148Chip0);	
 	
 	rtAdcValuePrBridge=samlpe_read_adc(&ads1148Chip0,NULL,8);
+	if(rtAdcValuePrBridge>0x7f00){
+		hardStatus.bits.bPrSensor=0;
+	}else{
+		hardStatus.bits.bPrSensor=1;
+	}		
 	__nop();
 	__nop();
 }
@@ -404,7 +461,7 @@ void samlpe_chip0_ch_pr_signal(void)
 	ads1148_set_vbias_ex(&ads1148Chip0,0);
 	ads1148_set_mux1_ex(&ads1148Chip0,ADS1148_VREFCON_INREF_ON,ADS1148_REFSELT_INREF,ADS1148_MUXCAL_NORMAL);
 	
-	ads1148_set_sys0_ex(&ads1148Chip0,ADS1148_PGA_64,ADS1148_SYS0_DR_1000SPS);
+	ads1148_set_sys0_ex(&ads1148Chip0,ADS1148_PGA_64,ADS1148_SYS0_DR_640SPS);
 	
 	ads1148_set_idac0_ex(&ads1148Chip0,ADS1148_DRDY_VIA_DRDY,ADS1148_IMAG_500uA);
 	ads1148_set_idac1_ex(&ads1148Chip0,IDAC_OUT_NC,IDAC_OUT_IEXC2);	
@@ -426,7 +483,7 @@ void samlpe_chip0_ch_pr_ref1(void)
 	ads1148_set_vbias_ex(&ads1148Chip0,0);
 	ads1148_set_mux1_ex(&ads1148Chip0,ADS1148_VREFCON_INREF_ON,ADS1148_REFSELT_INREF,ADS1148_MUXCAL_REF1_MONITOR);
 	
-	ads1148_set_sys0_ex(&ads1148Chip0,ADS1148_PGA_1,ADS1148_SYS0_DR_1000SPS);
+	ads1148_set_sys0_ex(&ads1148Chip0,ADS1148_PGA_1,ADS1148_SYS0_DR_640SPS);
 	
 	ads1148_set_idac0_ex(&ads1148Chip0,ADS1148_DRDY_VIA_DRDY,ADS1148_IMAG_500uA);
 	ads1148_set_idac1_ex(&ads1148Chip0,IDAC_OUT_NC,IDAC_OUT_IEXC2);
@@ -446,7 +503,7 @@ void samlpe_chip0_ch_temperature_in(void)
 	ads1148_set_vbias_ex(&ads1148Chip0,0);
 	ads1148_set_mux1_ex(&ads1148Chip0,ADS1148_VREFCON_INREF_ON,ADS1148_REFSELT_INREF,ADS1148_MUXCAL_NORMAL);
 	
-	ads1148_set_sys0_ex(&ads1148Chip0,ADS1148_PGA_1,ADS1148_SYS0_DR_1000SPS);
+	ads1148_set_sys0_ex(&ads1148Chip0,ADS1148_PGA_1,ADS1148_SYS0_DR_640SPS);
 	
 	ads1148_set_idac0_ex(&ads1148Chip0,ADS1148_DRDY_VIA_DRDY,ADS1148_IMAG_500uA);
 	//ads1148_set_idac1_ex(&ads1148Chip0,IDAC_OUT_NC,IDAC_OUT_IEXC2);
@@ -465,12 +522,12 @@ void samlpe_chip0_ch_temperature_in(void)
 */
 void samlpe_chip0_ch_temperature_in(void)
 {
-
+	if(hardStatus.bits.bInTempSensor==0)return;	
 	ads1148_set_mux0_ex(&ads1148Chip0,ADS1148_BCS_OFF,AIN6P,AIN0N);
 	ads1148_set_vbias_ex(&ads1148Chip0,0);
 	ads1148_set_mux1_ex(&ads1148Chip0,ADS1148_VREFCON_INREF_ON,ADS1148_REFSELT_INREF,ADS1148_MUXCAL_NORMAL);
 	
-	ads1148_set_sys0_ex(&ads1148Chip0,ADS1148_PGA_2,ADS1148_SYS0_DR_1000SPS);
+	ads1148_set_sys0_ex(&ads1148Chip0,ADS1148_PGA_2,ADS1148_SYS0_DR_640SPS);
 	
 	ads1148_set_idac0_ex(&ads1148Chip0,ADS1148_DRDY_VIA_DRDY,ADS1148_IMAG_1000uA);
 	//ads1148_set_idac1_ex(&ads1148Chip0,IDAC_OUT_NC,IDAC_OUT_IEXC2);
@@ -497,7 +554,7 @@ void samlpe_chip0_ch_diff_pr_ref0(void)
 	ads1148_set_vbias_ex(&ads1148Chip0,0+0);
 	ads1148_set_mux1_ex(&ads1148Chip0,ADS1148_VREFCON_INREF_ON,ADS1148_REFSELT_INREF,ADS1148_MUXCAL_NORMAL);
 	
-	ads1148_set_sys0_ex(&ads1148Chip0,ADS1148_PGA_1,ADS1148_SYS0_DR_1000SPS);
+	ads1148_set_sys0_ex(&ads1148Chip0,ADS1148_PGA_1,ADS1148_SYS0_DR_640SPS);
 	
 	ads1148_set_idac0_ex(&ads1148Chip0,ADS1148_DRDY_VIA_DRDY,ADS1148_IMAG_OFF);
 	ads1148_set_idac1_ex(&ads1148Chip0,IDAC_OUT_NC,IDAC_OUT_NC);
@@ -523,7 +580,12 @@ void sample_calc_press(void)
     x_prData.value=0;                                           
     t32=calculate_and_compensate(prPrCalibDataObj.calibTab,&x_prData);
     rtPrOriginal=t32;
-    rtPressure=t32;
+	t32=sample_calc_calib_x_2nd(rtPrOriginal,(st_2ndCalibDef*)(stSysData._2ndPrCalib));
+	if(hardStatus.bits.bPrSensor==1 && hardStatus.bits.bInTempSensor==1){
+		rtPressure=t32;
+	}else{
+		rtPressure=0;
+	}
 	//cal_diff_p_to_h(t32);
     __nop();
     __nop();
@@ -536,10 +598,14 @@ void sample_calc_temperature_in(void)
 	float x,y;
 	//x=(float)rtAdcValueChip0Ref0;
 	//x=800.0;
+	if(hardStatus.bits.bInTempSensor==0)return;	
 	y=(float)rtAdcValueTemperatureIn;
     y=y/32;
 	//y=y*100;
 	//转换为温度
+	if(firstSampleFlg){
+		if(y<10.000 || y>300)hardStatus.bits.bInTempSensor=0;
+	}	
     x=calc_res_2_temp(y);
     x=x*100;
 	rtTemperatureIn=(int32_t)x;
@@ -552,11 +618,14 @@ void sample_calc_temperature_in(void)
 
 void samlpe_chip1_ch_expr0_signal(void)
 {
+	
+	if(hardStatus.bits.bEx0PrEeprom==0)return;
+	if(hardStatus.bits.bAdcChip1==0)return;
 	ads1148_set_mux0_ex(&ads1148Chip1,ADS1148_BCS_OFF,AIN6P,AIN7N);
 	ads1148_set_vbias_ex(&ads1148Chip1,0);
 	ads1148_set_mux1_ex(&ads1148Chip1,ADS1148_VREFCON_INREF_ON,ADS1148_REFSELT_INREF,ADS1148_MUXCAL_NORMAL);
 	
-	ads1148_set_sys0_ex(&ads1148Chip1,ADS1148_PGA_32,ADS1148_SYS0_DR_1000SPS);
+	ads1148_set_sys0_ex(&ads1148Chip1,ADS1148_PGA_32,ADS1148_SYS0_DR_640SPS);
 	
 	ads1148_set_idac0_ex(&ads1148Chip1,ADS1148_DRDY_VIA_DRDY,ADS1148_IMAG_500uA);
 	ads1148_set_idac1_ex(&ads1148Chip1,IDAC_OUT_IEXC1,IDAC_OUT_NC);
@@ -571,10 +640,14 @@ void samlpe_chip1_ch_expr0_signal(void)
 void sample_calc_press_ex0(void)
 {
     int32_t t32;
+	if(hardStatus.bits.bEx0PrEeprom==0)return;
+	if(hardStatus.bits.bAdcChip1==0)return;
 	x_ex0prData.sigAdcValue=rtAdcValuePrEx0Signal;
 	x_ex0prData.tAdcValue=0;
 	x_ex0prData.value=0;                                           
     t32=calculate_and_compensate(ex0PrCalibDataObj.calibTab,&x_ex0prData);
+	rtEx0PrOriginal=t32;
+	t32=sample_calc_calib_x_2nd(rtEx0PrOriginal,(st_2ndCalibDef*)(stSysData._2ndPrEx0));
     rtEx0Pressure=t32;
     __nop();
     __nop();
@@ -586,7 +659,7 @@ void samlpe_chip1_ch_ex0_temperature_A(void)
 	ads1148_set_vbias_ex(&ads1148Chip1,0);
 	ads1148_set_mux1_ex(&ads1148Chip1,ADS1148_VREFCON_INREF_ON,ADS1148_REFSELT_INREF,ADS1148_MUXCAL_NORMAL);
 	
-	ads1148_set_sys0_ex(&ads1148Chip1,ADS1148_PGA_1,ADS1148_SYS0_DR_1000SPS);
+	ads1148_set_sys0_ex(&ads1148Chip1,ADS1148_PGA_1,ADS1148_SYS0_DR_640SPS);
 	
 	ads1148_set_idac0_ex(&ads1148Chip1,ADS1148_DRDY_VIA_DRDY,ADS1148_IMAG_500uA);
 	ads1148_set_idac1_ex(&ads1148Chip1,IDAC_OUT_IEXC1,IDAC_OUT_NC);
@@ -602,11 +675,13 @@ void samlpe_chip1_ch_ex0_temperature_A(void)
 */
 void samlpe_chip1_ch_ex0_temperature_A(void)
 {
+	if(hardStatus.bits.bEx0TempSensor==0)return;
+	if(hardStatus.bits.bAdcChip1==0)return;
 	ads1148_set_mux0_ex(&ads1148Chip1,ADS1148_BCS_OFF,AIN2P,AIN3N);
 	ads1148_set_vbias_ex(&ads1148Chip1,0);
 	ads1148_set_mux1_ex(&ads1148Chip1,ADS1148_VREFCON_INREF_ON,ADS1148_REFSELT_INREF,ADS1148_MUXCAL_NORMAL);
 	
-	ads1148_set_sys0_ex(&ads1148Chip1,ADS1148_PGA_4,ADS1148_SYS0_DR_1000SPS);
+	ads1148_set_sys0_ex(&ads1148Chip1,ADS1148_PGA_4,ADS1148_SYS0_DR_640SPS);
 	
 	ads1148_set_idac0_ex(&ads1148Chip1,ADS1148_DRDY_VIA_DRDY,ADS1148_IMAG_1000uA);
 	//ads1148_set_idac1_ex(&ads1148Chip1,IDAC_OUT_IEXC1,IDAC_OUT_NC);
@@ -626,7 +701,7 @@ void samlpe_chip1_ch_ex0_temperature_B(void)
 	ads1148_set_vbias_ex(&ads1148Chip1,0);
 	ads1148_set_mux1_ex(&ads1148Chip1,ADS1148_VREFCON_INREF_ON,ADS1148_REFSELT_INREF,ADS1148_MUXCAL_NORMAL);
 	
-	ads1148_set_sys0_ex(&ads1148Chip1,ADS1148_PGA_1,ADS1148_SYS0_DR_1000SPS);
+	ads1148_set_sys0_ex(&ads1148Chip1,ADS1148_PGA_1,ADS1148_SYS0_DR_640SPS);
 	
 	ads1148_set_idac0_ex(&ads1148Chip1,ADS1148_DRDY_VIA_DRDY,ADS1148_IMAG_500uA);
 	//ads1148_set_idac1_ex(&ads1148Chip1,IDAC_OUT_IEXC1,IDAC_OUT_NC);
@@ -642,11 +717,12 @@ void samlpe_chip1_ch_ex0_temperature_B(void)
 */
 void samlpe_chip1_ch_ex0_temperature_B(void)
 {
+	if(hardStatus.bits.bAdcChip1==0)return;
 	ads1148_set_mux0_ex(&ads1148Chip1,ADS1148_BCS_OFF,AIN3P,AIN5N);
 	ads1148_set_vbias_ex(&ads1148Chip1,0);
 	ads1148_set_mux1_ex(&ads1148Chip1,ADS1148_VREFCON_INREF_ON,ADS1148_REFSELT_INREF,ADS1148_MUXCAL_NORMAL);
 	
-	ads1148_set_sys0_ex(&ads1148Chip1,ADS1148_PGA_1,ADS1148_SYS0_DR_1000SPS);
+	ads1148_set_sys0_ex(&ads1148Chip1,ADS1148_PGA_1,ADS1148_SYS0_DR_640SPS);
 	
 	ads1148_set_idac0_ex(&ads1148Chip1,ADS1148_DRDY_VIA_DRDY,ADS1148_IMAG_500uA);
 	ads1148_set_idac1_ex(&ads1148Chip1,IDAC_OUT_NC,IDAC_OUT_NC);
@@ -681,7 +757,8 @@ void sample_calc_temperature_ex0(void)
 {
 	int32_t t32;
 	float x,y;    
-
+	if(hardStatus.bits.bEx0TempSensor==0)return;
+	if(hardStatus.bits.bAdcChip1==0)return;
 	t32=(int32_t)(stSysData.tempCalibEx0[1].adcValue-stSysData.tempCalibEx0[0].adcValue);
 	if(t32==0)t32=1;
 	x=(float)t32;
@@ -698,22 +775,28 @@ void sample_calc_temperature_ex0(void)
 	y=y+(float)(stSysData.tempCalibEx0[0].resValue);
 
 	rtTempRes0=(int32_t)(y);
-
+	if(firstSampleFlg){
+		if(rtTempRes0<10000)hardStatus.bits.bEx0TempSensor=0;
+	}
+	
 	x=calc_res_2_temp(y/1000);	
 	x=x*1000;
 	rtTemperatureEx0=(int32_t)x;
 	__nop();
 	__nop();
+
 }
 
 
 void samlpe_chip1_ch_expr1_signal(void)
 {
+	if(hardStatus.bits.bAdcChip1==0)return;
+	if(hardStatus.bits.bEx1PrEeprom==0)return;
 	ads1148_set_mux0_ex(&ads1148Chip1,ADS1148_BCS_OFF,AIN0P,AIN1N);
 	ads1148_set_vbias_ex(&ads1148Chip1,0);
 	ads1148_set_mux1_ex(&ads1148Chip1,ADS1148_VREFCON_INREF_ON,ADS1148_REFSELT_INREF,ADS1148_MUXCAL_NORMAL);
 	
-	ads1148_set_sys0_ex(&ads1148Chip1,ADS1148_PGA_32,ADS1148_SYS0_DR_1000SPS);
+	ads1148_set_sys0_ex(&ads1148Chip1,ADS1148_PGA_32,ADS1148_SYS0_DR_640SPS);
 	
 	ads1148_set_idac0_ex(&ads1148Chip1,ADS1148_DRDY_VIA_DRDY,ADS1148_IMAG_500uA);
 	ads1148_set_idac1_ex(&ads1148Chip1,IDAC_OUT_NC,IDAC_OUT_IEXC2);
@@ -729,10 +812,14 @@ void samlpe_chip1_ch_expr1_signal(void)
 void sample_calc_press_ex1(void)
 {
     int32_t t32;
+	if(hardStatus.bits.bEx1PrEeprom==0)return;
+	if(hardStatus.bits.bAdcChip1==0)return;
 	x_ex1prData.sigAdcValue=rtAdcValuePrEx1Signal;
 	x_ex1prData.tAdcValue=0;
 	x_ex1prData.value=0;                                           
     t32=calculate_and_compensate(ex1PrCalibDataObj.calibTab,&x_ex1prData);
+	rtEx1PrOriginal=t32;
+	t32=sample_calc_calib_x_2nd(rtEx1PrOriginal,(st_2ndCalibDef*)(stSysData._2ndPrEx1));
     rtEx1Pressure=t32;
     __nop();
     __nop();
@@ -744,7 +831,7 @@ void samlpe_chip1_ch_ex1_temperature_A(void)
 	ads1148_set_vbias_ex(&ads1148Chip1,0);
 	ads1148_set_mux1_ex(&ads1148Chip1,ADS1148_VREFCON_INREF_ON,ADS1148_REFSELT_INREF,ADS1148_MUXCAL_NORMAL);
 	
-	ads1148_set_sys0_ex(&ads1148Chip1,ADS1148_PGA_1,ADS1148_SYS0_DR_1000SPS);
+	ads1148_set_sys0_ex(&ads1148Chip1,ADS1148_PGA_1,ADS1148_SYS0_DR_640SPS);
 	
 	ads1148_set_idac0_ex(&ads1148Chip1,ADS1148_DRDY_VIA_DRDY,ADS1148_IMAG_500uA);
 	ads1148_set_idac1_ex(&ads1148Chip1,IDAC_OUT_NC,IDAC_OUT_IEXC2);
@@ -759,11 +846,13 @@ void samlpe_chip1_ch_ex1_temperature_A(void)
 */
 void samlpe_chip1_ch_ex1_temperature_A(void)
 {
+	if(hardStatus.bits.bEx1TempSensor==0)return;	
+	if(hardStatus.bits.bAdcChip1==0)return;
 	ads1148_set_mux0_ex(&ads1148Chip1,ADS1148_BCS_OFF,AIN4P,AIN5N);
 	ads1148_set_vbias_ex(&ads1148Chip1,0);
 	ads1148_set_mux1_ex(&ads1148Chip1,ADS1148_VREFCON_INREF_ON,ADS1148_REFSELT_INREF,ADS1148_MUXCAL_NORMAL);
 	
-	ads1148_set_sys0_ex(&ads1148Chip1,ADS1148_PGA_4,ADS1148_SYS0_DR_1000SPS);
+	ads1148_set_sys0_ex(&ads1148Chip1,ADS1148_PGA_4,ADS1148_SYS0_DR_640SPS);
 	
 	ads1148_set_idac0_ex(&ads1148Chip1,ADS1148_DRDY_VIA_DRDY,ADS1148_IMAG_1000uA);
 	//ads1148_set_idac1_ex(&ads1148Chip1,IDAC_OUT_NC,IDAC_OUT_IEXC2);
@@ -782,7 +871,7 @@ void samlpe_chip1_ch_ex1_temperature_B(void)
 	ads1148_set_vbias_ex(&ads1148Chip1,0);
 	ads1148_set_mux1_ex(&ads1148Chip1,ADS1148_VREFCON_INREF_ON,ADS1148_REFSELT_INREF,ADS1148_MUXCAL_NORMAL);
 	
-	ads1148_set_sys0_ex(&ads1148Chip1,ADS1148_PGA_1,ADS1148_SYS0_DR_1000SPS);
+	ads1148_set_sys0_ex(&ads1148Chip1,ADS1148_PGA_1,ADS1148_SYS0_DR_640SPS);
 	
 	ads1148_set_idac0_ex(&ads1148Chip1,ADS1148_DRDY_VIA_DRDY,ADS1148_IMAG_500uA);
 	ads1148_set_idac1_ex(&ads1148Chip1,IDAC_OUT_NC,IDAC_OUT_IEXC2);
@@ -797,11 +886,13 @@ void samlpe_chip1_ch_ex1_temperature_B(void)
 */
 void samlpe_chip1_ch_ex1_temperature_B(void)
 {
+	if(hardStatus.bits.bAdcChip1==0)return;
+	
 	ads1148_set_mux0_ex(&ads1148Chip1,ADS1148_BCS_OFF,AIN5P,AIN3N);
 	ads1148_set_vbias_ex(&ads1148Chip1,0);
 	ads1148_set_mux1_ex(&ads1148Chip1,ADS1148_VREFCON_INREF_ON,ADS1148_REFSELT_INREF,ADS1148_MUXCAL_NORMAL);
 	
-	ads1148_set_sys0_ex(&ads1148Chip1,ADS1148_PGA_1,ADS1148_SYS0_DR_1000SPS);
+	ads1148_set_sys0_ex(&ads1148Chip1,ADS1148_PGA_1,ADS1148_SYS0_DR_640SPS);
 	
 	ads1148_set_idac0_ex(&ads1148Chip1,ADS1148_DRDY_VIA_DRDY,ADS1148_IMAG_500uA);
 	ads1148_set_idac1_ex(&ads1148Chip1,IDAC_OUT_NC,IDAC_OUT_NC);
@@ -836,7 +927,8 @@ void sample_calc_temperature_ex1(void)
 	//tempCalibEx0
 	int32_t t32;
 	float x,y;    
-
+	if(hardStatus.bits.bEx1TempSensor==0)return;
+	if(hardStatus.bits.bAdcChip1==0)return;	
 	t32=(int32_t)(stSysData.tempCalibEx1[1].adcValue-stSysData.tempCalibEx1[0].adcValue);
 	if(t32==0)t32=1;
 	x=(float)t32;
@@ -853,7 +945,9 @@ void sample_calc_temperature_ex1(void)
 	y=y+stSysData.tempCalibEx1[0].resValue;
 
 	rtTempRes1=(int32_t)(y);
-
+	if(firstSampleFlg){
+		if(rtTempRes1<10000)hardStatus.bits.bEx1TempSensor=0;
+	}
 	x=calc_res_2_temp(y/1000);	
 	x=x*1000;
 	rtTemperatureEx1=(int32_t)x;
@@ -993,13 +1087,7 @@ uint8_t sample_process(void)
 		case 0x12:sample_calc_press_ex1();				break;
 		case 0x13:samlpe_chip1_ch_ex1_temperature_A();	break;
 		case 0x14:samlpe_chip1_ch_ex1_temperature_B();	break;
-		case 0x15:sample_calc_temperature_ex1();		break;		
-/*
-		case 0x13:samlpe_in_soc_battery();				break;
-		//case 0x14:sample_in_soc_solar();				break;
-		case 0x14:break;
-		case 0x15:samlpe_in_soc_ref();					break;
-*/		
+		case 0x15:sample_calc_temperature_ex1();		break;			
 #endif
 		default:	break;
 	}
@@ -1008,6 +1096,7 @@ uint8_t sample_process(void)
     if(sampleIndex>0x15){
         sampleIndex=0;
         sampleFreashFlg=true;
+		firstSampleFlg=false;
     }
 #else
     if(sampleIndex>0x0b){

@@ -831,7 +831,7 @@ void lcd_config(void)
     LCDREGbits.MODE13=1;
     
     LCDPSbits.BIASMD=0;
-    LCDPSbits.LP=4;
+    LCDPSbits.LP=2;
 	//LCDPSbits.WFT=1;
     
     LCDREFbits.LCDIRE=1;
@@ -870,7 +870,9 @@ void lcd_init(void)
 	//lcd_bl_init();
 	lcd_on();
     kz_vadd_on();
-    back_night_on();
+    //back_night_on();
+    asm("nop");
+    asm("nop");
 
 }
 //file end

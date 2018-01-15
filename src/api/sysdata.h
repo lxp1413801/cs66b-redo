@@ -15,6 +15,69 @@ extern "C"{
     #define globle_BUFFER_SIZE  256
     //extern uint8_t globleBuffer0[globle_BUFFER_SIZE];
 	extern uint8_t globleBuffer[globle_BUFFER_SIZE];
+	/*
+	typedef enum{
+		NO_ERROR=0,
+		
+		DPR_EEPROM_ERROR,
+        PR_EEPROM_ERROR, 
+        EX_PR0_EEPROM_ERROR,        
+        EX_PR1_EEPROM_ERROR, 
+                
+		DPR_SENSOR_ERROR,
+		PR_SENSOR_ERROR,
+		EX_PR0_SENSOR_ERROR,
+		EX_PR1_SENSOR_ERROR,
+			
+		
+		EX_TEMP0_SENSOR_ERROR,
+		EX_TEMP1_SENSOR_ERROR,
+		
+		IN_TEMP1_SENSOR_ERROR,
+		
+		ADC_CHIP0_ERROR,
+		ADC_CHIP1_ERROR,
+	}emErrCode_t;
+	extern emErrCode_t errCode;
+	*/
+	typedef union{
+		uint32_t t32;
+		struct{
+			uint32_t bAdcChip0:1;
+			
+			uint32_t bDprEeprom:1;
+			uint32_t bDprSensor:1;
+			
+			uint32_t bprEeprom:1;
+			uint32_t bPrSensor:1;
+			
+			
+			uint32_t bInTempSensor:1;
+			
+			uint32_t bAdcChip1:1;
+			
+			uint32_t bEx0PrEeprom:1;
+			uint32_t bEx1PrEeprom:1;
+			uint32_t bEx0PrSensor:1;
+			uint32_t bEx1PrSensor:1;
+			
+			uint32_t bEx0TempSensor:1;
+			uint32_t bEx1TempSensor:1;	
+
+			uint32_t bBjBoard:1;	
+			uint32_t bILoopBoard:1;	
+			uint32_t bModbusBoard:1;
+			uint32_t bNbiotBoard:1;
+			uint32_t bNGpsBoard:1;
+			
+			uint32_t bSolorBoard:1;
+			uint32_t bACPwrBoard:1;
+			
+			uint32_t bBatBorad:1;
+			uint32_t bBatChargeBorad:1;
+		}bits;
+	}hardStatus_t;
+	extern hardStatus_t hardStatus;
 	
 	typedef enum{
 		HOTIZONTAL=0,				//horizontal,
@@ -187,7 +250,8 @@ extern "C"{
 	
 	typedef struct{
 		uint8_t rowCount;	//有效的行�?组数,
-		uint8_t reverse[3];
+		uint8_t status;
+        uint8_t reverse[2];
 		xCalibRow_t calibRow[3];
 		staticPreErr_t staticPreAdj0;
 		staticPreErr_t staticPreAdj1;
