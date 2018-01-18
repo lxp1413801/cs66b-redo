@@ -39,7 +39,7 @@ void thread_main_pre(void)
      //ui_disp_all_off();
     // main_delay_ms(1000);
 
-	//ui_disp_start_cs600(6);
+	ui_disp_start_cs600(6);
 
 	//
 	
@@ -115,7 +115,7 @@ void event_sample_sleep_wake_mode(void)
     ticker_ms_set(0);
 	sleepHalfSec=0;
 	
-	delay_ms(30);
+	//delay_ms(30);
     kz_vadd_on();
     ads1148_post_sleep();
 	delay_ms(30);
@@ -133,6 +133,8 @@ void event_sample_sleep_wake_mode(void)
     
 	ads1148_pre_sleep();
 	t32=ticker_ms_get();
+    TMR1_Stop();
+    if(blShowTime==0)kz_vadd_off();
     //if(event &  flg_RTC_SECOND)event &=  ~flg_RTC_SECOND;
     __nop();
     __nop();
@@ -141,7 +143,7 @@ void event_iloop_out_put_adj(void)
 {
 	#if I_LOOP_BOARD
 	int32_t ad421value;
-	uint32_t t32;
+	//uint32_t t32;
 	int16_t t16;
 	if(stSysData.sleepPeriod>0){
 		return;
@@ -208,7 +210,7 @@ void event_enter_sleep(void)
 		
 		TMR1_Stop();
 		TMR2_Stop();	
-		
+		//lcd_off();
 		Sleep();
 		__nop();
 		__nop();    
@@ -216,8 +218,26 @@ void event_enter_sleep(void)
 		
 	}   
 }
+uint8_t dispIndex=0x00;
+void event_call_disp(void)
+{	
+
+    if(stSysData.sleepPeriod==0 || menu!=0 || noEventTimeOut>0){
+        ui_disp_menu();
+    }
+    else{
+        dispIndex++;
+        if(dispIndex>=4){
+            dispIndex=0;
+            ui_disp_menu();
+        }
+    }
+
+}
+
 int main(void)
 {
+
     SYSTEM_Initialize(); 
 
     //m_system_init();
@@ -242,8 +262,25 @@ int main(void)
 	#endif
      //ui_disp_all_off();
     // main_delay_ms(1000);
+    /*
+    while(1){
+		__nop();
+		__nop();
+		//pre_system_sleep_deinit_all_pins();
+		
+		pre_system_sleep();
+		ads1148_pre_sleep();
+		
+		TMR1_Stop();
+		TMR2_Stop();	
+		lcd_off();
+		Sleep();
+		__nop();
+		__nop();            
+    }
+     * */
+	//ui_disp_start_cs600(7);
 
-	ui_disp_start_cs600(7);
     while (1){
 		if(event & flg_KEY_DOWN){
 			//event &= ~flg_KEY_DOWN;
@@ -252,6 +289,7 @@ int main(void)
 			key_process();
 		}
 		if(event &  flg_RTC_SECOND){
+            //rtcc_interupt_disable();
 			event &=  ~flg_RTC_SECOND;
 
 			if(lcdTwinkle>0)lcdTwinkle--;
@@ -266,15 +304,19 @@ int main(void)
             //if(noEventTimeOut<blShowTime)noEventTimeOut=blShowTime;
             if(stSysData.sleepPeriod)sleepHalfSec++;
             
-			run_status_on();
+			//run_status_on();
+            //TMR1_Stop();
             ui_disp_menu();
-
+   // ui_disp_all_off();
+	//lcd_disp_refresh();
+			//event_call_disp();
 			run_status_off();
 			if(menu!=MENU_SET_ILOOP_ADJUST){
 				event_iloop_out_put();
 			}else{
 				event_iloop_out_put_adj();
 			}
+            //rtcc_interupt_enable();
 		}
         
 		event_sample_real_time_mode();

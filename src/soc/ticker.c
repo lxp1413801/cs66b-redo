@@ -48,7 +48,15 @@ void ticker_10ms_per_set(uint32_t tick)
 {
     tickerMsPer10Ms=tick;
 }
-
+void rtcc_interupt_disable(void)
+{
+    IFS3bits.RTCIF = 0;
+    IEC3bits.RTCIE = 0;
+}
+void rtcc_interupt_enable(void)
+{
+    IEC3bits.RTCIE = 1;
+}
 void __attribute__ ( ( interrupt, no_auto_psv ) ) _ISR _RTCCInterrupt( void )
 {
     /* TODO : Add interrupt handling code */

@@ -25,6 +25,13 @@
 		#define DEBUG_EX_TEMP_EN 0
 	#endif
 	
+	#ifndef SOFTWARE_VER
+		#define SOFTWARE_VER "30"
+	#endif
+	
+#ifndef LCD_TEST_EX_EN
+#define LCD_TEST_EX_EN 0
+#endif
 #ifdef __cplusplus
 	}
 #endif

@@ -455,11 +455,15 @@ void ui_disp_xfloat_pt_ex(st_float32_m* xpf,uint8_t line)
 {
     uint8_t buf[10];
     uint8_t t8;
+	uint8_t exs=0x00;
 	uint16_t x;
 	if(line>1)return; 
 	x=xpf->stru.significand;
 	if(xpf->stru.sign){
-		x/=10;
+		if(x>999){
+			x/=10;
+			exs=1;
+		}
         if(x>999)x=999;
         m_int16_2_str_4(buf,x);
         buf[0]='-';
@@ -473,7 +477,8 @@ void ui_disp_xfloat_pt_ex(st_float32_m* xpf,uint8_t line)
 	}else{
 		lcd_show_string_l1(buf);
 	}
-    t8=xpf->stru.exponent+xpf->stru.sign;
+    //t8=xpf->stru.exponent+xpf->stru.sign;
+	t8=xpf->stru.exponent+exs;
     if(t8<3)lcd_show_dp(t8+4*line,true);
 	//lcd_disp_refresh();    
 }
@@ -482,12 +487,16 @@ void ui_disp_xfloat_pt_ex(st_float32_m* xpf,uint8_t line)
 void ui_disp_xfloat_pt(st_float32_m* xpf,uint8_t line)
 {
     uint8_t buf[10];
-    uint8_t t8;
+    uint8_t t8,exs=0x00;
 	uint16_t x;
 	if(line>1)return; 
 	x=xpf->stru.significand;
 	if(xpf->stru.sign){
-		x/=10;
+		if(x>999){
+			exs=1;
+			x/=10;
+		}
+		
         if(x>999)x=999;
         m_int16_2_str_4(buf,x);
         buf[0]='-';
@@ -501,8 +510,8 @@ void ui_disp_xfloat_pt(st_float32_m* xpf,uint8_t line)
 	}else{
 		lcd_show_string_l1(buf);
 	}
-    t8=xpf->stru.exponent+xpf->stru.sign;
-    
+    //t8=xpf->stru.exponent+xpf->stru.sign;
+    t8=xpf->stru.exponent+exs;
     if(t8<3)lcd_show_dp(t8+4*line,true);
 	//lcd_disp_refresh();    
 }
@@ -597,10 +606,12 @@ void ui_disp_menu_home_02(void)
 	lcd_disp_level(t8);
 
 	lcd_disp_refresh(); 
+
 }
 */
 void ui_disp_menu_home_test(void)
 {
+    /*
 	uint8_t t8;
 	lcd_clear_all();
 	t8=subMenu & 0x0f;
@@ -620,6 +631,9 @@ void ui_disp_menu_home_test(void)
 		default:break;
 	}
     lcd_disp_refresh(); 
+    */
+    lcd_show_string((uint8_t*)"cs66-06-");
+    lcd_disp_refresh();    
 }
 void ui_disp_home_sm_tmp_in(int32_t x)
 {
@@ -673,11 +687,12 @@ void ui_disp_ext_loop(void)
     int32_t x;
 	uint32_t t32=globleHalfSec;
 	t32>>=3;
-	t32%=4;
+	t32%=5;
 	if(hardStatus.bits.bAdcChip1==0){
-		lcd_show_string_ex((uint8_t*)"Adc");
-		lcd_show_string_sm((uint8_t*)" nc");
-		return;
+		// lcd_show_string_ex((uint8_t*)"Adc");
+		// lcd_show_string_sm((uint8_t*)" nc");
+		// return;
+		t32=4;
 	}
 	do{
 		if(t32==0){
@@ -759,9 +774,9 @@ void ui_disp_menu_home(void)
 	int32_t t32;
     st_float32 mf;
 	lcd_clear_all();
-	lcd_disp_logo(true);
 	t8=subMenu & 0xf0;
 	t8>>=4;
+	
 	if(hardStatus.bits.bDprSensor==0 && t8<3){
 		lcd_show_string_l0((uint8_t*)" err");
 	}else{
@@ -788,6 +803,7 @@ void ui_disp_menu_home(void)
 	}
 	t8=subMenu & 0x0f;
 	if((hardStatus.bits.bPrSensor==0 || hardStatus.bits.bInTempSensor==0) && t8<3){
+    //if((hardStatus.bits.bPrSensor==0 ) && t8<3){
 		lcd_show_string_l1((uint8_t*)" err");
 	}else{	
 		if(t8==0){
@@ -809,27 +825,28 @@ void ui_disp_menu_home(void)
 		ui_disp_xfloat_pt(&mf,LCD_LINE_1);
 	}
     t8=rtLevel;
-    //t8=60;
+
 	if(hardStatus.bits.bDprSensor==1){
 		lcd_disp_level(t8);
 	}
 	lcd_disp_battary(batLevel);
-	//lcd_disp_light(solorLevel);
-	//ui_disp_home_sm_tmp_ex(rtTemperatureIn);
-	/*
-	if(stSysData.exPrTempShowEn){
-		//循环显示
-		ui_disp_ext_loop();
-	}else{
-		t8=(uint16_t)stSysData.matterIndex;
-		lcd_show_string_ex((uint8_t*)(stSysData.matterTab[t8].name));
-		//ui_disp_home_sm_tmp_ex(rtTemperatureIn);
-		ui_disp_home_sm_tmp_in(rtTemperatureIn);
-	}
-	*/
+	lcd_disp_light(solorLevel);
+
 	ui_disp_ext_loop();
 	lcd_disp_refresh(); 	
 }
+
+/*
+void ui_disp_menu_home(void)
+{
+    //lcd_clear_all();
+    lcd_disp_all(0);
+    //pLCD[0]=0xffff;pLCD[1]=0xffff;pLCD[2]=0xffff;pLCD[3]=0xffff;
+    uint8_t str[]="cs66-06-";
+    lcd_show_string(str);
+	lcd_disp_refresh(); 		
+}
+*/
 void ui_disp_menu_density_sel_matter(void)
 {
     uint16_t t16;
@@ -1498,6 +1515,7 @@ void ui_disp_menu_calib_x_2nd(void)
 }
 void ui_disp_menu(void)
 {
+
 	switch(menu){
 		#if LCD_TEST_EX_EN==1
 		case MENU_HOME:					ui_disp_menu_home_test();		break;

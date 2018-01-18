@@ -444,7 +444,7 @@ void __enter_menu_calib_dpr_2nd(uint8_t __subMenu)
 */
 void __enter_menu_calib_pr_2nd(uint8_t __subMenu)
 {
-	int32_t t32;
+	int32_t t32=0;
 	menu=MENU_CALIB_PR_2ND;
 	if(__subMenu>sub_MENU_CALIB_DPR_2ND_P1)__subMenu=sub_MENU_CALIB_DPR_2ND_P1;
 	subMenu=__subMenu;
@@ -458,7 +458,7 @@ void __enter_menu_calib_pr_2nd(uint8_t __subMenu)
 
 void __enter_menu_calib_epr0_2nd(uint8_t __subMenu)
 {
-	int32_t t32;
+	int32_t t32=0;
 	menu=MENU_CALIB_EPR0_2ND;
 	if(__subMenu>sub_MENU_CALIB_EPR0_2ND_P1)__subMenu=sub_MENU_CALIB_EPR0_2ND_P1;
 	subMenu=__subMenu;
@@ -472,7 +472,7 @@ void __enter_menu_calib_epr0_2nd(uint8_t __subMenu)
 
 void __enter_menu_calib_epr1_2nd(uint8_t __subMenu)
 {
-	int32_t t32;
+	//int32_t t32;
 	menu=MENU_CALIB_EPR1_2ND;
 	if(__subMenu>sub_MENU_CALIB_EPR1_2ND_P1)__subMenu=sub_MENU_CALIB_EPR1_2ND_P1;
 	subMenu=__subMenu;
@@ -1818,7 +1818,7 @@ void __set_short_calib_dpr_2nd(bool gohome)
 */
 void __set_short_calib_pr_2nd(bool gohome)
 {
-	int32_t t32;
+	//int32_t t32;
 	if(paramChangedFlag){
 		//t32=__mflot32_2_int32(m_floatAdj.t32);	
 		//stSysData._2ndPrCalib[subMenu].realValue=t32;
@@ -1836,7 +1836,7 @@ void __set_short_calib_pr_2nd(bool gohome)
 
 void __set_short_calib_epr0_2nd(bool gohome)
 {
-	int32_t t32;
+	//int32_t t32;
 	if(paramChangedFlag){
 		//t32=__mflot32_2_int32(m_floatAdj.t32);	
 		//stSysData._2ndPrEx0[subMenu].realValue=t32;
@@ -1854,7 +1854,7 @@ void __set_short_calib_epr0_2nd(bool gohome)
 
 void __set_short_calib_epr1_2nd(bool gohome)
 {
-	int32_t t32;
+	//int32_t t32;
 	if(paramChangedFlag){
 		//t32=__mflot32_2_int32(m_floatAdj.t32);	
 		//stSysData._2ndPrEx1[subMenu].realValue=t32;

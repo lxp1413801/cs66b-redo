@@ -18,7 +18,7 @@ extern "C"{
     #define lcd_on() LCDCONbits.LCDEN=1;
     #define lcd_off() LCDCONbits.LCDEN=0;
 	
-	extern void lcd_set_com_seg(uint8_t com,uint8_t s,uint16_t show);
+	//extern void lcd_set_com_seg(uint8_t com,uint8_t s,uint16_t show);
 	extern void lcd_disp_all(uint16_t x);
 	extern void lcd_init(void);
 	

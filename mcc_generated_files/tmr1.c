@@ -171,6 +171,7 @@ void TMR1_Stop( void )
 
     /*Disable the interrupt*/
     IEC0bits.T1IE = false;
+    IFS0bits.T1IF = false;
 }
 
 bool TMR1_GetElapsedThenClear(void)

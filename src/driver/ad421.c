@@ -35,31 +35,31 @@ void ad421_chip1_pins_init(void)
 
 void ad421_chip0_pins_deinit(void)
 {
-	// set_port_mode_dig(AD421_DATA_1_PORT,AD421_DATA_1_PIN);
-	// set_port_mode_out(AD421_DATA_1_PORT,AD421_DATA_1_PIN);
+	 set_port_mode_dig(AD421_DATA_1_PORT,AD421_DATA_1_PIN);
+	 set_port_mode_out(AD421_DATA_1_PORT,AD421_DATA_1_PIN);
 	set_port_value_hight(AD421_DATA_1_PORT,AD421_DATA_1_PIN);
 	
-	// set_port_mode_dig(AD421_CLOCK_1_PORT,AD421_CLOCK_1_PIN);
-	// set_port_mode_out(AD421_CLOCK_1_PORT,AD421_CLOCK_1_PIN);
+	 set_port_mode_dig(AD421_CLOCK_1_PORT,AD421_CLOCK_1_PIN);
+	 set_port_mode_out(AD421_CLOCK_1_PORT,AD421_CLOCK_1_PIN);
 	set_port_value_hight(AD421_CLOCK_1_PORT,AD421_CLOCK_1_PIN);	
 	
-	// set_port_mode_dig(AD421_LATCH_1_PORT,AD421_LATCH_1_PIN);
-	// set_port_mode_out(AD421_LATCH_1_PORT,AD421_LATCH_1_PIN);
+	 set_port_mode_dig(AD421_LATCH_1_PORT,AD421_LATCH_1_PIN);
+	 set_port_mode_out(AD421_LATCH_1_PORT,AD421_LATCH_1_PIN);
 	set_port_value_hight(AD421_LATCH_1_PORT,AD421_LATCH_1_PIN);	
 }
 
 void ad421_chip1_pins_deinit(void)
 {
-	// set_port_mode_dig(AD421_DATA_2_PORT,AD421_DATA_2_PIN);
-	// set_port_mode_out(AD421_DATA_2_PORT,AD421_DATA_2_PIN);
+	 set_port_mode_dig(AD421_DATA_2_PORT,AD421_DATA_2_PIN);
+	 set_port_mode_out(AD421_DATA_2_PORT,AD421_DATA_2_PIN);
 	set_port_value_hight(AD421_DATA_2_PORT,AD421_DATA_2_PIN);
 	
-	// set_port_mode_dig(AD421_CLOCK_2_PORT,AD421_CLOCK_2_PIN);
-	// set_port_mode_out(AD421_CLOCK_2_PORT,AD421_CLOCK_2_PIN);
+	 set_port_mode_dig(AD421_CLOCK_2_PORT,AD421_CLOCK_2_PIN);
+	 set_port_mode_out(AD421_CLOCK_2_PORT,AD421_CLOCK_2_PIN);
 	set_port_value_hight(AD421_CLOCK_2_PORT,AD421_CLOCK_2_PIN);	
 	
-	// set_port_mode_dig(AD421_LATCH_2_PORT,AD421_LATCH_2_PIN);
-	// set_port_mode_out(AD421_LATCH_2_PORT,AD421_LATCH_2_PIN);
+	 set_port_mode_dig(AD421_LATCH_2_PORT,AD421_LATCH_2_PIN);
+	 set_port_mode_out(AD421_LATCH_2_PORT,AD421_LATCH_2_PIN);
 	set_port_value_hight(AD421_LATCH_2_PORT,AD421_LATCH_2_PIN);	
 }
 

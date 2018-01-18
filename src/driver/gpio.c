@@ -4,6 +4,7 @@
 #include "gpio.h"
 #include "lcd.h"
 #include "i2c.h"
+#include "../soc/delay.h"
 
 volatile bool lcdBlackNightOn=false;
 volatile bool kzAvddOn=false;
@@ -207,6 +208,16 @@ void pre_system_sleep(void)
 	back_night_off();
 	kz_vadd_off();
     iic_pins_deinit();
+    ad421_chip1_pins_deinit();
+    ad421_chip0_pins_deinit();
+    IFS0=0x00;
+    IFS1=0x00;
+    IFS2=0x00;
+    IFS3=0x00;
+    IFS4=0x00;
+    IFS5=0x00;    
+    IFS6=0x00;
+    IFS7=0x00;        
     //lcd_off();
     asm("NOP");
     asm("NOP");   

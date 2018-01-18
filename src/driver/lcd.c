@@ -43,6 +43,11 @@ const uint16_t LCDDigitalTableEx[]=
     LCD_CODE_W_EX,LCD_CODE_X_EX,LCD_CODE_Y_EX,LCD_CODE_Z_EX,	
     0,
 };
+#define lcd_set_com_seg(c,s,show) do{ \
+	if(show){pLCD[(c<<2)+(s>>4)] |= (1<<(s&0x0f));} \
+    else{pLCD[(c<<2)+(s>>4)] &= ~(1<<(s&0x0f));} \
+}while(0); 
+/*
 void lcd_set_com_seg(uint8_t com,uint8_t seg,uint16_t show)
 {
 	uint16_t offset;
@@ -57,6 +62,7 @@ void lcd_set_com_seg(uint8_t com,uint8_t seg,uint16_t show)
 		pLCD[offset] &= ~(1<<bits);
 	}
 }
+*/
 void lcd_disp_level_bar(uint8_t bar,uint8_t show)
 {
 	//0-49 swap 
@@ -225,14 +231,16 @@ void lcd_disp_light(uint8_t light)
 {
 	//if(light>=100)light=100;
 	//light/=50;
-	if(light>1)light=1;
+	if(light>2)light=2;
 	//if(light<1)light=1;
-	if(1==light){
+	if(2==light){
 		lcd_disp_light_bar(0,1);
 		lcd_disp_light_bar(1,1);
-	}else{
+	}else if(1==light){
 		lcd_disp_light_bar(0,1);
-	}
+	}else{
+        
+    }
 }
 void lcd_disp_light_off(void)
 {
@@ -255,10 +263,11 @@ void lcd_disp_chr_loc_0(uint8_t code)
 }
 void lcd_disp_dp_loc_0(bool dp)
 {
-	if(dp)
+	if(dp){
 		lcd_set_com_seg(0,40,LCD_DSEG_DP);
-	else 
+    }else {
 		lcd_set_com_seg(0,40,0);
+    }
 }
 
 void lcd_disp_chr_loc_1(uint8_t code)
@@ -274,10 +283,11 @@ void lcd_disp_chr_loc_1(uint8_t code)
 }
 void lcd_disp_dp_loc_1(bool dp)
 {
-	if(dp)
+	if(dp){
 		lcd_set_com_seg(0,11,LCD_DSEG_DP);
-	else 
+    }else {
 		lcd_set_com_seg(0,11,0);
+    }
 }
 
 void lcd_disp_chr_loc_2(uint8_t code)
@@ -293,10 +303,11 @@ void lcd_disp_chr_loc_2(uint8_t code)
 }
 void lcd_disp_dp_loc_2(bool dp)
 {
-	if(dp)
+	if(dp){
 		lcd_set_com_seg(0,39,LCD_DSEG_DP);
-	else 
+    }else {
 		lcd_set_com_seg(0,39,0);
+    }
 }
 
 void lcd_disp_chr_loc_3(uint8_t code)
@@ -324,10 +335,11 @@ void lcd_disp_chr_loc_4(uint8_t code)
 }
 void lcd_disp_dp_loc_4(bool dp)
 {
-	if(dp)
+	if(dp){
 		lcd_set_com_seg(4,40,LCD_DSEG_DP);
-	else 
+    }else {
 		lcd_set_com_seg(4,40,0);
+    }
 }
 
 void lcd_disp_chr_loc_5(uint8_t code)
@@ -343,10 +355,11 @@ void lcd_disp_chr_loc_5(uint8_t code)
 }
 void lcd_disp_dp_loc_5(bool dp)
 {
-	if(dp)
+	if(dp){
 		lcd_set_com_seg(4,11,LCD_DSEG_DP);
-	else 
+    }else {
 		lcd_set_com_seg(4,11,0);
+    }
 }
 
 void lcd_disp_chr_loc_6(uint8_t code)
@@ -362,10 +375,11 @@ void lcd_disp_chr_loc_6(uint8_t code)
 }
 void lcd_disp_dp_loc_6(bool dp)
 {
-	if(dp)
+	if(dp){
 		lcd_set_com_seg(4,39,LCD_DSEG_DP);
-	else 
+    }else {
 		lcd_set_com_seg(4,39,0);
+    }
 }
 
 void lcd_disp_chr_loc_7(uint8_t code)
@@ -403,10 +417,11 @@ void lcd_disp_unit_t(bool show)
 {
 	lcd_set_com_seg(1,34,0);
 	lcd_set_com_seg(1,35,0);
-	if(show)
+	if(show){
 		lcd_set_com_seg(1,49,1);
-	else
+    }else{
 		lcd_set_com_seg(1,49,0);
+    }
 }
 
 void lcd_disp_unit_1st_m(bool show)
@@ -452,10 +467,11 @@ void lcd_disp_unit_2nd_m(bool show)
 	lcd_set_com_seg(2,49,0);
 	lcd_set_com_seg(3,35,0);
 	lcd_set_com_seg(4,35,0);
-	if(show)
+	if(show){
 		lcd_set_com_seg(2,34,1);
-	else
+    }else{
 		lcd_set_com_seg(2,34,0);
+    }
 }
 
 void lcd_disp_unit_2nd_m3(bool show)
@@ -571,31 +587,35 @@ void lcd_disp_chr_loc_2_sm(uint8_t code)
 }
 void lcd_disp_dp_loc_0_sm(bool dp)
 {
-	if(dp)
+	if(dp){
 		lcd_set_com_seg(4,18,LCD_DSEG_DP);
-	else 
+    }else {
 		lcd_set_com_seg(4,18,0);
+    }
 }
 void lcd_disp_dp_loc_1_sm(bool dp)
 {
-	if(dp)
+	if(dp){
 		lcd_set_com_seg(4,4,LCD_DSEG_DP);
-	else 
+    }else {
 		lcd_set_com_seg(4,4,0);
+    }
 }
 void lcd_disp_dp_loc_sign_sm(bool sig)
 {
-	if(sig)
+	if(sig){
 		lcd_set_com_seg(2,35,1);
-	else 
+    }else {
 		lcd_set_com_seg(2,35,0);
+    }
 }
 void lcd_disp_dp_loc_sm_temperature(bool show)
 {
-	if(show)
+	if(show){
 		lcd_set_com_seg(4,8,1);
-	else 
+    }else {
 		lcd_set_com_seg(4,8,0);
+    }
 }
 void lcd_show_dp_sm(uint8_t loc,bool show)
 {
@@ -615,7 +635,7 @@ void lcd_clear_all_dp_sm(void)
 uint8_t lcd_disp_get_code(uint8_t chr)
 {
 	uint8_t i;
-	uint8_t ret;
+	uint8_t ret=0;
 	for(i=0;i<sizeof(LCDDigitalIndexTable);i++){
 		if(chr==LCDDigitalIndexTable[i])break;
 	}
@@ -664,7 +684,10 @@ void lcd_show_dp(uint8_t loc,bool show)
 
 void lcd_show_chr(uint8_t loc,uint8_t chr)
 {
-    uint8_t code=lcd_disp_get_code(chr);
+    uint8_t code;
+    
+    code=lcd_disp_get_code(chr);
+    //return;
 	switch(loc){
 		case 0:lcd_disp_chr_loc_0(code);break;
 		case 1:lcd_disp_chr_loc_1(code);break;
@@ -749,6 +772,7 @@ void lcd_show_string_l1(uint8_t* str)
 void lcd_show_string(uint8_t* str)
 {
 	uint8_t t8=0;
+
 	while(*str!='\0' && t8<8){
 		lcd_show_chr(t8,*str);
 		str++;
@@ -831,7 +855,7 @@ void lcd_config(void)
     LCDREGbits.MODE13=1;
     
     LCDPSbits.BIASMD=0;
-    LCDPSbits.LP=2;
+    LCDPSbits.LP=3;
 	//LCDPSbits.WFT=1;
     
     LCDREFbits.LCDIRE=1;

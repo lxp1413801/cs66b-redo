@@ -461,7 +461,7 @@ void samlpe_chip0_ch_pr_signal(void)
 	ads1148_set_vbias_ex(&ads1148Chip0,0);
 	ads1148_set_mux1_ex(&ads1148Chip0,ADS1148_VREFCON_INREF_ON,ADS1148_REFSELT_INREF,ADS1148_MUXCAL_NORMAL);
 	
-	ads1148_set_sys0_ex(&ads1148Chip0,ADS1148_PGA_64,ADS1148_SYS0_DR_640SPS);
+	ads1148_set_sys0_ex(&ads1148Chip0,ADS1148_PGA_32,ADS1148_SYS0_DR_640SPS);
 	
 	ads1148_set_idac0_ex(&ads1148Chip0,ADS1148_DRDY_VIA_DRDY,ADS1148_IMAG_500uA);
 	ads1148_set_idac1_ex(&ads1148Chip0,IDAC_OUT_NC,IDAC_OUT_IEXC2);	
@@ -520,16 +520,19 @@ void samlpe_chip0_ch_temperature_in(void)
 
 }
 */
+
+
+
 void samlpe_chip0_ch_temperature_in(void)
 {
-	if(hardStatus.bits.bInTempSensor==0)return;	
+	if(hardStatus.bits.bInTempSensor==0)return ;
 	ads1148_set_mux0_ex(&ads1148Chip0,ADS1148_BCS_OFF,AIN6P,AIN0N);
 	ads1148_set_vbias_ex(&ads1148Chip0,0);
 	ads1148_set_mux1_ex(&ads1148Chip0,ADS1148_VREFCON_INREF_ON,ADS1148_REFSELT_INREF,ADS1148_MUXCAL_NORMAL);
 	
-	ads1148_set_sys0_ex(&ads1148Chip0,ADS1148_PGA_2,ADS1148_SYS0_DR_640SPS);
+	ads1148_set_sys0_ex(&ads1148Chip0,ADS1148_PGA_4,ADS1148_SYS0_DR_1000SPS);
 	
-	ads1148_set_idac0_ex(&ads1148Chip0,ADS1148_DRDY_VIA_DRDY,ADS1148_IMAG_1000uA);
+	ads1148_set_idac0_ex(&ads1148Chip0,ADS1148_DRDY_VIA_DRDY,ADS1148_IMAG_500uA);
 	//ads1148_set_idac1_ex(&ads1148Chip0,IDAC_OUT_NC,IDAC_OUT_IEXC2);
 	//下面这个代码比较诡异 ，把第一路的idac连接到IEXC2上
 	//ads1148_set_idac1_ex(&ads1148Chip0,IDAC_OUT_IEXC2,IDAC_OUT_NC);
@@ -541,7 +544,13 @@ void samlpe_chip0_ch_temperature_in(void)
 	__nop();
 	__nop();
     __nop();
-
+	
+	ads1148_set_idac1_ex(&ads1148Chip0,ADS1148_IDAC_OUT_PINS_AIN0,ADS1148_IDAC_OUT_PINS_AIN6);
+	ads1148_set_config_ex(&ads1148Chip0);	
+	rtAdcValueTemperatureIn+=samlpe_read_adc(&ads1148Chip0,samlpeBuf,16);	
+	__nop();
+	__nop();
+    __nop();	
 }
 
 void samlpe_chip0_ch_diff_pr_ref0(void)
@@ -595,16 +604,19 @@ void sample_calc_press(void)
 
 void sample_calc_temperature_in(void)
 {
+	
+	
 	float x,y;
 	//x=(float)rtAdcValueChip0Ref0;
 	//x=800.0;
 	if(hardStatus.bits.bInTempSensor==0)return;	
 	y=(float)rtAdcValueTemperatureIn;
-    y=y/32;
+    y/=64;//y=y/16/4;
+    y+=100;
 	//y=y*100;
 	//转换为温度
 	if(firstSampleFlg){
-		if(y<10.000 || y>300)hardStatus.bits.bInTempSensor=0;
+		if(y>300)hardStatus.bits.bInTempSensor=0;
 	}	
     x=calc_res_2_temp(y);
     x=x*100;
@@ -974,7 +986,7 @@ void sample_in_soc_solar(void)
 	ain_ref_config();
 	//ain_bat_config();
     ain_solor_config();
-    check_solor_set_hight();
+    //check_solor_set_hight();
     
 	ADC1_Initialize();
 	ADC1_ChannelSelect(ADC1_CHANNEL_SOLAR);
@@ -993,10 +1005,13 @@ void sample_in_soc_solar(void)
     check_solor_set_low();
     t16=(uint16_t)(t32/i);
     t32=IN_SOC_VREF_VALUE;
-    t32=t32*t16*12/4095;    
-    
-	rtValueSolor=(uint16_t)(t32/i);
-    if(rtValueSolor>9000){
+    t32=t32*t16*11/4095;    
+    __nop();
+    __nop();
+	rtValueSolor=(uint16_t)(t32);
+    if(rtValueSolor>8500){
+        solorLevel=2;
+    }else if(rtValueSolor>7000) {
         solorLevel=1;
     }else{
         solorLevel=0;
@@ -1072,8 +1087,8 @@ uint8_t sample_process(void)
         case 0x08:sample_calc_temperature_in();         break; 
 		
 		case 0x09:samlpe_in_soc_battery();				break;
-		//case 0x0a:sample_in_soc_solar();				break;
-		case 0x0a:break;
+		case 0x0a:sample_in_soc_solar();				break;
+		//case 0x0a:break;
 		case 0x0b:samlpe_in_soc_ref();					break;		
 		
 #if ADS1148_CHIP_OTRHER_ONE_ENABLE 

@@ -27,4 +27,6 @@ src/driver/../api/../driver/ad421.h  \
  src/driver/gpio_config.h  \
 src/driver/gpio.h  \
 src/driver/lcd.h  \
- src/driver/i2c.h 
+ src/driver/i2c.h  \
+src/driver/../soc/delay.h  \
+ src/driver/../soc/../../mcc_generated_files/mcc.h 
