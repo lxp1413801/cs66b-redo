@@ -2,21 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/soc/delay.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/driver/ads1148_hal.h</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/mcc_generated_files/tmr2.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/driver/gpio_config.h</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/driver/ads1148.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/app/main.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/driver/ads1148_hal.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/driver/ads1148.h</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/app/sample.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/soc/ticker.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/api/key_menu.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/api/ui.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/app/sample.h</file>
-        </group>
         <group name="cs600_test">
             <file>file:/F:/2017/cs66-b/cs66b.X/src/app/main.c</file>
             <file>file:/F:/2017/cs66-b/cs66b.X/src/driver/ad421.c</file>
@@ -27,6 +12,17 @@
             <file>file:/F:/2017/cs66-b/cs66b.X/src/driver/gpio.c</file>
             <file>file:/F:/2017/cs66-b/cs66b.X/src/driver/lcd.c</file>
             <file>file:/F:/2017/cs66-b/cs66b.X/src/api/ui.c</file>
+        </group>
+        <group>
+            <file>file:/D:/lxp/cs66b-redo/src/api/sysdata.c</file>
+            <file>file:/D:/lxp/cs66b-redo/src/api/sysdata.h</file>
+            <file>file:/D:/lxp/cs66b-redo/src/driver/i2c.h</file>
+            <file>file:/D:/lxp/cs66b-redo/src/driver/ex_eeprom.c</file>
+            <file>file:/D:/lxp/cs66b-redo/src/app/main.c</file>
+            <file>file:/D:/lxp/cs66b-redo/src/api/ui.c</file>
+            <file>file:/D:/lxp/cs66b-redo/src/api/ui.h</file>
+            <file>file:/D:/lxp/cs66b-redo/src/app/sample.c</file>
+            <file>file:/D:/lxp/cs66b-redo/src/app/sample.h</file>
         </group>
     </open-files>
 </project-private>

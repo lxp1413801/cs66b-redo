@@ -37,6 +37,7 @@ void back_night_on(void)
 	//
 	lcdBlackNightOn=true;
 }
+
 void back_night_off(void)
 {
 	set_portb_mode_dig(PIN11);
@@ -154,6 +155,7 @@ void bj_all_off(void)
 	set_port_value_low(BJ_V_PORT,BJ_V_PIN);
 	set_port_value_low(BJ_PORT,ALL_BJ_PINS);
 }
+
 void bi_output(void)
 {
 #if BJ_BAORD_EN
@@ -180,6 +182,7 @@ void bi_output(void)
         bj_4_off();  
 #endif
 }
+
 void run_status_init(void)
 {
 	set_port_mode_dig(RUN_STATUS_PORT,RUN_STATUS_PINS);
