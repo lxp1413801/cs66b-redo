@@ -701,7 +701,7 @@ int32_t cal_diff_p_to_h(int32_t p)
 	f1=(float)(p);
     density=data_sys_get_density();
 	f2=(float)(density);
-    f1=f1/(f2*9.8f);
+    f1=f1/(f2*9.80665f);
     f1*=1000;
     t32=(int32_t)f1;	
     //if(t32<0l)t32=0l;

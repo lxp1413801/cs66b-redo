@@ -1009,9 +1009,9 @@ void sample_in_soc_solar(void)
     __nop();
     __nop();
 	rtValueSolor=(uint16_t)(t32);
-    if(rtValueSolor>8500){
+    if(rtValueSolor>8010){
         solorLevel=2;
-    }else if(rtValueSolor>7000) {
+    }else if(rtValueSolor>6600) {
         solorLevel=1;
     }else{
         solorLevel=0;

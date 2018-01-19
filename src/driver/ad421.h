@@ -35,6 +35,8 @@ extern "C"{
 	extern  ad421Obj_t ad421ObjChip0;
 	extern  ad421Obj_t ad421ObjChip1;
 	
+    extern void ad421_chip0_pins_deinit(void);
+    extern void ad421_chip1_pins_deinit(void);
 	extern void ad421_all_obj_init(void);
 	extern void ad421_test(void);
     

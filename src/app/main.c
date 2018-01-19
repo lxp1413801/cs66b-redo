@@ -18,38 +18,40 @@ void m_system_init(void)
 
 void thread_main_pre(void)
 {
+	#if BJ_BAORD_EN
+	all_bj_init();
+	bj_all_on();
+	#endif
     
     kz_vadd_on();
     key_init();
-	//ticker_ms_delay(1000);
     lcd_init();
-    //ui_disp_all_on();
-	//lcd_disp_refresh();
     __nop();
     __nop();
     ticker_ms_delay(1000);
-    //ui_disp_all_on();
-    //lcd_clear_all();
-    //lcd_show_string((uint8_t*)"cs66-06-");
-    //lcd_disp_refresh();
-    //ticker_ms_delay(1000);
-	//ui_disp_start_cs600(6);
-	data_init_all();    
-    //
-     //ui_disp_all_off();
-    // main_delay_ms(1000);
 
+	data_init_all();    
 	ui_disp_start_cs600(6);
 
-	//
-	
-	//gpio_status_pins_mod_in();
 	__nop();
 	__nop();
     all_status_pins_mod_in();
 	run_status_init();
 	__nop();
-	__nop();	
+	__nop();
+	
+	all_bj_disable();
+    ads1148_init_all_obj();
+	ads1148_init_device(); 
+	
+    blShowTime=stSysData.lcdShowTm;
+	blShowTime*=2;
+	#if I_LOOP_BOARD 
+    ad421_all_obj_init();
+    ad421ObjChip0.pins_deinit();
+    ad421ObjChip1.pins_deinit();
+    //ad421_test();
+	#endif	
 }
 
 /*
@@ -237,50 +239,9 @@ void event_call_disp(void)
 
 int main(void)
 {
-
+	pre_system_sleep_deinit_all_pins();
     SYSTEM_Initialize(); 
-
-    //m_system_init();
-    //pre_system_sleep_deinit_all_pins();
-	#if BJ_BAORD_EN
-	all_bj_init();
-	bj_all_on();
-	#endif
-    thread_main_pre();
-	
-	all_bj_disable();
-	
-    ads1148_init_all_obj();
-	ads1148_init_device(); 
-    blShowTime=stSysData.lcdShowTm;
-	blShowTime*=2;
-	#if I_LOOP_BOARD 
-    ad421_all_obj_init();
-    ad421ObjChip0.pins_deinit();
-    ad421ObjChip1.pins_deinit();
-    //ad421_test();
-	#endif
-     //ui_disp_all_off();
-    // main_delay_ms(1000);
-    /*
-    while(1){
-		__nop();
-		__nop();
-		//pre_system_sleep_deinit_all_pins();
-		
-		pre_system_sleep();
-		ads1148_pre_sleep();
-		
-		TMR1_Stop();
-		TMR2_Stop();	
-		lcd_off();
-		Sleep();
-		__nop();
-		__nop();            
-    }
-     * */
-	//ui_disp_start_cs600(7);
-
+    thread_main_pre();	
     while (1){
 		if(event & flg_KEY_DOWN){
 			//event &= ~flg_KEY_DOWN;
@@ -289,7 +250,6 @@ int main(void)
 			key_process();
 		}
 		if(event &  flg_RTC_SECOND){
-            //rtcc_interupt_disable();
 			event &=  ~flg_RTC_SECOND;
 
 			if(lcdTwinkle>0)lcdTwinkle--;
@@ -305,10 +265,7 @@ int main(void)
             if(stSysData.sleepPeriod)sleepHalfSec++;
             
 			//run_status_on();
-            //TMR1_Stop();
             ui_disp_menu();
-   // ui_disp_all_off();
-	//lcd_disp_refresh();
 			//event_call_disp();
 			run_status_off();
 			if(menu!=MENU_SET_ILOOP_ADJUST){
@@ -316,7 +273,6 @@ int main(void)
 			}else{
 				event_iloop_out_put_adj();
 			}
-            //rtcc_interupt_enable();
 		}
         
 		event_sample_real_time_mode();
