@@ -31,7 +31,7 @@ void thread_main_pre(void)
     ticker_ms_delay(1000);
 
 	data_init_all();    
-	ui_disp_start_cs600(6);
+	//ui_disp_start_cs600(6);
 
 	__nop();
 	__nop();
@@ -223,16 +223,20 @@ void event_enter_sleep(void)
 uint8_t dispIndex=0x00;
 void event_call_disp(void)
 {	
-
-    if(stSysData.sleepPeriod==0 || menu!=0 || noEventTimeOut>0){
+    uint16_t t16=stSysData.sleepPeriod;
+    t16<<=1;
+    if(t16==0 || menu!=0 || noEventTimeOut>0){
         ui_disp_menu();
     }
     else{
         dispIndex++;
-        if(dispIndex>=4){
+        if(dispIndex>=t16){
             dispIndex=0;
-            ui_disp_menu();
+            run_status_on();
+            //ui_disp_menu();
+            run_status_off();
         }
+        lcd_disp_refresh();
     }
 
 }
@@ -253,9 +257,9 @@ int main(void)
 			event &=  ~flg_RTC_SECOND;
 
 			if(lcdTwinkle>0)lcdTwinkle--;
-			if(blShowTime>0)blShowTime--;
-			if(blShowTime==0){
-				back_night_off();
+			if(blShowTime>0){
+                blShowTime--;
+                if(blShowTime==0)back_night_off();
 			}
             if(noEventTimeOut){
                 noEventTimeOut--;
@@ -263,10 +267,8 @@ int main(void)
             }
             //if(noEventTimeOut<blShowTime)noEventTimeOut=blShowTime;
             if(stSysData.sleepPeriod)sleepHalfSec++;
-            
-			//run_status_on();
             ui_disp_menu();
-			//event_call_disp();
+            //event_call_disp();
 			run_status_off();
 			if(menu!=MENU_SET_ILOOP_ADJUST){
 				event_iloop_out_put();

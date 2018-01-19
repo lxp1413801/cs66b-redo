@@ -40,9 +40,9 @@ void back_night_on(void)
 void back_night_off(void)
 {
 	set_portb_mode_dig(PIN11);
-	//set_portb_mode_out(PIN11);
-	//set_portb_value_low(PIN11);
-	set_portb_mode_in(PIN11);
+	set_portb_mode_out(PIN11);
+	set_portb_value_low(PIN11);
+	//set_portb_mode_in(PIN11);
 	lcdBlackNightOn=false;
 }
 
@@ -202,6 +202,7 @@ void pre_system_sleep_deinit_all_pins(void)
 
 void pre_system_sleep(void)
 {
+	//pre_system_sleep_deinit_all_pins();
 	all_status_pins_mod_in();
 	all_bj_disable();
 	check_solor_set_low();
@@ -219,6 +220,8 @@ void pre_system_sleep(void)
     IFS6=0x00;
     IFS7=0x00;        
     //lcd_off();
+    U1MODEbits.UARTEN=0;
+    U2MODEbits.UARTEN=0;
     asm("NOP");
     asm("NOP");   
 }

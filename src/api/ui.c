@@ -909,8 +909,8 @@ void ui_disp_menu_h_adj(void)
 	lcd_clear_all();
 	lcd_disp_logo(true);
 	//sysDataDef_t* fps=(sysDataDef_t*)SYSTEM_DATA_ADDR;
-	sysDataDef_t* fps= &stSysData;
-	if(fps->pos==HOTIZONTAL){
+	//sysDataDef_t* fps= &stSysData;
+	if(stSysData.pos==HOTIZONTAL){
         ui_disp_adj_xfloat_pt((uint8_t*)"   l",&m_floatAdj,adjLocation);	
     }else{
         ui_disp_adj_xfloat_pt((uint8_t*)"   h",&m_floatAdj,adjLocation);	
@@ -1202,9 +1202,9 @@ void ui_disp_menu_warn_v_adj(void)
 	lcd_disp_logo(true);
 	t8=subMenu;
 	if(t8>7)return;
-	sysDataDef_t* fps= &stSysData;
+	//sysDataDef_t* fps= &stSysData;
 	t8=subMenu>>1;
-	type=fps->dprWarnSet[t8].type;
+	type=stSysData.dprWarnSet[t8].type;
 	m_mem_cpy(buf,(uint8_t*)" al1");
 	buf[3]='1'+t8;
 	if(subMenu & 0x01){

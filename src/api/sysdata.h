@@ -223,7 +223,7 @@ extern "C"{
 	
 	extern const sysDataDef_t defultSystemData;
 	#define SYSTEM_DATA_ADDR	user_FLASH_ADDR_START
-	extern sysDataDef_t stSysData;
+	extern volatile sysDataDef_t stSysData;
 	extern uint8_t data_sys_init(void); 
     extern uint8_t data_sys_save(uint16_t offset,uint8_t* mbuf,uint16_t len);
 	
