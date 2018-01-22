@@ -268,6 +268,8 @@ int main(void)
             //if(noEventTimeOut<blShowTime)noEventTimeOut=blShowTime;
             if(stSysData.sleepPeriod)sleepHalfSec++;
             ui_disp_menu();
+            //ui_disp_all_on();
+            //lcd_disp_refresh();
             //event_call_disp();
 			run_status_off();
 			if(menu!=MENU_SET_ILOOP_ADJUST){
@@ -276,7 +278,6 @@ int main(void)
 				event_iloop_out_put_adj();
 			}
 		}
-        
 		event_sample_real_time_mode();
 		event_sample_sleep_wake_mode();		
         event_enter_sleep();

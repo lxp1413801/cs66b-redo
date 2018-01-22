@@ -25,6 +25,8 @@ src/soc/../includes/../soc/ticker.h  \
  src/soc/../includes/../driver/gpio_config.h  \
  src/soc/../includes/../driver/gpio.h  \
 src/soc/../includes/../driver/lcd.h  \
+ src/soc/../includes/../driver/lcd-com-seg-clr.h  \
+ src/soc/../includes/../driver/lcd-com-seg-set.h  \
  src/soc/../includes/../driver/ads1148_hal.h  \
  src/soc/../includes/../driver/ads1148.h  \
  src/soc/../includes/../driver/i2c.h  \

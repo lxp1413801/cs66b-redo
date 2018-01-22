@@ -43,10 +43,12 @@ const uint16_t LCDDigitalTableEx[]=
     LCD_CODE_W_EX,LCD_CODE_X_EX,LCD_CODE_Y_EX,LCD_CODE_Z_EX,	
     0,
 };
+/*
 #define lcd_set_com_seg(c,s,show) do{ \
 	if(show){pLCD[(c<<2)+(s>>4)] |= (1<<(s&0x0f));} \
     else{pLCD[(c<<2)+(s>>4)] &= ~(1<<(s&0x0f));} \
 }while(0); 
+*/
 /*
 void lcd_set_com_seg(uint8_t com,uint8_t seg,uint16_t show)
 {
@@ -521,13 +523,13 @@ void lcd_disp_chr_loc_0_ex(uint16_t code)
 }
 void lcd_disp_chr_loc_1_ex(uint16_t code)
 {
-	lcd_set_com_seg(7,4,code&SEG_A_EX);	
+	lcd_set_com_seg(7,04,code&SEG_A_EX);	
 	lcd_set_com_seg(7,18,code&SEG_B_EX);	
 	lcd_set_com_seg(5,18,code&SEG_C_EX);	
 	lcd_set_com_seg(0,18,code&SEG_D_EX);	
-	lcd_set_com_seg(0,4,code&SEG_E_EX);	
-	lcd_set_com_seg(6,4,code&SEG_F_EX);	
-	lcd_set_com_seg(5,4,code&SEG_G_EX);	
+	lcd_set_com_seg(0,04,code&SEG_E_EX);	
+	lcd_set_com_seg(6,04,code&SEG_F_EX);	
+	lcd_set_com_seg(5,04,code&SEG_G_EX);	
 	lcd_set_com_seg(6,18,code&SEG_H_EX);
 	lcd_set_com_seg(6,55,code&SEG_I_EX);	
 	lcd_set_com_seg(7,55,code&SEG_J_EX);	
@@ -537,17 +539,17 @@ void lcd_disp_chr_loc_1_ex(uint16_t code)
 void lcd_disp_chr_loc_2_ex(uint16_t code)
 {
 	lcd_set_com_seg(7,19,code&SEG_A_EX);	
-	lcd_set_com_seg(7,9,code&SEG_B_EX);	
-	lcd_set_com_seg(5,9,code&SEG_C_EX);	
-	lcd_set_com_seg(0,9,code&SEG_D_EX);	
+	lcd_set_com_seg(7,09,code&SEG_B_EX);	
+	lcd_set_com_seg(5,09,code&SEG_C_EX);	
+	lcd_set_com_seg(0,09,code&SEG_D_EX);	
 	lcd_set_com_seg(0,19,code&SEG_E_EX);	
 	lcd_set_com_seg(6,19,code&SEG_F_EX);	
 	lcd_set_com_seg(5,19,code&SEG_G_EX);	
-	lcd_set_com_seg(6,9,code&SEG_H_EX);
-	lcd_set_com_seg(6,8,code&SEG_I_EX);	
-	lcd_set_com_seg(7,8,code&SEG_J_EX);	
-	lcd_set_com_seg(5,8,code&SEG_K_EX);	
-	lcd_set_com_seg(0,8,code&SEG_L_EX);	
+	lcd_set_com_seg(6,09,code&SEG_H_EX);
+	lcd_set_com_seg(6,08,code&SEG_I_EX);	
+	lcd_set_com_seg(7,08,code&SEG_J_EX);	
+	lcd_set_com_seg(5,08,code&SEG_K_EX);	
+	lcd_set_com_seg(0,08,code&SEG_L_EX);	
 }
 void lcd_disp_chr_loc_0_sm(uint8_t code)
 {
@@ -556,9 +558,9 @@ void lcd_disp_chr_loc_0_sm(uint8_t code)
     lcd_set_com_seg(3,55,code&LCD_DSEG_C);
     lcd_set_com_seg(4,55,code&LCD_DSEG_D);
     
-    lcd_set_com_seg(1,4,code&LCD_DSEG_F);
-    lcd_set_com_seg(2,4,code&LCD_DSEG_G);
-    lcd_set_com_seg(3,4,code&LCD_DSEG_E);
+    lcd_set_com_seg(1,04,code&LCD_DSEG_F);
+    lcd_set_com_seg(2,04,code&LCD_DSEG_G);
+    lcd_set_com_seg(3,04,code&LCD_DSEG_E);
     //lcd_disp_com_seg(3,00,code&LCD_DSEG_DP);
 }
 void lcd_disp_chr_loc_1_sm(uint8_t code)
@@ -575,14 +577,14 @@ void lcd_disp_chr_loc_1_sm(uint8_t code)
 }
 void lcd_disp_chr_loc_2_sm(uint8_t code)
 {
-	lcd_set_com_seg(1,9,code&LCD_DSEG_A);
-	lcd_set_com_seg(2,9,code&LCD_DSEG_B);
-    lcd_set_com_seg(3,9,code&LCD_DSEG_C);
-    lcd_set_com_seg(4,9,code&LCD_DSEG_D);
+	lcd_set_com_seg(1,09,code&LCD_DSEG_A);
+	lcd_set_com_seg(2,09,code&LCD_DSEG_B);
+    lcd_set_com_seg(3,09,code&LCD_DSEG_C);
+    lcd_set_com_seg(4,09,code&LCD_DSEG_D);
     
-    lcd_set_com_seg(1,8,code&LCD_DSEG_F);
-    lcd_set_com_seg(2,8,code&LCD_DSEG_G);
-    lcd_set_com_seg(3,8,code&LCD_DSEG_E);
+    lcd_set_com_seg(1,08,code&LCD_DSEG_F);
+    lcd_set_com_seg(2,08,code&LCD_DSEG_G);
+    lcd_set_com_seg(3,08,code&LCD_DSEG_E);
     //lcd_disp_com_seg(3,00,code&LCD_DSEG_DP);
 }
 void lcd_disp_dp_loc_0_sm(bool dp)
@@ -596,9 +598,9 @@ void lcd_disp_dp_loc_0_sm(bool dp)
 void lcd_disp_dp_loc_1_sm(bool dp)
 {
 	if(dp){
-		lcd_set_com_seg(4,4,LCD_DSEG_DP);
+		lcd_set_com_seg(4,04,LCD_DSEG_DP);
     }else {
-		lcd_set_com_seg(4,4,0);
+		lcd_set_com_seg(4,04,0);
     }
 }
 void lcd_disp_dp_loc_sign_sm(bool sig)
@@ -612,9 +614,9 @@ void lcd_disp_dp_loc_sign_sm(bool sig)
 void lcd_disp_dp_loc_sm_temperature(bool show)
 {
 	if(show){
-		lcd_set_com_seg(4,8,1);
+		lcd_set_com_seg(4,08,1);
     }else {
-		lcd_set_com_seg(4,8,0);
+		lcd_set_com_seg(4,08,0);
     }
 }
 void lcd_show_dp_sm(uint8_t loc,bool show)

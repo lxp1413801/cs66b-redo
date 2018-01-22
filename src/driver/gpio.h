@@ -85,7 +85,16 @@
 	
 	extern void pre_system_sleep(void);
     extern void pre_system_sleep_deinit_all_pins(void);
+	
+	#define FLOAT_RF7_PIN	PIN7
+	#define FLOAT_RF7_PORT	portf
+	
+	#define FLOAT_RD1_PIN	PIN1
+	#define FLOAT_RD1_PORT	portd
 
+	#define FLOAT_RB6_PIN	PIN6
+	#define FLOAT_RB6_PORT	portd	
+	extern void unused_pins_deinit(void);
 	
 #ifdef __cplusplus
 	}

@@ -21,11 +21,10 @@ void kz_vadd_on(void)
 }
 void kz_vadd_off(void)
 {
-	//set_portg_odc_en(PIN9);
 	set_portg_mode_dig(PIN9);
-	set_portg_mode_out(PIN9);
-	set_portg_value_hight(PIN9);
-	//set_portg_odc_en(PIN9);
+	set_portg_mode_in(PIN9);
+	//set_portg_mode_out(PIN9);
+	//set_portg_value_hight(PIN9);
 	kzAvddOn=false;
 }
 void back_night_on(void)
@@ -101,6 +100,9 @@ void all_bj_disable(void)
 	set_port_mode_dig(BJ_PORT,ALL_BJ_PINS);
 	set_port_mode_out(BJ_PORT,ALL_BJ_PINS);
 	set_port_value_low(BJ_PORT,ALL_BJ_PINS);	
+	//set_port_mode_in(BJ_PORT,ALL_BJ_PINS);
+	
+	
 }
 
 void bj_1_on(void)
@@ -199,18 +201,34 @@ void pre_system_sleep_deinit_all_pins(void)
     TRISG = 0xFFFF;        
 }
 
+void unused_pins_deinit(void)
+{
+	//set_port_mode_dig(FLOAT_RF7_PORT,FLOAT_RF7_PIN);
+	set_port_mode_out(FLOAT_RF7_PORT,FLOAT_RF7_PIN);
+	set_port_value_hight(FLOAT_RF7_PORT,FLOAT_RF7_PIN);	
+	
+	set_port_mode_dig(FLOAT_RD1_PORT,FLOAT_RD1_PIN);
+	set_port_mode_out(FLOAT_RD1_PORT,FLOAT_RD1_PIN);
+	set_port_value_hight(FLOAT_RD1_PORT,FLOAT_RD1_PIN);	
+
+	set_port_mode_dig(FLOAT_RB6_PORT,FLOAT_RB6_PIN);
+	set_port_mode_out(FLOAT_RB6_PORT,FLOAT_RB6_PIN);
+	set_port_value_hight(FLOAT_RB6_PORT,FLOAT_RB6_PIN);		
+}
 
 void pre_system_sleep(void)
 {
 	//pre_system_sleep_deinit_all_pins();
 	all_status_pins_mod_in();
 	all_bj_disable();
+	//bj_all_off();
 	check_solor_set_low();
 	back_night_off();
 	kz_vadd_off();
     iic_pins_deinit();
     ad421_chip1_pins_deinit();
     ad421_chip0_pins_deinit();
+	unused_pins_deinit();
     IFS0=0x00;
     IFS1=0x00;
     IFS2=0x00;

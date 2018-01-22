@@ -18,6 +18,8 @@ src/driver/gpio.c  \
  src/driver/../api/../driver/gpio_config.h  \
  src/driver/../api/../driver/gpio.h  \
 src/driver/../api/../driver/lcd.h  \
+ src/driver/../api/../driver/lcd-com-seg-clr.h  \
+ src/driver/../api/../driver/lcd-com-seg-set.h  \
  src/driver/../api/../driver/ads1148_hal.h  \
  src/driver/../api/../driver/ads1148.h  \
 src/driver/../api/../driver/i2c.h  \
