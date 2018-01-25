@@ -1,7 +1,7 @@
 #include "../includes/includes.h"
 #include "float.h"
 
-volatile sysDataDef_t stSysData;
+sysDataDef_t stSysData;
 uint8_t globleBuffer[globle_BUFFER_SIZE]={0};
 
 

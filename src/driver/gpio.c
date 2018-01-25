@@ -22,9 +22,9 @@ void kz_vadd_on(void)
 void kz_vadd_off(void)
 {
 	set_portg_mode_dig(PIN9);
-	set_portg_mode_in(PIN9);
-	//set_portg_mode_out(PIN9);
-	//set_portg_value_hight(PIN9);
+	//set_portg_mode_in(PIN9);
+	set_portg_mode_out(PIN9);
+	set_portg_value_hight(PIN9);
 	kzAvddOn=false;
 }
 void back_night_on(void)

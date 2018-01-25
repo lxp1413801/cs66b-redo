@@ -7,7 +7,7 @@
 	#include "../../mcc_generated_files/mcc.h"
     #include <stdint.h>
 
-	#define NO_EVENT_TIME_MAX 3*2
+	#define NO_EVENT_TIME_MAX 30*2
 	
 	#ifndef ADS1148_CHIP_OTRHER_ONE_ENABLE
 		#define ADS1148_CHIP_OTRHER_ONE_ENABLE 1

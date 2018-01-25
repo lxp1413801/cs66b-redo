@@ -8,12 +8,15 @@ volatile bool sampling=true;
 
 void m_system_init(void)
 {
-	PIN_MANAGER_Initialize();
-	OSCILLATOR_Initialize();
-	INTERRUPT_Initialize();
-	TMR2_Initialize();
-	TMR1_Initialize();
-	RTCC_Initialize();  
+    //PIN_MANAGER_Initialize();
+    OSCILLATOR_Initialize();
+    //INTERRUPT_Initialize();
+    //UART2_Initialize();
+    //UART1_Initialize();
+    //ADC1_Initialize();
+    //TMR2_Initialize();
+    //RTCC_Initialize();
+    //TMR1_Initialize();
 }
 
 void thread_main_pre(void)
@@ -31,7 +34,7 @@ void thread_main_pre(void)
     ticker_ms_delay(1000);
 
 	data_init_all();    
-	//ui_disp_start_cs600(6);
+	ui_disp_start_cs600(6);
 
 	__nop();
 	__nop();
@@ -243,9 +246,13 @@ void event_call_disp(void)
 
 int main(void)
 {
-	pre_system_sleep_deinit_all_pins();
+	
+    //m_system_init();
+    //pre_system_sleep_deinit_all_pins();
+
     SYSTEM_Initialize(); 
     thread_main_pre();	
+
     while (1){
 		if(event & flg_KEY_DOWN){
 			//event &= ~flg_KEY_DOWN;

@@ -536,7 +536,7 @@ void ads1148_waite_convert(ads1148Obj_t* obj)
         //asm("nop");
         //asm("nop");
         tm++;
-        //if(tm>5000)return;
+        if(tm>5000)break;
     }
     tm=0;
     while(obj->pins_drdy_get())
@@ -544,7 +544,7 @@ void ads1148_waite_convert(ads1148Obj_t* obj)
         asm("nop");
         asm("nop");
         tm++;
-        //if(tm>5000)return;
+        if(tm>5000)break;
     };
     asm("nop");
     asm("nop");
