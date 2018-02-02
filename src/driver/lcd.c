@@ -843,7 +843,11 @@ void lcd_disp_all(uint16_t x)
     }
 	//lcd_disp_refresh();
 }
+#ifndef LCD_GLASS_MODULE_VER
+	#define LCD_GLASS_MODULE_VER 101
+#endif
 
+#if LCD_GLASS_MODULE_VER==100
 void lcd_config(void)
 {
     LCDCONbits.CS=3;
@@ -853,23 +857,23 @@ void lcd_config(void)
     LCDCONbits.LMUX=7;
     
     LCDREGbits.CPEN=0;
-    LCDREGbits.BIAS=0;
+    LCDREGbits.BIAS=7;
     LCDREGbits.CKSEL=0;
     LCDREGbits.MODE13=1;
     
     LCDPSbits.BIASMD=0;
-    LCDPSbits.LP=2;
+    LCDPSbits.LP=4;
 	//LCDPSbits.WFT=1;
     
     LCDREFbits.LCDIRE=1;
-    LCDREFbits.LCDCST=4;
+    LCDREFbits.LCDCST=5;
     LCDREFbits.VLCD1PE=0;
     LCDREFbits.VLCD2PE=0;
     LCDREFbits.VLCD3PE=0;
     
     LCDREFbits.LRLAP=1;
     LCDREFbits.LRLBP=3;
-    LCDREFbits.LRLAT=2;
+    LCDREFbits.LRLAT=3;
     
     
 
@@ -889,7 +893,53 @@ void lcd_config(void)
 
 	//lcd_on();
 }
+#else
+void lcd_config(void)
+{
+    LCDCONbits.CS=3;
+    LCDCONbits.LCDSIDL=0;
+    LCDCONbits.SLPEN=0;
+    LCDCONbits.WERR=0;
+    LCDCONbits.LMUX=7;
+    
+    LCDREGbits.CPEN=0;
+    LCDREGbits.BIAS=7;
+    LCDREGbits.CKSEL=0;
+    LCDREGbits.MODE13=1;
+    
+    LCDPSbits.BIASMD=0;
+    LCDPSbits.LP=2;
+	//LCDPSbits.WFT=1;
+    
+    LCDREFbits.LCDIRE=1;
+    LCDREFbits.LCDCST=3;
+    LCDREFbits.VLCD1PE=0;
+    LCDREFbits.VLCD2PE=0;
+    LCDREFbits.VLCD3PE=0;
+    
+    LCDREFbits.LRLAP=1;
+    LCDREFbits.LRLBP=3;
+    LCDREFbits.LRLAT=3;
+    
+    
 
+	// TRISDbits.TRISD0=0;//debug
+	LCDSE0 = 0b0001111100010000;
+	LCDSE1 = 0b0000000000001100;
+	LCDSE2 = 0b1100001111001100;
+	LCDSE3 = 0b1111110010000110; // Disable Seg30, Seg28 and Seg27
+	//LCDSE4 = 0b11111110; // Disable unused segments
+	//LCDSE5 = 0b11001111; // Disable unused segments
+
+	//clear all pixel data
+    lcd_disp_all(0xffff);
+    lcd_disp_refresh();
+	//lcd_clear_all();
+	//config reference voltage
+
+	//lcd_on();
+}
+#endif
 
 void lcd_init(void)
 {

@@ -103,6 +103,7 @@ void OSCILLATOR_Initialize(void)
     __builtin_write_OSCCONL((uint8_t) (0x0200 & 0x00FF));
     // RCDIV FRC/1; DOZE 1:1; DOZEN disabled; ROI disabled; 
     CLKDIV = 0x0000;
+    //CLKDIVbits.RCDIV=1;
     // TUN Center frequency; 
     OSCTUN = 0x0000;
     // ROEN disabled; ROSEL disabled; RODIV Base clock value/16384; ROSSLP disabled; 

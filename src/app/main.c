@@ -69,7 +69,7 @@ void event_proess(void)
 void event_sample_real_time_mode(void)
 {
 	if(stSysData.sleepPeriod>0 && menu==0)return;
-
+	ads1148_post_sleep();
 	//noEventTimeOut=NO_EVENT_TIME_MAX;
 	if(event & flg_TICKER_10MS_PER){
 		event &= ~flg_TICKER_10MS_PER;
@@ -112,6 +112,7 @@ void event_sample_sleep_wake_mode(void)
 {
     uint8_t t8=0;
     uint32_t t32=0;
+	//return;
 	if(stSysData.sleepPeriod==0 || menu!=0)return;
 
 	if(sleepHalfSec<(stSysData.sleepPeriod)*2)return ;
@@ -204,14 +205,17 @@ void event_iloop_out_put(void)
 }
 void event_enter_sleep(void)
 {
-	if(menu!=0)return;
+	if(menu!=0){
+        //Idle();
+        return;
+    }
 	if(noEventTimeOut==0 && stSysData.sleepPeriod>0){
 		__nop();
 		__nop();
 		//pre_system_sleep_deinit_all_pins();
-		
-		pre_system_sleep();
 		ads1148_pre_sleep();
+		pre_system_sleep();
+		
 		
 		TMR1_Stop();
 		TMR2_Stop();	
@@ -221,7 +225,9 @@ void event_enter_sleep(void)
 		__nop();    
 		//delay_ms(10);
 		
-	}   
+	}else{
+        //Idle();
+    }
 }
 uint8_t dispIndex=0x00;
 void event_call_disp(void)

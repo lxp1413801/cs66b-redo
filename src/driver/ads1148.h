@@ -362,6 +362,14 @@
 		}regs;
 	}st_ads1148Reg,ads1148Reg_t;
 	
+	typedef enum{
+		ADS1148_PINS_UNINIT=0,
+		ADS1148_PINS_INITED=1,
+	}ads1148PinsSta_t;
+	
+	extern ads1148PinsSta_t allAds1148PinsSta;
+	
+	
 	typedef struct{
 		
 		void (*pins_init)(void);

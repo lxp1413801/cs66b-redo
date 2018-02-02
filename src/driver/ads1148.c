@@ -11,7 +11,7 @@
 #include "../global/globle.h" 
 
 ads1148Obj_t ads1148Chip0,ads1148Chip1;
-
+ads1148PinsSta_t allAds1148PinsSta=ADS1148_PINS_UNINIT;
 
 uint8_t ads1148_send_cmd(ads1148Obj_t* obj,uint8_t cmd)
 {
@@ -509,12 +509,21 @@ void ads1148_pre_sleep(void)
 {
     ads1148Chip0.pins_deinit();
     ads1148Chip1.pins_deinit();
+	set_port_value_low(ADS1148_CS_1_PORT,ADS1148_CS_1_PIN);
+	set_port_value_low(ADS1148_CS_0_PORT,ADS1148_CS_0_PIN);	
+	
+	allAds1148PinsSta=ADS1148_PINS_UNINIT;
+	
+	
 }
 
 void ads1148_post_sleep(void)
 {
-    ads1148Chip0.pins_init();
-    ads1148Chip1.pins_init();
+	if(allAds1148PinsSta==ADS1148_PINS_UNINIT){
+		ads1148Chip0.pins_init();
+		ads1148Chip1.pins_init();
+		allAds1148PinsSta=ADS1148_PINS_INITED;
+	}
 }
 
 void ads1148_start_convert(ads1148Obj_t* obj)

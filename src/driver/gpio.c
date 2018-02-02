@@ -17,7 +17,7 @@ void kz_vadd_on(void)
 	set_portg_mode_out(PIN9);
 	//set_portg_value_low(PIN9);
 	kzAvddOn=true;
-    delay_ms(10);
+    //delay_ms(10);
 }
 void kz_vadd_off(void)
 {
@@ -65,7 +65,24 @@ void all_status_pins_mod_in(void)
 	set_port_mode_dig(STATUS_485_PORT,STATUS_485_PINS);
 	set_port_mode_in(STATUS_485_PORT,STATUS_485_PINS);
 }
-
+void all_status_pins_mod_out(void)
+{
+	set_port_mode_dig(STATUS_MA_PORT,STATUS_MA_PINS);
+	set_port_mode_out(STATUS_MA_PORT,STATUS_MA_PINS);
+	set_port_value_hight(STATUS_MA_PORT,STATUS_MA_PINS);
+	
+	set_port_mode_dig(STATUS_GSM_PORT,STATUS_GSM_PINS);
+	set_port_mode_out(STATUS_GSM_PORT,STATUS_GSM_PINS);
+	set_port_value_hight(STATUS_GSM_PORT,STATUS_GSM_PINS);
+	
+	set_port_mode_dig(STATUS_BJ_PORT,STATUS_BJ_PINS);
+	set_port_mode_out(STATUS_BJ_PORT,STATUS_BJ_PINS);
+	set_port_value_hight(STATUS_BJ_PORT,STATUS_BJ_PINS);
+	
+	set_port_mode_dig(STATUS_485_PORT,STATUS_485_PINS);
+	set_port_mode_out(STATUS_485_PORT,STATUS_485_PINS);
+	set_port_value_hight(STATUS_485_PORT,STATUS_485_PINS);
+}
 //add 
 //ra9
 void check_solor_set_hight(void)
@@ -219,7 +236,8 @@ void unused_pins_deinit(void)
 void pre_system_sleep(void)
 {
 	//pre_system_sleep_deinit_all_pins();
-	all_status_pins_mod_in();
+	//all_status_pins_mod_in();
+	all_status_pins_mod_out();
 	all_bj_disable();
 	//bj_all_off();
 	check_solor_set_low();
@@ -238,8 +256,8 @@ void pre_system_sleep(void)
     IFS6=0x00;
     IFS7=0x00;        
     //lcd_off();
-    U1MODEbits.UARTEN=0;
-    U2MODEbits.UARTEN=0;
+    //U1MODEbits.UARTEN=0;
+    //U2MODEbits.UARTEN=0;
     asm("NOP");
     asm("NOP");   
 }
