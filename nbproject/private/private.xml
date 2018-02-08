@@ -2,14 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group name="cs600_test">
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/driver/ads1148.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/mcc_generated_files/mcc.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/app/main.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/driver/ads1148_hal.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/app/sample.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/app/sample.h</file>
-        </group>
         <group>
             <file>file:/F:/2017/cs66-b/cs66b.X/src/soc/delay.c</file>
             <file>file:/F:/2017/cs66-b/cs66b.X/src/driver/ads1148_hal.h</file>
@@ -24,6 +16,18 @@
             <file>file:/F:/2017/cs66-b/cs66b.X/src/api/key_menu.c</file>
             <file>file:/F:/2017/cs66-b/cs66b.X/src/api/ui.c</file>
             <file>file:/F:/2017/cs66-b/cs66b.X/src/app/sample.h</file>
+        </group>
+        <group name="cs600_test">
+            <file>file:/F:/2017/cs66-b/cs66b.X/src/api/sysdata.c</file>
+            <file>file:/F:/2017/cs66-b/cs66b.X/src/app/main.c</file>
+            <file>file:/F:/2017/cs66-b/cs66b.X/src/api/sysdata.h</file>
+            <file>file:/F:/2017/cs66-b/cs66b.X/src/api/modbus.h</file>
+            <file>file:/F:/2017/cs66-b/cs66b.X/mcc_generated_files/uart1.c</file>
+            <file>file:/F:/2017/cs66-b/cs66b.X/src/soc/ticker.c</file>
+            <file>file:/F:/2017/cs66-b/cs66b.X/src/driver/gpio.c</file>
+            <file>file:/F:/2017/cs66-b/cs66b.X/src/api/key_menu.c</file>
+            <file>file:/F:/2017/cs66-b/cs66b.X/src/app/event.h</file>
+            <file>file:/F:/2017/cs66-b/cs66b.X/src/api/modbus.c</file>
         </group>
     </open-files>
 </project-private>

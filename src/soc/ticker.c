@@ -37,6 +37,22 @@ void TMR2_CallBack(void)
     TMR2_Stop();
     tickerMsPer10Ms++;
     event |=  flg_TICKER_10MS_PER;
+	
+	if(uart1RecIdleTime>0){
+		uart1RecIdleTime+=20;
+		if(uart1RecIdleTime>10000)uart1RecIdleTime=10000;
+		if(uart1RecIdleTime>UART_1_REC_IDLE_TIME_OUT){
+			event |= flg_MODBUS_RECEIVED;
+		}
+	}
+	
+	if(uart2RecIdleTime>0){
+		uart2RecIdleTime+=20;
+		if(uart2RecIdleTime>10000)uart2RecIdleTime=10000;
+		if(uart1RecIdleTime > UART_2_REC_IDLE_TIME_OUT){
+			event |= flg_NB_GPS_RECEIVED;
+		}
+	}	
 }
 
 uint32_t ticker_10ms_per_get(void)

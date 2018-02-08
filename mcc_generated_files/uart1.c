@@ -47,7 +47,7 @@
 */
 
 #include "uart1.h"
-
+#include "tmr2.h"
 /**
   Section: Data Type Definitions
 */
@@ -117,7 +117,11 @@ static UART_OBJECT uart1_obj ;
 
 static uint8_t uart1_txByteQ[UART1_CONFIG_TX_BYTEQ_LENGTH] ;
 static uint8_t uart1_rxByteQ[UART1_CONFIG_RX_BYTEQ_LENGTH] ;
+//add by lxp
 
+uint16_t 	uart1ReceivedCount=0;
+uint8_t		uart1ReceivedBuf[64];
+uint16_t	uart1RecIdleTime=0;
 
 /**
   Section: Driver Interface
@@ -140,7 +144,7 @@ void UART1_Initialize (void)
    U1STAbits.UTXEN = 1;
    
    
-
+	/*
    uart1_obj.txHead = uart1_txByteQ;
    uart1_obj.txTail = uart1_txByteQ;
    uart1_obj.rxHead = uart1_rxByteQ;
@@ -149,6 +153,7 @@ void UART1_Initialize (void)
    uart1_obj.txStatus.s.empty = true;
    uart1_obj.txStatus.s.full = false;
    uart1_obj.rxStatus.s.full = false;
+   */
 }
 
 
@@ -158,7 +163,8 @@ void UART1_Initialize (void)
     Maintains the driver's transmitter state machine and implements its ISR
 */
 void __attribute__ ( ( interrupt, no_auto_psv ) ) _U1TXInterrupt ( void )
-{ 
+{
+	/*
     if(uart1_obj.txStatus.s.empty)
     {
         IEC0bits.U1TXIE = false;
@@ -187,12 +193,16 @@ void __attribute__ ( ( interrupt, no_auto_psv ) ) _U1TXInterrupt ( void )
             break;
         }
     }
+	*/
+	IEC0bits.U1TXIE = false;
+	IFS0bits.U1TXIF = false;
+	
 }
 
 void __attribute__ ( ( interrupt, no_auto_psv ) ) _U1RXInterrupt( void )
 {
-
-
+	
+	/*
     while((U1STAbits.URXDA == 1))
     {
 
@@ -217,7 +227,19 @@ void __attribute__ ( ( interrupt, no_auto_psv ) ) _U1RXInterrupt( void )
     }
 
     IFS0bits.U1RXIF = false;
-   
+	*/
+	uint8_t t8;
+	
+	while((U1STAbits.URXDA == 1)){
+		t8=U1RXREG;
+		if(uart1ReceivedCount<UART_1_REC_BUF_LEN){
+			uart1ReceivedBuf[uart1ReceivedCount]=t8;
+			uart1ReceivedCount++;
+			uart1RecIdleTime=20;
+            TMR2_Start();
+		}
+	}
+	IFS0bits.U1RXIF = false;
 }
 
 
@@ -420,7 +442,31 @@ UART1_STATUS UART1_StatusGet (void)
     return U1STA;
 }
 
+//add by lxp
+void uart1_send_byte(uint8_t x)
+{
+	while(!(U1STAbits.TRMT)){
+	
+	};
+	U1TXREG=x;
+	
+}
 
+void uart1_send_str(uint8_t* str)
+{
+	while(*str!='\0'){
+		uart1_send_byte(*str);
+		str++;
+	}
+}
+
+void uart1_send_len(uint8_t* buf,uint16_t len)
+{
+	uint16_t i;
+	for(i=0;i<len;i++){
+		uart1_send_byte(buf[i]);
+	}
+}
 
 /**
   End of File

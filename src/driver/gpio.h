@@ -55,6 +55,8 @@
 	#define STATUS_485_PINS	PIN4
 	#define STATUS_485_PORT	portc
 	
+
+	
 	extern void status_ma_mode_in(void);
 	extern void all_status_pins_mod_in(void);
 	
@@ -102,7 +104,12 @@
 	#define EX_FUNCTION_ILOOP_EN	(1<<2)
 	extern uint8_t  get_ex_function_status(void);
 	extern uint8_t volatile exFunctionSta; 
-	
+
+	//
+	#define RS_485_RE	PIN1
+	#define RS_485_PORT	portd
+	extern void rs_485_set_rx(void);
+	extern void rs_485_set_tx(void);	
 #ifdef __cplusplus
 	}
 #endif

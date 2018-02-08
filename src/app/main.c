@@ -84,7 +84,7 @@ void event_sample_real_time_mode(void)
 		}
 		sample_process();			
 	}
-    if( !T2CONbits.TON )TMR2_Start();
+    TMR2_Start();
 }
 /*
 void event_sample_sleep_wake_mode(void)
@@ -117,10 +117,10 @@ void event_sample_sleep_wake_mode(void)
     uint8_t t8=0;
     uint32_t t32=0;
 	//return;
-    if(stSysData.sleepPeriod)sleepSec++;
+    
 	if(stSysData.sleepPeriod==0 || menu!=0 )return;
 	if(sleepSec<(stSysData.sleepPeriod))return ;
-	
+	if(stSysData.sleepPeriod)sleepSec++;
     if( !T1CONbits.TON )TMR1_Start();
     ticker_ms_set(0);
 	sleepSec=0;
@@ -130,7 +130,6 @@ void event_sample_sleep_wake_mode(void)
     ads1148_post_sleep();
 	delay_ms(30);    
 	do{
-		
 		t8=sample_process();
 		#if ADS1148_CHIP_OTRHER_ONE_ENABLE 
 		if(t8==0 || t8==0x0c)break;
@@ -286,16 +285,15 @@ void event_rtc_lcd_off(void)
         }
     }
 }
-
+uint8_t uartTestStr[]="UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU";
 int main(void)
 {
 	
     //m_system_init();
     //pre_system_sleep_deinit_all_pins();
-
+    uint16_t t16;
     SYSTEM_Initialize(); 
     thread_main_pre();	
-
     while (1){
 		if(event & flg_KEY_DOWN){
 			//event &= ~flg_KEY_DOWN;
@@ -331,6 +329,13 @@ int main(void)
 				event_iloop_out_put_adj();
 			}
 		}
+        if(event & flg_MODBUS_RECEIVED){
+            event &= ~flg_MODBUS_RECEIVED;
+            t16=uart1ReceivedCount;
+            m_mem_cpy_len(globleBuffer,uart1ReceivedBuf,t16);
+            uart1ReceivedCount=0;
+            modbus_response_process(globleBuffer,t16);
+        }
 		event_sample_real_time_mode();
 		//event_sample_sleep_wake_mode();		
         event_enter_sleep();

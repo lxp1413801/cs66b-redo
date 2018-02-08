@@ -47,7 +47,7 @@
 */
 
 #include "uart2.h"
-
+#include "tmr2.h"
 /**
   Section: Data Type Definitions
 */
@@ -117,7 +117,11 @@ static UART_OBJECT uart2_obj ;
 
 static uint8_t uart2_txByteQ[UART2_CONFIG_TX_BYTEQ_LENGTH] ;
 static uint8_t uart2_rxByteQ[UART2_CONFIG_RX_BYTEQ_LENGTH] ;
+//add by lxp
 
+uint16_t 	uart2ReceivedCount=0;
+uint8_t		uart2ReceivedBuf[64];
+uint16_t	uart2RecIdleTime=0;
 
 /**
   Section: Driver Interface
@@ -140,7 +144,7 @@ void UART2_Initialize (void)
    U2STAbits.UTXEN = 1;
    
    
-
+	/*
    uart2_obj.txHead = uart2_txByteQ;
    uart2_obj.txTail = uart2_txByteQ;
    uart2_obj.rxHead = uart2_rxByteQ;
@@ -149,6 +153,7 @@ void UART2_Initialize (void)
    uart2_obj.txStatus.s.empty = true;
    uart2_obj.txStatus.s.full = false;
    uart2_obj.rxStatus.s.full = false;
+   */
 }
 
 
@@ -159,6 +164,7 @@ void UART2_Initialize (void)
 */
 void __attribute__ ( ( interrupt, no_auto_psv ) ) _U2TXInterrupt ( void )
 { 
+	/*
     if(uart2_obj.txStatus.s.empty)
     {
         IEC1bits.U2TXIE = false;
@@ -187,12 +193,15 @@ void __attribute__ ( ( interrupt, no_auto_psv ) ) _U2TXInterrupt ( void )
             break;
         }
     }
+	*/
+	IEC1bits.U2TXIE = false;
+	IFS1bits.U2TXIF = false;
 }
 
 void __attribute__ ( ( interrupt, no_auto_psv ) ) _U2RXInterrupt( void )
 {
 
-
+	/*
     while((U2STAbits.URXDA == 1))
     {
 
@@ -217,7 +226,19 @@ void __attribute__ ( ( interrupt, no_auto_psv ) ) _U2RXInterrupt( void )
     }
 
     IFS1bits.U2RXIF = false;
-   
+	*/
+	uint8_t t8;
+	
+	while((U2STAbits.URXDA == 1)){
+		t8=U2RXREG;
+		if(uart2ReceivedCount<UART_2_REC_BUF_LEN){
+			uart2ReceivedBuf[uart2ReceivedCount]=t8;
+			uart2ReceivedCount++;
+			uart2RecIdleTime=20;
+            TMR2_Start();
+		}	
+	}
+	IFS1bits.U2RXIF = false;
 }
 
 
@@ -420,7 +441,31 @@ UART2_STATUS UART2_StatusGet (void)
     return U2STA;
 }
 
+//add by lxp
+void uart2_send_byte(uint8_t x)
+{
+	while(!(U2STAbits.TRMT)){
+	
+	};
+	U2TXREG=x;
+	
+}
 
+void uart2_send_str(uint8_t* str)
+{
+	while(*str!='\0'){
+		uart2_send_byte(*str);
+		str++;
+	}
+}
+
+void uart2_send_len(uint8_t* buf,uint16_t len)
+{
+	uint16_t i;
+	for(i=0;i<len;i++){
+		uart2_send_byte(buf[i]);
+	}
+}
 
 /**
   End of File

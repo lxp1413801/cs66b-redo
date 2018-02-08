@@ -1,6 +1,7 @@
 #include "drivers.h"
 #include "../soc/delay.h"
 #include "../global/globle.h"
+#include "../configs/configs.h"
 iicDeviceObj_t at24c02Obj0;
 iicDeviceObj_t at24c02Obj1;
 iicDeviceObj_t at24c02Obj2;

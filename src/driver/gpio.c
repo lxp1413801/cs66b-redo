@@ -93,6 +93,19 @@ void all_status_pins_mod_out(void)
 	set_port_mode_out(STATUS_485_PORT,STATUS_485_PINS);
 	set_port_value_hight(STATUS_485_PORT,STATUS_485_PINS);
 }
+
+void rs_485_set_rx(void)
+{
+	set_port_mode_dig(STATUS_485_PORT,STATUS_485_PINS);
+	set_port_mode_out(STATUS_485_PORT,STATUS_485_PINS);
+	set_port_value_low(STATUS_485_PORT,STATUS_485_PINS);
+}
+void rs_485_set_tx(void)
+{
+	set_port_mode_dig(STATUS_485_PORT,STATUS_485_PINS);
+	set_port_mode_out(STATUS_485_PORT,STATUS_485_PINS);
+	set_port_value_hight(STATUS_485_PORT,STATUS_485_PINS);
+}
 //add 
 //ra9
 void check_solor_set_hight(void)
@@ -258,6 +271,8 @@ void pre_system_sleep(void)
     run_status_off();
     ad421_chip1_pins_deinit();
     ad421_chip0_pins_deinit();
+	
+	rs_485_set_rx();
 	unused_pins_deinit();
     IFS0=0x00;
     IFS1=0x00;

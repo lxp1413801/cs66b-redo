@@ -620,8 +620,15 @@ bool UART1_TransmitBufferIsFull (void);
 */
 
 UART1_STATUS UART1_StatusGet (void );
+//add by lxp
+#define UART_1_REC_BUF_LEN	64
+extern uint16_t 	uart1ReceivedCount;
+extern uint8_t		uart1ReceivedBuf[64];
+extern uint16_t	uart1RecIdleTime;
 
-
+extern void uart1_send_byte(uint8_t x);
+extern void uart1_send_str(uint8_t* str);
+extern void uart1_send_len(uint8_t* buf,uint16_t len);
 
 #ifdef __cplusplus  // Provide C++ Compatibility
 

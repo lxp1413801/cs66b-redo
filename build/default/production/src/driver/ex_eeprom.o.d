@@ -25,4 +25,6 @@ src/driver/ad421.h  \
 src/driver/../soc/delay.h  \
  src/driver/../soc/../../mcc_generated_files/mcc.h  \
  src/driver/../global/globle.h  \
- src/driver/../global/../../mcc_generated_files/mcc.h 
+ src/driver/../global/../../mcc_generated_files/mcc.h  \
+ src/driver/../configs/configs.h  \
+ src/driver/../configs/../../mcc_generated_files/mcc.h 

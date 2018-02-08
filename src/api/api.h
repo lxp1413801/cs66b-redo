@@ -10,7 +10,7 @@
 	#include "sysdata.h"
 	#include "ui.h"
 	#include "key_menu.h"
-	
+	#include "modbus.h"
 
 #ifdef __cplusplus
 	}

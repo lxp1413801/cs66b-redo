@@ -8,6 +8,20 @@
     #include <stdint.h>
 
 	#define NO_EVENT_TIME_MAX 30
+
+
+	#ifndef EEPROM_PER_VIA_IO
+		#define EEPROM_PER_VIA_IO 0
+	#endif	
+	
+	#ifndef UART_1_REC_IDLE_TIME_OUT 
+		#define UART_1_REC_IDLE_TIME_OUT 400
+	#endif
+	
+	#ifndef UART_2_REC_IDLE_TIME_OUT 
+		#define UART_2_REC_IDLE_TIME_OUT 1000
+	#endif	
+	
 	
 	#ifndef ADS1148_CHIP_OTRHER_ONE_ENABLE
 		#define ADS1148_CHIP_OTRHER_ONE_ENABLE 1
@@ -26,12 +40,16 @@
 	#endif
 	
 	#ifndef SOFTWARE_VER
-		#define SOFTWARE_VER "30"
+		#define SOFTWARE_VER " uer 30 "
 	#endif
 	
-#ifndef LCD_TEST_EX_EN
-#define LCD_TEST_EX_EN 0
-#endif
+
+	
+	#ifndef LCD_TEST_EX_EN
+	
+		#define LCD_TEST_EX_EN 0
+		
+	#endif
 #ifdef __cplusplus
 	}
 #endif
