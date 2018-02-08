@@ -21,11 +21,14 @@ void m_system_init(void)
 
 void thread_main_pre(void)
 {
-	#if BJ_BAORD_EN
+	all_status_pins_mod_in();
+	exFunctionSta=get_ex_function_status();
+	//#if BJ_BAORD_EN
 	all_bj_init();
-	bj_all_on();
-	#endif
-    
+	bj_all_off();
+	//#endif
+	
+	
     kz_vadd_on();
     key_init();
     lcd_init();
@@ -43,18 +46,19 @@ void thread_main_pre(void)
 	__nop();
 	__nop();
 	
-	all_bj_disable();
+	//all_bj_disable();
+	
     ads1148_init_all_obj();
 	ads1148_init_device(); 
 	
     blShowTime=stSysData.lcdShowTm;
 	blShowTime*=2;
-	#if I_LOOP_BOARD 
+	
+	//#if I_LOOP_BOARD 
     ad421_all_obj_init();
     ad421ObjChip0.pins_deinit();
     ad421ObjChip1.pins_deinit();
-    //ad421_test();
-	#endif	
+	//#endif	
 }
 
 /*
@@ -68,7 +72,7 @@ void event_proess(void)
 */
 void event_sample_real_time_mode(void)
 {
-	if(stSysData.sleepPeriod>0 && menu==0)return;
+	if(stSysData.sleepPeriod>0 && menu==0 && exFunctionSta!=0)return;
 	ads1148_post_sleep();
 	//noEventTimeOut=NO_EVENT_TIME_MAX;
 	if(event & flg_TICKER_10MS_PER){
@@ -113,8 +117,7 @@ void event_sample_sleep_wake_mode(void)
     uint8_t t8=0;
     uint32_t t32=0;
 	//return;
-	if(stSysData.sleepPeriod==0 || menu!=0)return;
-
+	if(stSysData.sleepPeriod==0 || menu!=0 || exFunctionSta==0)return;
 	if(sleepHalfSec<(stSysData.sleepPeriod)*2)return ;
 	
     if( !T1CONbits.TON )TMR1_Start();
@@ -124,8 +127,7 @@ void event_sample_sleep_wake_mode(void)
 	//delay_ms(30);
     kz_vadd_on();
     ads1148_post_sleep();
-	delay_ms(30);
-    
+	delay_ms(30);    
 	do{
 		
 		t8=sample_process();
@@ -135,8 +137,7 @@ void event_sample_sleep_wake_mode(void)
 		if(t8==0)break;	
 		#endif
 
-	}while(1);
-    
+	}while(1);   
 	ads1148_pre_sleep();
 	t32=ticker_ms_get();
     TMR1_Stop();
@@ -147,10 +148,11 @@ void event_sample_sleep_wake_mode(void)
 }
 void event_iloop_out_put_adj(void)
 {
-	#if I_LOOP_BOARD
+	//#if I_LOOP_BOARD
 	int32_t ad421value;
 	//uint32_t t32;
 	int16_t t16;
+	if(!(exFunctionSta & EX_FUNCTION_ILOOP_EN))return;
 	if(stSysData.sleepPeriod>0){
 		return;
 	};
@@ -171,14 +173,15 @@ void event_iloop_out_put_adj(void)
 		case sub_MENU_SET_ILP_ADJUST_CH1_Hi:ad421_chip1_set_idac_value_ex(ad421value);break;
 		default:break;
 	}  	
-	#endif
+	//#endif
 }
 void event_iloop_out_put(void)
 {
-	#if I_LOOP_BOARD
+	//#if I_LOOP_BOARD
 	int32_t ad421value;
 	uint32_t t32;
     //int16_t t16;
+	if(!(exFunctionSta & EX_FUNCTION_ILOOP_EN))return;
 	if(stSysData.sleepPeriod>0){
         return;
     };
@@ -201,7 +204,7 @@ void event_iloop_out_put(void)
     __nop();
     __nop();
     }
-	#endif
+	//#endif
 }
 void event_enter_sleep(void)
 {
@@ -272,7 +275,7 @@ int main(void)
 		__nop();   		
 	}
 	*/
-    ui_disp_all_on();
+    //ui_disp_all_on();
     while (1){
 		if(event & flg_KEY_DOWN){
 			//event &= ~flg_KEY_DOWN;
@@ -286,7 +289,7 @@ int main(void)
 			if(lcdTwinkle>0)lcdTwinkle--;
 			if(blShowTime>0){
                 blShowTime--;
-                if(blShowTime==0)back_night_off();
+                if(blShowTime==0 && stSysData.lcdShowTm>0 && exFunctionSta==0)back_night_off();
 			}
             if(noEventTimeOut){
                 noEventTimeOut--;
@@ -305,8 +308,8 @@ int main(void)
 				event_iloop_out_put_adj();
 			}
 		}
-		//event_sample_real_time_mode();
-		//event_sample_sleep_wake_mode();		
+		event_sample_real_time_mode();
+		event_sample_sleep_wake_mode();		
         event_enter_sleep();
     }
     return -1;

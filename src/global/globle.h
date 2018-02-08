@@ -9,6 +9,8 @@
 	extern volatile uint32_t globleTickerMs;
 	extern volatile uint32_t globleTickerSec;
 	extern volatile uint32_t globleHalfSec;
+	
+
 	#ifndef __nop
 		#define __nop() asm("NOP");
 	#endif

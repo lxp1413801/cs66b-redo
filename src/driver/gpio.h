@@ -73,7 +73,7 @@
 	extern void bj_all_on(void);
 	extern void bj_all_off(void);
     
-    extern void bi_output(void);	
+    extern void bj_output(void);	
     
 	#define RUN_STATUS_PINS PIN12
 	#define RUN_STATUS_PORT	portd
@@ -95,6 +95,13 @@
 	#define FLOAT_RB6_PIN	PIN6
 	#define FLOAT_RB6_PORT	portd	
 	extern void unused_pins_deinit(void);
+	
+		//定义外部功能板的状态
+	#define EX_FUNCTION_485_EN 		(1<<0)
+	#define EX_FUNCTION_BJ_EN		(1<<1)
+	#define EX_FUNCTION_ILOOP_EN	(1<<2)
+	extern uint8_t  get_ex_function_status(void);
+	extern uint8_t volatile exFunctionSta; 
 	
 #ifdef __cplusplus
 	}

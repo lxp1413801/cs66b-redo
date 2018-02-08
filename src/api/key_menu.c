@@ -726,7 +726,18 @@ void __down_base_zero_adj(void)
 {
 	//key_adj_value_float(&m_floatAdj,adjLocation);
 	//int16_t *val, int16_t min,int16_t max, bool up)
-	key_process_up_down_variable_speed_ex((int16_t*)(&adjValue),-1000,1000,true);
+	int32_t t32=0;
+	int16_t max,min;
+	if(stSysData.pos==HOTIZONTAL){
+        if(t32>(int32_t)(stSysData.d))t32=(int32_t)(stSysData.d);
+    }else{
+        if(t32>(int32_t)(stSysData.h + (stSysData.d * 2)))t32=(int32_t)(stSysData.h + (stSysData.d * 2));
+    }		
+	if(t32>32767)t32=32767;
+	if(t32<1000)t32=1000;
+	max=(int16_t)t32;
+	min=(0-max);
+	key_process_up_down_variable_speed_ex((int16_t*)(&adjValue),min,max,true);
 }
 
 void __down_pose_size(void)
@@ -810,6 +821,7 @@ void __down_home_adj_test(void)
 }
 void __down_ilp_adjust_value_adj(void)
 {
+	
 	key_process_up_down_variable_speed_ex((int16_t*)(&adjValue),-500,1000,false);
 }
 
@@ -963,7 +975,18 @@ void __up_base_zero_adj(void)
 {
 	//key_adj_value_float(&m_floatAdj,adjLocation);
 	//int16_t *val, int16_t min,int16_t max, bool up)
-	key_process_up_down_variable_speed_ex((int16_t*)(&adjValue),-1000,1000,false);
+	int32_t t32=0;
+	int16_t max,min;
+	if(stSysData.pos==HOTIZONTAL){
+        if(t32>(int32_t)(stSysData.d))t32=(int32_t)(stSysData.d);
+    }else{
+        if(t32>(int32_t)(stSysData.h + (stSysData.d * 2)))t32=(int32_t)(stSysData.h + (stSysData.d * 2));
+    }			
+	if(t32>32767)t32=32767;
+	if(t32<1000)t32=1000;
+	max=(int16_t)t32;
+	min=(0-max);	
+	key_process_up_down_variable_speed_ex((int16_t*)(&adjValue),min,max,false);
 }
 
 
@@ -1115,10 +1138,13 @@ void __up_adj_bar_level_scale(void)
 	uint16_t t16;
 	//t16=*((uint16_t*)(&adjValue));
 	t16=(uint16_t)adjValue;
-	if(t16==900)t16=950;
-	else
+	if(t16==900){
+		t16=950;
+	}else if(t16==950){
+		t16=1000;
+	}else{
 		t16=900;
-	
+	}
 	adjValue=t16;
 }
 void __up_adj_work_mode(void)
@@ -1147,13 +1173,16 @@ void __up_adj_bl_on_tm(void)
 {
 	uint8_t* p;
 	p=(uint8_t*)(&adjValue);
-	if(*p==10){
+	if(*p==0){
+		*p=10;
+	}else if(*p==10){
 		*p=30;
 	}else if(*p==30){
 		*p=60;
 	}else{
-		*p=10;
+		*p=0;
 	}		
+
 }
 
 void __up_adj_wakeup_period(void)

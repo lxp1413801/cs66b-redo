@@ -8,6 +8,8 @@
 
 volatile bool lcdBlackNightOn=false;
 volatile bool kzAvddOn=false;
+
+uint8_t volatile exFunctionSta=0;
 void kz_vadd_on(void)
 {
     if(kzAvddOn)return;
@@ -51,6 +53,14 @@ void status_ma_mode_in(void)
 	set_port_mode_in(STATUS_MA_PORT,STATUS_MA_PINS);
 }
 
+uint8_t  get_ex_function_status(void)
+{
+	uint8_t t8=0;
+	if(!(get_port_value(STATUS_485_PORT,STATUS_485_PINS)))t8 |= EX_FUNCTION_485_EN;
+	if(!(get_port_value(STATUS_MA_PORT,STATUS_MA_PINS)))t8 |= EX_FUNCTION_ILOOP_EN;
+	if(!(get_port_value(STATUS_BJ_PORT,STATUS_BJ_PINS)))t8 |= EX_FUNCTION_BJ_EN;
+	return t8;
+}
 void all_status_pins_mod_in(void)
 {
 	set_port_mode_dig(STATUS_MA_PORT,STATUS_MA_PINS);
@@ -173,10 +183,11 @@ void bj_all_off(void)
 	set_port_value_low(BJ_V_PORT,BJ_V_PIN);
 	set_port_value_low(BJ_PORT,ALL_BJ_PINS);
 }
-void bi_output(void)
+void bj_output(void)
 {
-#if BJ_BAORD_EN
+//#if BJ_BAORD_EN
     uint16_t t16;
+	if(!(exFunctionSta & EX_FUNCTION_BJ_EN))return;
     t16=deviceEvent.t16;
     if(t16 & 0x0f){
         set_port_value_hight(BJ_V_PORT,BJ_V_PIN);
@@ -197,7 +208,7 @@ void bi_output(void)
     if(t16 & 0x08)bj_4_on();
     else
         bj_4_off();  
-#endif
+//#endif
 }
 void run_status_init(void)
 {

@@ -318,6 +318,7 @@ void sample_calc_diff_press(void)
 	t32=cal_diff_p_to_h(rtDiffPressure);
 	t32=t32-stSysData.baseZero;
 	rtHight=t32;
+    
     __nop();
     __nop();
     //rtPressure=t32;
@@ -867,7 +868,7 @@ uint8_t sample_process(void)
 #endif
     if(stSysData.sleepPeriod==0){
         calc_warning_pr_dpr();
-        bi_output();
+        bj_output();
         TMR2_Start();
     }
     return sampleIndex;

@@ -45,7 +45,7 @@ extern "C"{
 	#define LCD_CODE_8_EX (SEG_A_EX + SEG_B_EX + SEG_C_EX + SEG_D_EX + SEG_E_EX + SEG_F_EX + SEG_G_EX + SEG_H_EX)
 	#define LCD_CODE_9_EX (SEG_A_EX + SEG_B_EX + SEG_C_EX + SEG_D_EX + SEG_F_EX + SEG_G_EX + SEG_H_EX)
 
-	#define LCD_CODE_A_EX (SEG_B_EX + SEG_C_EX + SEG_L_EX + SEG_J_EX + SEG_H_EX)
+	#define LCD_CODE_A_EX (SEG_A_EX + SEG_B_EX + SEG_C_EX + SEG_E_EX + SEG_F_EX + SEG_J_EX + SEG_H_EX)
 	#define LCD_CODE_B_EX (SEG_A_EX + SEG_F_EX + SEG_G_EX + SEG_J_EX + SEG_H_EX + SEG_C_EX + SEG_D_EX + SEG_E_EX)
 	#define LCD_CODE_C_EX (SEG_A_EX + SEG_F_EX + SEG_E_EX + SEG_D_EX )
 	#define LCD_CODE_D_EX (0)

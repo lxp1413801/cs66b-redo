@@ -844,7 +844,7 @@ void lcd_disp_all(uint16_t x)
 	//lcd_disp_refresh();
 }
 #ifndef LCD_GLASS_MODULE_VER
-	#define LCD_GLASS_MODULE_VER 101
+	#define LCD_GLASS_MODULE_VER 100
 #endif
 
 #if LCD_GLASS_MODULE_VER==100
@@ -862,7 +862,7 @@ void lcd_config(void)
     LCDREGbits.MODE13=1;
     
     LCDPSbits.BIASMD=0;
-    LCDPSbits.LP=4;
+    LCDPSbits.LP=3;
 	//LCDPSbits.WFT=1;
     
     LCDREFbits.LCDIRE=1;
