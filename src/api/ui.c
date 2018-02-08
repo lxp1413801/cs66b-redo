@@ -394,6 +394,31 @@ void ui_disp_adj_xfixed_pt(uint8_t* str,uint16_t x,uint8_t loc)
 	lcd_show_string(buf); 
 	lcd_disp_refresh();
 }
+//无小数点，闪烁
+void ui_disp_adj_xfixed_pt_t8(uint8_t* str,uint8_t x,uint8_t loc)
+{
+    uint8_t buf[10];
+	ui_disp_clear_num_dp();
+	//if(x>9999)x=9999;
+	m_mem_cpy(buf,str);
+	//m_int16_2_str_4(buf+4,x);
+	buf[4]=' ';
+	buf[5]='0'+(x / 100);
+	x%=100;
+	buf[6]='0'+(x / 10);
+	x%=10;
+	buf[7]='0'+(x / 1);
+	buf[8]='\0';
+	//__x_arrange_str(buf,8);
+	
+	if(loc>2)loc=2;
+	loc=3-loc;
+	if(!fi_lcd_twinkle_lock()){
+		if(!fi_twinkle())buf[4+loc]=' ';
+	}
+	lcd_show_string(buf); 
+	lcd_disp_refresh();
+}
 //有小数点，闪烁，
 void ui_disp_adj_xfixed_pt_dp(uint8_t* str,uint16_t x,uint8_t loc,uint8_t dploc)
 {
@@ -1351,23 +1376,6 @@ void ui_disp_menu_ext_show_mode(void)
     lcd_disp_refresh(); 	
 }
 
-void ui_disp_menu_bl_on_tm(void)
-{
-	uint8_t t8;
-    uint8_t* p;
-    uint8_t buf[10];
-	lcd_clear_all();
-	lcd_disp_logo(true);
-    p=(uint8_t*)(&adjValue);
-    t8=*p;
-	m_mem_cpy(buf,(uint8_t*)"  bl    ");
-	if(t8>99)t8=99;
-	buf[6]=t8/10+'0';
-	buf[7]=t8%10+'0';
-	buf[8]='\0';
-    lcd_show_string(buf);
-    lcd_disp_refresh(); 	
-}
 
 void ui_disp_menu_wake_up_period(void)
 {
@@ -1513,6 +1521,35 @@ void ui_disp_menu_calib_x_2nd(void)
 	//ui_disp_xfloat_pt_twinkle(&m_floatAdj,1,adjLocation);		
     lcd_disp_refresh(); 
 }
+
+void ui_disp_menu_bl_on_tm(void)
+{
+	uint8_t t8;
+    uint8_t* p;
+    uint8_t buf[10];
+	lcd_clear_all();
+	lcd_disp_logo(true);
+    p=(uint8_t*)(&adjValue);
+    t8=*p;
+	m_mem_cpy(buf,(uint8_t*)"  bl    ");
+	if(t8>99)t8=99;
+	buf[6]=t8/10+'0';
+	buf[7]=t8%10+'0';
+	buf[8]='\0';
+    lcd_show_string(buf);
+    lcd_disp_refresh(); 	
+}
+void ui_disp_menu_lcd_on_tm(void)
+{
+	lcd_clear_all();
+	ui_disp_adj_xfixed_pt_t8((uint8_t*)" lcd",(int8_t)adjValue,adjLocation);
+}
+void ui_disp_menu_modbus_id(void)
+{
+	lcd_clear_all();
+	ui_disp_adj_xfixed_pt_t8((uint8_t*)"  id",(int8_t)adjValue,adjLocation);
+}
+
 void ui_disp_menu(void)
 {
 
@@ -1551,7 +1588,7 @@ void ui_disp_menu(void)
         case MENU_SET_WORK_MODE:        ui_disp_menu_work_mode_adj();   break;
 		//改版后增加
 		case MENU_SET_EX_PR_TEMP_SHOW:	ui_disp_menu_ext_show_mode();break;
-		case MENU_PSW_SET_BL_ON_TM:		ui_disp_menu_bl_on_tm();break;
+		
 		//
 		case MENU_SET_WAKEUP_PERIOD:	ui_disp_menu_wake_up_period();break;
 		case MENU_SET_RF_SEND_PERIOD:	ui_disp_menu_rf_send_period();break;
@@ -1562,7 +1599,11 @@ void ui_disp_menu(void)
 		case MENU_CALIB_DPR_2ND:ui_disp_menu_calib_dpr_2nd();break;	
 		case MENU_CALIB_PR_2ND:
 		case MENU_CALIB_EPR0_2ND:
-		case MENU_CALIB_EPR1_2ND:		ui_disp_menu_calib_x_2nd();break;			
+		case MENU_CALIB_EPR1_2ND:		ui_disp_menu_calib_x_2nd();break;	
+
+		case MENU_PSW_SET_BL_ON_TM:		ui_disp_menu_bl_on_tm();break;
+		case MENU_PSW_SET_LCD_ON_TM:	ui_disp_menu_lcd_on_tm();break;
+		case MENU_PSW_SET_MODBUS_ID:	ui_disp_menu_modbus_id();break;
 		default:break;
 	}	
 }

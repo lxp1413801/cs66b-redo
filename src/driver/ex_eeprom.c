@@ -1,10 +1,27 @@
 #include "drivers.h"
 #include "../soc/delay.h"
+#include "../global/globle.h"
 iicDeviceObj_t at24c02Obj0;
 iicDeviceObj_t at24c02Obj1;
 iicDeviceObj_t at24c02Obj2;
 iicDeviceObj_t at24c02Obj3;
 
+void at24c02_vdd_on(void)
+{
+    
+	run_status_init();
+    run_status_on();
+    delay_ms(10);
+}
+void at24c02_vdd_off(void)
+{
+#if EEPROM_PER_VIA_IO    
+    delay_ms(10);
+    run_status_off();
+#else
+    __nop();
+#endif
+}
 void at24c02_set_slave_addr(st_iicDeviceObj* obj,uint8_t slv)
 {
     if(!((void*)obj))return;
@@ -13,7 +30,13 @@ void at24c02_set_slave_addr(st_iicDeviceObj* obj,uint8_t slv)
 
 void at24c02_init(st_iicDeviceObj* obj, uint8_t slv)
 {
+#if EEPROM_PER_VIA_IO
+    obj->deviceVddOn=at24c02_vdd_on;
+    obj->deviceVddOff=at24c02_vdd_off;
+#else
     obj->deviceVddOn=kz_vadd_on;
+    obj->deviceVddOff=at24c02_vdd_off;
+#endif
     obj->slaveAddr=slv;
 	obj->iic_start=iic_start;
 	obj->iic_stop=iic_stop;
@@ -58,6 +81,8 @@ void at24c02_read_n_byte(st_iicDeviceObj* obj,uint8_t addr,uint8_t* buf,uint16_t
 	}
 	*buf=obj->iic_received_byte_if_ack(IIC_NACK);
 	obj->iic_stop();	
+    
+    obj->deviceVddOff();
 }
 void at24c02_write_byte(st_iicDeviceObj* obj,uint8_t addr,uint8_t x)
 {
@@ -103,6 +128,8 @@ void at24c02_write_n_byte(st_iicDeviceObj* obj,uint8_t addr,uint8_t* buf,uint16_
 		obj->iic_stop();
         delay_ms(1);
 	}
+    
+    obj->deviceVddOff();
 }
 
 

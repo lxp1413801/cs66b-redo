@@ -8,6 +8,7 @@
     #include <stdint.h>
     //extern EventGroupHandle_t threadMainEvent;
 	extern volatile uint8_t blShowTime;
+    extern volatile uint16_t lcdOnTime;
 #ifdef __cplusplus
 	}
 #endif

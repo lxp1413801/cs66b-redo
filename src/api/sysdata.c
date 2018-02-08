@@ -281,12 +281,14 @@ const sysDataDef_t defultSystemData={
         {0,0},      //ilpAdjustValue_t   ilpAdjustCh1;
 		950,//uint16_t	barScale;
 		0,//uint8_t 	exPrTempShowEn;
-		60,//uint8_t		lcdShowTm;		        
+		60,//uint8_t		blOnTm;		        
 		//
 		10,//sleepPeriod
 		300,//rfSendPeriod
 		0,
 		0,
+		1,
+		255,
 		0,//uint16_t	crc;
 };
 

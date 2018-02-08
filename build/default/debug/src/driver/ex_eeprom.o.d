@@ -23,4 +23,6 @@ src/driver/ex_eeprom.h  \
  src/driver/key.h  \
 src/driver/ad421.h  \
 src/driver/../soc/delay.h  \
- src/driver/../soc/../../mcc_generated_files/mcc.h 
+ src/driver/../soc/../../mcc_generated_files/mcc.h  \
+ src/driver/../global/globle.h  \
+ src/driver/../global/../../mcc_generated_files/mcc.h 

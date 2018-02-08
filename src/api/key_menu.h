@@ -12,7 +12,7 @@ extern "C"{
 	#define PSW_SET_POSE_SIZE					66
 	
 	#define PSW_SET_EX_PR_TEMP_SHOW				38
-	#define PSW_SET_BL_ON_TM					39
+
 	
 	#define PSW_SET_BASE_ZERO					56
 	//calibration
@@ -52,7 +52,10 @@ extern "C"{
 	#define PSW_SET_WAKEUP_PERIOD				688
 	#define PSW_SET_RF_SEND_PERIOD				689
 	
-	
+	//add and modfy 2018.02.08
+	#define PSW_SET_BL_ON_TM					39
+	#define PSW_SET_LCD_ON_TM					398	
+	#define PSW_SET_MODBUS_ID					8
 	//==============================================================
 	//定义菜单,主界面
 	#define MENU_HOME							0x00
@@ -178,10 +181,18 @@ extern "C"{
 	//是否循环显示外部温度和压力
 	#define MENU_SET_EX_PR_TEMP_SHOW			0xf1
 	#define sub_MENU_SET_EX_PR_TEMP_SHOW		0x00
+	
+	
 	//背光打开时间
 	#define	MENU_PSW_SET_BL_ON_TM				0xf2
 	#define sub_MENU_PSW_SET_BL_ON_TM			0x00
 	
+	//lcd显示的时间
+	#define MENU_PSW_SET_LCD_ON_TM				0xf3
+	#define sub_MENU_PSW_SET_LCD_ON_TM			0x00
+	//设置485ID
+	#define MENU_PSW_SET_MODBUS_ID				0xf4
+	#define sub_MENU_PSW_SET_MODBUS_ID			0x00	
 	typedef union{
 		uint8_t t8;
 		struct{

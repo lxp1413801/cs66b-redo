@@ -62,6 +62,6 @@ void __attribute__ ( ( interrupt, no_auto_psv ) ) _ISR _RTCCInterrupt( void )
     /* TODO : Add interrupt handling code */
     
     IFS3bits.RTCIF = false;
-    event |=  flg_RTC_SECOND;
+    event |=  flg_RTC_HALF_SECOND;
 	globleHalfSec++;
 }

@@ -1,9 +1,9 @@
 #include "../includes/includes.h"
 //EventGroupHandle_t threadMainEvent;
 //#define main_delay_ms(ms) ticker_ms_delay(ms)
-
+volatile uint16_t lcdOnTime=60;
 volatile uint8_t blShowTime=60;
-volatile uint16_t sleepHalfSec=1000;
+volatile uint16_t sleepSec=1000;
 volatile bool sampling=true;
 
 void m_system_init(void)
@@ -51,7 +51,7 @@ void thread_main_pre(void)
     ads1148_init_all_obj();
 	ads1148_init_device(); 
 	
-    blShowTime=stSysData.lcdShowTm;
+    blShowTime=stSysData.blOnTm;
 	blShowTime*=2;
 	
 	//#if I_LOOP_BOARD 
@@ -72,7 +72,7 @@ void event_proess(void)
 */
 void event_sample_real_time_mode(void)
 {
-	if(stSysData.sleepPeriod>0 && menu==0 && exFunctionSta!=0)return;
+	if(stSysData.sleepPeriod>0 && menu==0 )return;
 	ads1148_post_sleep();
 	//noEventTimeOut=NO_EVENT_TIME_MAX;
 	if(event & flg_TICKER_10MS_PER){
@@ -93,10 +93,10 @@ void event_sample_sleep_wake_mode(void)
     uint32_t t32=0;
 	if(stSysData.sleepPeriod==0 || menu!=0)return;
 
-	if(sleepHalfSec<(stSysData.sleepPeriod)*2)return ;
+	if(sleepSec<(stSysData.sleepPeriod)*2)return ;
     if( !T1CONbits.TON )TMR1_Start();
     ticker_ms_set(0);
-	sleepHalfSec=0;
+	sleepSec=0;
 	
 	ads1148_post_sleep();
     kz_vadd_on();
@@ -117,12 +117,13 @@ void event_sample_sleep_wake_mode(void)
     uint8_t t8=0;
     uint32_t t32=0;
 	//return;
-	if(stSysData.sleepPeriod==0 || menu!=0 || exFunctionSta==0)return;
-	if(sleepHalfSec<(stSysData.sleepPeriod)*2)return ;
+    if(stSysData.sleepPeriod)sleepSec++;
+	if(stSysData.sleepPeriod==0 || menu!=0 )return;
+	if(sleepSec<(stSysData.sleepPeriod))return ;
 	
     if( !T1CONbits.TON )TMR1_Start();
     ticker_ms_set(0);
-	sleepHalfSec=0;
+	sleepSec=0;
 	
 	//delay_ms(30);
     kz_vadd_on();
@@ -244,13 +245,46 @@ void event_call_disp(void)
         dispIndex++;
         if(dispIndex>=t16){
             dispIndex=0;
-            run_status_on();
+            //run_status_on();
             //ui_disp_menu();
-            run_status_off();
+            //run_status_off();
         }
         lcd_disp_refresh();
     }
 
+}
+void event_rtc_bl_off(void)
+{
+    if(blShowTime>0){
+        blShowTime--;
+        //if(blShowTime==0 && stSysData.blOnTm>0 && exFunctionSta==0)back_night_off();
+        //不关闭被关的条件
+		if(stSysData.blOnTm==0 && exFunctionSta!=0){
+			return;
+		}else{
+			//关闭背光的条件
+			if(blShowTime==0)back_night_off();
+		}
+    }    
+}
+
+void event_rtc_no_operation_tm_out(void)
+{
+	if(noEventTimeOut){
+		noEventTimeOut--;
+		if(noEventTimeOut==0)no_operation_save_exit();
+	}
+}
+
+void event_rtc_lcd_off(void)
+{
+	if(lcdOnTime>0){
+        lcdOnTime--;
+        //lcdOnTime=(stSysData.lcdOnTime)*60;
+        if(stSysData.lcdOnTime>0 && lcdOnTime==0 && exFunctionSta==0){
+            lcd_off();
+        }
+    }
 }
 
 int main(void)
@@ -261,21 +295,7 @@ int main(void)
 
     SYSTEM_Initialize(); 
     thread_main_pre();	
-	/*
-	while(1){
-		ads1148_pre_sleep();
-		pre_system_sleep();
-		
-		
-		TMR1_Stop();
-		TMR2_Stop();	
-		lcd_off();
-		Sleep();
-		__nop();
-		__nop();   		
-	}
-	*/
-    //ui_disp_all_on();
+
     while (1){
 		if(event & flg_KEY_DOWN){
 			//event &= ~flg_KEY_DOWN;
@@ -283,25 +303,28 @@ int main(void)
             if( !T1CONbits.TON )TMR1_Start();
 			key_process();
 		}
-		if(event &  flg_RTC_SECOND){
-			event &=  ~flg_RTC_SECOND;
+		if(event &  flg_RTC_HALF_SECOND){
+			event &=  ~flg_RTC_HALF_SECOND;
 
 			if(lcdTwinkle>0)lcdTwinkle--;
-			if(blShowTime>0){
-                blShowTime--;
-                if(blShowTime==0 && stSysData.lcdShowTm>0 && exFunctionSta==0)back_night_off();
-			}
-            if(noEventTimeOut){
-                noEventTimeOut--;
-                if(noEventTimeOut==0)no_operation_save_exit();
-            }
+            
+            if(globleHalfSec & 0x01ul)event |= flg_RTC_SECOND;
+            if(LCDCONbits.LCDEN)ui_disp_menu();
+        }
+        if(event & flg_RTC_SECOND){
+            event &= ~flg_RTC_SECOND;
+            event_rtc_bl_off();
+			event_rtc_no_operation_tm_out();
+			event_rtc_lcd_off();
+			
             //if(noEventTimeOut<blShowTime)noEventTimeOut=blShowTime;
-            if(stSysData.sleepPeriod)sleepHalfSec++;
-            //ui_disp_menu();
+			event_sample_sleep_wake_mode();	
+            
+            
             //ui_disp_all_on();
             //lcd_disp_refresh();
             //event_call_disp();
-			run_status_off();
+			//run_status_off();
 			if(menu!=MENU_SET_ILOOP_ADJUST){
 				event_iloop_out_put();
 			}else{
@@ -309,7 +332,7 @@ int main(void)
 			}
 		}
 		event_sample_real_time_mode();
-		event_sample_sleep_wake_mode();		
+		//event_sample_sleep_wake_mode();		
         event_enter_sleep();
     }
     return -1;

@@ -212,11 +212,14 @@ extern "C"{
 
 		uint16_t		barScale;
 		uint8_t			exPrTempShowEn;
-		uint8_t			lcdShowTm;	
+		uint8_t			blOnTm;	
 		uint16_t		sleepPeriod;				//休眠周期s
 		uint16_t		rfSendPeriod;				//无线发送周期
 		uint8_t			bpMenu;
 		uint8_t			bpSubMenu;
+		//add by 2018.02.08
+		uint8_t			lcdOnTime;					//LCD点亮时间
+		uint8_t			ModbusId;//					
 		//
 		uint16_t		crc;
 	}sysDataDef_t;

@@ -15,6 +15,9 @@
 		#define __nop() asm("NOP");
 	#endif
 
+	#ifndef EEPROM_PER_VIA_IO
+		#define EEPROM_PER_VIA_IO 1
+	#endif
 #ifdef __cplusplus
 	}
 #endif

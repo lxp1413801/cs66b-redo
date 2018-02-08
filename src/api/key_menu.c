@@ -101,6 +101,31 @@ void key_adj_value_fixed(uint16_t* value,uint8_t loc)
 	*value=t16;
 }
 
+void key_adj_value_fixed_t8(uint8_t* value,uint8_t loc)
+{
+	uint8_t dloc;
+	uint16_t t8=*value;
+	uint8_t exp10loc;
+	if(loc==0){
+		exp10loc=1;
+	}else  if(loc==1){
+		exp10loc=10;
+	}else{
+		exp10loc=100;
+	}
+	if(loc>2)loc=2;
+	dloc=(t8/exp10loc)%10;
+	t8=t8-dloc*exp10loc;
+	dloc++;
+	if(dloc>9)dloc=0;
+	t8+=(dloc*exp10loc);
+	if(t8<=255){
+	*value=t8;
+	}else{
+		*value=0;
+	}
+}
+
 //adj my float value
 void key_adj_value_float(st_float32_m* mfp,uint8_t loc)
 {
@@ -679,13 +704,7 @@ void __enter_menu_set_ext_show_mode(void)
 	adjLocation=0;	
 }
 
-void __enter_menu_set_bl_on_tm(void)
-{
-	menu=MENU_PSW_SET_BL_ON_TM;
-	subMenu=sub_MENU_PSW_SET_BL_ON_TM;
-	*((uint8_t*)(&adjValue))=stSysData.lcdShowTm;
-	adjLocation=0;		
-}
+
 
 void __enter_menu_set_wakeup_period(void)
 {
@@ -705,6 +724,29 @@ void __enter_menu_set_rf_send_period(void)
 	adjLocation=0;		
 }
 
+void __enter_menu_set_bl_on_tm(void)
+{
+	menu=MENU_PSW_SET_BL_ON_TM;
+	subMenu=sub_MENU_PSW_SET_BL_ON_TM;
+	*((uint8_t*)(&adjValue))=stSysData.blOnTm;
+	adjLocation=0;		
+}
+
+void __enter_menu_set_lcd_on_tm(void)
+{
+	menu=MENU_PSW_SET_LCD_ON_TM;
+	subMenu=sub_MENU_PSW_SET_LCD_ON_TM;
+	*((uint8_t*)(&adjValue))=stSysData.lcdOnTime;
+	adjLocation=0;		
+}
+
+void __enter_menu_set_modbus_addr(void)
+{
+	menu=MENU_PSW_SET_MODBUS_ID;
+	subMenu=sub_MENU_PSW_SET_MODBUS_ID;
+	*((uint8_t*)(&adjValue))=stSysData.ModbusId;
+	adjLocation=0;		
+}
 void __exit_menu_to_home_unsave(void)
 {
 	//menu=MENU_HOME;
@@ -896,6 +938,8 @@ void key_process_down(void)
 		//key_shift_loc((uint8_t*)(&adjLocation),0,4);
 		//paramChangedFlag=false;
 		break;
+		case MENU_PSW_SET_LCD_ON_TM:key_shift_loc((uint8_t*)(&adjLocation),0,2);break;
+		case MENU_PSW_SET_MODBUS_ID:key_shift_loc((uint8_t*)(&adjLocation),0,2);break;	
 		default:break;
 	}	
 }
@@ -1169,21 +1213,7 @@ void __up_adj_ext_show_mode(void)
 	}		
 }
 
-void __up_adj_bl_on_tm(void)
-{
-	uint8_t* p;
-	p=(uint8_t*)(&adjValue);
-	if(*p==0){
-		*p=10;
-	}else if(*p==10){
-		*p=30;
-	}else if(*p==30){
-		*p=60;
-	}else{
-		*p=0;
-	}		
 
-}
 
 void __up_adj_wakeup_period(void)
 {
@@ -1229,7 +1259,31 @@ void __up_adj_rf_send_period(void)
 	(*(uint16_t*)(&adjValue))=t16;	
 }
 
+void __up_adj_bl_on_tm(void)
+{
+	uint8_t* p;
+	p=(uint8_t*)(&adjValue);
+	if(*p==0){
+		*p=10;
+	}else if(*p==10){
+		*p=30;
+	}else if(*p==30){
+		*p=60;
+	}else{
+		*p=0;
+	}		
 
+}
+
+void __up_adj_lcd_on_tm(void)
+{
+	key_adj_value_fixed_t8((uint8_t*)(&adjValue),adjLocation);
+}
+
+void __up_adj_modbus_id(void)
+{
+	key_adj_value_fixed_t8((uint8_t*)(&adjValue),adjLocation);
+}
 
 void key_process_up(void)
 {
@@ -1259,7 +1313,7 @@ void key_process_up(void)
 		//case 
 		//改版后增加
 		case MENU_SET_EX_PR_TEMP_SHOW:__up_adj_ext_show_mode();break;
-		case MENU_PSW_SET_BL_ON_TM:__up_adj_bl_on_tm();break;
+		
 		//
 		case MENU_SET_WAKEUP_PERIOD:__up_adj_wakeup_period();break;
 		case MENU_SET_RF_SEND_PERIOD:__up_adj_rf_send_period();break;
@@ -1273,6 +1327,10 @@ void key_process_up(void)
 		case MENU_CALIB_EPR1_2ND:	
 			paramChangedFlag=!paramChangedFlag;
 			//key_adj_value_float(&m_floatAdj,adjLocation);break;
+			break;
+		case MENU_PSW_SET_BL_ON_TM:__up_adj_bl_on_tm();break;
+		case MENU_PSW_SET_LCD_ON_TM:__up_adj_lcd_on_tm();break;
+		case MENU_PSW_SET_MODBUS_ID:__up_adj_modbus_id();break;
 		default:break;
 	}		
 }
@@ -1317,6 +1375,9 @@ void key_process_set_up_long(void)
 		
 		case PSW_CALIB_EPR0_2ND:		__enter_menu_calib_epr0_2nd(0);			break;
 		case PSW_CALIB_EPR1_2ND:		__enter_menu_calib_epr1_2nd(0);			break;
+		//2018.02.08增加
+		case PSW_SET_LCD_ON_TM:			__enter_menu_set_lcd_on_tm();			break;
+		case PSW_SET_MODBUS_ID:			__enter_menu_set_modbus_addr();			break;
 		default:break;
 		}
 	}	
@@ -2049,17 +2110,7 @@ void __set_long_ext_show_mode(void)
     __exit_menu_to_home_unsave();   	
 }
 
-void __set_long_bl_on_tm(void)
-{
-	uint8_t* p;
-	p=(uint8_t*)(&adjValue);
-	
-	stSysData.lcdShowTm=*p;
-	
-    __sys_data_save_write_flash();
-    
-    __exit_menu_to_home_unsave(); 	
-}
+
 
 void __set_long_wake_up_period(void)
 {
@@ -2081,6 +2132,41 @@ void __set_long_poly_coefic_adj_mod(void)
     __exit_menu_to_home_unsave(); 
 }
 
+void __set_long_bl_on_tm(void)
+{
+	uint8_t* p;
+	p=(uint8_t*)(&adjValue);
+	
+	stSysData.blOnTm=*p;
+	
+    __sys_data_save_write_flash();
+    
+    __exit_menu_to_home_unsave(); 	
+}
+
+void __set_long_lcd_on_tm(void)
+{
+	uint8_t* p;
+	p=(uint8_t*)(&adjValue);
+	
+	stSysData.lcdOnTime=*p;
+	
+    __sys_data_save_write_flash();
+    
+    __exit_menu_to_home_unsave(); 	
+}
+
+void __set_long_modbus_id(void)
+{
+	uint8_t* p;
+	p=(uint8_t*)(&adjValue);
+	
+	stSysData.ModbusId=*p;
+	
+    __sys_data_save_write_flash();
+    
+    __exit_menu_to_home_unsave(); 	
+}
 //============================================================================
 void key_process_set_long(void)
 {
@@ -2109,7 +2195,7 @@ void key_process_set_long(void)
 		case MENU_SET_WORK_MODE:        __set_long_work_mode();             break;	
 		//改版增加的部分
 		case MENU_SET_EX_PR_TEMP_SHOW:	__set_long_ext_show_mode();break;
-		case MENU_PSW_SET_BL_ON_TM:		__set_long_bl_on_tm();break;
+		
 		//
 		case MENU_SET_WAKEUP_PERIOD:	__set_long_wake_up_period();break;
 		case MENU_SET_RF_SEND_PERIOD:	__set_long_rf_send_period();break;
@@ -2120,7 +2206,11 @@ void key_process_set_long(void)
 		case MENU_CALIB_DPR_2ND:		__set_short_calib_dpr_2nd(goHOME);break;
 		case MENU_CALIB_PR_2ND:			__set_short_calib_pr_2nd(goHOME);break;
 		case MENU_CALIB_EPR0_2ND:		__set_short_calib_epr0_2nd(goHOME);break;
-		case MENU_CALIB_EPR1_2ND:		__set_short_calib_epr1_2nd(goHOME);break;		
+		case MENU_CALIB_EPR1_2ND:		__set_short_calib_epr1_2nd(goHOME);break;	
+		
+		case MENU_PSW_SET_BL_ON_TM:		__set_long_bl_on_tm();break;
+		case MENU_PSW_SET_LCD_ON_TM:	__set_long_lcd_on_tm();break;
+		case MENU_PSW_SET_MODBUS_ID:	__set_long_modbus_id();break;
 		default:break;
 	}
 }
@@ -2226,44 +2316,51 @@ void key_process(void)
     event &= ~flg_KEY_DOWN;
     key=get_key_value();
     if(keyValue==KEY_VALUE_NONE && key== KEY_VALUE_NONE)return;
-	//玛德，这里可能有问题！可以把这个判断放在key_waite_release函数中，结构更简单！！！
-    if(!((keyValue == KEY_VALUE_UP || keyValue==KEY_VALUE_DOWN) && \
-	(menu==MENU_SET_BASE_ZERO || menu==MENU_SET_ILOOP_ADJUST) )){
-        tm=key_waite_release(LONG_PRESS_TIME,&key);
-	}
-	if(tm>=LONG_PRESS_TIME){
-		//长按
-		if(key==KEY_VALUE_SET){
-			key_process_set_long();
-		}else if(key == (KEY_VALUE_SET+KEY_VALUE_UP)){
-			key_process_set_up_long();
-		}else if(key == KEY_VALUE_DOWN + KEY_VALUE_SET){
-           // blackEn= (!blackEn);
-            if(lcdBlackNightOn){
-				back_night_off();
-				blShowTime=0;
+    do{
+		if(!(LCDCONbits.LCDEN)){
+			lcdOnTime=(stSysData.lcdOnTime)*60;
+			lcd_on();
+			break;
+		}
+		//玛德，这里可能有问题！可以把这个判断放在key_waite_release函数中，结构更简单！！！
+		if(!((keyValue == KEY_VALUE_UP || keyValue==KEY_VALUE_DOWN) && \
+		(menu==MENU_SET_BASE_ZERO || menu==MENU_SET_ILOOP_ADJUST) )){
+			tm=key_waite_release(LONG_PRESS_TIME,&key);
+		}
+		if(tm>=LONG_PRESS_TIME){
+			//长按
+			if(key==KEY_VALUE_SET){
+				key_process_set_long();
+			}else if(key == (KEY_VALUE_SET+KEY_VALUE_UP)){
+				key_process_set_up_long();
+			}else if(key == KEY_VALUE_DOWN + KEY_VALUE_SET){
+			   // blackEn= (!blackEn);
+				if(lcdBlackNightOn){
+					back_night_off();
+					blShowTime=0;
+				}
+				else{ 
+					back_night_on();
+					blShowTime=stSysData.blOnTm;
+					if(blShowTime<20)blShowTime=20;
+				}				
 			}
-            else{ 
-                back_night_on();
-				blShowTime=stSysData.lcdShowTm;
-				blShowTime*=2;
-			}				
-        }
-	}else{
-		//短按
-		if(keyValue == KEY_VALUE_DOWN){
-			key_process_down();		
-		}else if(keyValue == KEY_VALUE_UP){
-			key_process_up();		
-		}else if(keyValue == KEY_VALUE_SET){
-			key_process_set();		
-		}	
-	}
-	//点亮闪烁的数位，禁止闪烁
-	lcd_twinkle_lock(TWINKLE_LOCK_TIME_s);
-	//sys_ticker_stop();
-	ui_disp_menu();
-	//sys_ticker_start();
+		}else{
+			//短按
+			if(keyValue == KEY_VALUE_DOWN){
+				key_process_down();		
+			}else if(keyValue == KEY_VALUE_UP){
+				key_process_up();		
+			}else if(keyValue == KEY_VALUE_SET){
+				key_process_set();		
+			}	
+		}
+		//点亮闪烁的数位，禁止闪烁
+		lcd_twinkle_lock(TWINKLE_LOCK_TIME_s);
+		//sys_ticker_stop();
+		ui_disp_menu();
+		//sys_ticker_start();
+	}while(0);
 	key_waite_release(LONG_PRESS_TIME,&key);
     keyValue=KEY_VALUE_NONE;
 }

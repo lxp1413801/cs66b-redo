@@ -255,6 +255,7 @@ void pre_system_sleep(void)
 	back_night_off();
 	kz_vadd_off();
     iic_pins_deinit();
+    run_status_off();
     ad421_chip1_pins_deinit();
     ad421_chip0_pins_deinit();
 	unused_pins_deinit();
