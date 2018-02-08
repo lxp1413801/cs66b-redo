@@ -258,7 +258,21 @@ int main(void)
 
     SYSTEM_Initialize(); 
     thread_main_pre();	
-
+	/*
+	while(1){
+		ads1148_pre_sleep();
+		pre_system_sleep();
+		
+		
+		TMR1_Stop();
+		TMR2_Stop();	
+		lcd_off();
+		Sleep();
+		__nop();
+		__nop();   		
+	}
+	*/
+    ui_disp_all_on();
     while (1){
 		if(event & flg_KEY_DOWN){
 			//event &= ~flg_KEY_DOWN;
@@ -280,7 +294,7 @@ int main(void)
             }
             //if(noEventTimeOut<blShowTime)noEventTimeOut=blShowTime;
             if(stSysData.sleepPeriod)sleepHalfSec++;
-            ui_disp_menu();
+            //ui_disp_menu();
             //ui_disp_all_on();
             //lcd_disp_refresh();
             //event_call_disp();
@@ -291,8 +305,8 @@ int main(void)
 				event_iloop_out_put_adj();
 			}
 		}
-		event_sample_real_time_mode();
-		event_sample_sleep_wake_mode();		
+		//event_sample_real_time_mode();
+		//event_sample_sleep_wake_mode();		
         event_enter_sleep();
     }
     return -1;
