@@ -277,10 +277,10 @@ void event_rtc_no_operation_tm_out(void)
 
 void event_rtc_lcd_off(void)
 {
-	if(lcdOnTime>0){
+	if(lcdOnTime>0 &&  menu==0){
         lcdOnTime--;
         //lcdOnTime=(stSysData.lcdOnTime)*60;
-        if(stSysData.lcdOnTime>0 && lcdOnTime==0 && exFunctionSta==0){
+        if(stSysData.lcdOnTime>0 && lcdOnTime==0 && exFunctionSta==0 ){
             lcd_off();
         }
     }

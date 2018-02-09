@@ -113,11 +113,13 @@ uint16_t getRegisterVal(uint16_t addr,uint16_t *tempData)
 {
     int32_t t32;
 	uint16_t result = 0; 
-	uint16_t tempAddr; 
+	//uint16_t tempAddr; 
+    int16_t t16;
+    //int16_t t8;
 	//uint32_t TEMP;
 	
 	//tempAddr = addr & 0xff;
-	switch(tempAddr)
+	switch(addr)
 	{
 		//????
 		case 0x4001:
@@ -130,65 +132,75 @@ uint16_t getRegisterVal(uint16_t addr,uint16_t *tempData)
 		//????
 		case 0x4003: 
             t32=rtHight;
-            *tempData = (uint16_t)((t32>>16) & 0x0000ffff); 
+            *tempData = (uint16_t)((t32) & 0x0000ffff); 
 			break; 
 		case 0x4004:
-			//TEMP=INSTANT_R*1000.0;
-			//*tempData = TEMP & 0x0000ffff; 
-           // __t32=flow*10/6;
-           // *tempData=flow;
-
+			t32=rtPressure;
+			*tempData = (uint16_t)((t32>>16) & 0x0000ffff);
 			break; 
-		//????
-
 		case 0x4005:
-
-            //__t32=rtBalanceMoney/100;
-			//*tempData = (uint16_t)((__t32>>16) & 0x0000ffff); 
-             *tempData = 0x5555; 
+			t32=rtPressure;
+			*tempData = (uint16_t)((t32) & 0x0000ffff); 
 			break;
 		case 0x4006: 
-
-			//__t32=rtBalanceMoney/100;
-			//*tempData =(uint16_t)( __t32 & 0x0000ffff); 
-            *tempData = 0x5555; 
+			t32=rtTemperatureIn;
+            t32/=1000;
+            if(t32>127)t32=127;
+            if(t32<-128)t32=-128;
+            t16=(int16_t)t32;
+			*tempData = t16;
 			break;	
-		//????
 		case 0x4007: 
-			//WR_LL=TOTAL_R+TMP_LL;
-			//TEMP=WR_LL;
-               *tempData = 0x5555; 
+			t32=rtEx0Pressure;
+			*tempData = (uint16_t)((t32>>16) & 0x0000ffff);
 			break;	
 		case 0x4008: 
-			//WR_LL=TOTAL_R+TMP_LL;
-			//TEMP=WR_LL;
-             *tempData = 0x5555; 
+			t32=rtEx0Pressure;
+			*tempData = (uint16_t)((t32) & 0x0000ffff); 
 			break;
         case 0x4009:
-            //__t32=mainSystemData.totalConsumeVolume;
-           // __t32 += rtVolume_m3;            
-			//*tempData =(uint16_t)(mainSystemData.price); 
-            *tempData=0x5555;
+			t32=rtEx1Pressure;
+			*tempData = (uint16_t)((t32>>16) & 0x0000ffff);
 			break;   
         case 0x400a:
-            //__t32=mainSystemData.transferMoney;
-            //__t32=__t32/100;
-            //*tempData =(uint16_t)( (__t32>>16) & 0x0000ffff); 
-            *tempData=0x5555;
+			t32=rtEx1Pressure;
+			*tempData = (uint16_t)((t32) & 0x0000ffff); 
             break;   
         case 0x400b:
-            //__t32=mainSystemData.transferMoney;
-            //__t32=__t32/100;
-           // *tempData =(uint16_t)( __t32 & 0x0000ffff); 
-            *tempData=0x5555;
-            break;
+			t32=rtTemperatureEx0;
+			*tempData = (uint16_t)((t32>>16) & 0x0000ffff);
+			break;   
         case 0x400c:
-            //*tempData =(uint16_t)(mainSystemData.transferTime);
-            *tempData=0x5555;
+			t32=rtTemperatureEx0;
+			*tempData = (uint16_t)((t32) & 0x0000ffff); 
             break;
+		case 0x400d:
+			t32=rtTemperatureEx1;
+			*tempData = (uint16_t)((t32>>16) & 0x0000ffff);
+			break;   	
+		case 0x400e:
+			t32=rtTemperatureEx1;
+			*tempData = (uint16_t)((t32) & 0x0000ffff); 
+            break;	
+		case 0x400f:
+			t16=rtValueBat;
+			*tempData = (uint16_t)t16; 
+            break;
+		case 0x4010:
+			t16=deviceEvent.t16;
+			*tempData = (uint16_t)t16; 
+            break;		
+		case 0x4011:
+			t32=hardStatus.t32;
+			*tempData = (uint16_t)((t32>>16) & 0x0000ffff);
+            break;	
+		case 0x4012:
+			t32=hardStatus.t32;
+			*tempData = (uint16_t)(t32 & 0x0000ffff);
+            break;	            
 		default: 
+			*tempData = 0x55aa;
 			break;	
-          
 	}
 	return result;
 }

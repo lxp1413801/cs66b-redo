@@ -56,6 +56,7 @@ extern "C"{
 	#define PSW_SET_BL_ON_TM					39
 	#define PSW_SET_LCD_ON_TM					398	
 	#define PSW_SET_MODBUS_ID					8
+	#define PSW_SHOW_VER						368
 	//==============================================================
 	//定义菜单,主界面
 	#define MENU_HOME							0x00
@@ -184,15 +185,18 @@ extern "C"{
 	
 	
 	//背光打开时间
-	#define	MENU_PSW_SET_BL_ON_TM				0xf2
-	#define sub_MENU_PSW_SET_BL_ON_TM			0x00
+	#define	MENU_SET_BL_ON_TM				0xf2
+	#define sub_MENU_SET_BL_ON_TM			0x00
 	
 	//lcd显示的时间
-	#define MENU_PSW_SET_LCD_ON_TM				0xf3
-	#define sub_MENU_PSW_SET_LCD_ON_TM			0x00
+	#define MENU_SET_LCD_ON_TM				0xf3
+	#define sub_MENU_SET_LCD_ON_TM			0x00
 	//设置485ID
-	#define MENU_PSW_SET_MODBUS_ID				0xf4
-	#define sub_MENU_PSW_SET_MODBUS_ID			0x00	
+	#define MENU_SET_MODBUS_ID				0xf4
+	#define sub_MENU_SET_MODBUS_ID			0x00	
+	//显示版本号
+	#define MENU_SHOW_VER					0xf5
+	#define sub_MENU_SHOW_VER			0x00		
 	typedef union{
 		uint8_t t8;
 		struct{
