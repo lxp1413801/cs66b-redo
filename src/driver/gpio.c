@@ -96,15 +96,15 @@ void all_status_pins_mod_out(void)
 
 void rs_485_set_rx(void)
 {
-	set_port_mode_dig(STATUS_485_PORT,STATUS_485_PINS);
-	set_port_mode_out(STATUS_485_PORT,STATUS_485_PINS);
-	set_port_value_low(STATUS_485_PORT,STATUS_485_PINS);
+	set_port_mode_dig(RS_485_RE_PORT,RS_485_RE_PINS);
+	set_port_mode_out(RS_485_RE_PORT,RS_485_RE_PINS);
+	set_port_value_low(RS_485_RE_PORT,RS_485_RE_PINS);
 }
 void rs_485_set_tx(void)
 {
-	set_port_mode_dig(STATUS_485_PORT,STATUS_485_PINS);
-	set_port_mode_out(STATUS_485_PORT,STATUS_485_PINS);
-	set_port_value_hight(STATUS_485_PORT,STATUS_485_PINS);
+	set_port_mode_dig(RS_485_RE_PORT,RS_485_RE_PINS);
+	set_port_mode_out(RS_485_RE_PORT,RS_485_RE_PINS);
+	set_port_value_hight(RS_485_RE_PORT,RS_485_RE_PINS);
 }
 //add 
 //ra9
@@ -259,6 +259,7 @@ void unused_pins_deinit(void)
 
 void pre_system_sleep(void)
 {
+	#if 0
 	//pre_system_sleep_deinit_all_pins();
 	//all_status_pins_mod_in();
 	all_status_pins_mod_out();
@@ -274,6 +275,7 @@ void pre_system_sleep(void)
 	
 	rs_485_set_rx();
 	unused_pins_deinit();
+
     IFS0=0x00;
     IFS1=0x00;
     IFS2=0x00;
@@ -287,4 +289,33 @@ void pre_system_sleep(void)
     //U2MODEbits.UARTEN=0;
     asm("NOP");
     asm("NOP");   
+	#else
+	all_status_pins_mod_out();
+	all_bj_disable();
+	check_solor_set_low();
+	back_night_off();
+
+    iic_pins_deinit();
+    run_status_off();
+    ad421_chip1_pins_deinit();
+    ad421_chip0_pins_deinit();
+	
+	rs_485_set_rx();
+	 unused_pins_deinit();
+	kz_vadd_off();
+    IFS0=0x00;
+    IFS1=0x00;
+    IFS2=0x00;
+    IFS3=0x00;
+    IFS4=0x00;
+    IFS5=0x00;    
+    IFS6=0x00;
+    IFS7=0x00;        
+    //lcd_off();
+    //U1MODEbits.UARTEN=0;
+    //U2MODEbits.UARTEN=0;
+    asm("NOP");
+    asm("NOP");  		
+	#endif
+	
 }
