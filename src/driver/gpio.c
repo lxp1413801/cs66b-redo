@@ -96,15 +96,15 @@ void all_status_pins_mod_out(void)
 
 void rs_485_set_rx(void)
 {
-	set_port_mode_dig(STATUS_485_PORT,STATUS_485_PINS);
-	set_port_mode_out(STATUS_485_PORT,STATUS_485_PINS);
-	set_port_value_low(STATUS_485_PORT,STATUS_485_PINS);
+	set_port_mode_dig(RS_485_RE_PORT,RS_485_RE_PINS);
+	set_port_mode_out(RS_485_RE_PORT,RS_485_RE_PINS);
+	set_port_value_low(RS_485_RE_PORT,RS_485_RE_PINS);
 }
 void rs_485_set_tx(void)
 {
-	set_port_mode_dig(STATUS_485_PORT,STATUS_485_PINS);
-	set_port_mode_out(STATUS_485_PORT,STATUS_485_PINS);
-	set_port_value_hight(STATUS_485_PORT,STATUS_485_PINS);
+	set_port_mode_dig(RS_485_RE_PORT,RS_485_RE_PINS);
+	set_port_mode_out(RS_485_RE_PORT,RS_485_RE_PINS);
+	set_port_value_hight(RS_485_RE_PORT,RS_485_RE_PINS);
 }
 //add 
 //ra9

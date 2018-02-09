@@ -749,7 +749,7 @@ void __enter_menu_set_modbus_addr(void)
 }
 
 //__enter_menu_show_ver
-__enter_menu_show_ver(void)
+void __enter_menu_show_ver(void)
 {
 	menu=MENU_SHOW_VER;
 	subMenu=sub_MENU_SHOW_VER;
@@ -780,9 +780,11 @@ void __down_base_zero_adj(void)
 	int32_t t32=0;
 	int16_t max,min;
 	if(stSysData.pos==HOTIZONTAL){
-        if(t32>(int32_t)(stSysData.d))t32=(int32_t)(stSysData.d);
+        //if(t32>(int32_t)(stSysData.d))t32=(int32_t)(stSysData.d);
+        t32=(int32_t)(stSysData.d);
     }else{
-        if(t32>(int32_t)(stSysData.h + (stSysData.d * 2)))t32=(int32_t)(stSysData.h + (stSysData.d * 2));
+        //if(t32>(int32_t)(stSysData.h + (stSysData.d * 2)))t32=(int32_t)(stSysData.h + (stSysData.d * 2));
+        t32=(int32_t)(stSysData.h + (stSysData.d * 2));
     }		
 	if(t32>32767)t32=32767;
 	if(t32<1000)t32=1000;
@@ -1031,9 +1033,11 @@ void __up_base_zero_adj(void)
 	int32_t t32=0;
 	int16_t max,min;
 	if(stSysData.pos==HOTIZONTAL){
-        if(t32>(int32_t)(stSysData.d))t32=(int32_t)(stSysData.d);
+        //if(t32>(int32_t)(stSysData.d))t32=(int32_t)(stSysData.d);
+        t32=(int32_t)(stSysData.d);
     }else{
-        if(t32>(int32_t)(stSysData.h + (stSysData.d * 2)))t32=(int32_t)(stSysData.h + (stSysData.d * 2));
+        //if(t32>(int32_t)(stSysData.h + (stSysData.d * 2)))t32=(int32_t)(stSysData.h + (stSysData.d * 2));
+        t32=(int32_t)(stSysData.h + (stSysData.d * 2));
     }			
 	if(t32>32767)t32=32767;
 	if(t32<1000)t32=1000;
@@ -1229,15 +1233,17 @@ void __up_adj_wakeup_period(void)
 	uint16_t t16;
 	t16=(*(uint16_t*)(&adjValue));
 	switch(t16){
-		case 0:t16=2;break;
-		case 2:t16=4;break;
-		case 4:t16=6;break;
-		case 6:t16=10;break;
 		
+		case WAKE_UP_SAMPLE_FORBID:t16=5;break;
+		case 5:t16=10;break;
 		case 10:t16=20;break;
-		case 20:t16=40;break;
-		case 40:t16=60;break;
-		case 60:t16=100;break;
+		
+		case 20:t16=30;break;
+		case 30:t16=60;break;
+		case 60:t16=120;break;
+		case 120:t16=180;break;
+		case 180:t16=0;break;
+		case 0:t16=WAKE_UP_SAMPLE_FORBID;break;
 		/*
 		case 100:t16=200;break;
 		case 200:t16=400;break;
@@ -2099,13 +2105,10 @@ void __set_long_bar_level_scale(void)
 
 void __set_long_work_mode(void)
 {
-	uint8_t* p;
-	//int32_t t32;
-	//sysDataDef_t* stp=(sysDataDef_t*)globleBuffer1; 
-	//m_flash_read(SYSTEM_DATA_ADDR,globleBuffer1,sizeof(sysDataDef_t));	
+	uint8_t* p;	
     p=(uint8_t*)(&adjValue);	
-	//stp->barScale=*p;
     dwm=*p;
+	
     __exit_menu_to_home_unsave();  	
 }
 
@@ -2221,7 +2224,7 @@ void key_process_set_long(void)
 		case MENU_SET_BL_ON_TM:		__set_long_bl_on_tm();break;
 		case MENU_SET_LCD_ON_TM:	__set_long_lcd_on_tm();break;
 		case MENU_SET_MODBUS_ID:	__set_long_modbus_id();break;
-		case PSW_SHOW_VER:			
+		case MENU_SHOW_VER:			
 		default:__exit_menu_to_home_unsave();
 		break;
 	}
@@ -2328,12 +2331,14 @@ void key_process(void)
     event &= ~flg_KEY_DOWN;
     key=get_key_value();
     if(keyValue==KEY_VALUE_NONE && key== KEY_VALUE_NONE)return;
+	lcdOnTime=(stSysData.lcdOnTime)*60;
     do{
 		if(!(LCDCONbits.LCDEN)){
-			lcdOnTime=(stSysData.lcdOnTime)*60;
+			
 			lcd_on();
 			break;
 		}
+		
 		//玛德，这里可能有问题！可以把这个判断放在key_waite_release函数中，结构更简单！！！
 		if(!((keyValue == KEY_VALUE_UP || keyValue==KEY_VALUE_DOWN) && \
 		(menu==MENU_SET_BASE_ZERO || menu==MENU_SET_ILOOP_ADJUST) )){

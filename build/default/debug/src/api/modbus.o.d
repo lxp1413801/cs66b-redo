@@ -1,5 +1,5 @@
-build/default/debug/src/api/sysdata.o:  \
-src/api/sysdata.c  \
+build/default/debug/src/api/modbus.o:  \
+src/api/modbus.c  \
  src/api/../includes/includes.h  \
  src/api/../includes/../../mcc_generated_files/mcc.h  \
  src/api/../includes/../../mcc_generated_files/pin_manager.h  \

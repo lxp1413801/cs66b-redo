@@ -267,6 +267,7 @@ void modbus_response_process(uint8_t* rbuf,uint16_t rlen){
 	//uint8_t resp=0;
 	st_modbusComReqStructDef* pmdbs=(st_modbusComReqStructDef*)rbuf;
 	//if(!(pmdbs->addr ==0xff  || pmdbs->addr==mainSystemData.shortID || pmdbs->addr!=0x00))return;
+    if(rlen<4)return;
     if(!( pmdbs->addr==stSysData.ModbusId || pmdbs->addr!=0x00))return;
 	if(!(crc_verify(rbuf,rlen)))return ;
 	//function expand expand

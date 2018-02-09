@@ -1379,8 +1379,15 @@ void ui_disp_menu_ext_show_mode(void)
 
 void ui_disp_menu_wake_up_period(void)
 {
+	int16_t t16;
 	lcd_clear_all();
-	ui_disp_adj_xfixed_static((uint8_t*)(" slp"),(int16_t)adjValue,3);
+	t16=(int16_t)adjValue;
+	if(t16==WAKE_UP_SAMPLE_FORBID){
+		lcd_show_string((uint8_t*)(" slp off"));
+		lcd_disp_refresh(); 
+	}else{
+		ui_disp_adj_xfixed_static((uint8_t*)(" slp"),t16,3);
+	}
 }
 
 void ui_disp_menu_rf_send_period(void)

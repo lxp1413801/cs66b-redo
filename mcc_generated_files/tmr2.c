@@ -155,7 +155,7 @@ void __attribute__ ((weak)) TMR2_CallBack(void)
 
 void TMR2_Start( void )
 {
-	if(tmr2Run)return;
+	if(tmr2Run && T2CONbits.TON)return;
     /* Reset the status information */
     tmr2_obj.timerElapsed = false;
 

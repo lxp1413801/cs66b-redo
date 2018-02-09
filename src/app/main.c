@@ -36,9 +36,9 @@ void thread_main_pre(void)
     __nop();
     ticker_ms_delay(1000);
 
-	data_init_all();    
+	  
 	ui_disp_start_cs600(6);
-
+	data_init_all();  
 	__nop();
 	__nop();
     all_status_pins_mod_in();
@@ -117,10 +117,12 @@ void event_sample_sleep_wake_mode(void)
     uint8_t t8=0;
     uint32_t t32=0;
 	//return;
-    
+    if(stSysData.sleepPeriod == WAKE_UP_SAMPLE_FORBID)return;
 	if(stSysData.sleepPeriod==0 || menu!=0 )return;
+    //if(stSysData.sleepPeriod)sleepSec++;
+    sleepSec++;
 	if(sleepSec<(stSysData.sleepPeriod))return ;
-	if(stSysData.sleepPeriod)sleepSec++;
+	
     if( !T1CONbits.TON )TMR1_Start();
     ticker_ms_set(0);
 	sleepSec=0;
@@ -131,11 +133,12 @@ void event_sample_sleep_wake_mode(void)
 	delay_ms(30);    
 	do{
 		t8=sample_process();
-		#if ADS1148_CHIP_OTRHER_ONE_ENABLE 
-		if(t8==0 || t8==0x0c)break;
-		#else
+		// #if ADS1148_CHIP_OTRHER_ONE_ENABLE 
+		// if(t8==0 || t8==0x0c)break;
+		// #else
+		// if(t8==0)break;	
+		// #endif
 		if(t8==0)break;	
-		#endif
 
 	}while(1);   
 	ads1148_pre_sleep();

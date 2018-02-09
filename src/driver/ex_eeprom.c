@@ -115,10 +115,10 @@ extern uint8_t globleBuffer[];
 void at24c02_write_n_byte(st_iicDeviceObj* obj,uint8_t addr,uint8_t* buf,uint16_t len)
 {
 	uint16_t i;
-    obj->deviceVddOn();
+    
 	uint8_t tmpBuf[256];
 	at24c02_read_n_byte(obj,addr,tmpBuf,len);
-	
+	obj->deviceVddOn();
 	for(i=0;i<len;i++){
 		if(tmpBuf[i]==buf[i])continue;
 		
