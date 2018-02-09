@@ -31,6 +31,5 @@ src/driver/../api/api.h  \
 src/driver/../api/../driver/drivers.h  \
  src/driver/../api/ui.h  \
 src/driver/../api/key_menu.h  \
- src/driver/../api/modbus.h  \
-src/driver/../global/globle.h  \
+ src/driver/../global/globle.h  \
  src/driver/../global/../../mcc_generated_files/mcc.h 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project>
-  <executable name="dist/default/debug/cs66b-redo.debug.elf">
+  <executable name="dist/default/debug/cs66b.X.debug.elf">
     <memory name="data">
       <units>bytes</units>
       <length>8192</length>
@@ -11,8 +11,8 @@
     <memory name="program">
       <units>bytes</units>
       <length>131316</length>
-      <used>75249</used>
-      <free>56067</free>
+      <used>74265</used>
+      <free>57051</free>
     </memory>
   </executable>
 </project>

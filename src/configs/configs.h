@@ -40,7 +40,7 @@
 	#endif
 	
 	#ifndef SOFTWARE_VER
-		#define SOFTWARE_VER " uer 30 "
+		#define SOFTWARE_VER " uer 101"
 	#endif
 	
 

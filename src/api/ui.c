@@ -1550,6 +1550,13 @@ void ui_disp_menu_modbus_id(void)
 	ui_disp_adj_xfixed_pt_t8((uint8_t*)"  id",(int8_t)adjValue,adjLocation);
 }
 
+void ui_disp_menu_ver(void)
+{
+	lcd_clear_all();
+	//ui_disp_adj_xfixed_pt_t8((uint8_t*)"  id",(int8_t)adjValue,adjLocation);
+	lcd_show_string((uint8_t*)SOFTWARE_VER);
+	lcd_disp_refresh(); 
+}
 void ui_disp_menu(void)
 {
 
@@ -1601,9 +1608,10 @@ void ui_disp_menu(void)
 		case MENU_CALIB_EPR0_2ND:
 		case MENU_CALIB_EPR1_2ND:		ui_disp_menu_calib_x_2nd();break;	
 
-		case MENU_PSW_SET_BL_ON_TM:		ui_disp_menu_bl_on_tm();break;
-		case MENU_PSW_SET_LCD_ON_TM:	ui_disp_menu_lcd_on_tm();break;
-		case MENU_PSW_SET_MODBUS_ID:	ui_disp_menu_modbus_id();break;
+		case MENU_SET_BL_ON_TM:		ui_disp_menu_bl_on_tm();break;
+		case MENU_SET_LCD_ON_TM:	ui_disp_menu_lcd_on_tm();break;
+		case MENU_SET_MODBUS_ID:	ui_disp_menu_modbus_id();break;
+		case MENU_SHOW_VER:			ui_disp_menu_ver();break;
 		default:break;
 	}	
 }

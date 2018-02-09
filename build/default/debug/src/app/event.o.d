@@ -42,8 +42,7 @@ src/app/../includes/../api/api.h  \
  src/app/../includes/../api/../driver/drivers.h  \
  src/app/../includes/../api/ui.h  \
 src/app/../includes/../api/key_menu.h  \
- src/app/../includes/../api/modbus.h  \
-src/app/../includes/../app/app.h  \
+ src/app/../includes/../app/app.h  \
  src/app/../includes/../app/../../mcc_generated_files/mcc.h  \
  src/app/../includes/../app/main.h  \
 src/app/../includes/../app/event.h  \

@@ -8,42 +8,49 @@ volatile bool sampling=true;
 
 void m_system_init(void)
 {
-    PIN_MANAGER_Initialize();
+    //PIN_MANAGER_Initialize();
     OSCILLATOR_Initialize();
-    INTERRUPT_Initialize();
-    UART2_Initialize();
-    UART1_Initialize();
-    ADC1_Initialize();
-    TMR2_Initialize();
-    RTCC_Initialize();
-    TMR1_Initialize();
+    //INTERRUPT_Initialize();
+    //UART2_Initialize();
+    //UART1_Initialize();
+    //ADC1_Initialize();
+    //TMR2_Initialize();
+    //RTCC_Initialize();
+    //TMR1_Initialize();
 }
 
 void thread_main_pre(void)
 {
-	#if 0
- 	all_status_pins_mod_in();
+	all_status_pins_mod_in();
 	exFunctionSta=get_ex_function_status();
 	//#if BJ_BAORD_EN
 	all_bj_init();
 	bj_all_off();
 	//#endif
+	
+	
     kz_vadd_on();
     key_init();
     lcd_init();
     __nop();
     __nop();
     ticker_ms_delay(1000);
+
 	data_init_all();    
 	ui_disp_start_cs600(6);
+
 	__nop();
 	__nop();
+    all_status_pins_mod_in();
 	run_status_init();
 	__nop();
-	__nop();	
-	all_bj_disable();	
+	__nop();
+	
+	//all_bj_disable();
+	
     ads1148_init_all_obj();
-	ads1148_init_device(); 	
+	ads1148_init_device(); 
+	
     blShowTime=stSysData.blOnTm;
 	blShowTime*=2;
 	
@@ -52,10 +59,6 @@ void thread_main_pre(void)
     ad421ObjChip0.pins_deinit();
     ad421ObjChip1.pins_deinit();
 	//#endif	
-	#else
-    ads1148_init_all_obj();
-	ads1148_init_device(); 		
-	#endif
 }
 
 /*
@@ -274,10 +277,10 @@ void event_rtc_no_operation_tm_out(void)
 
 void event_rtc_lcd_off(void)
 {
-	if(lcdOnTime>0){
+	if(lcdOnTime>0 &&  menu==0){
         lcdOnTime--;
         //lcdOnTime=(stSysData.lcdOnTime)*60;
-        if(stSysData.lcdOnTime>0 && lcdOnTime==0 && exFunctionSta==0){
+        if(stSysData.lcdOnTime>0 && lcdOnTime==0 && exFunctionSta==0 ){
             lcd_off();
         }
     }
@@ -285,22 +288,12 @@ void event_rtc_lcd_off(void)
 uint8_t uartTestStr[]="UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU";
 int main(void)
 {
-	uint16_t t16;
-    pre_system_sleep_deinit_all_pins();
-    m_system_init(); 
-	thread_main_pre();	
-	while(1){
-        __nop();
-        __nop();
-		ads1148_pre_sleep();
-		pre_system_sleep();
-		TMR1_Stop();
-		TMR2_Stop();	
-		//lcd_off();
-		Sleep();
-		__nop();
-		__nop();    	
-	}    
+	
+    //m_system_init();
+    //pre_system_sleep_deinit_all_pins();
+    uint16_t t16;
+    SYSTEM_Initialize(); 
+    thread_main_pre();	
     while (1){
 		if(event & flg_KEY_DOWN){
 			//event &= ~flg_KEY_DOWN;
@@ -314,7 +307,7 @@ int main(void)
 			if(lcdTwinkle>0)lcdTwinkle--;
             
             if(globleHalfSec & 0x01ul)event |= flg_RTC_SECOND;
-            //if(LCDCONbits.LCDEN)ui_disp_menu();
+            if(LCDCONbits.LCDEN)ui_disp_menu();
         }
         if(event & flg_RTC_SECOND){
             event &= ~flg_RTC_SECOND;
@@ -323,7 +316,7 @@ int main(void)
 			event_rtc_lcd_off();
 			
             //if(noEventTimeOut<blShowTime)noEventTimeOut=blShowTime;
-			//event_sample_sleep_wake_mode();	
+			event_sample_sleep_wake_mode();	
             
             
             //ui_disp_all_on();
@@ -343,8 +336,8 @@ int main(void)
             uart1ReceivedCount=0;
             modbus_response_process(globleBuffer,t16);
         }
-		//event_sample_real_time_mode();
-	
+		event_sample_real_time_mode();
+		//event_sample_sleep_wake_mode();		
         event_enter_sleep();
     }
     return -1;

@@ -106,8 +106,8 @@
 	extern uint8_t volatile exFunctionSta; 
 
 	//
-	#define RS_485_RE_PINS	PIN1
-	#define RS_485_RE_PORT	portd
+	#define RS_485_RE	PIN1
+	#define RS_485_PORT	portd
 	extern void rs_485_set_rx(void);
 	extern void rs_485_set_tx(void);	
 #ifdef __cplusplus

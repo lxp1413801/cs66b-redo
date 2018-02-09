@@ -726,26 +726,35 @@ void __enter_menu_set_rf_send_period(void)
 
 void __enter_menu_set_bl_on_tm(void)
 {
-	menu=MENU_PSW_SET_BL_ON_TM;
-	subMenu=sub_MENU_PSW_SET_BL_ON_TM;
+	menu=MENU_SET_BL_ON_TM;
+	subMenu=sub_MENU_SET_BL_ON_TM;
 	*((uint8_t*)(&adjValue))=stSysData.blOnTm;
 	adjLocation=0;		
 }
 
 void __enter_menu_set_lcd_on_tm(void)
 {
-	menu=MENU_PSW_SET_LCD_ON_TM;
-	subMenu=sub_MENU_PSW_SET_LCD_ON_TM;
+	menu=MENU_SET_LCD_ON_TM;
+	subMenu=sub_MENU_SET_LCD_ON_TM;
 	*((uint8_t*)(&adjValue))=stSysData.lcdOnTime;
 	adjLocation=0;		
 }
 
 void __enter_menu_set_modbus_addr(void)
 {
-	menu=MENU_PSW_SET_MODBUS_ID;
-	subMenu=sub_MENU_PSW_SET_MODBUS_ID;
+	menu=MENU_SET_MODBUS_ID;
+	subMenu=sub_MENU_SET_MODBUS_ID;
 	*((uint8_t*)(&adjValue))=stSysData.ModbusId;
 	adjLocation=0;		
+}
+
+//__enter_menu_show_ver
+__enter_menu_show_ver(void)
+{
+	menu=MENU_SHOW_VER;
+	subMenu=sub_MENU_SHOW_VER;
+	//*((uint8_t*)(&adjValue))=stSysData.ModbusId;
+	//adjLocation=0;		
 }
 void __exit_menu_to_home_unsave(void)
 {
@@ -938,8 +947,8 @@ void key_process_down(void)
 		//key_shift_loc((uint8_t*)(&adjLocation),0,4);
 		//paramChangedFlag=false;
 		break;
-		case MENU_PSW_SET_LCD_ON_TM:key_shift_loc((uint8_t*)(&adjLocation),0,2);break;
-		case MENU_PSW_SET_MODBUS_ID:key_shift_loc((uint8_t*)(&adjLocation),0,2);break;	
+		case MENU_SET_LCD_ON_TM:key_shift_loc((uint8_t*)(&adjLocation),0,2);break;
+		case MENU_SET_MODBUS_ID:key_shift_loc((uint8_t*)(&adjLocation),0,2);break;	
 		default:break;
 	}	
 }
@@ -1328,9 +1337,9 @@ void key_process_up(void)
 			paramChangedFlag=!paramChangedFlag;
 			//key_adj_value_float(&m_floatAdj,adjLocation);break;
 			break;
-		case MENU_PSW_SET_BL_ON_TM:__up_adj_bl_on_tm();break;
-		case MENU_PSW_SET_LCD_ON_TM:__up_adj_lcd_on_tm();break;
-		case MENU_PSW_SET_MODBUS_ID:__up_adj_modbus_id();break;
+		case MENU_SET_BL_ON_TM:__up_adj_bl_on_tm();break;
+		case MENU_SET_LCD_ON_TM:__up_adj_lcd_on_tm();break;
+		case MENU_SET_MODBUS_ID:__up_adj_modbus_id();break;
 		default:break;
 	}		
 }
@@ -1378,6 +1387,7 @@ void key_process_set_up_long(void)
 		//2018.02.08增加
 		case PSW_SET_LCD_ON_TM:			__enter_menu_set_lcd_on_tm();			break;
 		case PSW_SET_MODBUS_ID:			__enter_menu_set_modbus_addr();			break;
+		case PSW_SHOW_VER:				__enter_menu_show_ver();				break;
 		default:break;
 		}
 	}	
@@ -2208,10 +2218,12 @@ void key_process_set_long(void)
 		case MENU_CALIB_EPR0_2ND:		__set_short_calib_epr0_2nd(goHOME);break;
 		case MENU_CALIB_EPR1_2ND:		__set_short_calib_epr1_2nd(goHOME);break;	
 		
-		case MENU_PSW_SET_BL_ON_TM:		__set_long_bl_on_tm();break;
-		case MENU_PSW_SET_LCD_ON_TM:	__set_long_lcd_on_tm();break;
-		case MENU_PSW_SET_MODBUS_ID:	__set_long_modbus_id();break;
-		default:break;
+		case MENU_SET_BL_ON_TM:		__set_long_bl_on_tm();break;
+		case MENU_SET_LCD_ON_TM:	__set_long_lcd_on_tm();break;
+		case MENU_SET_MODBUS_ID:	__set_long_modbus_id();break;
+		case PSW_SHOW_VER:			
+		default:__exit_menu_to_home_unsave();
+		break;
 	}
 }
 
