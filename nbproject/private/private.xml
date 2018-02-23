@@ -18,16 +18,21 @@
             <file>file:/F:/2017/cs66-b/cs66b.X/src/app/sample.h</file>
         </group>
         <group name="cs600_test">
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/api/sysdata.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/app/main.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/api/sysdata.h</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/api/modbus.h</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/mcc_generated_files/uart1.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/soc/ticker.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/driver/gpio.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/api/key_menu.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/app/event.h</file>
-            <file>file:/F:/2017/cs66-b/cs66b.X/src/api/modbus.c</file>
+            <file>file:/F:/2017/cs66-b/cs66b-redo/src/app/sample.c</file>
+            <file>file:/F:/2017/cs66-b/cs66b-redo/src/driver/gpio.c</file>
+            <file>file:/F:/2017/cs66-b/cs66b-redo/src/api/key_menu.c</file>
+            <file>file:/F:/2017/cs66-b/cs66b-redo/src/driver/i2c.h</file>
+            <file>file:/F:/2017/cs66-b/cs66b-redo/src/driver/lcd_code_table_ex.h</file>
+            <file>file:/F:/2017/cs66-b/cs66b-redo/src/driver/ads1148.c</file>
+            <file>file:/F:/2017/cs66-b/cs66b-redo/src/driver/gpio.h</file>
+            <file>file:/F:/2017/cs66-b/cs66b-redo/src/api/ui.c</file>
+            <file>file:/F:/2017/cs66-b/cs66b-redo/src/api/sysdata.c</file>
+            <file>file:/F:/2017/cs66-b/cs66b-redo/mcc_generated_files/uart2.c</file>
+            <file>file:/F:/2017/cs66-b/cs66b-redo/src/app/main.c</file>
+            <file>file:/F:/2017/cs66-b/cs66b-redo/mcc_generated_files/mcc.c</file>
+            <file>file:/F:/2017/cs66-b/cs66b-redo/src/driver/ex_eeprom.c</file>
+            <file>file:/F:/2017/cs66-b/cs66b-redo/src/driver/lcd.c</file>
+            <file>file:/F:/2017/cs66-b/cs66b-redo/mcc_generated_files/tmr2.c</file>
         </group>
     </open-files>
 </project-private>
