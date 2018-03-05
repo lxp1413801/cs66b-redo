@@ -11,7 +11,7 @@
 
 
 	#ifndef EEPROM_PER_VIA_IO
-		#define EEPROM_PER_VIA_IO 1
+		#define EEPROM_PER_VIA_IO 0
 	#endif	
 	
 	#ifndef UART_1_REC_IDLE_TIME_OUT 

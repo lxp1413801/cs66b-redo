@@ -1,3 +1,29 @@
+功耗以及显示均能够接受的显示方式1
+    LCDPSbits.BIASMD=0;
+    LCDPSbits.LP=2;
+	//LCDPSbits.WFT=1;
+    
+    LCDREFbits.LCDIRE=1;
+    LCDREFbits.LCDCST=2;
+    LCDREFbits.VLCD1PE=0;
+    LCDREFbits.VLCD2PE=0;
+    LCDREFbits.VLCD3PE=0;
+    
+    LCDREFbits.LRLAP=1;
+    LCDREFbits.LRLBP=3;
+    LCDREFbits.LRLAT=4;
+
+	
+更好一点的：
+    LCDREFbits.LCDIRE=1;
+    LCDREFbits.LCDCST=3;
+    LCDREFbits.VLCD1PE=0;
+    LCDREFbits.VLCD2PE=0;
+    LCDREFbits.VLCD3PE=0;
+    
+    LCDREFbits.LRLAP=2;
+    LCDREFbits.LRLBP=3;
+    LCDREFbits.LRLAT=2;
 1,报警计算以及报警输出						[ok][ok]
 2,4-20mA电流环设置以及输出					[ok][ok]
 

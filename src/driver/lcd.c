@@ -862,18 +862,18 @@ void lcd_config(void)
     LCDREGbits.MODE13=1;
     
     LCDPSbits.BIASMD=0;
-    LCDPSbits.LP=3;
+    LCDPSbits.LP=2;
 	//LCDPSbits.WFT=1;
     
     LCDREFbits.LCDIRE=1;
-    LCDREFbits.LCDCST=5;
+    LCDREFbits.LCDCST=2;
     LCDREFbits.VLCD1PE=0;
     LCDREFbits.VLCD2PE=0;
     LCDREFbits.VLCD3PE=0;
     
     LCDREFbits.LRLAP=1;
     LCDREFbits.LRLBP=3;
-    LCDREFbits.LRLAT=3;
+    LCDREFbits.LRLAT=4;
     
     
 
@@ -943,6 +943,8 @@ void lcd_config(void)
 
 void lcd_init(void)
 {
+    IEC6bits.LCDIE=0;
+    IFS6bits.LCDIF=0;
 	lcd_config();
 	//lcd_bl_init();
 	lcd_on();
@@ -950,6 +952,14 @@ void lcd_init(void)
     //back_night_on();
     asm("nop");
     asm("nop");
+    
+    //IEC6bits.LCDIE=1;
+}
 
+void __attribute__ ( ( interrupt, no_auto_psv ) ) _Interrupt100 ( void )
+{
+    IFS6bits.LCDIF=0;
+    asm("nop");
+    asm("nop");
 }
 //file end

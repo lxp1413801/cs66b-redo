@@ -34,11 +34,12 @@ void thread_main_pre(void)
     lcd_init();
     __nop();
     __nop();
-    ticker_ms_delay(1000);
-
-	  
+    ticker_ms_delay(2000);
+    lcd_off();
+    data_init_all(); 
+	lcd_on();
 	ui_disp_start_cs600(6);
-	data_init_all();  
+	 
 	__nop();
 	__nop();
     all_status_pins_mod_in();
@@ -316,7 +317,7 @@ int main(void)
             event &= ~flg_RTC_SECOND;
             event_rtc_bl_off();
 			event_rtc_no_operation_tm_out();
-			event_rtc_lcd_off();
+			//event_rtc_lcd_off();
 			
             //if(noEventTimeOut<blShowTime)noEventTimeOut=blShowTime;
 			event_sample_sleep_wake_mode();	

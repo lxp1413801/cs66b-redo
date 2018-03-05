@@ -708,12 +708,14 @@ int32_t cal_diff_p_to_h(int32_t p)
     t32=(int32_t)f1;	
     //if(t32<0l)t32=0l;
 	//rtHight=t32;
+	/*
 	if(stSysData.pos==HOTIZONTAL){
         if(t32>(int32_t)(stSysData.d))t32=(int32_t)(stSysData.d);
     }else{
-        if(t32>(int32_t)(stSysData.h + (stSysData.d * 2)))t32=(int32_t)(stSysData.h + (stSysData.d * 2));
+        //if(t32>(int32_t)(stSysData.h + (stSysData.d * 2)))t32=(int32_t)(stSysData.h + (stSysData.d * 2));
+		if(t32>(int32_t)(stSysData.h ))t32=(int32_t)(stSysData.h );
     }	
-	
+	*/
 	return t32;
 }
 

@@ -273,7 +273,7 @@ int32_t sample_calc_diff_press_static_err(int32_t in)
 	int32_t t32;
 	float x,y;
 	y=(float)(calibTab0.staticPreAdj1.diffPrZero-calibTab0.staticPreAdj0.diffPrZero);
-    if(y>100)return in;
+    if(y>100 || y==0)return in;
     x=(float)(calibTab0.staticPreAdj1.pr-calibTab0.staticPreAdj0.pr);
     if(x<1)x=1;
     y=y/x;//y为斜率
