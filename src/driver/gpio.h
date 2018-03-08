@@ -110,6 +110,18 @@
 	#define RS_485_RE_PORT	portd
 	extern void rs_485_set_rx(void);
 	extern void rs_485_set_tx(void);	
+	
+	
+	//for hw ver:303
+	#if HW_VER >= HWVER303
+		#define KZ_QY_VCC_PINS	PIN6
+		#define KZ_QY_VCC_PORT	portb
+		
+		//extern extern kz_qy_vcc_config(void);
+		extern void kz_qy_vcc_enable(void);
+		extern void kz_qy_vcc_disable(void);
+	#endif
+	
 #ifdef __cplusplus
 	}
 #endif

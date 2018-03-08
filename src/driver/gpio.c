@@ -10,14 +10,41 @@ volatile bool lcdBlackNightOn=false;
 volatile bool kzAvddOn=false;
 
 uint8_t volatile exFunctionSta=0;
+#if HW_VER >= HWVER303
+/*
+void kz_qy_vcc_config(void)
+{
+	set_port_mode_dig(KZ_QY_VCC_PORT,KZ_QY_VCC_PINS);
+	set_port_mode_out(KZ_QY_VCC_PORT,KZ_QY_VCC_PINS);
+	set_port_value_hight(STATUS_MA_PORT,STATUS_MA_PINS);	
+}
+*/
+void  kz_qy_vcc_enable(void)
+{
+	set_port_mode_dig(KZ_QY_VCC_PORT,KZ_QY_VCC_PINS);
+	set_port_mode_out(KZ_QY_VCC_PORT,KZ_QY_VCC_PINS);	
+	set_port_value_low(KZ_QY_VCC_PORT,KZ_QY_VCC_PINS);	
+}
+void kz_qy_vcc_disable(void)
+{
+	set_port_mode_an(KZ_QY_VCC_PORT,KZ_QY_VCC_PINS);
+	set_port_mode_in(KZ_QY_VCC_PORT,KZ_QY_VCC_PINS);	
+}
+#endif	
 void kz_vadd_on(void)
 {
     if(kzAvddOn)return;
 	//set_portg_odc_en(PIN9);
 	set_portg_mode_dig(PIN9);
-    set_portg_value_low(PIN9);
+
 	set_portg_mode_out(PIN9);
-	//set_portg_value_low(PIN9);
+	
+	#if HW_VER >= HWVER303
+	set_portg_value_hight(PIN9);
+	#else
+    set_portg_value_low(PIN9);
+	#endif
+	
 	kzAvddOn=true;
     //delay_ms(10);
 }
@@ -26,7 +53,11 @@ void kz_vadd_off(void)
 	set_portg_mode_dig(PIN9);
 	//set_portg_mode_in(PIN9);
 	set_portg_mode_out(PIN9);
+	#if HW_VER >= HWVER303
+	set_portg_value_low(PIN9);
+	#else
 	set_portg_value_hight(PIN9);
+	#endif
 	kzAvddOn=false;
 }
 void back_night_on(void)
@@ -251,10 +282,13 @@ void unused_pins_deinit(void)
 	set_port_mode_dig(FLOAT_RD1_PORT,FLOAT_RD1_PIN);
 	set_port_mode_out(FLOAT_RD1_PORT,FLOAT_RD1_PIN);
 	set_port_value_hight(FLOAT_RD1_PORT,FLOAT_RD1_PIN);	
-
+#if HW_VER >= HWVER303
+	kz_qy_vcc_disable();
+#else
 	set_port_mode_dig(FLOAT_RB6_PORT,FLOAT_RB6_PIN);
 	set_port_mode_out(FLOAT_RB6_PORT,FLOAT_RB6_PIN);
 	set_port_value_hight(FLOAT_RB6_PORT,FLOAT_RB6_PIN);		
+#endif
 }
 
 void pre_system_sleep(void)

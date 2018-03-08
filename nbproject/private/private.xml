@@ -19,16 +19,17 @@
         </group>
         <group name="cs600_test">
             <file>file:/F:/2017/cs66-b/cs66b-redo/src/api/ui.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b-redo/mcc_generated_files/uart1.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b-redo/src/soc/ticker.c</file>
+            <file>file:/F:/2017/cs66-b/cs66b-redo/src/app/sample.c</file>
+            <file>file:/F:/2017/cs66-b/cs66b-redo/src/api/sysdata.c</file>
+            <file>file:/F:/2017/cs66-b/cs66b-redo/src/driver/gpio_config.h</file>
             <file>file:/F:/2017/cs66-b/cs66b-redo/src/app/main.c</file>
             <file>file:/F:/2017/cs66-b/cs66b-redo/src/driver/lcd.h</file>
-            <file>file:/F:/2017/cs66-b/cs66b-redo/mcc_generated_files/adc1.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b-redo/src/api/key_menu.c</file>
+            <file>file:/F:/2017/cs66-b/cs66b-redo/src/driver/gpio.c</file>
             <file>file:/F:/2017/cs66-b/cs66b-redo/mcc_generated_files/mcc.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b-redo/src/driver/key.c</file>
             <file>file:/F:/2017/cs66-b/cs66b-redo/mcc_generated_files/tmr1.c</file>
             <file>file:/F:/2017/cs66-b/cs66b-redo/src/driver/lcd.c</file>
+            <file>file:/F:/2017/cs66-b/cs66b-redo/src/app/sample.h</file>
+            <file>file:/F:/2017/cs66-b/cs66b-redo/src/driver/gpio.h</file>
         </group>
     </open-files>
 </project-private>

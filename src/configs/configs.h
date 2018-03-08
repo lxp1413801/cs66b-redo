@@ -7,11 +7,19 @@
 	#include "../../mcc_generated_files/mcc.h"
     #include <stdint.h>
 
+	#define HWVER301 301
+	#define HWVER302 302
+	#define HWVER303 303
+	
+	#ifndef HW_VER
+		#define HW_VER HWVER303
+	#endif
+
 	#define NO_EVENT_TIME_MAX 30
 
 
 	#ifndef EEPROM_PER_VIA_IO
-		#define EEPROM_PER_VIA_IO 0
+		#define EEPROM_PER_VIA_IO 1
 	#endif	
 	
 	#ifndef UART_1_REC_IDLE_TIME_OUT 
@@ -42,6 +50,7 @@
 	#ifndef SOFTWARE_VER
 		#define SOFTWARE_VER " uer 101"
 	#endif
+	
 	
 	#define WAKE_UP_SAMPLE_FORBID 0xffff
 	
