@@ -53,6 +53,298 @@
 /**
     Section: Device Pin Macros
 */
+/**
+  @Summary
+    Sets the GPIO pin, RB7, high using LATB7.
+
+  @Description
+    Sets the GPIO pin, RB7, high using LATB7.
+
+  @Preconditions
+    The RB7 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Set RB7 high (1)
+    channel_AN7_SetHigh();
+    </code>
+
+*/
+#define channel_AN7_SetHigh()          _LATB7 = 1
+/**
+  @Summary
+    Sets the GPIO pin, RB7, low using LATB7.
+
+  @Description
+    Sets the GPIO pin, RB7, low using LATB7.
+
+  @Preconditions
+    The RB7 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Set RB7 low (0)
+    channel_AN7_SetLow();
+    </code>
+
+*/
+#define channel_AN7_SetLow()           _LATB7 = 0
+/**
+  @Summary
+    Toggles the GPIO pin, RB7, using LATB7.
+
+  @Description
+    Toggles the GPIO pin, RB7, using LATB7.
+
+  @Preconditions
+    The RB7 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Toggle RB7
+    channel_AN7_Toggle();
+    </code>
+
+*/
+#define channel_AN7_Toggle()           _LATB7 ^= 1
+/**
+  @Summary
+    Reads the value of the GPIO pin, RB7.
+
+  @Description
+    Reads the value of the GPIO pin, RB7.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    uint16_t portValue;
+
+    // Read RB7
+    postValue = channel_AN7_GetValue();
+    </code>
+
+*/
+#define channel_AN7_GetValue()         _RB7
+/**
+  @Summary
+    Configures the GPIO pin, RB7, as an input.
+
+  @Description
+    Configures the GPIO pin, RB7, as an input.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Sets the RB7 as an input
+    channel_AN7_SetDigitalInput();
+    </code>
+
+*/
+#define channel_AN7_SetDigitalInput()  _TRISB7 = 1
+/**
+  @Summary
+    Configures the GPIO pin, RB7, as an output.
+
+  @Description
+    Configures the GPIO pin, RB7, as an output.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Sets the RB7 as an output
+    channel_AN7_SetDigitalOutput();
+    </code>
+
+*/
+#define channel_AN7_SetDigitalOutput() _TRISB7 = 0
+/**
+  @Summary
+    Sets the GPIO pin, RG8, high using LATG8.
+
+  @Description
+    Sets the GPIO pin, RG8, high using LATG8.
+
+  @Preconditions
+    The RG8 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Set RG8 high (1)
+    channel_AN19_SetHigh();
+    </code>
+
+*/
+#define channel_AN19_SetHigh()          _LATG8 = 1
+/**
+  @Summary
+    Sets the GPIO pin, RG8, low using LATG8.
+
+  @Description
+    Sets the GPIO pin, RG8, low using LATG8.
+
+  @Preconditions
+    The RG8 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Set RG8 low (0)
+    channel_AN19_SetLow();
+    </code>
+
+*/
+#define channel_AN19_SetLow()           _LATG8 = 0
+/**
+  @Summary
+    Toggles the GPIO pin, RG8, using LATG8.
+
+  @Description
+    Toggles the GPIO pin, RG8, using LATG8.
+
+  @Preconditions
+    The RG8 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Toggle RG8
+    channel_AN19_Toggle();
+    </code>
+
+*/
+#define channel_AN19_Toggle()           _LATG8 ^= 1
+/**
+  @Summary
+    Reads the value of the GPIO pin, RG8.
+
+  @Description
+    Reads the value of the GPIO pin, RG8.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    uint16_t portValue;
+
+    // Read RG8
+    postValue = channel_AN19_GetValue();
+    </code>
+
+*/
+#define channel_AN19_GetValue()         _RG8
+/**
+  @Summary
+    Configures the GPIO pin, RG8, as an input.
+
+  @Description
+    Configures the GPIO pin, RG8, as an input.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Sets the RG8 as an input
+    channel_AN19_SetDigitalInput();
+    </code>
+
+*/
+#define channel_AN19_SetDigitalInput()  _TRISG8 = 1
+/**
+  @Summary
+    Configures the GPIO pin, RG8, as an output.
+
+  @Description
+    Configures the GPIO pin, RG8, as an output.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Sets the RG8 as an output
+    channel_AN19_SetDigitalOutput();
+    </code>
+
+*/
+#define channel_AN19_SetDigitalOutput() _TRISG8 = 0
 
 /**
     Section: Function Prototypes

@@ -1,0 +1,15 @@
+void rs_485_set_rx(void)
+{
+	set_port_mode_dig(RS_485_RE_PORT,RS_485_RE_PINS);
+	set_port_mode_out(RS_485_RE_PORT,RS_485_RE_PINS);
+	set_port_value_low(RS_485_RE_PORT,RS_485_RE_PINS);
+}
+void rs_485_set_tx(void)
+{
+	set_port_mode_dig(RS_485_RE_PORT,RS_485_RE_PINS);
+	set_port_mode_out(RS_485_RE_PORT,RS_485_RE_PINS);
+	set_port_value_hight(RS_485_RE_PORT,RS_485_RE_PINS);
+}
+
+	#define RS_485_RE_PINS	PIN1
+	#define RS_485_RE_PORT	portd

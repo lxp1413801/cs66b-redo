@@ -6,6 +6,23 @@ __nop();__nop();__nop();__nop();__nop(); \
 __nop();__nop();__nop();__nop();__nop(); \
 }while(0);
 
+void iic_pins_init(void)
+{
+	iic_scl_mode_out();
+	iic_sda_mode_out();	
+	iic_sda_hight();
+	iic_scl_hight();	
+}
+
+void iic_pins_deinit(void)
+{
+    //iic_sda_mode_in();
+    //iic_scl_mode_in();
+	iic_scl_mode_out();
+	iic_sda_mode_out();
+	iic_sda_low();
+	iic_scl_low();	
+}
 
 void iic_start(void)
 {

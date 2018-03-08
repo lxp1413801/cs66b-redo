@@ -44,13 +44,20 @@ void key_init(void)
 
 void __attribute__ ( ( interrupt, no_auto_psv ) ) _CNInterrupt ()
 {
+    uint16_t dly=1000;
 	CNIF=0;
 	__nop();
 	tmpKeyValue=get_key_value();
+    while(dly--){
+        __nop();__nop();__nop();__nop();
+         __nop();__nop();__nop();__nop();
+    }
+    tmpKeyValue=get_key_value();
 	if(tmpKeyValue!= 0 && keyValue==0){
 		keyValue=tmpKeyValue;
+        send_thread_main_event_key_down();
 	}
-    send_thread_main_event_key_down();
+    
 	__nop();
 	__nop();
 }

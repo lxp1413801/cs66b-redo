@@ -3,6 +3,7 @@
 #include "../soc/ticker.h"
 #include "ads1148.h"
 #include "float.h"
+#include "../api/api.h"
 
 // #include "../../os_configs/FreeRTOSConfig.h"
 // #include "../../os_kernel/include/FreeRTOS.h"
@@ -10,7 +11,7 @@
 #include "../global/globle.h" 
 
 ads1148Obj_t ads1148Chip0,ads1148Chip1;
-
+ads1148PinsSta_t allAds1148PinsSta=ADS1148_PINS_UNINIT;
 
 uint8_t ads1148_send_cmd(ads1148Obj_t* obj,uint8_t cmd)
 {
@@ -384,6 +385,7 @@ void ads1148_init_obj_0(void)
     ads1148Chip0.pins_drdy_get=ads1148_hal_drdy_0_get;
     
     ads1148Chip0.pins_init=ads1148_hal_port_init_chip0;
+    ads1148Chip0.pins_deinit=ads1148_hal_port_deinit_chip0;
     ads1148Chip0.ads1148_write_read_via_spi=ads1148_hal_write_read_byte;
  
 }
@@ -407,6 +409,7 @@ void ads1148_init_obj_1(void)
     ads1148Chip1.pins_drdy_get=ads1148_hal_drdy_1_get;
     
     ads1148Chip1.pins_init=ads1148_hal_port_init_chip1;
+    ads1148Chip1.pins_deinit=ads1148_hal_port_deinit_chip1;
     ads1148Chip1.ads1148_write_read_via_spi=ads1148_hal_write_read_byte;
 }
 void ads1148_set_sync(ads1148Obj_t* obj)
@@ -449,7 +452,7 @@ void ads1148_set_ready(ads1148Obj_t* obj)
 }
 const uint8_t ads1148DefaultBuf[]={1,0,0,0,0,0,0,0,0,0x40,0x90,0xff};
 
-void ads1148_init_chip_regs(ads1148Obj_t* obj)
+uint8_t  ads1148_init_chip_regs(ads1148Obj_t* obj)
 {
 	uint16_t t16;
     //float f;
@@ -459,10 +462,11 @@ void ads1148_init_chip_regs(ads1148Obj_t* obj)
 	delay_ms(1);
 	//ads1148_set_bcs(obj,ADS1148_BCS_2uA0);
 	ads1148_set_vref(obj,ADS1148_REFSELT_INREF);
-	//ads1148_set_data_rate(obj,ADS1148_SYS0_DR_2000SPS);
+	ads1148_set_data_rate(obj,ADS1148_SYS0_DR_640SPS);
 	ads1148_set_muxcal(obj,ADS1148_MUXCAL_GAIN_CALIB);
 	ads1148_set_ani_pga(obj,ADS1148_PGA_1);	
 	ads1148_get_all_register(obj);
+	if(obj->ads1148Regs.buf[0]!=0x01)return 0;
     __nop();
 	ads1148_start_convert(obj);
 	//delay_us(5);
@@ -478,10 +482,10 @@ void ads1148_init_chip_regs(ads1148Obj_t* obj)
 	obj->offset=t16;
 
 	ads1148_start_convert(obj);
-	//ads1148_set_data_rate(obj,ADS1148_SYS0_DR_2000SPS);
+	ads1148_set_data_rate(obj,ADS1148_SYS0_DR_640SPS);
 	ads1148_get_all_register(obj);
 	__nop();
-
+    return 1;
 }
 
 void ads1148_init_all_obj(void)
@@ -492,18 +496,46 @@ void ads1148_init_all_obj(void)
 
 void ads1148_init_device(void)
 {
-    ads1148_init_chip_regs(&ads1148Chip0);
-    ads1148_init_chip_regs(&ads1148Chip1);  
+    uint8_t ret;
+    //return;
+    ret=ads1148_init_chip_regs(&ads1148Chip0);
+    if(!ret)hardStatus.bits.bAdcChip0=0;
+    ret=ads1148_init_chip_regs(&ads1148Chip1);  
+    if(!ret)hardStatus.bits.bAdcChip1=0;
+    
+}
+
+void ads1148_pre_sleep(void)
+{
+    ads1148Chip0.pins_deinit();
+    ads1148Chip1.pins_deinit();
+	set_port_value_low(ADS1148_CS_1_PORT,ADS1148_CS_1_PIN);
+	set_port_value_low(ADS1148_CS_0_PORT,ADS1148_CS_0_PIN);	
+	
+	allAds1148PinsSta=ADS1148_PINS_UNINIT;
+	
+	
+}
+
+void ads1148_post_sleep(void)
+{
+	if(allAds1148PinsSta==ADS1148_PINS_UNINIT){
+		ads1148Chip0.pins_init();
+		ads1148Chip1.pins_init();
+		allAds1148PinsSta=ADS1148_PINS_INITED;
+	}
 }
 
 void ads1148_start_convert(ads1148Obj_t* obj)
 {
 	obj->pins_start_set_hight();
 }
+
 void ads1148_stop_convert(ads1148Obj_t* obj)
 {
 	obj->pins_start_set_low();
 }
+
 void ads1148_waite_convert(ads1148Obj_t* obj)
 {
     uint16_t tm=0;
@@ -513,7 +545,7 @@ void ads1148_waite_convert(ads1148Obj_t* obj)
         //asm("nop");
         //asm("nop");
         tm++;
-        if(tm>300)return;
+        if(tm>5000)break;
     }
     tm=0;
     while(obj->pins_drdy_get())
@@ -521,17 +553,18 @@ void ads1148_waite_convert(ads1148Obj_t* obj)
         asm("nop");
         asm("nop");
         tm++;
-        if(tm>300)return;
+        if(tm>5000)break;
     };
     asm("nop");
     asm("nop");
-    asm("nop");
-    asm("nop");
-    asm("nop");
-    asm("nop");
-    asm("nop");
-    asm("nop");    
+    // asm("nop");
+    // asm("nop");
+    // asm("nop");
+    // asm("nop");
+    // asm("nop");
+    // asm("nop");    
 }
+
 void ads1148_test(void)
 {
 	volatile uint32_t staTm,eclipsTm,convertNum;

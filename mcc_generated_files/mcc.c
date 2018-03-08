@@ -54,7 +54,7 @@
 // CONFIG3
 #pragma config WPFP = WPFP127    // Write Protection Flash Page Segment Boundary->Page 127 (0x1FC00)
 #pragma config VBTBOR = ON    // VBAT BOR enable bit->VBAT BOR enabled
-#pragma config SOSCSEL = ON    // SOSC Selection bits->SOSC circuit selected
+#pragma config SOSCSEL = ON    // SOSC Selection bits->Digital (SCLKI) mode
 #pragma config WDTWIN = PS25_0    // Watch Dog Timer Window Width->Watch Dog Timer Window Width is 25 percent
 #pragma config BOREN = ON    // Brown-out Reset Enable->Brown-out Reset Enable
 #pragma config WPDIS = WPDIS    // Segment Write Protection Disable->Disabled
@@ -66,7 +66,7 @@
 #pragma config BOREN1 = EN    // BOR Override bit->BOR Enabled [When BOREN=1]
 #pragma config IOL1WAY = ON    // IOLOCK One-Way Set Enable bit->Once set, the IOLOCK bit cannot be cleared
 #pragma config OSCIOFCN = ON    // OSCO Pin Configuration->OSCO/CLKO/RC15 functions as port I/O (RC15)
-#pragma config FCKSM = CSDCMD    // Clock Switching and Fail-Safe Clock Monitor Configuration bits->Clock switching and Fail-Safe Clock Monitor are disabled
+#pragma config FCKSM = CSECME    // Clock Switching and Fail-Safe Clock Monitor Configuration bits->Clock switching is enabled, Fail-Safe Clock Monitor is enabled
 #pragma config FNOSC = PRI    // Initial Oscillator Select->Primary Oscillator (XT, HS, EC)
 #pragma config ALTVREF = DLT_AV_DLT_CV    // Alternate VREF/CVREF Pins Selection bit->Voltage reference input, ADC =RA9/RA10 Comparator =RA9,RA10
 #pragma config IESO = ON    // Internal External Switchover->Enabled
@@ -89,17 +89,21 @@ void SYSTEM_Initialize(void)
     PIN_MANAGER_Initialize();
     OSCILLATOR_Initialize();
     INTERRUPT_Initialize();
+    UART2_Initialize();
+    UART1_Initialize();
+    ADC1_Initialize();
     TMR2_Initialize();
-    TMR1_Initialize();
     RTCC_Initialize();
+    TMR1_Initialize();
 }
 
 void OSCILLATOR_Initialize(void)
 {
-    // CF no clock failure; NOSC PRI; SOSCEN enabled; POSCEN disabled; CLKLOCK unlocked; OSWEN Switch is Complete; IOLOCK not-active; 
-    __builtin_write_OSCCONL((uint8_t) (0x0202 & 0x00FF));
+    // CF no clock failure; NOSC PRI; SOSCEN disabled; POSCEN disabled; CLKLOCK unlocked; OSWEN Switch is Complete; IOLOCK not-active; 
+    __builtin_write_OSCCONL((uint8_t) (0x0200 & 0x00FF));
     // RCDIV FRC/1; DOZE 1:1; DOZEN disabled; ROI disabled; 
     CLKDIV = 0x0000;
+    //CLKDIVbits.RCDIV=1;
     // TUN Center frequency; 
     OSCTUN = 0x0000;
     // ROEN disabled; ROSEL disabled; RODIV Base clock value/16384; ROSSLP disabled; 

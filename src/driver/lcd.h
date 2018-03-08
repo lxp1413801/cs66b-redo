@@ -7,6 +7,8 @@ extern "C"{
 	
 	#include <stdint.h>
     #include <stdbool.h>
+    #include "lcd-com-seg-clr.h"
+    #include "lcd-com-seg-set.h"
 	extern uint16_t* pLcdReg;
 	#define LCD_PIXEL_REGISTER_SIZE 32
 	extern uint16_t pLCD[];
@@ -18,7 +20,11 @@ extern "C"{
     #define lcd_on() LCDCONbits.LCDEN=1;
     #define lcd_off() LCDCONbits.LCDEN=0;
 	
-	extern void lcd_set_com_seg(uint8_t com,uint8_t s,uint16_t show);
+	#define lcd_set_com_seg(c,s,d) do{ \
+	if(d){lcd_data_set_c##c##_s##s();}else{lcd_data_clr_c##c##_s##s();} \
+	}while(0);
+	
+	//extern void lcd_set_com_seg(uint8_t com,uint8_t s,uint16_t show);
 	extern void lcd_disp_all(uint16_t x);
 	extern void lcd_init(void);
 	
@@ -55,6 +61,7 @@ extern "C"{
 	extern void lcd_show_string_ex(uint8_t* str);
     extern void lcd_show_dp_sm(uint8_t loc,bool show);
     extern void lcd_disp_dp_loc_sign_sm(bool sig);
+    extern void lcd_disp_dp_loc_sm_temperature(bool show);
 #ifdef __cplusplus
 }
 #endif

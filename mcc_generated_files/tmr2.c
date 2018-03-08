@@ -49,7 +49,8 @@
 
 #include <xc.h>
 #include "tmr2.h"
-
+#include "uart1.h"
+#include "uart2.h"
 /**
   Section: Data Type Definitions
 */
@@ -66,7 +67,7 @@
   Remarks:
     None.
 */
-
+volatile bool tmr2Run=false;
 typedef struct _TMR_OBJ_STRUCT
 {
     /* Timer Elapsed */
@@ -154,6 +155,7 @@ void __attribute__ ((weak)) TMR2_CallBack(void)
 
 void TMR2_Start( void )
 {
+	if(tmr2Run && T2CONbits.TON)return;
     /* Reset the status information */
     tmr2_obj.timerElapsed = false;
 
@@ -162,15 +164,21 @@ void TMR2_Start( void )
 
     /* Start the Timer */
     T2CONbits.TON = 1;
+	tmr2Run=true;
 }
 
 void TMR2_Stop( void )
 {
+	
+	if(uart1RecIdleTime >0 || uart2RecIdleTime>0)return;
     /* Stop the Timer */
     T2CONbits.TON = false;
 
     /*Disable the interrupt*/
     IEC0bits.T2IE = false;
+    IFS0bits.T2IF = false;
+	tmr2Run=false;
+	
 }
 
 bool TMR2_GetElapsedThenClear(void)

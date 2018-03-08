@@ -6,6 +6,9 @@
 #endif
 	#include "../../mcc_generated_files/mcc.h"
     #include <stdint.h>
+
+    #define IN_SOC_VREF_VALUE   2048
+
 	#define SAMPLE_ADC_BUF_LEN 64
 	extern volatile int16_t samlpeBuf[SAMPLE_ADC_BUF_LEN];
 	//extern void thread_sample_void(void);
@@ -28,7 +31,33 @@
 	extern volatile int16_t rtAdcValueChip1Ref1;	
 	
 	//extern void thread_sample_create(void);
-    extern void sample_process(void);
+    extern volatile bool sampleFreashFlg;
+    
+    extern volatile int32_t rtTempRes0;
+    extern volatile int32_t rtTempRes1;  
+    extern volatile int16_t rtAdcValueTemperatureEx0A;
+    extern volatile int16_t rtAdcValueTemperatureEx0B;
+    extern volatile int16_t rtAdcValueTemperatureEx1A;
+    extern volatile int16_t rtAdcValueTemperatureEx1B;
+    
+    // extern volatile int32_t rtAdcValueTemperatureEx0A;
+    // extern volatile int32_t rtAdcValueTemperatureEx0B;
+    // extern volatile int32_t rtAdcValueTemperatureEx1A;
+    // extern volatile int32_t rtAdcValueTemperatureEx1B;
+
+    extern volatile int16_t rtValueBat;
+	extern volatile uint8_t batLevel;    
+    extern volatile uint8_t solorLevel;
+    
+    extern uint8_t sample_process(void);
+	
+    
+	#define AIN_BAT_PIN 	PIN8
+	#define AIN_BAT_PORT	portg
+	
+	#define AIN_REF_P_PIN	PIN10
+	#define AIN_REF_P_PORT	porta
+	extern void samlpe_in_soc_battery(void);
 
 #ifdef __cplusplus
 	}

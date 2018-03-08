@@ -362,6 +362,14 @@
 		}regs;
 	}st_ads1148Reg,ads1148Reg_t;
 	
+	typedef enum{
+		ADS1148_PINS_UNINIT=0,
+		ADS1148_PINS_INITED=1,
+	}ads1148PinsSta_t;
+	
+	extern ads1148PinsSta_t allAds1148PinsSta;
+	
+	
 	typedef struct{
 		
 		void (*pins_init)(void);
@@ -402,7 +410,7 @@
 	extern ads1148Obj_t ads1148Chip0,ads1148Chip1;
 	extern void ads1148_init_all_obj(void);
 	extern void ads1148_init_device(void);
-	extern void ads1148_init_chip_regs(ads1148Obj_t* obj);
+	extern uint8_t ads1148_init_chip_regs(ads1148Obj_t* obj);
 	
 	//extern void ads1148_init_all_obj(void);
 	//extern void ads1148_init_all(void);
@@ -435,6 +443,8 @@
 	extern void ads1148_set_idac1_ex(ads1148Obj_t* obj,uint8_t i1dir,uint8_t i2dir);
 	
 	extern void ads1148_set_config_ex(ads1148Obj_t* obj);
+    extern void ads1148_pre_sleep(void);
+    extern void ads1148_post_sleep(void);
 
 #ifdef __cplusplus
 	}

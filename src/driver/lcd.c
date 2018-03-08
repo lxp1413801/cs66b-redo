@@ -7,7 +7,7 @@ extern volatile bool blackEn;
 //uint8_t* pLcdReg=(uint8_t*)(&LCDDATA0); 
 uint16_t pLCD[LCD_PIXEL_REGISTER_SIZE];
 
-const uint8_t  LCDDigitalIndexTable[]="0123456789abcdefghijklmnopqrstuvwxyz.-: GHC";
+const uint8_t  LCDDigitalIndexTable[]="0123456789abcdefghijklmnopqrstuvwxyz.-: GHC*";
 const uint8_t LCDDigitalTable[]=
 {
     LCD_CODE_0,LCD_CODE_1,LCD_CODE_2,LCD_CODE_3,
@@ -20,9 +20,9 @@ const uint8_t LCDDigitalTable[]=
     LCD_CODE_S,LCD_CODE_T,LCD_CODE_U,LCD_CODE_V,
     LCD_CODE_W,LCD_CODE_X,LCD_CODE_Y,LCD_CODE_Z,
     LCD_CODE_DOT,LCD_CODE__,LCD_CODE_DDOT,0x00,
-	LCD_CODE_G_U,LCD_CODE_H_U,LCD_CODE_C
+	LCD_CODE_G_U,LCD_CODE_H_U,LCD_CODE_C,LCD_CODE_STAR,
 };
-const uint8_t LCDDigitalTableIndexEx[]="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const uint8_t LCDDigitalTableIndexEx[]="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ";
 const uint16_t LCDDigitalTableEx[]=
 {
     LCD_CODE_0_EX,LCD_CODE_1_EX,LCD_CODE_2_EX,LCD_CODE_3_EX,
@@ -41,7 +41,15 @@ const uint16_t LCDDigitalTableEx[]=
     LCD_CODE_O_EX,LCD_CODE_P_EX,LCD_CODE_Q_EX,LCD_CODE_R_EX,
     LCD_CODE_S_EX,LCD_CODE_T_EX,LCD_CODE_U_EX,LCD_CODE_V_EX,
     LCD_CODE_W_EX,LCD_CODE_X_EX,LCD_CODE_Y_EX,LCD_CODE_Z_EX,	
+    0,
 };
+/*
+#define lcd_set_com_seg(c,s,show) do{ \
+	if(show){pLCD[(c<<2)+(s>>4)] |= (1<<(s&0x0f));} \
+    else{pLCD[(c<<2)+(s>>4)] &= ~(1<<(s&0x0f));} \
+}while(0); 
+*/
+/*
 void lcd_set_com_seg(uint8_t com,uint8_t seg,uint16_t show)
 {
 	uint16_t offset;
@@ -56,6 +64,7 @@ void lcd_set_com_seg(uint8_t com,uint8_t seg,uint16_t show)
 		pLCD[offset] &= ~(1<<bits);
 	}
 }
+*/
 void lcd_disp_level_bar(uint8_t bar,uint8_t show)
 {
 	//0-49 swap 
@@ -154,18 +163,19 @@ void lcd_disp_battary_bar(uint8_t bar,uint8_t show)
 	if(bar>=4)bar=4;
 	switch(bar){
 		case 0:	lcd_set_com_seg(3,50,show);	break;
-		case 3:	lcd_set_com_seg(4,46,show);	break;
+		case 1:	lcd_set_com_seg(4,46,show);	break;
 		case 2:	lcd_set_com_seg(3,46,show);	break;
-		case 1:	lcd_set_com_seg(4,50,show);	break;
+		case 3:	lcd_set_com_seg(4,50,show);	break;
 	}
 }
 void lcd_disp_battary(uint8_t level)
 {
 	uint8_t i;
-	if(level>=100)level=100;
-	level/=25;
-	if(level<1)level=1;
-	for(i=0;i<level;i++){
+	//if(level>=100)level=100;
+	//level/=25;
+	if(level>3)level=3;
+	//if(level<1)level=1;
+	for(i=0;i<=level;i++){
 		lcd_disp_battary_bar(i,1);
 	}
 	for(;i<4;i++){
@@ -215,21 +225,24 @@ void lcd_disp_light_bar(uint8_t bar,uint8_t show)
 {
 	if(bar>=1)bar=1;
 	switch(bar){
-		case 1:	lcd_set_com_seg(2,46,show);	break;
-		case 0:	lcd_set_com_seg(2,50,show);	break;
+		case 0:	lcd_set_com_seg(2,46,show);	break;
+		case 1:	lcd_set_com_seg(2,50,show);	break;
 	}	
 }
 void lcd_disp_light(uint8_t light)
 {
-	if(light>=100)light=100;
-	light/=50;
-	if(light<1)light=1;
+	//if(light>=100)light=100;
+	//light/=50;
+	if(light>2)light=2;
+	//if(light<1)light=1;
 	if(2==light){
 		lcd_disp_light_bar(0,1);
 		lcd_disp_light_bar(1,1);
-	}else{
+	}else if(1==light){
 		lcd_disp_light_bar(0,1);
-	}
+	}else{
+        
+    }
 }
 void lcd_disp_light_off(void)
 {
@@ -252,10 +265,11 @@ void lcd_disp_chr_loc_0(uint8_t code)
 }
 void lcd_disp_dp_loc_0(bool dp)
 {
-	if(dp)
+	if(dp){
 		lcd_set_com_seg(0,40,LCD_DSEG_DP);
-	else 
+    }else {
 		lcd_set_com_seg(0,40,0);
+    }
 }
 
 void lcd_disp_chr_loc_1(uint8_t code)
@@ -271,10 +285,11 @@ void lcd_disp_chr_loc_1(uint8_t code)
 }
 void lcd_disp_dp_loc_1(bool dp)
 {
-	if(dp)
+	if(dp){
 		lcd_set_com_seg(0,11,LCD_DSEG_DP);
-	else 
+    }else {
 		lcd_set_com_seg(0,11,0);
+    }
 }
 
 void lcd_disp_chr_loc_2(uint8_t code)
@@ -290,10 +305,11 @@ void lcd_disp_chr_loc_2(uint8_t code)
 }
 void lcd_disp_dp_loc_2(bool dp)
 {
-	if(dp)
+	if(dp){
 		lcd_set_com_seg(0,39,LCD_DSEG_DP);
-	else 
+    }else {
 		lcd_set_com_seg(0,39,0);
+    }
 }
 
 void lcd_disp_chr_loc_3(uint8_t code)
@@ -321,10 +337,11 @@ void lcd_disp_chr_loc_4(uint8_t code)
 }
 void lcd_disp_dp_loc_4(bool dp)
 {
-	if(dp)
+	if(dp){
 		lcd_set_com_seg(4,40,LCD_DSEG_DP);
-	else 
+    }else {
 		lcd_set_com_seg(4,40,0);
+    }
 }
 
 void lcd_disp_chr_loc_5(uint8_t code)
@@ -340,10 +357,11 @@ void lcd_disp_chr_loc_5(uint8_t code)
 }
 void lcd_disp_dp_loc_5(bool dp)
 {
-	if(dp)
+	if(dp){
 		lcd_set_com_seg(4,11,LCD_DSEG_DP);
-	else 
+    }else {
 		lcd_set_com_seg(4,11,0);
+    }
 }
 
 void lcd_disp_chr_loc_6(uint8_t code)
@@ -359,10 +377,11 @@ void lcd_disp_chr_loc_6(uint8_t code)
 }
 void lcd_disp_dp_loc_6(bool dp)
 {
-	if(dp)
+	if(dp){
 		lcd_set_com_seg(4,39,LCD_DSEG_DP);
-	else 
+    }else {
 		lcd_set_com_seg(4,39,0);
+    }
 }
 
 void lcd_disp_chr_loc_7(uint8_t code)
@@ -400,10 +419,11 @@ void lcd_disp_unit_t(bool show)
 {
 	lcd_set_com_seg(1,34,0);
 	lcd_set_com_seg(1,35,0);
-	if(show)
+	if(show){
 		lcd_set_com_seg(1,49,1);
-	else
+    }else{
 		lcd_set_com_seg(1,49,0);
+    }
 }
 
 void lcd_disp_unit_1st_m(bool show)
@@ -449,10 +469,11 @@ void lcd_disp_unit_2nd_m(bool show)
 	lcd_set_com_seg(2,49,0);
 	lcd_set_com_seg(3,35,0);
 	lcd_set_com_seg(4,35,0);
-	if(show)
+	if(show){
 		lcd_set_com_seg(2,34,1);
-	else
+    }else{
 		lcd_set_com_seg(2,34,0);
+    }
 }
 
 void lcd_disp_unit_2nd_m3(bool show)
@@ -502,13 +523,13 @@ void lcd_disp_chr_loc_0_ex(uint16_t code)
 }
 void lcd_disp_chr_loc_1_ex(uint16_t code)
 {
-	lcd_set_com_seg(7,4,code&SEG_A_EX);	
+	lcd_set_com_seg(7,04,code&SEG_A_EX);	
 	lcd_set_com_seg(7,18,code&SEG_B_EX);	
 	lcd_set_com_seg(5,18,code&SEG_C_EX);	
 	lcd_set_com_seg(0,18,code&SEG_D_EX);	
-	lcd_set_com_seg(0,4,code&SEG_E_EX);	
-	lcd_set_com_seg(6,4,code&SEG_F_EX);	
-	lcd_set_com_seg(5,4,code&SEG_G_EX);	
+	lcd_set_com_seg(0,04,code&SEG_E_EX);	
+	lcd_set_com_seg(6,04,code&SEG_F_EX);	
+	lcd_set_com_seg(5,04,code&SEG_G_EX);	
 	lcd_set_com_seg(6,18,code&SEG_H_EX);
 	lcd_set_com_seg(6,55,code&SEG_I_EX);	
 	lcd_set_com_seg(7,55,code&SEG_J_EX);	
@@ -518,17 +539,17 @@ void lcd_disp_chr_loc_1_ex(uint16_t code)
 void lcd_disp_chr_loc_2_ex(uint16_t code)
 {
 	lcd_set_com_seg(7,19,code&SEG_A_EX);	
-	lcd_set_com_seg(7,9,code&SEG_B_EX);	
-	lcd_set_com_seg(5,9,code&SEG_C_EX);	
-	lcd_set_com_seg(0,9,code&SEG_D_EX);	
+	lcd_set_com_seg(7,09,code&SEG_B_EX);	
+	lcd_set_com_seg(5,09,code&SEG_C_EX);	
+	lcd_set_com_seg(0,09,code&SEG_D_EX);	
 	lcd_set_com_seg(0,19,code&SEG_E_EX);	
 	lcd_set_com_seg(6,19,code&SEG_F_EX);	
 	lcd_set_com_seg(5,19,code&SEG_G_EX);	
-	lcd_set_com_seg(6,9,code&SEG_H_EX);
-	lcd_set_com_seg(6,8,code&SEG_I_EX);	
-	lcd_set_com_seg(7,8,code&SEG_J_EX);	
-	lcd_set_com_seg(5,8,code&SEG_K_EX);	
-	lcd_set_com_seg(0,8,code&SEG_L_EX);	
+	lcd_set_com_seg(6,09,code&SEG_H_EX);
+	lcd_set_com_seg(6,08,code&SEG_I_EX);	
+	lcd_set_com_seg(7,08,code&SEG_J_EX);	
+	lcd_set_com_seg(5,08,code&SEG_K_EX);	
+	lcd_set_com_seg(0,08,code&SEG_L_EX);	
 }
 void lcd_disp_chr_loc_0_sm(uint8_t code)
 {
@@ -537,9 +558,9 @@ void lcd_disp_chr_loc_0_sm(uint8_t code)
     lcd_set_com_seg(3,55,code&LCD_DSEG_C);
     lcd_set_com_seg(4,55,code&LCD_DSEG_D);
     
-    lcd_set_com_seg(1,4,code&LCD_DSEG_F);
-    lcd_set_com_seg(2,4,code&LCD_DSEG_G);
-    lcd_set_com_seg(3,4,code&LCD_DSEG_E);
+    lcd_set_com_seg(1,04,code&LCD_DSEG_F);
+    lcd_set_com_seg(2,04,code&LCD_DSEG_G);
+    lcd_set_com_seg(3,04,code&LCD_DSEG_E);
     //lcd_disp_com_seg(3,00,code&LCD_DSEG_DP);
 }
 void lcd_disp_chr_loc_1_sm(uint8_t code)
@@ -556,43 +577,47 @@ void lcd_disp_chr_loc_1_sm(uint8_t code)
 }
 void lcd_disp_chr_loc_2_sm(uint8_t code)
 {
-	lcd_set_com_seg(1,9,code&LCD_DSEG_A);
-	lcd_set_com_seg(2,9,code&LCD_DSEG_B);
-    lcd_set_com_seg(3,9,code&LCD_DSEG_C);
-    lcd_set_com_seg(4,9,code&LCD_DSEG_D);
+	lcd_set_com_seg(1,09,code&LCD_DSEG_A);
+	lcd_set_com_seg(2,09,code&LCD_DSEG_B);
+    lcd_set_com_seg(3,09,code&LCD_DSEG_C);
+    lcd_set_com_seg(4,09,code&LCD_DSEG_D);
     
-    lcd_set_com_seg(1,8,code&LCD_DSEG_F);
-    lcd_set_com_seg(2,8,code&LCD_DSEG_G);
-    lcd_set_com_seg(3,8,code&LCD_DSEG_E);
+    lcd_set_com_seg(1,08,code&LCD_DSEG_F);
+    lcd_set_com_seg(2,08,code&LCD_DSEG_G);
+    lcd_set_com_seg(3,08,code&LCD_DSEG_E);
     //lcd_disp_com_seg(3,00,code&LCD_DSEG_DP);
 }
 void lcd_disp_dp_loc_0_sm(bool dp)
 {
-	if(dp)
+	if(dp){
 		lcd_set_com_seg(4,18,LCD_DSEG_DP);
-	else 
+    }else {
 		lcd_set_com_seg(4,18,0);
+    }
 }
 void lcd_disp_dp_loc_1_sm(bool dp)
 {
-	if(dp)
-		lcd_set_com_seg(4,4,LCD_DSEG_DP);
-	else 
-		lcd_set_com_seg(4,4,0);
+	if(dp){
+		lcd_set_com_seg(4,04,LCD_DSEG_DP);
+    }else {
+		lcd_set_com_seg(4,04,0);
+    }
 }
 void lcd_disp_dp_loc_sign_sm(bool sig)
 {
-	if(sig)
+	if(sig){
 		lcd_set_com_seg(2,35,1);
-	else 
+    }else {
 		lcd_set_com_seg(2,35,0);
+    }
 }
 void lcd_disp_dp_loc_sm_temperature(bool show)
 {
-	if(show)
-		lcd_set_com_seg(4,8,1);
-	else 
-		lcd_set_com_seg(4,8,0);
+	if(show){
+		lcd_set_com_seg(4,08,1);
+    }else {
+		lcd_set_com_seg(4,08,0);
+    }
 }
 void lcd_show_dp_sm(uint8_t loc,bool show)
 {
@@ -612,7 +637,7 @@ void lcd_clear_all_dp_sm(void)
 uint8_t lcd_disp_get_code(uint8_t chr)
 {
 	uint8_t i;
-	uint8_t ret;
+	uint8_t ret=0;
 	for(i=0;i<sizeof(LCDDigitalIndexTable);i++){
 		if(chr==LCDDigitalIndexTable[i])break;
 	}
@@ -661,7 +686,10 @@ void lcd_show_dp(uint8_t loc,bool show)
 
 void lcd_show_chr(uint8_t loc,uint8_t chr)
 {
-    uint8_t code=lcd_disp_get_code(chr);
+    uint8_t code;
+    
+    code=lcd_disp_get_code(chr);
+    //return;
 	switch(loc){
 		case 0:lcd_disp_chr_loc_0(code);break;
 		case 1:lcd_disp_chr_loc_1(code);break;
@@ -746,6 +774,7 @@ void lcd_show_string_l1(uint8_t* str)
 void lcd_show_string(uint8_t* str)
 {
 	uint8_t t8=0;
+
 	while(*str!='\0' && t8<8){
 		lcd_show_chr(t8,*str);
 		str++;
@@ -758,6 +787,13 @@ void lcd_show_string(uint8_t* str)
 void lcd_disp_refresh(void)
 {
 	//m_mem_cpy_len(pLcdReg,pLCD,LCD_PIXEL_REGISTER_SIZE);
+	
+	// while(!(LCDPSbits.WA)){
+         //LCDCONbits.WERR=0;
+    //};
+    //if(LCDCONbits.WERR)LCDCONbits.WERR=0;
+    LCDCONbits.WERR=0;
+    if(!(LCDPSbits.WA))return;
 	LCDDATA0=pLCD[0];
 	LCDDATA1=pLCD[1];
 	LCDDATA2=pLCD[2];
@@ -794,6 +830,8 @@ void lcd_disp_refresh(void)
 	LCDDATA29=pLCD[29];
 	LCDDATA30=pLCD[30];
 	LCDDATA31=pLCD[31];		
+	//if(LCDCONbits.WERR)LCDCONbits.WERR=0;
+	LCDCONbits.WERR=0;
 }
 
 void lcd_disp_all(uint16_t x)
@@ -805,38 +843,37 @@ void lcd_disp_all(uint16_t x)
     }
 	//lcd_disp_refresh();
 }
+#ifndef LCD_GLASS_MODULE_VER
+	#define LCD_GLASS_MODULE_VER 100
+#endif
 
+#if LCD_GLASS_MODULE_VER==100
 void lcd_config(void)
 {
-    LCDCONbits.CS=0;
+    LCDCONbits.CS=3;
     LCDCONbits.LCDSIDL=0;
     LCDCONbits.SLPEN=0;
     LCDCONbits.WERR=0;
     LCDCONbits.LMUX=7;
     
-    LCDREGbits.CPEN=1;
-	// set_port_mode_an(portg,PIN7 | PIN8);
-	// set_port_mode_in(portg,PIN7 | PIN8);
-	
-	// set_port_mode_an(porte,PIN7 | PIN6 | PIN5);
-	// set_port_mode_in(porte,PIN7 | PIN6 | PIN5);
+    LCDREGbits.CPEN=0;
     LCDREGbits.BIAS=7;
-    LCDREGbits.CKSEL=2;
+    LCDREGbits.CKSEL=0;
     LCDREGbits.MODE13=1;
     
     LCDPSbits.BIASMD=0;
-    LCDPSbits.LP=4;
+    LCDPSbits.LP=2;
 	//LCDPSbits.WFT=1;
     
     LCDREFbits.LCDIRE=1;
-    LCDREFbits.LCDCST=4;
+    LCDREFbits.LCDCST=2;
     LCDREFbits.VLCD1PE=0;
     LCDREFbits.VLCD2PE=0;
     LCDREFbits.VLCD3PE=0;
     
-    LCDREFbits.LRLAP=3;
+    LCDREFbits.LRLAP=1;
     LCDREFbits.LRLBP=3;
-    LCDREFbits.LRLAT=7;
+    LCDREFbits.LRLAT=4;
     
     
 
@@ -856,15 +893,73 @@ void lcd_config(void)
 
 	//lcd_on();
 }
+#else
+void lcd_config(void)
+{
+    LCDCONbits.CS=3;
+    LCDCONbits.LCDSIDL=0;
+    LCDCONbits.SLPEN=0;
+    LCDCONbits.WERR=0;
+    LCDCONbits.LMUX=7;
+    
+    LCDREGbits.CPEN=0;
+    LCDREGbits.BIAS=7;
+    LCDREGbits.CKSEL=0;
+    LCDREGbits.MODE13=1;
+    
+    LCDPSbits.BIASMD=0;
+    LCDPSbits.LP=2;
+	//LCDPSbits.WFT=1;
+    
+    LCDREFbits.LCDIRE=1;
+    LCDREFbits.LCDCST=3;
+    LCDREFbits.VLCD1PE=0;
+    LCDREFbits.VLCD2PE=0;
+    LCDREFbits.VLCD3PE=0;
+    
+    LCDREFbits.LRLAP=1;
+    LCDREFbits.LRLBP=3;
+    LCDREFbits.LRLAT=3;
+    
+    
 
+	// TRISDbits.TRISD0=0;//debug
+	LCDSE0 = 0b0001111100010000;
+	LCDSE1 = 0b0000000000001100;
+	LCDSE2 = 0b1100001111001100;
+	LCDSE3 = 0b1111110010000110; // Disable Seg30, Seg28 and Seg27
+	//LCDSE4 = 0b11111110; // Disable unused segments
+	//LCDSE5 = 0b11001111; // Disable unused segments
+
+	//clear all pixel data
+    lcd_disp_all(0xffff);
+    lcd_disp_refresh();
+	//lcd_clear_all();
+	//config reference voltage
+
+	//lcd_on();
+}
+#endif
 
 void lcd_init(void)
 {
+    IEC6bits.LCDIE=0;
+    IFS6bits.LCDIF=0;
 	lcd_config();
 	//lcd_bl_init();
 	lcd_on();
     kz_vadd_on();
-    back_night_on();
+    //back_night_on();
+    asm("nop");
+    asm("nop");
+    
+    //IEC6bits.LCDIE=1;
+}
 
+void __attribute__ ( ( interrupt, no_auto_psv ) ) _Interrupt100 ( void )
+{
+    IFS6bits.LCDIF=0;
+    asm("nop");
+    asm("nop");
 }
 //file end

@@ -66,6 +66,7 @@ extern "C"{
 	#define LCD_CODE__ (LCD_DSEG_G)
 	#define LCD_CODE_DOT	(LCD_DSEG_G)
 	#define LCD_CODE_DDOT	(LCD_DSEG_G+LCD_DSEG_D)
+	#define LCD_CODE_STAR	(LCD_DSEG_A+LCD_DSEG_F+LCD_DSEG_G)
 
 	#define LCD_TABLE_LEN 40
 	extern const uint8_t LCDDigitalTable[];

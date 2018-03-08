@@ -50,7 +50,7 @@
 
 #define ERROR_HANDLER __attribute__((interrupt,no_auto_psv))
 #define ERROR_HANDLER_NORETURN ERROR_HANDLER __attribute__((noreturn))
-#define FAILSAFE_STACK_GUARDSIZE 8
+#define FAILSAFE_STACK_GUARDSIZE 32
 
 /**
  * a private place to store the error code if we run into a severe error

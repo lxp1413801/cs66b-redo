@@ -37,6 +37,24 @@ void TMR2_CallBack(void)
     TMR2_Stop();
     tickerMsPer10Ms++;
     event |=  flg_TICKER_10MS_PER;
+	
+	if(uart1RecIdleTime>0){
+		uart1RecIdleTime+=20;
+		if(uart1RecIdleTime>10000)uart1RecIdleTime=10000;
+		if(uart1RecIdleTime>UART_1_REC_IDLE_TIME_OUT){
+            uart1RecIdleTime=0;
+			event |= flg_MODBUS_RECEIVED;
+		}
+	}
+	
+	if(uart2RecIdleTime>0){
+		uart2RecIdleTime+=20;
+		if(uart2RecIdleTime>10000)uart2RecIdleTime=10000;
+		if(uart2RecIdleTime > UART_2_REC_IDLE_TIME_OUT){
+            uart2RecIdleTime=0;
+			event |= flg_NB_GPS_RECEIVED;
+		}
+	}	
 }
 
 uint32_t ticker_10ms_per_get(void)
@@ -48,12 +66,20 @@ void ticker_10ms_per_set(uint32_t tick)
 {
     tickerMsPer10Ms=tick;
 }
-
+void rtcc_interupt_disable(void)
+{
+    IFS3bits.RTCIF = 0;
+    IEC3bits.RTCIE = 0;
+}
+void rtcc_interupt_enable(void)
+{
+    IEC3bits.RTCIE = 1;
+}
 void __attribute__ ( ( interrupt, no_auto_psv ) ) _ISR _RTCCInterrupt( void )
 {
     /* TODO : Add interrupt handling code */
     
     IFS3bits.RTCIF = false;
-    event |=  flg_RTC_SECOND;
+    event |=  flg_RTC_HALF_SECOND;
 	globleHalfSec++;
 }

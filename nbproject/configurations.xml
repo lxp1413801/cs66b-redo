@@ -12,6 +12,9 @@
         <itemPath>mcc_generated_files/tmr2.h</itemPath>
         <itemPath>mcc_generated_files/tmr1.h</itemPath>
         <itemPath>mcc_generated_files/traps.h</itemPath>
+        <itemPath>mcc_generated_files/uart2.h</itemPath>
+        <itemPath>mcc_generated_files/uart1.h</itemPath>
+        <itemPath>mcc_generated_files/adc1.h</itemPath>
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="SourceFiles" displayName="源文件" projectFiles="true">
@@ -25,12 +28,16 @@
         <itemPath>mcc_generated_files/tmr2.c</itemPath>
         <itemPath>mcc_generated_files/tmr1.c</itemPath>
         <itemPath>mcc_generated_files/traps.c</itemPath>
+        <itemPath>mcc_generated_files/uart2.c</itemPath>
+        <itemPath>mcc_generated_files/uart1.c</itemPath>
+        <itemPath>mcc_generated_files/adc1.c</itemPath>
       </logicalFolder>
       <logicalFolder name="src" displayName="src" projectFiles="true">
         <logicalFolder name="api" displayName="api" projectFiles="true">
           <itemPath>src/api/ui.c</itemPath>
           <itemPath>src/api/key_menu.c</itemPath>
           <itemPath>src/api/sysdata.c</itemPath>
+          <itemPath>src/api/modbus.c</itemPath>
         </logicalFolder>
         <logicalFolder name="app" displayName="app" projectFiles="true">
           <itemPath>src/app/main.c</itemPath>
@@ -51,6 +58,7 @@
           <itemPath>src/driver/ex_eeprom.c</itemPath>
           <itemPath>src/driver/i2c.c</itemPath>
           <itemPath>src/driver/key.c</itemPath>
+          <itemPath>src/driver/ad421.c</itemPath>
         </logicalFolder>
         <logicalFolder name="global" displayName="global" projectFiles="true">
           <itemPath>src/global/globle.c</itemPath>
@@ -224,8 +232,7 @@
         <property key="warn-section-align" value="false"/>
       </C30-LD>
       <C30Global>
-        <property key="common-include-directories"
-                  value="src\os\os_configs;src\os\os_kernel\include;src\os\os_portable"/>
+        <property key="common-include-directories" value=""/>
         <property key="dual-boot-partition" value="0"/>
         <property key="fast-math" value="false"/>
         <property key="generic-16-bit" value="false"/>
@@ -290,7 +297,7 @@
                   value="${memories.instruction.ram.ranges}"/>
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="0-157f7"/>
-        <property key="poweroptions.powerenable" value="true"/>
+        <property key="poweroptions.powerenable" value="false"/>
         <property key="programmertogo.imagename" value=""/>
         <property key="programoptions.donoteraseauxmem" value="false"/>
         <property key="programoptions.eraseb4program" value="true"/>

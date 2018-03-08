@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=cs66b.X
+PROJECTNAME=cs66b-redo
 
 # Active Configuration
 DEFAULTCONF=default

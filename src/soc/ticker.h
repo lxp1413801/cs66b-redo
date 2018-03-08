@@ -19,6 +19,8 @@ extern "C"{
     extern void ticker_10ms_per_set(uint32_t tick);
     
     extern void ticker_ms_delay(uint16_t ms);
+    extern void rtcc_interupt_disable(void);
+    extern void rtcc_interupt_enable(void);
     
 #ifdef __cplusplus
 }

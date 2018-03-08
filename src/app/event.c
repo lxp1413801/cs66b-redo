@@ -1,7 +1,7 @@
 #include "../includes/includes.h"
 volatile uint16_t event=0x00;
 volatile uint8_t keyEventCount=0x00;
-
+volatile uint16_t noEventTimeOut=NO_EVENT_TIME_MAX;
 /*
 void send_event_group_isr(EventGroupHandle_t eventGroup,EventBits_t bits)
 {
