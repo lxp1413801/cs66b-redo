@@ -993,10 +993,12 @@ void ui_disp_menu_calib_adj_x(uint8_t chr,__xDataStruct_t* xdat)
 	lcd_clear_all();
 	lcd_disp_logo(true);
 	buf[0]=chr;
+	buf[1]='1'+calibRow;
+	/*
 	if(calibRow==0)buf[1]='d';
 	else if(calibRow==1)buf[1]='C';
 	else if(calibRow==2)buf[1]='G';
-	
+	*/
 	t8=calibCol;
 	buf[2]='0'+t8%10;
 

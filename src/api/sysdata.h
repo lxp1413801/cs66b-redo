@@ -232,8 +232,8 @@ extern "C"{
 	
 	//定义修正表格�?
 	//这段算法好像很恶�?
-	#define CALIB_P_POINT_NUM 6
-	
+	#define CALIB_P_POINT_NUM 3
+	#define CALIB_ROW_NUM	6
 	typedef struct{
 		int32_t	value;
 		int16_t	sigAdcValue;
@@ -255,7 +255,7 @@ extern "C"{
 		uint8_t rowCount;	//有效的行�?组数,
 		uint8_t status;
         uint8_t reverse[2];
-		xCalibRow_t calibRow[3];
+		xCalibRow_t calibRow[CALIB_ROW_NUM];
 		staticPreErr_t staticPreAdj0;
 		staticPreErr_t staticPreAdj1;
 		uint16_t crc;		

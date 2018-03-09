@@ -382,7 +382,7 @@ void calib_data_put_piont_tab(xCalibTab_t* ptab,xCalibPoint_t* pp,uint8_t row,ui
 void calib_data_set_default(xCalibTab_t *ctab,uint8_t rowCount)
 {
     uint8_t i,j;
-	if(!(rowCount >=1 && rowCount <=3))rowCount=1;
+	if(!(rowCount >=1 && rowCount <=CALIB_ROW_NUM))rowCount=1;
 	m_mem_set((uint8_t*)ctab,0,sizeof(xCalibTab_t));
 	ctab->rowCount=rowCount;
 
@@ -560,7 +560,7 @@ void data_init_all(void)
 	ex1PrCalibDataObj.calibTab=&calibTab3;
 	ex1PrCalibDataObj.eep24c02=&at24c02Obj3;
 	
-    ret=calib_data_obj_init(&diffPrCalibDataObj,3);
+    ret=calib_data_obj_init(&diffPrCalibDataObj,CALIB_ROW_NUM);
     if(ret){
         hardStatus.bits.bDprEeprom=1;
     }else{
@@ -733,14 +733,15 @@ int32_t cal_diff_vol_to_t(int32_t v)
 
 //计算差压
 //计算结果直接用xin返回
-__xDataStruct_t tmpx[3];
+__xDataStruct_t tmpx[6];
 
 int32_t calculate_and_compensate(xCalibTab_t* cTab,__xDataStruct_t* xin)
 {
 	uint8_t i=0,j=0;
 	xCalibRow_t* tabrow;
 	m_mem_set((uint8_t*)tmpx,0,sizeof(tmpx));
-    for(i=0;i<cTab->rowCount;i++){
+	for(i=0;i<CALIB_ROW_NUM;i++){
+    //for(i=0;i<cTab->rowCount;i++){
         tabrow = &(cTab->calibRow[i]);
 		if(tabrow->pCount<2)continue;
         m_interp1_cal_p_s(tabrow,xin,&tmpx[j++]);

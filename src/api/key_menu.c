@@ -1054,7 +1054,7 @@ void __up_diff_calib_adj(void)
 	if(calibCol==0){
 		t8=*(uint8_t*)(&adjValue);
 		t8++;
-		if(t8>=6)t8=0;
+		if(t8>CALIB_P_POINT_NUM)t8=0;
 		if(t8==1)t8=2;
 		*(uint8_t*)(&adjValue)=t8;
 	}else{
@@ -1070,7 +1070,7 @@ void __up_pr_calib_adj(void)
 	if(calibCol==0){
 		t8=*(uint8_t*)(&adjValue);
 		t8++;
-		if(t8>=6)t8=0;
+		if(t8>CALIB_P_POINT_NUM)t8=0;
 		if(t8==1)t8=2;
 		*(uint8_t*)(&adjValue)=t8;
 	}else{	
@@ -1085,7 +1085,7 @@ void __up_ex0_pr_calib_adj(void)
 	if(calibCol==0){
 		t8=*(uint8_t*)(&adjValue);
 		t8++;
-		if(t8>=6)t8=0;
+		if(t8>CALIB_P_POINT_NUM)t8=0;
 		if(t8==1)t8=2;
 		*(uint8_t*)(&adjValue)=t8;
 	}else{	
@@ -1099,7 +1099,7 @@ void __up_ex1_pr_calib_adj(void)
 	if(calibCol==0){
 		t8=*(uint8_t*)(&adjValue);
 		t8++;
-		if(t8>=6)t8=0;
+		if(t8>CALIB_P_POINT_NUM)t8=0;
 		if(t8==1)t8=2;
 		*(uint8_t*)(&adjValue)=t8;
 	}else{	
@@ -1571,7 +1571,7 @@ void __set_short_diff_calib(bool gohome)
 	if(calibCol>calibTab0.calibRow[calibRow].pCount){
         calibCol=0;
         calibRow++;
-        if(calibRow>2)calibRow=0;
+        if(calibRow>CALIB_ROW_NUM-1)calibRow=0;
     }
     __enter_menu_calib_press_diff(calibRow,calibCol);
 	
@@ -1642,7 +1642,7 @@ void __set_short_pr_calib(bool gohome)
 	if(calibCol>calibTab1.calibRow[calibRow].pCount){
         calibCol=0;
         calibRow++;
-        if(calibRow>2)calibRow=0;
+        if(calibRow>CALIB_ROW_NUM-1)calibRow=0;
     }
     __enter_menu_calib_press(calibRow,calibCol);
 	
@@ -1687,7 +1687,7 @@ void __set_short_ex0_pr_calib(bool gohome)
 	if(calibCol>calibTab2.calibRow[calibRow].pCount){
         calibCol=0;
         calibRow++;
-        if(calibRow>2)calibRow=0;
+        if(calibRow>CALIB_ROW_NUM-1)calibRow=0;
     }
     __enter_menu_ex0_pr_calib(calibRow,calibCol);
 	
@@ -1732,7 +1732,7 @@ void __set_short_ex1_pr_calib(bool gohome)
 	if(calibCol>calibTab3.calibRow[calibRow].pCount){
         calibCol=0;
         calibRow++;
-        if(calibRow>2)calibRow=0;
+        if(calibRow>CALIB_ROW_NUM-1)calibRow=0;
     }
     __enter_menu_ex1_pr_calib(calibRow,calibCol);
 	
