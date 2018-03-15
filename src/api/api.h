@@ -11,6 +11,8 @@
 	#include "ui.h"
 	#include "key_menu.h"
 	#include "modbus.h"
+	#include "nbiot.h"
+	#include "gps.h"
 
 #ifdef __cplusplus
 	}

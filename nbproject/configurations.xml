@@ -38,6 +38,8 @@
           <itemPath>src/api/key_menu.c</itemPath>
           <itemPath>src/api/sysdata.c</itemPath>
           <itemPath>src/api/modbus.c</itemPath>
+          <itemPath>src/api/gps.c</itemPath>
+          <itemPath>src/api/nbiot.c</itemPath>
         </logicalFolder>
         <logicalFolder name="app" displayName="app" projectFiles="true">
           <itemPath>src/app/main.c</itemPath>

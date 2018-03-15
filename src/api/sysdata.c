@@ -283,11 +283,11 @@ const sysDataDef_t defultSystemData={
 		0,//uint8_t 	exPrTempShowEn;
 		60,//uint8_t		blOnTm;		        
 		//
-		10,//sleepPeriod
+		0,//sleepPeriod
 		300,//rfSendPeriod
 		0,
 		0,
-		1,
+		0,
 		255,
 		0,//uint16_t	crc;
 };
@@ -376,7 +376,6 @@ void calib_data_put_piont_tab(xCalibTab_t* ptab,xCalibPoint_t* pp,uint8_t row,ui
 	stp->value=pp->value;
 	stp->sigAdcValue=pp->sigAdcValue;
 	stp->tAdcValue=pp->tAdcValue;
-
 }
 
 void calib_data_set_default(xCalibTab_t *ctab,uint8_t rowCount)

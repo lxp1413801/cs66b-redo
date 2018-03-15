@@ -46,15 +46,15 @@ extern "C"{
 	#define PSW_SET_ILOOP_ADJUST				112
 
 	//高度条满刻度对应的值95%还是100%
-	#define PSW_SET_BAR_LEVEL_SCALE				188
-	#define PSW_SET_WORK_MODE					18
+	#define PSW_SET_BAR_LEVEL_SCALE				86
+	#define PSW_SET_WORK_MODE					1888
 	//add 
-	#define PSW_SET_WAKEUP_PERIOD				688
+	#define PSW_SET_WAKEUP_PERIOD				76
 	#define PSW_SET_RF_SEND_PERIOD				689
 	
 	//add and modfy 2018.02.08
 	#define PSW_SET_BL_ON_TM					39
-	#define PSW_SET_LCD_ON_TM					398	
+	#define PSW_SET_LCD_ON_TM					98	
 	#define PSW_SET_MODBUS_ID					8
 	#define PSW_SHOW_VER						368
 	//==============================================================

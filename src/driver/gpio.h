@@ -122,6 +122,33 @@
 		extern void kz_qy_vcc_disable(void);
 	#endif
 	
+	#define GSM_EN_PINS	PIN7
+	#define GSM_EN_PORT	portg
+	
+	#define GSM_RST_PINS PIN2
+	#define GSM_RST_PORT portb
+	
+	#define GPS_EN_PINS PIN6
+	#define GPS_EN_PORT portf
+	
+	#define GPS_RST_PINS PIN2
+	#define GPS_RST_PORT portg
+	
+	extern void gsm_en_pins_config(void);
+	extern void gsm_module_enable(void);
+	extern void gsm_module_disable(void);
+	
+	extern void gsm_rst_pins_config(void);
+	extern void gsm_rst_enable(void);
+	extern void gsm_rst_release(void);
+	
+	extern void gps_en_pins_config(void);
+	extern void gps_module_enable(void);
+	extern void gps_module_disable(void);
+	
+	extern void gps_rst_pins_config(void);
+	extern void gps_rst_enable(void);
+	extern void gps_rst_release(void);	
 #ifdef __cplusplus
 	}
 #endif

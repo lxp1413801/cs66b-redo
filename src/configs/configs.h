@@ -17,9 +17,13 @@
 
 	#define NO_EVENT_TIME_MAX 30
 
-
+	//V303的板子都是通过io口向eeprom供电的，301之前的只有一块板子使用io供电
 	#ifndef EEPROM_PER_VIA_IO
-		#define EEPROM_PER_VIA_IO 1
+		#if HW_VER>= HWVER303
+			#define EEPROM_PER_VIA_IO 1
+		#else
+			#define EEPROM_PER_VIA_IO 0
+		#endif
 	#endif	
 	
 	#ifndef UART_1_REC_IDLE_TIME_OUT 

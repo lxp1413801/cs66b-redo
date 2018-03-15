@@ -281,13 +281,16 @@ void event_rtc_no_operation_tm_out(void)
 
 void event_rtc_lcd_off(void)
 {
-	if(lcdOnTime>0 &&  menu==0){
-        lcdOnTime--;
-        //lcdOnTime=(stSysData.lcdOnTime)*60;
-        if(stSysData.lcdOnTime>0 && lcdOnTime==0 && exFunctionSta==0 ){
-            lcd_off();
-        }
-    }
+    if(menu!=0)return;
+	if(stSysData.sleepPeriod==0)return;
+	if(exFunctionSta)return;
+	if(lcdOnTime==0){
+		if(stSysData.lcdOnTime>0 || batLevel<=1){
+			lcd_off();
+		}
+	}else{
+		lcdOnTime--;
+	}
 }
 uint8_t uartTestStr[]="UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU";
 int main(void)
@@ -317,7 +320,7 @@ int main(void)
             event &= ~flg_RTC_SECOND;
             event_rtc_bl_off();
 			event_rtc_no_operation_tm_out();
-			//event_rtc_lcd_off();
+			event_rtc_lcd_off();
 			
             //if(noEventTimeOut<blShowTime)noEventTimeOut=blShowTime;
 			event_sample_sleep_wake_mode();	

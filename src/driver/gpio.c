@@ -172,8 +172,6 @@ void all_bj_disable(void)
 	set_port_mode_out(BJ_PORT,ALL_BJ_PINS);
 	set_port_value_low(BJ_PORT,ALL_BJ_PINS);	
 	//set_port_mode_in(BJ_PORT,ALL_BJ_PINS);
-	
-	
 }
 
 void bj_1_on(void)
@@ -289,6 +287,75 @@ void unused_pins_deinit(void)
 	set_port_mode_out(FLOAT_RB6_PORT,FLOAT_RB6_PIN);
 	set_port_value_hight(FLOAT_RB6_PORT,FLOAT_RB6_PIN);		
 #endif
+}
+
+void gsm_en_pins_config(void)
+{
+
+	
+}
+
+void gsm_module_enable(void)
+{
+	set_port_mode_dig(GSM_EN_PORT,GSM_EN_PINS);
+	set_port_mode_out(GSM_EN_PORT,GSM_EN_PINS);	
+	set_port_value_hight(GSM_EN_PORT,GSM_EN_PINS);	
+}
+void gsm_module_disable(void)
+{
+	set_port_mode_dig(GSM_EN_PORT,GSM_EN_PINS);
+	set_port_mode_in(GSM_EN_PORT,GSM_EN_PINS);		
+}
+
+void gsm_rst_pins_config(void)
+{
+}
+
+void gsm_rst_enable(void)
+{
+	set_port_mode_dig(GSM_RST_PORT,GSM_RST_PINS);
+	set_port_mode_out(GSM_RST_PORT,GSM_RST_PINS);	
+	set_port_value_hight(GSM_RST_PORT,GSM_RST_PINS);	
+}
+
+void gsm_rst_release(void)
+{
+	set_port_mode_dig(GSM_RST_PORT,GSM_RST_PINS);
+	set_port_mode_in(GSM_RST_PORT,GSM_RST_PINS);	
+}
+
+void gps_en_pins_config(void)
+{
+}
+
+void gps_module_enable(void)
+{
+	//set_port_mode_dig(GPS_EN_PORT,GPS_EN_PINS);
+	set_port_mode_out(GPS_EN_PORT,GPS_EN_PINS);
+	set_port_value_hight(GPS_EN_PORT,GPS_EN_PINS);	
+}
+
+void gps_module_disable(void)
+{
+	//set_port_mode_dig(GPS_EN_PORT,GPS_EN_PINS);
+	set_port_mode_in(GPS_EN_PORT,GPS_EN_PINS);		
+}
+
+void gps_rst_pins_config(void)
+{
+}
+
+void gps_rst_enable(void)
+{
+	set_port_mode_dig(GPS_RST_PORT,GPS_RST_PINS);
+	set_port_mode_out(GPS_RST_PORT,GPS_RST_PINS);	
+	set_port_value_hight(GPS_RST_PORT,GPS_RST_PINS);		
+}
+
+void gps_rst_release(void)
+{
+	set_port_mode_dig(GPS_RST_PORT,GPS_RST_PINS);	
+	set_port_mode_in(GPS_RST_PORT,GPS_RST_PINS);		
 }
 
 void pre_system_sleep(void)

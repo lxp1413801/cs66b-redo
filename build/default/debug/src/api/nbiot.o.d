@@ -1,5 +1,5 @@
-build/default/debug/src/api/ui.o:  \
-src/api/ui.c  \
+build/default/debug/src/api/nbiot.o:  \
+src/api/nbiot.c  \
  src/api/../includes/includes.h  \
  src/api/../includes/../../mcc_generated_files/mcc.h  \
  src/api/../includes/../../mcc_generated_files/pin_manager.h  \

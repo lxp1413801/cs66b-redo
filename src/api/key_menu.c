@@ -2165,7 +2165,7 @@ void __set_long_lcd_on_tm(void)
 	stSysData.lcdOnTime=*p;
 	
     __sys_data_save_write_flash();
-    
+    //lcdOnTime=(stSysData.lcdOnTime)*60;
     __exit_menu_to_home_unsave(); 	
 }
 
@@ -2331,7 +2331,6 @@ void key_process(void)
     event &= ~flg_KEY_DOWN;
     key=get_key_value();
     if(keyValue==KEY_VALUE_NONE && key== KEY_VALUE_NONE)return;
-	lcdOnTime=(stSysData.lcdOnTime)*60;
     do{
 		if(!(LCDCONbits.LCDEN)){
 			
@@ -2380,6 +2379,11 @@ void key_process(void)
 	}while(0);
 	key_waite_release(LONG_PRESS_TIME,&key);
     keyValue=KEY_VALUE_NONE;
+    if(batLevel>1){
+        lcdOnTime=(stSysData.lcdOnTime)*60;
+    }else{
+        lcdOnTime=30;
+    }
 }
 
 //file end

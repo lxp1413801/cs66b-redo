@@ -862,8 +862,6 @@ void sample_in_soc_solar(void)
 	__nop();	
 }
 
-
-
 void samlpe_in_soc_battery(void)
 {
 	uint32_t t32;
@@ -895,14 +893,18 @@ void samlpe_in_soc_battery(void)
 	
     t16=(uint16_t)(t32/i);
     t32=IN_SOC_VREF_VALUE;
-    t32=t32*t16*6/4095;
+	#if HW_VER >= HWVER303
+    t32=t32*t16*3/4095;
+	#else
+	t32=t32*t16*6/4095;	
+	#endif
 	rtValueBat=(uint16_t)t32;
     if(rtValueBat>3500){
 		batLevel=3;
 	}else if(rtValueBat>3300){
 		batLevel=2;
 	}else if(rtValueBat>3000){
-		batLevel=1;
+		batLevel=1;//关闭液晶
 	}else{
 		batLevel=0;
 	}
