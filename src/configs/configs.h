@@ -52,11 +52,12 @@
 	#endif
 	
 	#ifndef SOFTWARE_VER
-		#define SOFTWARE_VER " uer 101"
+		#define SOFTWARE_VER " uer 331"
 	#endif
 	
 	
 	#define WAKE_UP_SAMPLE_FORBID 0xffff
+    #define RF_SEND_OFF     0xffff
 	
 	#ifndef LCD_TEST_EX_EN
 	

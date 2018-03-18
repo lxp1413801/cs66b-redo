@@ -242,7 +242,7 @@ const sysDataDef_t defultSystemData={
 
 		1234,//uint32_t 	id;
 		1,//em_posture	pos;							//立式或者卧式
-		95,//uint8_t		maxValueForlevelBar;			//状态条显示满时对应的高度值,
+		0,//uint8_t		maxValueForlevelBar;			//状态条显示满时对应的高度值,
 													//(95%或者100%)
 		5,//uint16_t	density;						//密度
 		{{"LO2",1140},{"LN2",810},{"LAR",1402},{"CO2",1020},{"LNG",460},{"  P",1000}},
@@ -279,16 +279,22 @@ const sysDataDef_t defultSystemData={
 		//st_ilpScaleDef
         {0,0},      //ilpAdjustValue_t   ilpAdjustCh0;
         {0,0},      //ilpAdjustValue_t   ilpAdjustCh1;
-		950,//uint16_t	barScale;
+		1000,//uint16_t	barScale;
 		0,//uint8_t 	exPrTempShowEn;
-		60,//uint8_t		blOnTm;		        
+		10,//uint8_t		blOnTm;		        
 		//
-		0,//sleepPeriod
-		300,//rfSendPeriod
-		0,
-		0,
-		0,
-		255,
+		10,//sleepPeriod
+		RF_SEND_OFF,//rfSendPeriod
+		0,//bpMenu;
+		0,//bpSubMenu
+		0,//lcdOnTime
+		255,//ModbusId
+		//
+		1803,//production date
+		1,//producteCode
+		//
+		{0},//pdcWassword
+		(PSW_SET_PDC),//pdcWassword
 		0,//uint16_t	crc;
 };
 

@@ -202,16 +202,52 @@ void key_process_up_down_variable_speed_ex(
 //set long time press process
 void __enter_menu_password(void)
 {	
-	// stSysData.bpMenu=menu;
-	// stSysData.bpSubMenu=subMenu;
-	
 	menu=MENU_PASSWORD;
 	subMenu=0x00;
 	
 	passWord=0x00;
 	adjLocation=0x00;
 }
+void __enter_menu_set_pdc_chang_psd(uint8_t d)
+{
+	// stSysData.bpMenu=menu;
+	// stSysData.bpSubMenu=subMenu;
+	//密码生成规则：psd=((日期+编号)*(1.618+修改次数))%1000;
+	//取后四位
+	//如果psd<2000;psd=psd+1618;
+	uint16_t t16;
+	float f=1.0;
+	
+	stSysData.pdcEnterTm+=d;
+	
+	t16=stSysData.producteDate;
+	t16+=stSysData.producteCode;
+	
+	f=(float)t16;
+	f=0.618+(float)stSysData.pdcEnterTm;
+	f=f*(t16);
+	
+	t16=(uint16_t)f;
+	t16%=10000;
+	if(t16<2000)t16+=1618;
+	stSysData.pdcWassword=t16;
 
+	__sys_data_save_write_flash();	
+}
+void __enter_menu_set_pdc(uint8_t __subMenu)
+{
+	menu=MENU_SET_PDC;
+	subMenu=__subMenu;
+	
+	adjValue=0x00ul;
+	if(subMenu==sub_MENU_SET_PD){
+		*((uint16_t*)(&adjValue))=(uint16_t)(stSysData.producteDate);
+	}else{
+		*((uint16_t*)(&adjValue))=(uint16_t)(stSysData.producteCode);
+	}
+	adjLocation=0;
+	
+}
 void __enter_menu_set_density(void)
 {
 	uint16_t t16;
@@ -919,6 +955,7 @@ void key_process_down(void)
 		#else 
 		case MENU_HOME:__down_home_adj();break;
 		#endif
+		
 		case MENU_PASSWORD:key_shift_loc((uint8_t*)(&adjLocation),0,3);break;
 		case MENU_SET_DENSITY:__down_density();break;
 		case MENU_SET_POSE_SIZE:__down_pose_size();break;
@@ -951,6 +988,8 @@ void key_process_down(void)
 		break;
 		case MENU_SET_LCD_ON_TM:key_shift_loc((uint8_t*)(&adjLocation),0,2);break;
 		case MENU_SET_MODBUS_ID:key_shift_loc((uint8_t*)(&adjLocation),0,2);break;	
+		//
+		case MENU_SET_PDC:key_shift_loc((uint8_t*)(&adjLocation),0,3);break;
 		default:break;
 	}	
 }
@@ -978,7 +1017,10 @@ void __up_home_adj(void)
 	__sys_data_save_write_flash();
 	//if(subMenu>sub_MENU_HOME_02)subMenu=sub_MENU_HOME_00;
 }
-
+void __up_adj_pcd(void)
+{
+	key_adj_value_fixed((uint16_t*)(&adjValue),adjLocation);
+}
 void __up_psw_adj(void)
 {
 	key_adj_value_fixed((uint16_t*)(&passWord),adjLocation);
@@ -1260,15 +1302,14 @@ void __up_adj_rf_send_period(void)
 	uint16_t t16;
 	t16=(*(uint16_t*)(&adjValue));
 	switch(t16){
-		case 1:t16=2;break;
-		case 2:t16=4;break;
-		case 4:t16=6;break;
-		case 6:t16=10;break;
-		
-		case 10:t16=20;break;
-		case 20:t16=40;break;
-		case 40:t16=60;break;
-		case 60:t16=100;break;	
+		case 5:t16=10;break;
+		case 10:t16=30;break;
+		case 30:t16=60;break;
+
+		case 60:t16=360;break;
+		case 360:t16=720;break;
+		case 720:t16=RF_SEND_OFF;break;
+		case RF_SEND_OFF:t16=5;break;	
 		default:t16=1;break;
 	}
 	(*(uint16_t*)(&adjValue))=t16;	
@@ -1285,7 +1326,11 @@ void __up_adj_bl_on_tm(void)
 	}else if(*p==30){
 		*p=60;
 	}else{
-		*p=0;
+		if(exFunctionSta !=0){
+			*p=0;
+		}else{
+			*p=10;
+		}
 	}		
 
 }
@@ -1343,16 +1388,24 @@ void key_process_up(void)
 			paramChangedFlag=!paramChangedFlag;
 			//key_adj_value_float(&m_floatAdj,adjLocation);break;
 			break;
-		case MENU_SET_BL_ON_TM:__up_adj_bl_on_tm();break;
-		case MENU_SET_LCD_ON_TM:__up_adj_lcd_on_tm();break;
-		case MENU_SET_MODBUS_ID:__up_adj_modbus_id();break;
+		case MENU_SET_BL_ON_TM:		__up_adj_bl_on_tm();break;
+		case MENU_SET_LCD_ON_TM:	__up_adj_lcd_on_tm();break;
+		case MENU_SET_MODBUS_ID:	__up_adj_modbus_id();break;
+		case MENU_SET_PDC:			__up_adj_pcd();break;
 		default:break;
 	}		
 }
-
+void key_process_set_all_long(void)
+{
+	if(menu!=MENU_HOME)return;
+	menu=MENU_SHOW_PDC;
+	subMenu=sub_MENU_SHOW_PDC;
+}
 
 void key_process_set_up_long(void)
 {
+    //uint16_t pdcPsd=stSysData.pdcWassword;
+    uint8_t sta=1;
 	if(menu==MENU_PASSWORD){
 		switch(passWord){
 		case PSW_SET_DENSITY:           __enter_menu_set_density();             break;
@@ -1394,7 +1447,14 @@ void key_process_set_up_long(void)
 		case PSW_SET_LCD_ON_TM:			__enter_menu_set_lcd_on_tm();			break;
 		case PSW_SET_MODBUS_ID:			__enter_menu_set_modbus_addr();			break;
 		case PSW_SHOW_VER:				__enter_menu_show_ver();				break;
-		default:break;
+		//add 2018.03.16
+		//case pdcPsd:		__enter_menu_set_pdc();					break;
+		default:
+            sta=0;break;
+		}
+        if(sta==0 && passWord==stSysData.pdcWassword){
+			__enter_menu_set_pdc_chang_psd(1);
+			__enter_menu_set_pdc(0);
 		}
 	}	
 }
@@ -1424,6 +1484,20 @@ void key_process_set_down_long(void)
 
 
 //============================================================================
+void __set_short_pdc(bool gohome)
+{
+	if(subMenu==sub_MENU_SET_PD){
+		stSysData.producteDate=*((uint16_t*)(&adjValue));
+	}else{
+		stSysData.producteCode=*((uint16_t*)(&adjValue));
+	}
+	__enter_menu_set_pdc_chang_psd(0);
+	//__sys_data_save_write_flash();
+	if(gohome){__exit_menu_to_home_unsave(); return;}
+	subMenu++;
+	if(subMenu>sub_MENU_SET_PC)subMenu=sub_MENU_SET_PD;
+	__enter_menu_set_pdc(subMenu);
+}
 void __set_short_density(void)
 {
 	//int32_t t32;
@@ -2088,6 +2162,7 @@ void __set_long_base_zero(void)
     __exit_menu_to_home_unsave();
 }
 
+
 void __set_long_bar_level_scale(void)
 {
 	//uint16_t* p;
@@ -2224,6 +2299,9 @@ void key_process_set_long(void)
 		case MENU_SET_BL_ON_TM:		__set_long_bl_on_tm();break;
 		case MENU_SET_LCD_ON_TM:	__set_long_lcd_on_tm();break;
 		case MENU_SET_MODBUS_ID:	__set_long_modbus_id();break;
+		//
+		case MENU_SET_PDC:			__set_short_pdc(goHOME);break;
+		//
 		case MENU_SHOW_VER:			
 		default:__exit_menu_to_home_unsave();
 		break;
@@ -2264,7 +2342,7 @@ void key_process_set(void)
 		case MENU_CALIB_PR_2ND:			__set_short_calib_pr_2nd(unGoHome);break;
 		case MENU_CALIB_EPR0_2ND:		__set_short_calib_epr0_2nd(unGoHome);break;
 		case MENU_CALIB_EPR1_2ND:		__set_short_calib_epr1_2nd(unGoHome);break;
-
+		case MENU_SET_PDC:				__set_short_pdc(unGoHome);break;
 		default:break;
 	}
 }
@@ -2358,9 +2436,11 @@ void key_process(void)
 				else{ 
 					back_night_on();
 					blShowTime=stSysData.blOnTm;
-					if(blShowTime<20)blShowTime=20;
+					if(blShowTime<10)blShowTime=10;
 				}				
-			}
+			}else if(key == KEY_VALUE_DOWN + KEY_VALUE_SET + KEY_VALUE_UP){
+                key_process_set_all_long();
+            }
 		}else{
 			//短按
 			if(keyValue == KEY_VALUE_DOWN){
@@ -2379,11 +2459,15 @@ void key_process(void)
 	}while(0);
 	key_waite_release(LONG_PRESS_TIME,&key);
     keyValue=KEY_VALUE_NONE;
+    lcdOnTime=(stSysData.lcdOnTime)*60;
+	if(lcdOnTime<10)lcdOnTime=10;
+    /*
     if(batLevel>1){
         lcdOnTime=(stSysData.lcdOnTime)*60;
     }else{
         lcdOnTime=30;
     }
+	*/
 }
 
 //file end

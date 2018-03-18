@@ -2,7 +2,7 @@
 //EventGroupHandle_t threadMainEvent;
 //#define main_delay_ms(ms) ticker_ms_delay(ms)
 volatile uint16_t lcdOnTime=60;
-volatile uint8_t blShowTime=60;
+volatile uint8_t blShowTime=10;
 volatile uint16_t sleepSec=1000;
 volatile bool sampling=true;
 
@@ -53,7 +53,7 @@ void thread_main_pre(void)
 	ads1148_init_device(); 
 	
     blShowTime=stSysData.blOnTm;
-	blShowTime*=2;
+	//blShowTime*=2;
 	
 	//#if I_LOOP_BOARD 
     ad421_all_obj_init();
@@ -145,7 +145,11 @@ void event_sample_sleep_wake_mode(void)
 	ads1148_pre_sleep();
 	t32=ticker_ms_get();
     TMR1_Stop();
+    #if HW_VER >= HWVER303
+    kz_vadd_off();
+    #else
     if(blShowTime==0)kz_vadd_off();
+    #endif
     //if(event &  flg_RTC_SECOND)event &=  ~flg_RTC_SECOND;
     __nop();
     __nop();
@@ -258,17 +262,16 @@ void event_call_disp(void)
 }
 void event_rtc_bl_off(void)
 {
-    if(blShowTime>0){
-        blShowTime--;
-        //if(blShowTime==0 && stSysData.blOnTm>0 && exFunctionSta==0)back_night_off();
-        //不关闭被关的条件
-		if(stSysData.blOnTm==0 && exFunctionSta!=0){
-			return;
-		}else{
-			//关闭背光的条件
-			if(blShowTime==0)back_night_off();
-		}
-    }    
+    do{
+        if(stSysData.blOnTm==0 && exFunctionSta!=0)break;
+
+        if(blShowTime>0){
+            blShowTime--;
+        }else if(blShowTime==0){
+            back_night_off();
+        }  
+    }while(0);
+    
 }
 
 void event_rtc_no_operation_tm_out(void)
@@ -282,10 +285,13 @@ void event_rtc_no_operation_tm_out(void)
 void event_rtc_lcd_off(void)
 {
     if(menu!=0)return;
-	if(stSysData.sleepPeriod==0)return;
+	
 	if(exFunctionSta)return;
+	if(stSysData.sleepPeriod==0)return;
+
 	if(lcdOnTime==0){
-		if(stSysData.lcdOnTime>0 || batLevel<=1){
+		//if(stSysData.lcdOnTime>0 || batLevel<=1 || stSysData.rfSendPeriod==RF_SEND_OFF){
+        if(stSysData.lcdOnTime>0  || stSysData.sleepPeriod==WAKE_UP_SAMPLE_FORBID){
 			lcd_off();
 		}
 	}else{
@@ -321,11 +327,7 @@ int main(void)
             event_rtc_bl_off();
 			event_rtc_no_operation_tm_out();
 			event_rtc_lcd_off();
-			
-            //if(noEventTimeOut<blShowTime)noEventTimeOut=blShowTime;
 			event_sample_sleep_wake_mode();	
-            
-            
             //ui_disp_all_on();
             //lcd_disp_refresh();
             //event_call_disp();

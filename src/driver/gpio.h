@@ -102,6 +102,7 @@
 	#define EX_FUNCTION_485_EN 		(1<<0)
 	#define EX_FUNCTION_BJ_EN		(1<<1)
 	#define EX_FUNCTION_ILOOP_EN	(1<<2)
+    #define EX_FUNCTION_ALL (EX_FUNCTION_485_EN | EX_FUNCTION_BJ_EN | EX_FUNCTION_ILOOP_EN)
 	extern uint8_t  get_ex_function_status(void);
 	extern uint8_t volatile exFunctionSta; 
 

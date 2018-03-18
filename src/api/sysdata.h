@@ -163,12 +163,23 @@ extern "C"{
 		LCD_BL_ON_30s=30,
 		LCD_BL_ON_60s=60
 	}em_lcdBlOnTime;
+	//add at 2018.03.05
+	typedef struct{
+		int32_t ex0PrWarnHight;
+		int32_t ex0PrWarnLow;
+		int32_t ex1PrWarnHight;
+		int32_t ex1PrWarnLow;
+		int32_t ex0TempWarnHight;
+		int32_t ex0TempWarnLow;
+		int32_t ex1TempWarnHight;
+		int32_t ex1TempWarnLow;		
+	}exWarnValue_t;
 	
 	typedef struct{
 		uint32_t 		id;
 		em_posture		pos;							//立式或者卧�?
-		uint8_t			reversexxx;//maxValueForlevelBar;			//状态条显示满时对应的高度�?
-													//(95%或�?00%)
+		uint8_t			pdcEnterTm;						//maxValueForlevelBar;			//状态条显示满时对应的高度�?
+														//(95%或�?00%)
 		uint16_t		matterIndex;					//密度
 		matterDsc_t 	matterTab[6];
 		int32_t			h;								//�?
@@ -220,7 +231,13 @@ extern "C"{
 		//add by 2018.02.08
 		uint8_t			lcdOnTime;					//LCD点亮时间
 		uint8_t			ModbusId;//					
-		//
+		//add by 2018.03.15
+		uint16_t		producteDate;//production date
+		uint16_t		producteCode;
+		//外部报警
+		exWarnValue_t	exWarnValue;
+		uint16_t		pdcWassword;
+		
 		uint16_t		crc;
 	}sysDataDef_t;
 	

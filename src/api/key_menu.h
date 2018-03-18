@@ -50,13 +50,16 @@ extern "C"{
 	#define PSW_SET_WORK_MODE					1888
 	//add 
 	#define PSW_SET_WAKEUP_PERIOD				76
-	#define PSW_SET_RF_SEND_PERIOD				689
+	#define PSW_SET_RF_SEND_PERIOD				698
 	
 	//add and modfy 2018.02.08
 	#define PSW_SET_BL_ON_TM					39
 	#define PSW_SET_LCD_ON_TM					98	
 	#define PSW_SET_MODBUS_ID					8
 	#define PSW_SHOW_VER						368
+	//add at 2015.03.15
+	#define PSW_SET_EX_WARN						18
+	#define PSW_SET_PDC							9698
 	//==============================================================
 	//定义菜单,主界面
 	#define MENU_HOME							0x00
@@ -66,6 +69,20 @@ extern "C"{
 	//密码验证界面
 	#define MENU_PASSWORD						0x10
 	#define	sub_MENU_PASSWORD					0x00
+	
+	#define MENU_PASSWORD_EX					0x11
+	#define	sub_MENU_PASSWORD_EX				0x00
+	//设置
+	#define MENU_SET_PDC						0x12
+	#define sub_MENU_SET_PD						0x00
+	#define sub_MENU_SET_PC						0x01
+	//
+	#define MENU_SHOW_PDC						0x13
+	#define sub_MENU_SHOW_PDC					0x00
+	//设置外部报警值
+	#define MENU_SET_WARN_VALUE_EX				0x13
+	#define sub_MENU_SET_WARN_VALUE_EX_0		0x00
+	#define sub_MENU_SET_WARN_VALUE_EX_7		0x07	
 	
 	//设置密度	psd=36
 	#define MENU_SET_DENSITY					0x20

@@ -562,6 +562,60 @@ void ui_disp_adj_xfixed_pt_dp_ex(int16_t adcv,uint16_t x,uint8_t loc,uint8_t dpl
 	lcd_disp_refresh();
 }
 */
+void ui_disp_menu_pdc(void)
+{
+    uint8_t buf[10];
+    uint16_t x;
+	lcd_clear_all();
+	//m_mem_cpy(buf,str);
+	
+	x=stSysData.producteDate;
+	if(x>9999)x=9999;
+	m_int16_2_str_4(buf,x);
+	
+	x=stSysData.producteCode;
+	if(x>9999)x=9999;
+	m_int16_2_str_4(buf+4,x);
+
+	lcd_show_string(buf); 
+	lcd_show_dp(1,true);
+	lcd_disp_refresh();
+}
+
+void ui_disp_menu_set_pdc(void)
+{
+    uint8_t buf[10];
+    uint16_t x0,x1;
+	uint8_t loc;
+	lcd_clear_all();
+	
+	x0=stSysData.producteDate;
+	x1=stSysData.producteCode;
+	
+	if(subMenu ==sub_MENU_SET_PD){
+		x0=*((uint16_t*)(&adjValue));
+	}else{
+		x1=*((uint16_t*)(&adjValue));
+	}
+	
+	m_int16_2_str_4(buf,x0);
+	m_int16_2_str_4(buf+4,x1);
+	
+	loc=adjLocation;
+	
+	if(loc>3)loc=0;
+	loc=3-loc;
+	
+	if(subMenu>1)subMenu=1;
+	if(!fi_lcd_twinkle_lock()){
+		if(!fi_twinkle())buf[subMenu*4+loc]=' ';
+	}	
+	
+	lcd_show_string(buf); 
+	lcd_show_dp(1,true);
+	lcd_disp_refresh();	
+}
+
 void ui_disp_menu_psw_adj(void)
 {
 	lcd_clear_all();
@@ -1188,6 +1242,14 @@ void ui_disp_menu_poly_c_adj(void)
 	m_mem_cpy(buf,(uint8_t*)"    ");
 	
 	buf[3]='a'+t8;
+	/*
+	switch(t8){
+		case 0:buf[3]='0'+t8;break;
+		case 1:buf[3]='3'+t8;break;
+		case 2:buf[3]='6'+t8;break;
+		default:break;
+	}
+	*/
 	ui_disp_adj_xfixed_pt_dp(buf,adjValue,adjLocation,0);
 }
 
@@ -1381,21 +1443,30 @@ void ui_disp_menu_ext_show_mode(void)
 
 void ui_disp_menu_wake_up_period(void)
 {
-	int16_t t16;
+	uint16_t t16;
 	lcd_clear_all();
-	t16=(int16_t)adjValue;
+	t16=*((uint16_t*)(&adjValue));
+	
 	if(t16==WAKE_UP_SAMPLE_FORBID){
 		lcd_show_string((uint8_t*)(" slp off"));
 		lcd_disp_refresh(); 
 	}else{
-		ui_disp_adj_xfixed_static((uint8_t*)(" slp"),t16,3);
+		ui_disp_adj_xfixed_static((uint8_t*)(" slp"),(int)t16,3);
 	}
 }
 
 void ui_disp_menu_rf_send_period(void)
 {
+	uint16_t t16;
 	lcd_clear_all();
-	ui_disp_adj_xfixed_static((uint8_t*)(" rfp"),(int16_t)adjValue,3);
+	//RF_SEND_OFF
+	t16=*((uint16_t*)(&adjValue));
+	if(t16==RF_SEND_OFF){
+		lcd_show_string((uint8_t*)(" rfp off"));
+		lcd_disp_refresh(); 		
+	}else{
+		ui_disp_adj_xfixed_static((uint8_t*)(" rfp"),(int)t16,3);
+	}
 }
 
 
@@ -1407,9 +1478,9 @@ void ui_disp_menu_poly_coefic_adj_mod(void)
 	lcd_clear_all();
 	//lcd_disp_logo(true);
 	if(adjValue==0){
-		m_mem_cpy(buf,(uint8_t*)"   n   1");
+		m_mem_cpy(buf,(uint8_t*)"   n   0");
 	}else if(adjValue==1){
-		m_mem_cpy(buf,(uint8_t*)"   n   4");
+		m_mem_cpy(buf,(uint8_t*)"   n   3");
 	}else{
 		m_mem_cpy(buf,(uint8_t*)"   n   6");
 	}
@@ -1564,6 +1635,7 @@ void ui_disp_menu_ver(void)
 	lcd_clear_all();
 	//ui_disp_adj_xfixed_pt_t8((uint8_t*)"  id",(int8_t)adjValue,adjLocation);
 	lcd_show_string((uint8_t*)SOFTWARE_VER);
+    lcd_show_dp(6,true);
 	lcd_disp_refresh(); 
 }
 void ui_disp_menu(void)
@@ -1575,6 +1647,7 @@ void ui_disp_menu(void)
 		#else 
 		case MENU_HOME:					ui_disp_menu_home();			break;
 		#endif
+		case MENU_SHOW_PDC:				ui_disp_menu_pdc();break;
 		case MENU_PASSWORD:				ui_disp_menu_psw_adj();			break;		
 		case MENU_SET_DENSITY:			ui_disp_menu_density_adj();		break;		
 		case MENU_SET_POSE_SIZE:		ui_disp_menu_pose_size();		break;
@@ -1621,6 +1694,8 @@ void ui_disp_menu(void)
 		case MENU_SET_LCD_ON_TM:	ui_disp_menu_lcd_on_tm();break;
 		case MENU_SET_MODBUS_ID:	ui_disp_menu_modbus_id();break;
 		case MENU_SHOW_VER:			ui_disp_menu_ver();break;
+		//add 
+		case MENU_SET_PDC:			ui_disp_menu_set_pdc();break;
 		default:break;
 	}	
 }

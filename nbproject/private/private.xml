@@ -18,10 +18,7 @@
             <file>file:/F:/2017/cs66-b/cs66b.X/src/app/sample.h</file>
         </group>
         <group name="cs600_test">
-            <file>file:/F:/2017/cs66-b/cs66b-redo/src/api/sysdata.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b-redo/src/soc/delay.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b-redo/src/driver/ads1148_hal.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b-redo/src/driver/ads1148.c</file>
+            <file>file:/F:/2017/cs66-b/cs66b-redo/src/app/main.c</file>
         </group>
     </open-files>
 </project-private>
