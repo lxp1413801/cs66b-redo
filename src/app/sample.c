@@ -365,7 +365,8 @@ void sample_calc_diff_press(void)
 		//t32=0;
 	}
     rtDiffPressure=sample_calc_calib_dpr_2nd(t32,(st_2ndCalibDef*)(stSysData._2ndPrDiffCalib));
-    //
+    
+	//
 	t32=cal_diff_p_to_h(rtDiffPressure);
 	t32=t32-stSysData.baseZero;
 	rtHight=t32;
