@@ -23,4 +23,6 @@ src/driver/ex_eeprom.h  \
  src/driver/key.h  \
 src/driver/ad421.h  \
 src/driver/lcd_code_table.h  \
- src/driver/lcd_code_table_ex.h 
+ src/driver/lcd_code_table_ex.h  \
+src/driver/../configs/configs.h  \
+ src/driver/../configs/../../mcc_generated_files/mcc.h 

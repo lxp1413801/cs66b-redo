@@ -109,7 +109,8 @@ extern "C"{
 	typedef struct{
 		uint16_t t16;
 		union{
-			uint16_t :10;
+			uint16_t :9;
+			uint16_t dprFull:1;
             uint16_t powerStatus:2;
             uint16_t warnBit3:1;
             uint16_t warnBit2:1;
@@ -315,6 +316,7 @@ extern "C"{
     extern volatile int32_t		rtDiffPressure;
     extern volatile int32_t     rtDiffPrOriginal;
 	extern volatile int32_t		rtVolume;
+    extern volatile int32_t    rtHightOriginal;
     extern volatile int32_t		rtHight;
 	extern volatile int32_t		rtWeight;
 	extern volatile uint8_t		rtLevel;
@@ -340,7 +342,7 @@ extern "C"{
     extern uint32_t data_sys_cal_v2(sysDataDef_t* stp);
     
 
-    
+    extern uint16_t data_sys_get_density(void);
 	extern void calib_data_put_piont_tab(xCalibTab_t* ptab,xCalibPoint_t* pp,uint8_t row,uint8_t col);
     //apl
 	extern int32_t calculate_and_compensate(xCalibTab_t* cTab,__xDataStruct_t* xin);

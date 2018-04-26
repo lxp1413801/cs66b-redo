@@ -41,6 +41,7 @@ volatile int16_t rtValueSolor;
 volatile uint8_t solorLevel=0;
 
 
+//volatile uint8_t sampleTimes=0x00;
 int16_t abs_diff(uint16_t a,uint16_t b)
 {
 	if(a>b){
@@ -323,8 +324,14 @@ int32_t sample_calc_diff_press_static_err(int32_t in)
 {
 	int32_t t32;
 	float x,y;
+	t32=(calibTab0.staticPreAdj1.diffPrZero);
+	if(t32>2000 || t32<-2000)return in;
+	t32=(calibTab0.staticPreAdj0.diffPrZero);
+	if(t32>2000 || t32<-2000)return in;	
+	
 	y=(float)(calibTab0.staticPreAdj1.diffPrZero-calibTab0.staticPreAdj0.diffPrZero);
-    if(y>100 || y==0)return in;
+    if(y==0)return in;
+    if(y>2000 || y<-2000)return in;
     x=(float)(calibTab0.staticPreAdj1.pr-calibTab0.staticPreAdj0.pr);
     if(x<1)x=1;
     y=y/x;//y为斜率
@@ -336,12 +343,28 @@ int32_t sample_calc_diff_press_static_err(int32_t in)
     t32=in-t32;
 	return t32;
 }
-
+void sample_calc_diff_press_fi_full(void)
+{
+	//int32_t t32=rtDiffPressure;
+	int32_t fullSet;
+    int16_t _point;
+	xCalibTab_t* cTab=diffPrCalibDataObj.calibTab;
+    _point=cTab->calibRow[0].pCount;
+    if(_point<2)return;
+	fullSet=cTab->calibRow[0].calibPoint[_point-1].value;
+    if(rtDiffPressure>=(fullSet+fullSet/2)){
+		deviceEvent.bits.dprFull=1;
+	}else if(rtDiffPressure<=(0-fullSet)){
+		deviceEvent.bits.dprFull=1;
+	}else{
+		deviceEvent.bits.dprFull=0;
+	}
+}
 
 void sample_calc_diff_press(void)
 {
     //uint8_t i;
-    int32_t t32;
+    int32_t t32,density;
 	x_prDiffData.sigAdcValue=rtAdcValueDPrSignal;
     x_prDiffData.tAdcValue=rtAdcValueDPrBridge;
     x_prDiffData.value=0;                                           
@@ -363,12 +386,18 @@ void sample_calc_diff_press(void)
 		t32=sample_calc_diff_press_static_err(rtDiffPrOriginal);
 	}else{
 		//t32=0;
+		t32=rtDiffPrOriginal;
 	}
+    //t32=rtDiffPrOriginal;
     rtDiffPressure=sample_calc_calib_dpr_2nd(t32,(st_2ndCalibDef*)(stSysData._2ndPrDiffCalib));
-    
+
+    //add fi_full
+	sample_calc_diff_press_fi_full();
 	//
 	t32=cal_diff_p_to_h(rtDiffPressure);
-	t32=t32-stSysData.baseZero;
+	density=data_sys_get_density();
+    rtHightOriginal=t32;
+	t32=t32-(stSysData.baseZero/density);
 	rtHight=t32;
     
     __nop();

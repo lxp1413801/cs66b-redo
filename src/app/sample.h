@@ -58,7 +58,10 @@
 	#define AIN_REF_P_PIN	PIN10
 	#define AIN_REF_P_PORT	porta
 	extern void samlpe_in_soc_battery(void);
-
+	
+	// 2018.03.28
+	//extern volatile uint8_t sampleTimes;
+    extern volatile bool firstSampleFlg;
 #ifdef __cplusplus
 	}
 #endif

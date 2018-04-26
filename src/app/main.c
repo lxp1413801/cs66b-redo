@@ -1,8 +1,8 @@
 #include "../includes/includes.h"
 //EventGroupHandle_t threadMainEvent;
 //#define main_delay_ms(ms) ticker_ms_delay(ms)
-volatile uint16_t lcdOnTime=60;
-volatile uint8_t blShowTime=10;
+volatile uint16_t lcdOnTime=4;
+volatile uint8_t blShowTime=4;
 volatile uint16_t sleepSec=1000;
 volatile bool sampling=true;
 
@@ -34,12 +34,12 @@ void thread_main_pre(void)
     lcd_init();
     __nop();
     __nop();
-    ticker_ms_delay(2000);
-    lcd_off();
-    data_init_all(); 
-	lcd_on();
-	ui_disp_start_cs600(6);
-	 
+    // ticker_ms_delay(2000);
+    // lcd_off();
+    // data_init_all(); 
+	// lcd_on();
+	ui_disp_start_cs600(8);
+	data_init_all(); 
 	__nop();
 	__nop();
     all_status_pins_mod_in();
@@ -52,7 +52,11 @@ void thread_main_pre(void)
     ads1148_init_all_obj();
 	ads1148_init_device(); 
 	
-    blShowTime=stSysData.blOnTm;
+    //blShowTime=stSysData.blOnTm;
+	lcdOnTime=(stSysData.lcdOnTime)*60;
+	if(stSysData.sleepPeriod==WAKE_UP_SAMPLE_FORBID && lcdOnTime>8){lcdOnTime=8;}
+	
+	if(lcdOnTime<8)lcdOnTime=8;
 	//blShowTime*=2;
 	
 	//#if I_LOOP_BOARD 
@@ -73,7 +77,11 @@ void event_proess(void)
 */
 void event_sample_real_time_mode(void)
 {
-	if(stSysData.sleepPeriod>0 && menu==0 )return;
+	do{
+		if(firstSampleFlg)break;
+		if(stSysData.sleepPeriod == WAKE_UP_SAMPLE_FORBID)return;
+		if(stSysData.ployCoeffic[0]!=1000 && menu==0 )return;
+	}while(0);
 	ads1148_post_sleep();
 	//noEventTimeOut=NO_EVENT_TIME_MAX;
 	if(event & flg_TICKER_10MS_PER){
@@ -118,8 +126,10 @@ void event_sample_sleep_wake_mode(void)
     uint8_t t8=0;
     uint32_t t32=0;
 	//return;
+	if(firstSampleFlg)return;
     if(stSysData.sleepPeriod == WAKE_UP_SAMPLE_FORBID)return;
-	if(stSysData.sleepPeriod==0 || menu!=0 )return;
+	if(stSysData.ployCoeffic[0]==1000 || menu!=0 )return;
+	//if(stSysData.sleepPeriod==0 || menu!=0 )return;
     //if(stSysData.sleepPeriod)sleepSec++;
     sleepSec++;
 	if(sleepSec<(stSysData.sleepPeriod))return ;
@@ -220,7 +230,10 @@ void event_enter_sleep(void)
         //Idle();
         return;
     }
-	if(noEventTimeOut==0 && stSysData.sleepPeriod>0){
+	if(blShowTime >0)return; 
+	//if(noEventTimeOut==0 && stSysData.sleepPeriod>0){
+	
+	if(noEventTimeOut==0 && stSysData.ployCoeffic[0]!=1000){	
 		__nop();
 		__nop();
 		//pre_system_sleep_deinit_all_pins();
@@ -263,6 +276,8 @@ void event_call_disp(void)
 void event_rtc_bl_off(void)
 {
     do{
+		
+		
         if(stSysData.blOnTm==0 && exFunctionSta!=0)break;
 
         if(blShowTime>0){
@@ -286,16 +301,19 @@ void event_rtc_lcd_off(void)
 {
     if(menu!=0)return;
 	
-	if(exFunctionSta)return;
+	//if(exFunctionSta)return;
 	if(stSysData.sleepPeriod==0)return;
+    if(stSysData.ployCoeffic[0]==1000)return;
 
+	if(lcdOnTime)lcdOnTime--;
 	if(lcdOnTime==0){
+		if(blShowTime>0)return;	
 		//if(stSysData.lcdOnTime>0 || batLevel<=1 || stSysData.rfSendPeriod==RF_SEND_OFF){
         if(stSysData.lcdOnTime>0  || stSysData.sleepPeriod==WAKE_UP_SAMPLE_FORBID){
 			lcd_off();
 		}
 	}else{
-		lcdOnTime--;
+		//lcdOnTime--;
 	}
 }
 uint8_t uartTestStr[]="UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU";
@@ -307,12 +325,14 @@ int main(void)
     uint16_t t16;
     SYSTEM_Initialize(); 
     thread_main_pre();	
+    noEventTimeOut=2;
     while (1){
 		if(event & flg_KEY_DOWN){
 			//event &= ~flg_KEY_DOWN;
             noEventTimeOut=NO_EVENT_TIME_MAX;
             if( !T1CONbits.TON )TMR1_Start();
 			key_process();
+            if(menu==MENU_HOME)noEventTimeOut=2;
 		}
 		if(event &  flg_RTC_HALF_SECOND){
 			event &=  ~flg_RTC_HALF_SECOND;
@@ -320,7 +340,7 @@ int main(void)
 			if(lcdTwinkle>0)lcdTwinkle--;
             
             if(globleHalfSec & 0x01ul)event |= flg_RTC_SECOND;
-            if(LCDCONbits.LCDEN)ui_disp_menu();
+            if(LCDCONbits.LCDEN && firstSampleFlg==false)ui_disp_menu();
         }
         if(event & flg_RTC_SECOND){
             event &= ~flg_RTC_SECOND;

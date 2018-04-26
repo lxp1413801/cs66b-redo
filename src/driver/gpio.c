@@ -21,6 +21,7 @@ void kz_qy_vcc_config(void)
 */
 void  kz_qy_vcc_enable(void)
 {
+	//set_port_odc_en(KZ_QY_VCC_PORT,KZ_QY_VCC_PINS);
 	set_port_mode_dig(KZ_QY_VCC_PORT,KZ_QY_VCC_PINS);
 	set_port_mode_out(KZ_QY_VCC_PORT,KZ_QY_VCC_PINS);	
 	set_port_value_low(KZ_QY_VCC_PORT,KZ_QY_VCC_PINS);	
@@ -28,7 +29,13 @@ void  kz_qy_vcc_enable(void)
 void kz_qy_vcc_disable(void)
 {
 	set_port_mode_an(KZ_QY_VCC_PORT,KZ_QY_VCC_PINS);
-	set_port_mode_in(KZ_QY_VCC_PORT,KZ_QY_VCC_PINS);	
+	set_port_mode_in(KZ_QY_VCC_PORT,KZ_QY_VCC_PINS);
+	/*
+	// set_port_odc_en(KZ_QY_VCC_PORT,KZ_QY_VCC_PINS);
+	 set_port_mode_dig(KZ_QY_VCC_PORT,KZ_QY_VCC_PINS);
+	 set_port_mode_out(KZ_QY_VCC_PORT,KZ_QY_VCC_PINS);	
+	 set_port_value_low(KZ_QY_VCC_PORT,KZ_QY_VCC_PINS);	
+	 */
 }
 #endif	
 void kz_vadd_on(void)
@@ -63,6 +70,7 @@ void kz_vadd_off(void)
 void back_night_on(void)
 {
     if(!kzAvddOn)kz_vadd_on();
+	set_portb_value_low(PIN11);
 	set_portb_mode_dig(PIN11);
 	set_portb_mode_out(PIN11);
 	set_portb_value_hight(PIN11);

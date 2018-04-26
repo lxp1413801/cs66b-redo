@@ -49,8 +49,8 @@ void __attribute__ ( ( interrupt, no_auto_psv ) ) _CNInterrupt ()
 	__nop();
 	tmpKeyValue=get_key_value();
     while(dly--){
-        __nop();__nop();__nop();__nop();
-         __nop();__nop();__nop();__nop();
+		__nop();__nop();__nop();__nop();
+		__nop();__nop();__nop();__nop();
     }
     tmpKeyValue=get_key_value();
 	if(tmpKeyValue!= 0 && keyValue==0){

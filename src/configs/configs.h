@@ -17,6 +17,12 @@
 
 	#define NO_EVENT_TIME_MAX 30
 
+	//uer3310:3.0V
+	//uer3313:3.3V	
+	#ifndef SOFTWARE_VER
+		#define SOFTWARE_VER " uer 331"
+	#endif
+	
 	//V303的板子都是通过io口向eeprom供电的，301之前的只有一块板子使用io供电
 	#ifndef EEPROM_PER_VIA_IO
 		#if HW_VER>= HWVER303
@@ -26,6 +32,10 @@
 		#endif
 	#endif	
 	
+    #define __default_PD 1803
+    #define __default_PC   0
+
+    #define PSD_DELTA   0.618
 	#ifndef UART_1_REC_IDLE_TIME_OUT 
 		#define UART_1_REC_IDLE_TIME_OUT 400
 	#endif
@@ -50,14 +60,9 @@
 	#ifndef DEBUG_EX_TEMP_EN
 		#define DEBUG_EX_TEMP_EN 0
 	#endif
-	
-	#ifndef SOFTWARE_VER
-		#define SOFTWARE_VER " uer 331"
-	#endif
-	
-	
+
 	#define WAKE_UP_SAMPLE_FORBID 0xffff
-    #define RF_SEND_OFF     0xffff
+    #define RF_SEND_OFF     0x0
 	
 	#ifndef LCD_TEST_EX_EN
 	

@@ -99,7 +99,8 @@ extern "C"{
 	#define LCD_CODE_q_EX (SEG_A_EX + SEG_I_EX + SEG_B_EX + SEG_H_EX + SEG_C_EX)
 
 	//#define LCD_CODE_R (LCD_DSEG_A +LCD_DSEG_F +LCD_DSEG_E)
-    #define LCD_CODE_r_EX (SEG_A_EX + SEG_F_EX + SEG_E_EX)
+    //#define LCD_CODE_r_EX (SEG_A_EX + SEG_F_EX + SEG_E_EX)
+	#define LCD_CODE_r_EX (SEG_G_EX + SEG_L_EX + SEG_H_EX)
 	#define LCD_CODE_s_EX (SEG_A_EX + SEG_F_EX + SEG_G_EX+ SEG_K_EX + SEG_D_EX )
 	#define LCD_CODE_t_EX (SEG_G_EX + SEG_H_EX + SEG_J_EX + SEG_L_EX + SEG_D_EX)
 	

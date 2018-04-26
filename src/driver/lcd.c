@@ -2,7 +2,7 @@
 #include "lcd_code_table.h"
 #include "lcd_code_table_ex.h"
 #include "lcd.h"
-
+#include "../configs/configs.h"
 extern volatile bool blackEn;
 //uint8_t* pLcdReg=(uint8_t*)(&LCDDATA0); 
 uint16_t pLCD[LCD_PIXEL_REGISTER_SIZE];
@@ -857,26 +857,23 @@ void lcd_config(void)
     LCDCONbits.LMUX=7;
     
     LCDREGbits.CPEN=0;
-    LCDREGbits.BIAS=7;
+    LCDREGbits.BIAS=5;
     LCDREGbits.CKSEL=0;
     LCDREGbits.MODE13=1;
     
     LCDPSbits.BIASMD=0;
     LCDPSbits.LP=2;
 	//LCDPSbits.WFT=1;
-    
+
     LCDREFbits.LCDIRE=1;
-    LCDREFbits.LCDCST=2;
+    LCDREFbits.LCDCST=3;//越大功耗越低
     LCDREFbits.VLCD1PE=0;
     LCDREFbits.VLCD2PE=0;
     LCDREFbits.VLCD3PE=0;
     
-    LCDREFbits.LRLAP=1;
-    LCDREFbits.LRLBP=3;
-    LCDREFbits.LRLAT=4;
-    
-    
-
+    LCDREFbits.LRLAP=1;//越大越亮，功耗越高
+    LCDREFbits.LRLBP=3;//越大越亮，功耗越高
+    LCDREFbits.LRLAT=4;//越大功耗越低
 	// TRISDbits.TRISD0=0;//debug
 	LCDSE0 = 0b0001111100010000;
 	LCDSE1 = 0b0000000000001100;

@@ -36,6 +36,7 @@ volatile int32_t    rtTemperatureInBuf[4]={0,0,0,0};
 volatile int32_t    rtDiffPrBuf[4]={0,0,0,0};
 volatile int32_t	rtDiffPressure;
 
+volatile int32_t    rtHightOriginal;
 volatile int32_t	rtHight;
 volatile int32_t	rtWeight;
 volatile int32_t	rtVolume;
@@ -245,8 +246,8 @@ const sysDataDef_t defultSystemData={
 		0,//uint8_t		maxValueForlevelBar;			//状态条显示满时对应的高度值,
 													//(95%或者100%)
 		5,//uint16_t	density;						//密度
-		{{"LO2",1140},{"LN2",810},{"LAR",1402},{"CO2",1020},{"LNG",460},{"  P",1000}},
-		3765,//int32_t		h;								//高
+		{{"LO2",1140},{"LN2",810},{"LAr",1402},{"CO2",1020},{"LNG",460},{"  P",1000}},
+		3670,//int32_t		h;								//高
 		1400,//uint32_t	d;								//直径
 		
 		0,//int32_t		V1;								//圆筒部分体积
@@ -262,7 +263,7 @@ const sysDataDef_t defultSystemData={
 		{{6000,20,0,{0}},{1000,20,1,{0}},{800,5,2,{0}},{200,5,3,{0}}},//st_warnDef		diffPressureWarnSet[4];		//差压报警设置
 		//{{0},{0}},//st_warnDef		pressureWarnSet[2];			//压力报警设置
 
-		
+		//{600,200,100,100},
 		{1000,0,0,0},//uint16_t		ployCoeffic[4];					//v0'=a0.v0+a1.v1+ ...+an.vn
 
 		{{0,0},{10000,10000}},//st_exClibDef	TmepCalib[2];				//温度标定，
@@ -290,8 +291,8 @@ const sysDataDef_t defultSystemData={
 		0,//lcdOnTime
 		255,//ModbusId
 		//
-		1803,//production date
-		1,//producteCode
+		__default_PD,//1803,//production date
+		__default_PC,//0,//producteCode
 		//
 		{0},//pdcWassword
 		(PSW_SET_PDC),//pdcWassword
