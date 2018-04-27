@@ -13,7 +13,7 @@
 	#include "modbus.h"
 	#include "nbiot.h"
 	#include "gps.h"
-
+	#include "at-cmd.h"
 #ifdef __cplusplus
 	}
 #endif

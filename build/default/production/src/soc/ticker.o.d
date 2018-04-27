@@ -45,7 +45,8 @@ src/soc/../includes/../api/key_menu.h  \
  src/soc/../includes/../api/modbus.h  \
 src/soc/../includes/../api/nbiot.h  \
  src/soc/../includes/../api/gps.h  \
-src/soc/../includes/../app/app.h  \
+src/soc/../includes/../api/at-cmd.h  \
+ src/soc/../includes/../app/app.h  \
  src/soc/../includes/../app/../../mcc_generated_files/mcc.h  \
  src/soc/../includes/../app/main.h  \
 src/soc/../includes/../app/event.h  \

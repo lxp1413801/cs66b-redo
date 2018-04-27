@@ -95,7 +95,7 @@ typedef struct
 
 } UART_OBJECT ;
 
-static UART_OBJECT uart2_obj ;
+//static UART_OBJECT uart2_obj ;
 
 /** UART Driver Queue Length
 
@@ -115,12 +115,12 @@ static UART_OBJECT uart2_obj ;
 
 */
 
-static uint8_t uart2_txByteQ[UART2_CONFIG_TX_BYTEQ_LENGTH] ;
-static uint8_t uart2_rxByteQ[UART2_CONFIG_RX_BYTEQ_LENGTH] ;
+//static uint8_t uart2_txByteQ[UART2_CONFIG_TX_BYTEQ_LENGTH] ;
+//static uint8_t uart2_rxByteQ[UART2_CONFIG_RX_BYTEQ_LENGTH] ;
 //add by lxp
 
 uint16_t 	uart2ReceivedCount=0;
-uint8_t		uart2ReceivedBuf[64];
+uint8_t		uart2ReceivedBuf[UART_2_REC_BUF_LEN];
 uint16_t	uart2RecIdleTime=0;
 
 /**
@@ -255,7 +255,7 @@ void __attribute__ ( ( interrupt, no_auto_psv ) ) _U2ErrInterrupt ( void )
 /**
   Section: UART Driver Client Routines
 */
-
+/*
 uint8_t UART2_Read( void)
 {
     uint8_t data = 0;
@@ -440,7 +440,7 @@ UART2_STATUS UART2_StatusGet (void)
 {
     return U2STA;
 }
-
+*/
 //add by lxp
 void uart2_send_byte(uint8_t x)
 {

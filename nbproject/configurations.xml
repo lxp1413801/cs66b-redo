@@ -40,6 +40,7 @@
           <itemPath>src/api/modbus.c</itemPath>
           <itemPath>src/api/gps.c</itemPath>
           <itemPath>src/api/nbiot.c</itemPath>
+          <itemPath>src/api/at-cmd.c</itemPath>
         </logicalFolder>
         <logicalFolder name="app" displayName="app" projectFiles="true">
           <itemPath>src/app/main.c</itemPath>
