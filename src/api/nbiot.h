@@ -19,9 +19,46 @@ extern "C"{
     }stAtCmdProcessSm,atCmdProcessSm_t;
 	
     extern atCmdProcessSm_t atCmdSm;
-    extern uint16_t nbRecLen;
-    #define NB_REC_BUFFER_LEN UART_2_REC_BUF_LEN
-    extern uint8_t nbRecBuf[NB_REC_BUFFER_LEN];
+    
+ 	typedef enum{
+        NB_PSM_SM_NOTHING,
+		NB_PSM_SM_NRZ,
+		NB_PSM_SM_AT,
+		NB_PSM_SM_ATI,
+		NB_PSM_SM_CMEE,
+		NB_PSM_SM_CGMR,
+		NB_PSM_SM_CFUN,
+		NB_PSM_SM_CFUNR,
+
+		NB_PSM_SM_CGCCONT,
+		NB_PSM_SM_CGCCONT_R,
+		NB_PSM_SM_NCDP,
+		NB_PSM_SM_NCDPR,
+		NB_PSM_SM_CGATT,
+		NB_PSM_SM_CGATTR,
+		NB_PSM_SM_CGATTR_SLOW,
+		NB_PSM_SM_CGATTR_FAST,
+		
+		NB_PSM_SM_CIMI,
+		NB_PSM_SM_NCCID,
+		NB_PSM_SM_CGSN,	
+		NB_PSM_SM_CSQ,
+		NB_PSM_SM_NUESTATS,
+		NB_PSM_SM_QSECSWT,
+		NB_PSM_SM_QSECSWT_R,
+		
+		NB_PSM_SM_SEND,
+		NB_PSM_SM_RECEIVE,
+		NB_PSM_SM_PSM,
+		NB_PSM_SM_NO_NET,
+                
+             
+	}em_nbPsmStateMachine,nbPsmStateMachine_t;
+	extern nbPsmStateMachine_t nbPsmStateMachine;
+    
+    extern uint16_t nbBufLen;
+    #define NB_BUFFER_LEN UART_2_REC_BUF_LEN
+    extern uint8_t nbBuf[NB_BUFFER_LEN];
     
 #ifdef __cplusplus
 }

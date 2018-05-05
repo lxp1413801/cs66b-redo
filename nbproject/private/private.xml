@@ -2,22 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group name="cs600_test">
-            <file>file:/F:/2017/cs66-b/cs66b-redo/src/driver/lcd.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b-redo/src/app/main.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b-redo/src/configs/configs.h</file>
-            <file>file:/F:/2017/cs66-b/cs66b-redo/src/api/ui.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b-redo/src/app/sample.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b-redo/src/app/sample.h</file>
-            <file>file:/F:/2017/cs66-b/cs66b-redo/src/api/key_menu.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b-redo/src/api/sysdata.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b-redo/src/soc/delay.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b-redo/src/driver/ads1148_hal.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b-redo/src/driver/ads1148.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b-redo/src/app/event.c</file>
-            <file>file:/F:/2017/cs66-b/cs66b-redo/src/driver/key.h</file>
-            <file>file:/F:/2017/cs66-b/cs66b-redo/src/driver/key.c</file>
-        </group>
         <group>
             <file>file:/D:/lxp/cs66b-redo/src/api/sysdata.c</file>
             <file>file:/D:/lxp/cs66b-redo/src/api/sysdata.h</file>
@@ -28,6 +12,9 @@
             <file>file:/D:/lxp/cs66b-redo/src/api/ui.h</file>
             <file>file:/D:/lxp/cs66b-redo/src/app/sample.c</file>
             <file>file:/D:/lxp/cs66b-redo/src/app/sample.h</file>
+        </group>
+        <group name="cs600_test">
+            <file>file:/F:/2017/cs66-b/cs66b-redo/src/api/nbiot.c</file>
         </group>
     </open-files>
 </project-private>

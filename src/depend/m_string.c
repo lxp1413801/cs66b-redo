@@ -57,6 +57,17 @@ void m_mem_cpy(uint8_t* d,uint8_t* s)
 	*d='\0';
 }
 
+uint16_t m_str_cpy(uint8_t* d,uint8_t* s)
+{
+	uint16_t len=0;
+	while(*s!='\0'){
+		*d++=*s++;
+		len++;
+	}
+	*d='\0';	
+	return (len+1);
+}
+
 uint16_t m_str_cmp(uint8_t* d,uint8_t* s)
 {
 	uint16_t ret=1;
@@ -86,11 +97,11 @@ uint16_t m_str_cmp_len(uint8_t* d,uint8_t* s,uint8_t len)
 	}
 	return ret;
 }
-/*
 uint16_t m_str_match(uint8_t* b,uint8_t* c)
 {
 	uint8_t *bb,*cc;
 	uint16_t ret=0;
+	uint16_t loc=0;
 	while(*b!='\0' )
 	{
 		cc=c;
@@ -111,11 +122,36 @@ uint16_t m_str_match(uint8_t* b,uint8_t* c)
 			//if(ret)return ret;
 			//ret=1;
 			return 1;
+			
 		}
+		loc++;
 	}
 	return ret;
 }
-*/
+uint16_t m_str_match_ex(uint8_t* b,uint8_t* c,uint16_t *loc)
+{
+	uint8_t *bb,*cc;
+	uint16_t local=0;
+	while(*b!='\0' ){
+		cc=c;
+		bb=b++;
+		while(*bb!='\0' && *cc!='\0'){
+			if(*bb!=*cc){
+				break;
+			}
+			bb++;
+			cc++;
+		}
+		if(*cc=='\0'){
+			*loc=local;
+			return 1;
+			
+		}
+		local++;
+	}
+	*loc=local;
+	return 0;
+}
 int32_t m_math_pow(int32_t x,uint8_t y)
 {
 	int32_t ret=1;
@@ -278,5 +314,19 @@ void m_int16_2_str_3(uint8_t* buf,int16_t x)
 	buf[1]=HexTable[x%10];
 	x/=10;
 	buf[0]=HexTable[x%10];
+}
+uint8_t int16_2_d(uint8_t* str,uint32_t t16)
+{
+	uint8_t buf[16]={0};
+	uint8_t* p=buf+14;
+	uint8_t t8=0;
+	while(t16){
+		*p--=(uint8_t)(t16%10)+'0';
+		t16/=10;
+		t8++;
+	}
+	p++;
+	m_mem_cpy(str,p);
+	return t8;
 }
 //file end

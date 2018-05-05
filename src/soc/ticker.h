@@ -22,6 +22,20 @@ extern "C"{
     extern void rtcc_interupt_disable(void);
     extern void rtcc_interupt_enable(void);
     
+
+    extern volatile uint8_t timerUsedFlg;
+    #define UART1_USED_TIMER2 (0x01<<0)
+    #define UART2_USED_TIMER2 (0x01<<1)
+
+    #define timer2_used_by_uart1() do{timerUsedFlg |= UART1_USED_TIMER2;}while(0);
+    #define timer2_used_by_uart2() do{timerUsedFlg |= UART2_USED_TIMER2;}while(0);
+    #define timer2_release_by_uart1() do{timerUsedFlg &= ~UART1_USED_TIMER2;}while(0);
+    #define timer2_release_by_uart2() do{timerUsedFlg &= ~UART2_USED_TIMER2;}while(0);
+    #define fi_timer_uase_by_uart() (timerUsedFlg & (UART1_USED_TIMER2| UART2_USED_TIMER2))
+
+    extern void api_timer2_start(void);
+    extern void api_timer2_stop(void);
+    
 #ifdef __cplusplus
 }
 #endif

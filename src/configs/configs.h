@@ -69,6 +69,9 @@
 		#define LCD_TEST_EX_EN 0
 		
 	#endif
+
+    #define IOT_IP "117.60.157.137"
+    #define IOT_NCDP "AT+NCDP=117.60.157.137\r\n"
 #ifdef __cplusplus
 	}
 #endif

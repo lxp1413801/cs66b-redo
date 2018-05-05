@@ -38,7 +38,17 @@
 	//20170910
 	extern void m_int16_2_str_4(uint8_t* buf,int16_t x);
 	extern void m_int16_2_str_3(uint8_t* buf,int16_t x);
-	
+    
+    extern uint16_t m_str_match_ex(uint8_t* b,uint8_t* c,uint16_t *loc);
+	extern uint8_t int16_2_d(uint8_t* str,uint32_t t16);
+	extern uint16_t m_str_cpy(uint8_t* d,uint8_t* s);
+    
+    #define _chr2hex(h,c) do{ \
+		if(c>='0' && c <='9')h|=(c-'0'); \
+		else if(c>='A' && c<='F')h|=(c-'A'+0x0a); \
+		else if(c>='a' && c<='f')h|=(c-'a'+0x0a); \
+		else h|=0; \
+	}while(0);
 	#ifdef __cplusplus
 	}
 	#endif

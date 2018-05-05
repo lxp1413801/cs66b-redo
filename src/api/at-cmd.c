@@ -183,7 +183,8 @@ const st_ATcmdDef AT_CMD_NSOCR=
 
 const st_ATcmdDef AT_CMD_NCDP=
 {
-	"AT+NCDP=117.60.157.137\r\n",
+	//"AT+NCDP=117.60.157.137\r\n",
+    IOT_NCDP,
 	"OK",
 	"ERROR",
 };
