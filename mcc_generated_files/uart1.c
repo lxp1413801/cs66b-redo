@@ -48,6 +48,7 @@
 
 #include "uart1.h"
 #include "tmr2.h"
+#include "../src/soc/soc.h"
 /**
   Section: Data Type Definitions
 */
@@ -236,7 +237,8 @@ void __attribute__ ( ( interrupt, no_auto_psv ) ) _U1RXInterrupt( void )
 			uart1ReceivedBuf[uart1ReceivedCount]=t8;
 			uart1ReceivedCount++;
 			uart1RecIdleTime=20;
-            TMR2_Start();
+            api_timer2_start();
+            timer2_used_by_uart1();
 		}
 	}
 	IFS0bits.U1RXIF = false;

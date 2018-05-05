@@ -622,9 +622,9 @@ bool UART2_TransmitBufferIsFull (void);
 UART2_STATUS UART2_StatusGet (void );
 
 //add by lxp
-#define UART_2_REC_BUF_LEN	128
+#define UART_2_REC_BUF_LEN	64
 extern uint16_t 	uart2ReceivedCount;
-extern uint8_t		uart2ReceivedBuf[UART_2_REC_BUF_LEN];
+extern uint8_t		uart2ReceivedBuf[64];
 extern uint16_t	uart2RecIdleTime;
 
 extern void uart2_send_byte(uint8_t x);

@@ -899,10 +899,14 @@ void __down_home_adj(void)
 	if(t8>3)t8=0;
 	#else
     if(t8>2)t8=0;
+	if(hardStatus.bits.bPrSensorOriginal==0){
+		if(t8==0)t8=1;
+	}
 	#endif
     //t8<<=4;
     subMenu &= 0xf0;
     subMenu |= t8;	
+	
 	
 	stSysData.bpMenu=menu;
 	stSysData.bpSubMenu=subMenu;	
@@ -2384,6 +2388,7 @@ void __set_long_poly_coefic_adj_mod(void)
 {
     __sys_data_save_write_flash();
     __exit_menu_to_home_unsave(); 
+	modifyPolyCeofficTimer=0;
 }
 
 void __set_long_bl_on_tm(void)

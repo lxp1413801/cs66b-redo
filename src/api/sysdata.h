@@ -75,6 +75,7 @@ extern "C"{
 			
 			uint32_t bBatBorad:1;
 			uint32_t bBatChargeBorad:1;
+            uint32_t bPrSensorOriginal:1;
 		}bits;
 	}hardStatus_t;
 	extern hardStatus_t hardStatus;
@@ -331,7 +332,9 @@ extern "C"{
 	extern volatile int32_t		rtEx0Pressure;
 	extern volatile int32_t		rtEx1Pressure;	
 	extern volatile int32_t		rtEx0PrOriginal;
-	extern volatile int32_t		rtEx1PrOriginal;		
+	extern volatile int32_t		rtEx1PrOriginal;	
+
+	extern uint16_t modifyPolyCeofficTimer;
 	//
 	extern __xDataStruct_t		x_prDiffData;
 	extern __xDataStruct_t		x_prData;

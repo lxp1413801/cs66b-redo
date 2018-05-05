@@ -7,6 +7,7 @@ void my_uart1_send_poll(uint8_t* buf,uint16_t len)
     rs_485_set_tx();
     delay_ms(2);
     uart1_send_len(buf,len);
+    delay_ms(10);
     rs_485_set_rx();
 }
 //#define __mbStatusStartAddr__ 0xe000
@@ -144,7 +145,7 @@ uint16_t getRegisterVal(uint16_t addr,uint16_t *tempData)
 			break;
 		case 0x4006: 
 			t32=rtTemperatureIn;
-            t32/=1000;
+            t32/=100;
             if(t32>127)t32=127;
             if(t32<-128)t32=-128;
             t16=(int16_t)t32;
@@ -268,7 +269,7 @@ void modbus_response_process(uint8_t* rbuf,uint16_t rlen){
 	st_modbusComReqStructDef* pmdbs=(st_modbusComReqStructDef*)rbuf;
 	//if(!(pmdbs->addr ==0xff  || pmdbs->addr==mainSystemData.shortID || pmdbs->addr!=0x00))return;
     if(rlen<4)return;
-    if(!( pmdbs->addr==stSysData.ModbusId || pmdbs->addr!=0x00))return;
+    if(!( pmdbs->addr==stSysData.ModbusId && pmdbs->addr!=0x00))return;
 	if(!(crc_verify(rbuf,rlen)))return ;
 	//function expand expand
 	switch(pmdbs->func){

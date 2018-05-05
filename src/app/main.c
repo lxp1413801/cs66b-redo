@@ -93,7 +93,7 @@ void event_sample_real_time_mode(void)
 		}
 		sample_process();			
 	}
-    TMR2_Start();
+    api_timer2_start();
 }
 /*
 void event_sample_sleep_wake_mode(void)
@@ -242,7 +242,7 @@ void event_enter_sleep(void)
 		
 		
 		TMR1_Stop();
-		TMR2_Stop();	
+		api_timer2_stop();
 		//lcd_off();
 		Sleep();
 		__nop();
@@ -317,6 +317,25 @@ void event_rtc_lcd_off(void)
 	}
 }
 uint8_t uartTestStr[]="UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU";
+
+void event_rtc_modify_poly_coeffic(void)
+{
+	uint16_t t16;
+	t16=stSysData.ployCoeffic[0];
+	if(t16==1000){
+		modifyPolyCeofficTimer++;
+		//if(modifyPolyCeofficTimer>0x8000)modifyPolyCeofficTimer=0x8000;
+		if(modifyPolyCeofficTimer>3600){
+			stSysData.ployCoeffic[0]=600;
+			stSysData.ployCoeffic[1]=200;
+			stSysData.ployCoeffic[2]=100;
+			stSysData.ployCoeffic[3]=100;
+			__sys_data_save_write_flash();
+			modifyPolyCeofficTimer=0;
+		}
+	}
+}
+
 int main(void)
 {
 	
@@ -325,6 +344,9 @@ int main(void)
     uint16_t t16;
     SYSTEM_Initialize(); 
     thread_main_pre();	
+	//add at 2018.05.03
+	rs_485_set_rx();
+	//add end
     noEventTimeOut=2;
     while (1){
 		if(event & flg_KEY_DOWN){
@@ -333,7 +355,9 @@ int main(void)
             if( !T1CONbits.TON )TMR1_Start();
 			key_process();
             if(menu==MENU_HOME)noEventTimeOut=2;
-		}
+		}else{
+            keyValue=KEY_VALUE_NONE;
+        }
 		if(event &  flg_RTC_HALF_SECOND){
 			event &=  ~flg_RTC_HALF_SECOND;
 
@@ -357,6 +381,7 @@ int main(void)
 			}else{
 				event_iloop_out_put_adj();
 			}
+			event_rtc_modify_poly_coeffic();
 		}
         if(event & flg_MODBUS_RECEIVED){
             event &= ~flg_MODBUS_RECEIVED;

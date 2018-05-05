@@ -11,9 +11,10 @@
 	#include "ui.h"
 	#include "key_menu.h"
 	#include "modbus.h"
+    #include "at-cmd.h"
 	#include "nbiot.h"
 	#include "gps.h"
-	#include "at-cmd.h"
+
 #ifdef __cplusplus
 	}
 #endif

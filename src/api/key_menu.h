@@ -7,7 +7,7 @@ extern "C"{
 #endif
 	#include <stdint.h>
 	#include <stdbool.h>
-	
+	extern uint8_t __sys_data_save_write_flash(void);
 	#define PSW_SET_DENSITY						36	
 	#define PSW_SET_POSE_SIZE					63
 	
@@ -240,6 +240,7 @@ extern "C"{
 	extern void no_operation_save_exit(void);
 	//9086504300
 	//3045006890
+
 #ifdef __cplusplus
 }
 #endif

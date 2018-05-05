@@ -433,8 +433,14 @@ void samlpe_chip0_ch_pr_bridge(void)
 	rtAdcValuePrBridge=samlpe_read_adc(&ads1148Chip0,NULL,8);
 	if(rtAdcValuePrBridge>0x7f00){
 		hardStatus.bits.bPrSensor=0;
+		if(firstSampleFlg){
+			hardStatus.bits.bPrSensorOriginal=0;
+		}	
 	}else{
 		hardStatus.bits.bPrSensor=1;
+		if(firstSampleFlg){
+			hardStatus.bits.bPrSensorOriginal=1;
+		}		
 	}		
 	__nop();
 	__nop();
@@ -1004,7 +1010,7 @@ uint8_t sample_process(void)
     if(stSysData.sleepPeriod==0){
         calc_warning_pr_dpr();
         bj_output();
-        TMR2_Start();
+        api_timer2_start();
     }
     return sampleIndex;
 }

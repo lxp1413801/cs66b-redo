@@ -910,13 +910,19 @@ void ui_disp_menu_home(void)
 	else if(t8==2){lcd_disp_unit_t(true);	}
 	
 	t8=subMenu & 0x0f;
-
+	
+	if(t8==0 && hardStatus.bits.bPrSensorOriginal==0){
+		t8=1;
+		subMenu &= 0xf0;
+		subMenu |= t8;
+	}
+	
 	if(t8==0){
 		if(hardStatus.bits.bPrSensor==0 || hardStatus.bits.bInTempSensor==0){
 			lcd_show_string_l1((uint8_t*)" err");
 		}else{
 			mf.t32=__int32_2_mflot32(rtPressure);
-			ui_disp_xfloat_pt(&mf,LCD_LINE_1);		
+			ui_disp_xfloat_pt(&mf,LCD_LINE_1);				
 		}
 	}else if(t8==1 || t8==2){
 		if(hardStatus.bits.bDprSensor==0){
@@ -926,12 +932,12 @@ void ui_disp_menu_home(void)
 			lcd_show_string_l1((uint8_t*)"full");
 			
 		}else{
-			if(t8==1){
+			if(t8==2){
 				t32=rtHight;
 				if(t32<0l)t32=0l;	
 				mf.t32=__int32_2_mflot32(t32);
 				
-			}else if(t8==2){	
+			}else if(t8==1){	
 				mf.t32=__int32_2_mflot32(rtVolume);
 							
 			}
@@ -944,8 +950,8 @@ void ui_disp_menu_home(void)
 		#endif
 	}
 	if(t8==0){lcd_disp_unit_mpa(true);}
-	else if(t8==1){lcd_disp_unit_2nd_m(true);	}
-	else if(t8==2){lcd_disp_unit_2nd_m3(true);	}
+	else if(t8==2){lcd_disp_unit_2nd_m(true);	}
+	else if(t8==1){lcd_disp_unit_2nd_m3(true);	}
 
     t8=rtLevel;
 

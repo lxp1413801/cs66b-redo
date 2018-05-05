@@ -61,6 +61,7 @@ volatile int32_t		rtEx1PrOriginal;
 //
 
 volatile st_deviceOpMode dwm=TEST_MODE;
+uint16_t modifyPolyCeofficTimer=0x00;
 
 deviceEventDef_t deviceEvent={0};
 hardStatus_t hardStatus={~0x00ul};
@@ -246,7 +247,7 @@ const sysDataDef_t defultSystemData={
 		0,//uint8_t		maxValueForlevelBar;			//状态条显示满时对应的高度值,
 													//(95%或者100%)
 		5,//uint16_t	density;						//密度
-		{{"LO2",1140},{"LN2",810},{"LAr",1402},{"CO2",1020},{"LNG",460},{"  P",1000}},
+		{{"LO2",1140},{"LN2",810},{"LAr",1402},{"CO2",1020},{"LNG",436},{"  P",1000}},
 		3670,//int32_t		h;								//高
 		1400,//uint32_t	d;								//直径
 		
