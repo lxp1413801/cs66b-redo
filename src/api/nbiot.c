@@ -542,6 +542,17 @@ uint16_t nb_received_process(uint8_t* rbuf,uint16_t rlen)
 	return 1;
 }
 
+void nb_uart_enable(void)
+{
+	set_port_mode_out(GPS_EN_PORT,GPS_EN_PINS);
+	set_port_value_hight(GPS_EN_PORT,GPS_EN_PINS);		
+}
+
+void nb_uart_disable(void)
+{
+	set_port_mode_in(GPS_EN_PORT,GPS_EN_PINS);		
+}
+
 void nb_process(void)
 {
 	uint16_t t16;
@@ -551,6 +562,10 @@ void nb_process(void)
 	//uint16_t reclen=sizeof(nbRecBuf);
 	uint8_t* sendStr; 
 	uint8_t tryTm=0x00;
+	
+	nb_uart_enable();
+	delay_ms(1000);
+	nb_process_disable_sleep_in_lwp();
     do{
         nb_coap_psm_send_ready();
 		if(nbPsmStateMachine!=NB_PSM_SM_SEND){
@@ -575,6 +590,8 @@ void nb_process(void)
     }while(1);
 	
 	nb_coap_enter_psm();
+	nb_uart_disable();
+	
 }
 
 //file end
